@@ -1,0 +1,214 @@
+\documentclass{article}
+
+% --- GESTION DES MARGES DE PAGE ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
+
+% --- PRÉAMBULE STANDARD ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{graphicx} % Requis pour inclure des images
+\usepackage{amssymb} % Pour les symboles mathématiques comme \subseteq
+\usepackage{sectsty} % Pour le style des sections
+\usepackage{etoolbox} % Pour les conditions
+\usepackage[dvipsnames]{xcolor}
+\usetikzlibrary{
+    matrix, 
+    patterns.meta,
+    calc,
+    positioning,
+    decorations.pathreplacing,
+    trees
+}
+
+% Styles de hachures (inchangés)
+\tikzset{
+  red_hatch/.style={
+    pattern={Lines[angle=45, line width=0.8pt, distance=4pt]}, 
+    pattern color=red
+  },
+  blue_hatch/.style={
+    pattern={Lines[angle=-45, line width=0.8pt, distance=4pt]}, 
+    pattern color=blue
+  },
+  purple_hatch/.style={
+    pattern={Lines[angle=45, line width=0.8pt, distance=4pt]}, 
+    pattern color=red,
+    postaction={
+      pattern={Lines[angle=-45, line width=0.8pt, distance=4pt]}, 
+      pattern color=blue
+    }
+  }
+}
+
+% --- BIBLIOTHÈQUES TCOLORBOX ---
+\tcbuselibrary{listings, skins, breakable}
+
+% --- GESTION DES LIENS HYPERTEXTE ---
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=blue]{hyperref}
+
+% --- SOULIGNER LES TITRES ET SOUS-TITRES ---
+\sectionfont{\underline}
+\subsectionfont{\underline}
+
+% --- PAGE DE GARDE AMÉLIORÉE ---
+\makeatletter
+\renewcommand{\maketitle}{%
+\begin{titlepage}
+\centering
+\vspace*{\stretch{1.5}}
+{\Huge \bfseries Mes Notes de Lecture\par}
+\vspace{0.4cm}
+\rule{0.8\linewidth}{0.4pt}
+\vspace{1cm}
+{\LARGE \bfseries Introduction à la Probabilité\par}
+\vspace*{\stretch{2.5}}
+{\Large \scshape Lou Brunet\par}
+\vspace{0.5cm}
+{\large \today\par}
+\vspace*{\stretch{1}}
+\end{titlepage}
+}
+\makeatother
+
+% --- DÉFINITION DES COULEURS STYLE VS CODE ---
+\definecolor{vscodeBlue}{HTML}{569CD6}
+\definecolor{vscodeOrange}{HTML}{CE9178}
+\definecolor{vscodeGreen}{HTML}{6A9955}
+\definecolor{vscodePurple}{HTML}{C586C0}
+\definecolor{vscodeGray}{HTML}{9B9B9B}
+\definecolor{codeBackground}{HTML}{1E1E1E}
+
+% --- CONFIGURATION DU STYLE LISTINGS ---
+\lstdefinestyle{vscode}{
+    language=Python,
+    backgroundcolor=\color{codeBackground},
+    basicstyle=\ttfamily\small\color{white},
+    keywordstyle=\color{vscodeBlue},
+    stringstyle=\color{vscodeOrange},
+    commentstyle=\color{vscodeGreen},
+    numberstyle=\tiny\color{vscodeGray},
+    otherkeywords={self, True, False, None},
+    keywordstyle=[2]\color{vscodePurple},
+    showstringspaces=false,
+    breaklines=true,
+    frame=none,
+    tabsize=4
+}
+
+% --- STYLE DE L'OUTPUT ---
+\lstdefinestyle{outputstyle}{
+    basicstyle=\ttfamily\small\color{white},
+    numbers=left,
+    numberstyle=\color{white}\def\thelstnumber{>>},
+    numbersep=5pt,
+    breaklines=true,
+    frame=none
+}
+
+% --- DÉFINITION DES CELLULES DE CODE ET OUTPUT ---
+\newtcblisting{codecell}{
+  arc=2mm, boxrule=0.8pt, colframe=vscodeBlue, colback=codeBackground,
+  coltitle=white, fonttitle=\bfseries, title=Code Python,
+  listing only, listing options={style=vscode, basicstyle=\ttfamily\footnotesize\color{white}},
+  left=6mm, right=6mm, top=3mm, bottom=3mm, boxsep=4mm
+}
+\newtcblisting{outputcell}{
+  arc=2mm, boxrule=0.8pt, colframe=black!95, colback=black!85,
+  fonttitle=\bfseries\color{white}, title=Output, coltitle=black!95,
+  listing only, listing options={style=outputstyle, basicstyle=\ttfamily\footnotesize\color{white}},
+  left=6mm, right=6mm, top=3mm, bottom=3mm, boxsep=4mm
+}
+
+% --- DÉFINITION DES COULEURS POUR DÉF/THÉO/PREUVE/INTUITION/EXEMPLE ---
+\definecolor{defColor}{HTML}{1b1f3a}       % Bleu nuit pour les définitions
+\definecolor{theoColor}{HTML}{53354a}      % Violet aubergine pour les théorèmes
+\definecolor{proofColor}{HTML}{a64942}     % Rouge brique pour les preuves
+\definecolor{intuitionColor}{HTML}{16A085} % Turquoise pour l'intuition
+\definecolor{exampleColor}{HTML}{4a6982}   % Bleu ardoise pour les exemples
+\definecolor{exoColor}{HTML}{1E8449}       % Vert
+\definecolor{corrColor}{HTML}{7F8C8D}      % Gris
+
+% --- DÉFINITION D'UN STYLE DE BASE COMMUN ---
+\tcbset{
+    baseboxstyle/.style={
+        arc=2mm, boxrule=0.8pt,
+        fontupper=\color{black}, left=6mm, right=6mm, top=3mm, bottom=3mm,
+        boxsep=4mm, breakable
+    }
+}
+
+% --- DÉFINITION DES CELLULES THÉORIQUES AVEC FOND DE COULEUR ---
+\newtcolorbox{definitionbox}[1][]{
+  baseboxstyle, colframe=defColor, colback=defColor!10, coltitle=defColor,
+  fonttitle=\bfseries\color{white},
+  title=Définition\ifstrempty{#1}{}{ : #1}
+}
+\newtcolorbox{theorembox}[1][]{
+  baseboxstyle, colframe=theoColor, colback=theoColor!10, coltitle=theoColor,
+  fonttitle=\bfseries\color{white},
+  title=Théorème\ifstrempty{#1}{}{ : #1}
+}
+\newtcolorbox{proofbox}[1][]{
+  baseboxstyle, colframe=proofColor, colback=proofColor!10, coltitle=proofColor,
+  fonttitle=\bfseries\color{white},
+  title=Preuve\ifstrempty{#1}{}{ : #1}
+}
+\newtcolorbox{intuitionbox}[1][]{
+  baseboxstyle, colframe=intuitionColor, colback=intuitionColor!10, coltitle=intuitionColor,
+  fonttitle=\bfseries\color{white},
+  title=Intuition\ifstrempty{#1}{}{ : #1}
+}
+\newtcolorbox{examplebox}[1][]{
+  baseboxstyle, colframe=exampleColor, colback=exampleColor!10, coltitle=exampleColor,
+  fonttitle=\bfseries\color{white},
+  title=Exemple\ifstrempty{#1}{}{ : #1}
+}
+
+% --- DÉFINITION DES CELLULES EXERCICE (GRIS) ET CORRECTION (VERT) ---
+\newtcolorbox{exercicebox}[1][]{
+    baseboxstyle, colframe=corrColor, colback=corrColor!10, coltitle=corrColor,
+    fonttitle=\bfseries\color{white},
+    title=Exercice\ifstrempty{#1}{}{ : #1}
+}
+
+\newtcolorbox{correctionbox}[1][]{
+    baseboxstyle, colframe=exoColor, colback=exoColor!10, coltitle=exoColor,
+    fonttitle=\bfseries\color{white},
+    title=Correction\ifstrempty{#1}{}{ : #1}
+}
+
+% --- DÉFINITION D'UNE CELLULE INTERLUDE ---
+\definecolor{interludeColor}{HTML}{D35400} 
+
+\newtcolorbox{interludebox}[1][]{
+  baseboxstyle, colframe=interludeColor, colback=interludeColor!10, coltitle=interludeColor,
+  fonttitle=\bfseries\color{white},
+  title=Interlude\ifstrempty{#1}{}{ : #1}
+}
+
+% =============================================
+% --- CORPS DU DOCUMENT ---
+% =============================================
+% =============================================
+% --- CORPS DU DOCUMENT ---
+% =============================================
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents 
+\newpage
+
+\input{section1.tex}
+\input{section2.tex}
+\input{section3.tex}
+
+
+\end{document}
