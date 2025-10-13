@@ -1,0 +1,272 @@
+\newpage
+\section{Variables Aléatoires Discrètes}
+
+\subsection{Variable Aléatoire}
+
+\begin{definitionbox}[Variable Aléatoire]
+Étant donné une expérience avec un univers $S$, une variable aléatoire est une fonction de l'univers $S$ vers les nombres réels $\mathbb{R}$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+Une variable aléatoire est une manière de traduire les résultats d'une expérience en nombres. Au lieu de travailler avec des concepts comme "Pile" ou "Face", on leur assigne des valeurs numériques (par exemple, 1 pour Pile, 0 pour Face). Cela nous permet d'utiliser toute la puissance des outils mathématiques (fonctions, calculs, etc.) pour analyser le hasard. C'est un pont entre le monde concret des événements et le monde abstrait des nombres.
+\end{intuitionbox}
+
+\begin{examplebox}
+On lance deux dés. L'univers $S$ est l'ensemble des 36 paires de résultats, comme $(1,1), (1,2), \dots, (6,6)$. On peut définir une variable aléatoire $X$ comme étant la \textbf{somme des deux dés}.
+Pour le résultat $(2, 5)$, la valeur de la variable aléatoire est $X(2, 5) = 2 + 5 = 7$.
+\end{examplebox}
+
+\subsection{Variable Aléatoire Discrète}
+
+\begin{definitionbox}[Variable Aléatoire Discrète]
+Une variable aléatoire $X$ est dite discrète s'il existe une liste finie ou infinie dénombrable de valeurs $a_1, a_2, \dots$ telle que $P(X=a_j \text{ pour un certain } j) = 1$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+Une variable aléatoire est "discrète" si on peut lister (compter) toutes les valeurs qu'elle peut prendre, même si cette liste est infinie. Pensez aux "sauts" d'une valeur à l'autre, sans possibilité de prendre une valeur intermédiaire. C'est comme monter un escalier : on peut être sur la marche 1, 2 ou 3, mais jamais sur la marche 2.5. Le nombre de têtes en 10 lancers, le résultat d'un dé, le nombre d'emails que vous recevez en une heure sont des exemples. À l'opposé, une variable continue pourrait être la taille exacte d'une personne, qui peut prendre n'importe quelle valeur dans un intervalle.
+\end{intuitionbox}
+
+\subsection{Fonction de Masse (PMF)}
+
+\begin{definitionbox}[Probability Mass Function (PMF)]
+La fonction de masse (PMF) d'une variable aléatoire discrète $X$ est la fonction $P_X$ donnée par $P_X(x) = P(X=x)$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+La PMF est la "carte d'identité" probabiliste d'une variable aléatoire discrète. Pour chaque valeur que la variable peut prendre, la PMF nous donne la probabilité exacte associée à cette valeur. C'est comme si chaque résultat possible avait une "étiquette de prix" qui indique sa chance de se produire. La somme de toutes ces probabilités doit bien sûr valoir 1.
+\end{intuitionbox}
+
+\begin{examplebox}
+Soit $X$ le résultat d'un lancer de dé équilibré. La variable $X$ peut prendre les valeurs $\{1, 2, 3, 4, 5, 6\}$.
+La PMF de $X$ est la fonction qui assigne $1/6$ à chaque valeur :
+$P(X=1) = 1/6$, $P(X=2) = 1/6$, ..., $P(X=6) = 1/6$.
+Pour toute autre valeur $x$ (par exemple $x=2.5$ ou $x=7$), $P(X=x) = 0$.
+\end{examplebox}
+
+\subsection{Distribution de Bernoulli}
+
+\begin{definitionbox}[Distribution de Bernoulli]
+Une variable aléatoire $X$ suit la distribution de Bernoulli avec paramètre $p$ si $P(X=1) = p$ et $P(X=0) = 1-p$, où $0 < p < 1$. On note cela $X \sim \text{Bern}(p)$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+La distribution de Bernoulli est le modèle le plus simple pour une expérience aléatoire avec seulement deux issues : "succès" (codé par 1) et "échec" (codé par 0). C'est la brique de base de nombreuses autres distributions. Pensez à un unique lancer de pièce (Pile/Face), un unique tir au but (Marqué/Manqué), ou la réponse à une question par oui/non. Le paramètre $p$ est simplement la probabilité du "succès".
+\end{intuitionbox}
+
+\subsection{Variable Aléatoire Indicatrice}
+
+\begin{definitionbox}[Variable Aléatoire Indicatrice]
+La variable aléatoire indicatrice d'un événement $A$ est la variable aléatoire qui vaut 1 si $A$ se produit et 0 sinon. Nous la noterons $I_A$. Notez que $I_A \sim \text{Bern}(p)$ avec $p=P(A)$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+Une variable indicatrice est un interrupteur. Elle est sur "ON" (valeur 1) si un événement qui nous intéresse se produit, et sur "OFF" (valeur 0) sinon. C'est un outil extrêmement puissant car il transforme les questions sur les probabilités des événements en questions sur les espérances des variables aléatoires, ce qui simplifie souvent les calculs.
+\end{intuitionbox}
+
+\subsection{Distribution Binomiale}
+
+\begin{theorembox}[PMF Binomiale]
+Si $X \sim \text{Bin}(n, p)$, alors la PMF de $X$ est :
+$$ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $$
+pour $k = 0, 1, \dots, n$.
+\end{theorembox}
+
+\begin{intuitionbox}
+La distribution binomiale répond à la question : "Si je répète $n$ fois la même expérience de Bernoulli (qui a une probabilité de succès $p$), quelle est la probabilité d'obtenir exactement $k$ succès ?"
+La formule est construite logiquement en multipliant trois composantes. D'abord, $\mathbf{p^k}$ représente la probabilité d'obtenir $k$ succès. Ensuite, $\mathbf{(1-p)^{n-k}}$ est la probabilité que les $n-k$ échecs restants se produisent. Finalement, comme les $k$ succès peuvent apparaître n'importe où parmi les $n$ essais, on multiplie par $\mathbf{\binom{n}{k}}$, qui compte le nombre de manières distinctes de placer ces succès.
+\end{intuitionbox}
+
+\begin{examplebox}
+On lance une pièce équilibrée 10 fois ($n=10$, $p=0.5$). Quelle est la probabilité d'obtenir exactement 6 Piles ($k=6$) ?
+$$ P(X=6) = \binom{10}{6} (0.5)^6 (1-0.5)^{10-6} = \frac{10!}{6!4!} (0.5)^{10} = 210 \times (0.5)^{10} \approx 0.205 $$
+Il y a environ 20.5\% de chance d'obtenir exactement 6 Piles.
+\end{examplebox}
+
+\subsection{Distribution Hypergéométrique}
+
+\begin{theorembox}[PMF Hypergéométrique]
+Si $X \sim \text{HG}(w, b, m)$, alors la PMF de $X$ est :
+$$ P(X=k) = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}} $$
+\end{theorembox}
+
+\begin{intuitionbox}
+La distribution hypergéométrique est la "cousine" de la binomiale pour les tirages \textbf{sans remise}. Imaginez une urne avec des boules de deux couleurs (par exemple, $w$ blanches et $b$ noires). Vous tirez $m$ boules d'un coup. Quelle est la probabilité que vous ayez exactement $k$ boules blanches ?
+La formule est un simple ratio issu du dénombrement. Le \textbf{dénominateur}, $\binom{w+b}{m}$, compte le nombre total de façons de tirer $m$ boules parmi toutes celles disponibles. Le \textbf{numérateur} compte les issues favorables : c'est le produit du nombre de façons de choisir $k$ blanches parmi les $w$ ($\binom{w}{k}$) ET de choisir les $m-k$ boules restantes parmi les noires ($\binom{b}{m-k}$). La différence clé avec la loi binomiale est que les tirages ne sont pas indépendants.
+\end{intuitionbox}
+
+\begin{examplebox}
+Un comité de 5 personnes est choisi au hasard parmi un groupe de 8 hommes et 10 femmes. Quelle est la probabilité que le comité soit composé de 2 hommes et 3 femmes ?
+Ici, on tire 5 personnes ($m=5$) d'une population de 18 personnes. On s'intéresse au nombre d'hommes ($k=2$) parmi les 8 disponibles ($w=8$). Le reste du comité sera composé de femmes ($b=10$).
+$$ P(X=2) = \frac{\binom{8}{2} \binom{10}{3}}{\binom{18}{5}} = \frac{28 \times 120}{8568} \approx 0.392 $$
+Il y a environ 39.2\% de chance que le comité ait exactement cette composition.
+\end{examplebox}
+
+\subsection{Fonction de Répartition (CDF)}
+
+\begin{definitionbox}[Cumulative Distribution Function (CDF)]
+La fonction de répartition (CDF) d'une variable aléatoire $X$ est la fonction $F_X$ donnée par $F_X(x) = P(X \le x)$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+Alors que la PMF répond à la question "Quelle est la probabilité d'obtenir \textit{exactement} $x$ ?", la CDF répond à la question "Quelle est la probabilité d'obtenir \textit{au plus} $x$ ?". C'est une fonction cumulative : pour une valeur $x$ donnée, elle additionne les probabilités de tous les résultats inférieurs ou égaux à $x$.
+La CDF a toujours une forme d'escalier pour les variables discrètes. Elle commence à 0 (très loin à gauche) et monte par "sauts" à chaque valeur possible de la variable, pour finalement atteindre 1 (très loin à droite). La hauteur de chaque saut correspond à la valeur de la PMF à ce point.
+\end{intuitionbox}
+
+\begin{examplebox}
+Reprenons le lancer d'un dé équilibré ($X$). Calculons quelques valeurs de la CDF, notée $F(x)$.
+\newline
+$F(0.5) = P(X \le 0.5) = 0$
+\newline
+$F(1) = P(X \le 1) = P(X=1) = 1/6$
+\newline
+$F(1.5) = P(X \le 1.5) = P(X=1) = 1/6$
+\newline
+$F(2) = P(X \le 2) = P(X=1) + P(X=2) = 2/6$
+\newline
+$F(5.9) = P(X \le 5.9) = P(X=1) + \dots + P(X=5) = 5/6$
+\newline
+$F(6) = P(X \le 6) = 1$
+\newline
+$F(100) = P(X \le 100) = 1$
+\end{examplebox}
+
+\subsection{Exercices}
+
+\begin{exercicebox}[PMF d'un dé spécial]
+Un dé à 4 faces (tétraèdre) est truqué. La probabilité d'obtenir un certain nombre est proportionnelle à ce nombre. Soit $X$ la variable aléatoire du résultat d'un lancer.
+\begin{enumerate}
+    \item Déterminez la fonction de masse (PMF) de $X$.
+    \item Calculez $P(X \ge 3)$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{correctionbox}
+1. Les résultats possibles sont $\{1, 2, 3, 4\}$. La probabilité est proportionnelle au résultat, donc $P(X=k) = c \cdot k$ pour une constante $c$.
+La somme des probabilités doit valoir 1 :
+$$ \sum_{k=1}^{4} P(X=k) = c \cdot 1 + c \cdot 2 + c \cdot 3 + c \cdot 4 = 10c = 1 \implies c = \frac{1}{10} $$
+La PMF est donc : $P(X=1)=1/10$, $P(X=2)=2/10$, $P(X=3)=3/10$, $P(X=4)=4/10$.
+
+2. On calcule $P(X \ge 3) = P(X=3) + P(X=4) = \frac{3}{10} + \frac{4}{10} = \frac{7}{10}$.
+\end{correctionbox}
+
+\begin{exercicebox}[Loi Binomiale : Tirs au but]
+Un footballeur a une probabilité de $0.8$ de marquer un penalty. Il tire 5 penaltys. Soit $X$ le nombre de penaltys marqués.
+\begin{enumerate}
+    \item Quelle est la distribution de $X$ ?
+    \item Quelle est la probabilité qu'il marque exactement 4 penaltys ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{correctionbox}
+1. Les tirs sont des épreuves de Bernoulli indépendantes et répétées avec la même probabilité de succès. $X$ suit donc une loi binomiale : $X \sim \text{Bin}(n=5, p=0.8)$.
+
+2. On cherche $P(X=4)$. On applique la formule de la PMF binomiale :
+$$ P(X=4) = \binom{5}{4} (0.8)^4 (1-0.8)^{5-4} = 5 \times (0.8)^4 \times (0.2)^1 = 5 \times 0.4096 \times 0.2 = 0.4096 $$
+La probabilité est de 40.96\%.
+\end{correctionbox}
+
+\begin{exercicebox}[Loi Hypergéométrique : Contrôle qualité]
+Une boîte contient 20 ampoules, dont 5 sont défectueuses. On prélève 4 ampoules au hasard sans remise pour les tester. Soit $X$ le nombre d'ampoules défectueuses dans l'échantillon.
+\begin{enumerate}
+    \item Quelle est la distribution de $X$ ?
+    \item Quelle est la probabilité de ne trouver aucune ampoule défectueuse ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{correctionbox}
+1. Il s'agit d'un tirage sans remise d'une population finie contenant deux types d'objets. $X$ suit donc une loi hypergéométrique : $X \sim \text{HG}(w=5, b=15, m=4)$.
+
+2. On cherche $P(X=0)$. On applique la formule de la PMF hypergéométrique :
+$$ P(X=0) = \frac{\binom{5}{0} \binom{15}{4}}{\binom{20}{4}} = \frac{1 \times \frac{15 \times 14 \times 13 \times 12}{4 \times 3 \times 2 \times 1}}{\frac{20 \times 19 \times 18 \times 17}{4 \times 3 \times 2 \times 1}} = \frac{1365}{4845} \approx 0.2817 $$
+La probabilité est d'environ 28.17\%.
+\end{correctionbox}
+
+\begin{exercicebox}[CDF]
+En utilisant la PMF du dé truqué de l'exercice 1, déterminez et tracez la fonction de répartition (CDF) de $X$.
+\end{exercicebox}
+
+\begin{correctionbox}
+La PMF était $P(X=1)=0.1$, $P(X=2)=0.2$, $P(X=3)=0.3$, $P(X=4)=0.4$.
+La CDF, $F(x)=P(X \le x)$, se calcule par accumulation :
+\begin{itemize}
+    \item Pour $x < 1$, $F(x) = 0$.
+    \item Pour $1 \le x < 2$, $F(x) = P(X=1) = 0.1$.
+    \item Pour $2 \le x < 3$, $F(x) = P(X \le 2) = 0.1 + 0.2 = 0.3$.
+    \item Pour $3 \le x < 4$, $F(x) = P(X \le 3) = 0.3 + 0.3 = 0.6$.
+    \item Pour $x \ge 4$, $F(x) = P(X \le 4) = 0.6 + 0.4 = 1$.
+\end{itemize}
+C'est une fonction en escalier qui saute aux points 1, 2, 3 et 4.
+\end{correctionbox}
+
+\begin{exercicebox}[Binomiale : "Au moins un"]
+Un système de sécurité a 4 composants identiques. Chaque composant a une probabilité de 0.05 de tomber en panne dans l'année. Les pannes sont indépendantes. Quelle est la probabilité qu'au moins un composant tombe en panne dans l'année ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Soit $X$ le nombre de composants en panne. $X \sim \text{Bin}(n=4, p=0.05)$.
+Calculer $P(X \ge 1)$ directement serait long ($P(X=1)+P(X=2)+...$). Il est plus simple de passer par l'événement complémentaire : "aucun composant ne tombe en panne".
+$$ P(X \ge 1) = 1 - P(X=0) $$
+$$ P(X=0) = \binom{4}{0} (0.05)^0 (0.95)^4 = 1 \times 1 \times (0.95)^4 \approx 0.8145 $$
+$$ P(X \ge 1) = 1 - 0.8145 = 0.1855 $$
+La probabilité est d'environ 18.55\%.
+\end{correctionbox}
+
+\begin{exercicebox}[Hypergéométrique : Main de poker]
+Quelle est la probabilité de recevoir exactement 2 Rois dans une main de 5 cartes tirées d'un jeu standard de 52 cartes ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Soit $X$ le nombre de Rois dans la main. C'est un tirage sans remise. Il y a 4 Rois et 48 autres cartes dans le jeu. $X \sim \text{HG}(w=4, b=48, m=5)$.
+On cherche $P(X=2)$ :
+$$ P(X=2) = \frac{\binom{4}{2} \binom{48}{3}}{\binom{52}{5}} = \frac{6 \times 17296}{2598960} = \frac{103776}{2598960} \approx 0.0399 $$
+La probabilité est d'environ 3.99\%.
+\end{correctionbox}
+
+\begin{exercicebox}[Identifier la distribution 1]
+Une usine produit des vis. 2\% des vis sont défectueuses. Vous achetez une boîte de 100 vis. Modélisez le nombre de vis défectueuses dans votre boîte.
+\end{exercicebox}
+
+\begin{correctionbox}
+Chaque vis peut être vue comme une épreuve de Bernoulli (défectueuse ou non). Puisque le nombre total de vis produites par l'usine est très grand par rapport à la taille de l'échantillon (100), on peut considérer les tirages comme étant indépendants et avec remise. La situation est donc modélisée par une loi binomiale : $X \sim \text{Bin}(n=100, p=0.02)$.
+\end{correctionbox}
+
+\begin{exercicebox}[Identifier la distribution 2]
+Une classe contient 12 filles et 10 garçons. On choisit une équipe de 4 élèves au hasard pour un projet. Modélisez le nombre de filles dans l'équipe.
+\end{exercicebox}
+
+\begin{correctionbox}
+Le choix se fait sans remise à partir d'une petite population finie (22 élèves). Les choix ne sont pas indépendants. La situation est donc modélisée par une loi hypergéométrique : $X \sim \text{HG}(w=12, b=10, m=4)$.
+\end{correctionbox}
+
+\begin{exercicebox}[Variable Indicatrice]
+On lance deux dés. Soit $A$ l'événement "la somme des dés est 7". Définissez la variable aléatoire indicatrice $I_A$ et donnez sa distribution.
+\end{exercicebox}
+
+\begin{correctionbox}
+La variable indicatrice $I_A$ est définie comme :
+$I_A = 1$ si la somme est 7.
+$I_A = 0$ si la somme n'est pas 7.
+
+Pour trouver sa distribution, il faut calculer $p = P(A)$. Les paires qui donnent une somme de 7 sont (1,6), (2,5), (3,4), (4,3), (5,2), (6,1). Il y en a 6 sur 36 résultats possibles.
+Donc, $p = P(A) = 6/36 = 1/6$.
+
+La distribution de $I_A$ est une distribution de Bernoulli : $I_A \sim \text{Bern}(p=1/6)$.
+\end{correctionbox}
+
+\begin{exercicebox}[Binomiale : Quiz]
+Un étudiant répond au hasard à un QCM de 10 questions. Chaque question a 4 choix de réponse, dont un seul est correct. Quelle est la probabilité qu'il ait au moins 3 bonnes réponses ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Soit $X$ le nombre de bonnes réponses. Chaque question est une épreuve de Bernoulli avec une probabilité de succès $p = 1/4 = 0.25$. Donc, $X \sim \text{Bin}(n=10, p=0.25)$.
+On cherche $P(X \ge 3)$. On utilise le complémentaire : $P(X \ge 3) = 1 - P(X < 3) = 1 - (P(X=0) + P(X=1) + P(X=2))$.
+
+$P(X=0) = \binom{10}{0}(0.25)^0(0.75)^{10} \approx 0.0563$
+$P(X=1) = \binom{10}{1}(0.25)^1(0.75)^9 \approx 0.1877$
+$P(X=2) = \binom{10}{2}(0.25)^2(0.75)^8 \approx 0.2816$
+
+$P(X < 3) \approx 0.0563 + 0.1877 + 0.2816 = 0.5256$
+$P(X \ge 3) \approx 1 - 0.5256 = 0.4744$
+
+La probabilité d'avoir au moins 3 bonnes réponses est d'environ 47.44\%.
+\end{correctionbox}
