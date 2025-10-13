@@ -1,0 +1,488 @@
+\newpage
+\section{Espérance, Variance et Distributions Discrètes Usuelles}
+
+\subsection{Espérance d'une variable aléatoire discrète}
+
+\begin{definitionbox}[Espérance]
+L'espérance (ou valeur attendue) d'une variable aléatoire discrète $X$, qui prend les valeurs distinctes $x_1, x_2, \dots$, est définie par :
+$$ E(X) = \sum_j x_j P(X=x_j) $$
+\end{definitionbox}
+
+\begin{intuitionbox}
+L'espérance représente la valeur moyenne que l'on obtiendrait si l'on répétait l'expérience un très grand nombre de fois. C'est le \textbf{centre de gravité} de la distribution de probabilité. Si les probabilités étaient des masses placées sur une tige aux positions $x_j$, l'espérance serait le point d'équilibre.
+\end{intuitionbox}
+
+\begin{examplebox}[Lancer d'un dé]
+Soit $X$ le résultat d'un lancer de dé équilibré. Chaque face a une probabilité de $1/6$. L'espérance est :
+$$ E(X) = 1\left(\frac{1}{6}\right) + 2\left(\frac{1}{6}\right) + 3\left(\frac{1}{6}\right) + 4\left(\frac{1}{6}\right) + 5\left(\frac{1}{6}\right) + 6\left(\frac{1}{6}\right) = \frac{21}{6} = 3.5 $$
+Même si 3.5 n'est pas un résultat possible, c'est la valeur moyenne sur un grand nombre de lancers.
+\end{examplebox}
+
+\subsection{Linéarité de l'espérance}
+
+\begin{theorembox}[Linéarité de l'espérance]
+Pour toutes variables aléatoires $X$ et $Y$, et pour toute constante $c$, on a :
+\begin{align*}
+E(X+Y) &= E(X) + E(Y) \\
+E(cX) &= cE(X)
+\end{align*}
+Cette propriété est extrêmement puissante car elle ne requiert pas que $X$ et $Y$ soient indépendantes.
+\end{theorembox}
+
+\begin{intuitionbox}
+Cette propriété formalise une idée très simple : "la moyenne d'une somme est la somme des moyennes". Si vous jouez à deux jeux de hasard, votre gain moyen total est simplement la somme de ce que vous gagnez en moyenne à chaque jeu, que les jeux soient liés ou non.
+\end{intuitionbox}
+
+\begin{examplebox}[Somme de deux dés]
+Soit $X_1$ le résultat du premier dé et $X_2$ celui du second. On sait que $E(X_1) = 3.5$ et $E(X_2) = 3.5$.
+Soit $S = X_1 + X_2$ la somme des deux dés. Grâce à la linéarité, on peut calculer l'espérance de la somme sans avoir à lister les 36 résultats possibles :
+$$ E(S) = E(X_1 + X_2) = E(X_1) + E(X_2) = 3.5 + 3.5 = 7 $$
+\end{examplebox}
+
+\subsection{Espérance de la loi binomiale}
+
+\begin{theorembox}[Espérance de la loi binomiale]
+Si $X \sim \text{Bin}(n, p)$, alors son espérance est $E(X) = np$.
+\end{theorembox}
+
+\begin{intuitionbox}
+Ce résultat est très naturel. Si vous lancez une pièce 100 fois ($n=100$) avec une probabilité de 50\% d'obtenir Pile ($p=0.5$), vous vous attendez en moyenne à obtenir $100 \times 0.5 = 50$ Piles. La formule $np$ généralise cette idée.
+\end{intuitionbox}
+
+\begin{proofbox}
+Le calcul direct de l'espérance avec la PMF binomiale est possible, mais long. En utilisant la linéarité de l'espérance, on obtient une preuve beaucoup plus courte et élégante.
+\newline
+On peut voir une variable binomiale $X$ comme la somme de $n$ variables de Bernoulli indépendantes, $X = I_1 + I_2 + \dots + I_n$, où chaque $I_j$ représente le succès (1) ou l'échec (0) du $j$-ième essai.
+\newline
+Chaque $I_j$ a pour espérance $E(I_j) = 1 \cdot p + 0 \cdot (1-p) = p$.
+\newline
+Par linéarité de l'espérance, on a :
+$$ E(X) = E(I_1) + E(I_2) + \dots + E(I_n) = \underbrace{p + p + \dots + p}_{n \text{ fois}} = np $$
+\end{proofbox}
+
+\subsection{La loi géométrique}
+
+\begin{theorembox}[PMF de la loi géométrique]
+Une variable aléatoire $X$ suit la loi géométrique de paramètre $p$, notée $X \sim \text{Geom}(p)$, si elle modélise le nombre d'échecs avant le premier succès dans une série d'épreuves de Bernoulli indépendantes. Sa fonction de masse (PMF) est :
+$$ P(X=k) = (1-p)^k p \quad \text{pour } k=0, 1, 2, \dots $$
+où $q = 1-p$ est la probabilité d'échec.
+\end{theorembox}
+
+\begin{intuitionbox}
+La formule $P(X=k) = q^k p$ décrit la probabilité d'une séquence très spécifique : $k$ échecs consécutifs (chacun avec une probabilité $q$, donc $q^k$ pour la série), suivis immédiatement d'un succès (avec une probabilité $p$). C'est la loi de "l'attente du premier succès".
+\end{intuitionbox}
+
+\begin{examplebox}[Premier 6 au lancer de dé]
+On lance un dé jusqu'à obtenir un 6. La probabilité de succès est $p=1/6$, et celle d'échec est $q=5/6$. Quelle est la probabilité que l'on ait besoin de 3 lancers (donc 2 échecs avant le premier succès) ?
+Ici, $k=2$. La probabilité est :
+$$ P(X=2) = (5/6)^2 \cdot (1/6) = \frac{25}{216} \approx 0.116 $$
+\end{examplebox}
+
+\begin{theorembox}[Espérance de la loi géométrique]
+L'espérance d'une variable aléatoire $X \sim \text{Geom}(p)$ (comptant le nombre d'échecs) est :
+$$ E(X) = \frac{1-p}{p} = \frac{q}{p} $$
+\end{theorembox}
+
+\begin{intuitionbox}
+Si un événement a 1 chance sur 10 de se produire ($p=0.1$), il est logique de penser qu'il faudra en moyenne 9 échecs ($q/p = 0.9/0.1=9$) avant qu'il ne se produise. L'espérance du nombre total d'essais (échecs + 1 succès) serait alors $1/p$.
+\end{intuitionbox}
+
+\begin{proofbox}[Démonstration de l'espérance géométrique via les séries entières]
+Soit $X \sim \text{Geom}(p)$, où $X$ compte le nombre d'échecs avant le premier succès. La PMF est $P(X=k) = q^k p$ pour $k=0, 1, 2, \dots$, avec $q=1-p$.
+\newline
+Par définition, l'espérance est :
+$$ E(X) = \sum_{k=0}^{\infty} k \cdot P(X=k) = \sum_{k=0}^{\infty} k q^k p $$
+Le terme pour $k=0$ est nul, on peut donc commencer la somme à $k=1$ :
+$$ E(X) = p \sum_{k=1}^{\infty} k q^k $$
+L'astuce consiste à reconnaître que la somme ressemble à la dérivée d'une série géométrique. Rappelons la formule de la série géométrique pour $|q|<1$ :
+$$ \sum_{k=0}^{\infty} q^k = \frac{1}{1-q} $$
+En dérivant les deux côtés par rapport à $q$, on obtient :
+$$ \frac{d}{dq} \left( \sum_{k=0}^{\infty} q^k \right) = \frac{d}{dq} \left( \frac{1}{1-q} \right) $$
+$$ \sum_{k=1}^{\infty} k q^{k-1} = \frac{1}{(1-q)^2} $$
+Pour faire apparaître ce terme dans notre formule d'espérance, on factorise $q$ dans la somme :
+$$ E(X) = p \cdot q \sum_{k=1}^{\infty} k q^{k-1} $$
+On peut maintenant remplacer la somme par son expression analytique :
+$$ E(X) = p \cdot q \cdot \frac{1}{(1-q)^2} $$
+Puisque $p = 1-q$, on a :
+$$ E(X) = p \cdot q \cdot \frac{1}{p^2} = \frac{q}{p} $$
+Ce qui démontre que l'espérance du nombre d'échecs avant le premier succès est $\frac{q}{p}$.
+\end{proofbox}
+
+\subsection{Loi du statisticien inconscient (LOTUS)}
+
+\begin{theorembox}[Théorème de Transfert (LOTUS)]
+Si $X$ est une variable aléatoire discrète et $g(x)$ est une fonction de $\mathbb{R}$ dans $\mathbb{R}$, alors l'espérance de la variable aléatoire $g(X)$ est donnée par :
+$$ E[g(X)] = \sum_x g(x) P(X=x) $$
+La somme porte sur toutes les valeurs possibles de $X$. Ce théorème est utile car il évite d'avoir à trouver la PMF de $g(X)$.
+\end{theorembox}
+
+\begin{intuitionbox}
+Pour trouver la valeur moyenne d'une fonction d'une variable aléatoire (par exemple, le carré du résultat d'un dé), vous n'avez pas besoin de déterminer d'abord la distribution de ce carré. Vous pouvez simplement prendre chaque valeur possible du résultat original, lui appliquer la fonction, et pondérer ce nouveau résultat par la probabilité du résultat original.
+\end{intuitionbox}
+
+\begin{examplebox}[Calcul de $E(X^2)$ pour un dé]
+Soit $X$ le résultat d'un lancer de dé. Calculons l'espérance de $Y=X^2$. La fonction est $g(x)=x^2$.
+\begin{align*}
+E(X^2) &= \sum_{k=1}^6 k^2 P(X=k) \\
+&= 1^2\left(\frac{1}{6}\right) + 2^2\left(\frac{1}{6}\right) + 3^2\left(\frac{1}{6}\right) + 4^2\left(\frac{1}{6}\right) + 5^2\left(\frac{1}{6}\right) + 6^2\left(\frac{1}{6}\right) \\
+&= \frac{1+4+9+16+25+36}{6} = \frac{91}{6} \approx 15.17
+\end{align*}
+\end{examplebox}
+
+\subsection{Variance}
+
+\begin{definitionbox}[Variance et écart-type]
+La \textbf{variance} d'une variable aléatoire $X$ mesure la dispersion de sa distribution autour de son espérance. Elle est définie par :
+$$ \text{Var}(X) = E\left[ (X - E(X))^2 \right] $$
+La racine carrée de la variance est appelée l' \textbf{écart-type} :
+$$ \text{SD}(X) = \sqrt{\text{Var}(X)} $$
+\end{definitionbox}
+
+\begin{intuitionbox}
+La variance est la "distance carrée moyenne à la moyenne". On prend l'écart de chaque valeur par rapport à la moyenne, on le met au carré (pour que les écarts positifs et négatifs ne s'annulent pas), puis on en calcule la moyenne. L'écart-type est souvent plus interprétable car il ramène cette mesure de dispersion dans les mêmes unités que la variable aléatoire elle-même.
+\end{intuitionbox}
+
+\begin{theorembox}[Formule de calcul de la variance]
+Pour toute variable aléatoire $X$, une formule plus pratique pour le calcul de la variance est :
+$$ \text{Var}(X) = E(X^2) - [E(X)]^2 $$
+\end{theorembox}
+
+\begin{examplebox}[Variance d'un lancer de dé]
+Nous avons déjà calculé pour un dé que $E(X) = 3.5$ et $E(X^2) = 91/6$. On peut maintenant trouver la variance facilement :
+$$ \text{Var}(X) = E(X^2) - [E(X)]^2 = \frac{91}{6} - (3.5)^2 = \frac{91}{6} - 12.25 = 15.166... - 12.25 \approx 2.917 $$
+L'écart-type est $\text{SD}(X) = \sqrt{2.917} \approx 1.708$.
+\end{examplebox}
+
+\subsection{La loi de Poisson}
+
+\begin{definitionbox}[Distribution de Poisson]
+Une variable aléatoire $X$ suit la loi de Poisson de paramètre $\lambda > 0$ si sa PMF est donnée par :
+$$ P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!} \quad \text{pour } k=0, 1, 2, \dots $$
+Elle modélise typiquement le nombre d'événements se produisant dans un intervalle de temps ou d'espace fixe.
+\end{definitionbox}
+
+\begin{intuitionbox}
+La loi de Poisson est la loi des événements rares. Imaginez que vous comptez le nombre d'appels arrivant à un standard téléphonique en une minute. Il y a de nombreux instants où un appel pourrait arriver, mais la probabilité à chaque instant est infime. La loi de Poisson modélise ce type de scénario, où l'on connaît seulement le taux moyen d'arrivée des événements ($\lambda$).
+\end{intuitionbox}
+
+\begin{examplebox}[Appels à un centre de service]
+Un centre de service reçoit en moyenne $\lambda=3$ appels par minute. La probabilité de recevoir exactement 2 appels dans une minute donnée est :
+$$ P(X=2) = \frac{e^{-3} 3^2}{2!} = \frac{9e^{-3}}{2} \approx 0.224 $$
+Il y a environ 22.4\% de chance de recevoir exactement 2 appels.
+\end{examplebox}
+
+\begin{theorembox}[La loi de Poisson comme limite de la loi binomiale]
+Soit $X_n \sim \text{Bin}(n, p_n)$, où $\lambda = np_n$ est une constante positive fixée. Alors, pour tout $k \in \{0, 1, 2, \dots\}$, nous avons :
+$$ \lim_{n \to \infty} P(X_n=k) = \frac{e^{-\lambda}\lambda^k}{k!} $$
+En pratique, la loi de Poisson est une excellente approximation de la loi binomiale quand $n$ est grand et $p$ est petit.
+\end{theorembox}
+
+\begin{intuitionbox}
+Cette relation est la raison pour laquelle la loi de Poisson est si utile. Pensez au nombre de fautes de frappe sur une page de livre. Il y a un grand nombre de caractères ($n$ est grand), et la probabilité qu'un caractère donné soit une faute de frappe est très faible ($p$ est petit). Calculer avec la loi binomiale serait fastidieux. La loi de Poisson, avec $\lambda=np$, offre une approximation simple et très précise.
+\end{intuitionbox}
+
+\begin{proofbox}[Dérivation de la loi de Poisson à partir de la binomiale]
+On part de la PMF de la loi binomiale $X_n \sim \text{Bin}(n, p)$ avec $p=\lambda/n$.
+\begin{align*}
+\lim_{n \to \infty} P(X_n=k) &= \lim_{n \to \infty} \binom{n}{k} p^k (1-p)^{n-k} \\
+&= \lim_{n \to \infty} \frac{n!}{k!(n-k)!} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} \\
+&= \frac{\lambda^k}{k!} \lim_{n \to \infty} \frac{n(n-1)\cdots(n-k+1)}{n^k} \left(1-\frac{\lambda}{n}\right)^n \left(1-\frac{\lambda}{n}\right)^{-k}
+\end{align*}
+Analysons chaque terme de la limite :
+\begin{enumerate}
+    \item $\displaystyle \lim_{n \to \infty} \frac{n(n-1)\cdots(n-k+1)}{n^k} = \lim_{n \to \infty} \left(\frac{n}{n}\right)\left(\frac{n-1}{n}\right)\cdots\left(\frac{n-k+1}{n}\right) = 1$
+    \item $\displaystyle \lim_{n \to \infty} \left(1-\frac{\lambda}{n}\right)^n = e^{-\lambda}$
+    \item $\displaystyle \lim_{n \to \infty} \left(1-\frac{\lambda}{n}\right)^{-k} = 1$
+\end{enumerate}
+En rassemblant ces résultats, on obtient :
+$$ \lim_{n \to \infty} P(X_n=k) = \frac{\lambda^k}{k!} \cdot 1 \cdot e^{-\lambda} \cdot 1 = \frac{e^{-\lambda}\lambda^k}{k!} $$
+\end{proofbox}
+
+\subsection{Exercices}
+
+\begin{exercicebox}[Espérance d'un jeu]
+Un jeu consiste à lancer un dé à six faces. Si vous obtenez un 6, vous gagnez 10€. Si vous obtenez un 4 ou un 5, vous gagnez 1€. Sinon, vous ne gagnez rien. Quelle est l'espérance de gain pour une partie ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Soit $X$ la variable aléatoire représentant le gain. Les valeurs possibles de $X$ sont 10, 1, et 0.
+Les probabilités associées sont :
+$P(X=10) = P(\text{obtenir un 6}) = 1/6$.
+$P(X=1) = P(\text{obtenir un 4 ou 5}) = 2/6 = 1/3$.
+$P(X=0) = P(\text{obtenir 1, 2 ou 3}) = 3/6 = 1/2$.
+
+L'espérance de gain est :
+$$ E(X) = 10 \cdot P(X=10) + 1 \cdot P(X=1) + 0 \cdot P(X=0) $$
+$$ E(X) = 10 \cdot \frac{1}{6} + 1 \cdot \frac{2}{6} + 0 \cdot \frac{3}{6} = \frac{10+2}{6} = \frac{12}{6} = 2 $$
+L'espérance de gain est de 2€ par partie.
+\end{correctionbox}
+
+\begin{exercicebox}[Linéarité de l'espérance]
+On lance deux dés non truqués. Soit $X$ la somme des résultats. Calculez $E(X)$ en utilisant la linéarité de l'espérance.
+\end{exercicebox}
+
+\begin{correctionbox}
+Soit $D_1$ le résultat du premier dé et $D_2$ le résultat du second dé. On a $X = D_1 + D_2$.
+L'espérance du résultat d'un seul dé est $E(D_1) = E(D_2) = 3.5$.
+Par linéarité de l'espérance :
+$$ E(X) = E(D_1 + D_2) = E(D_1) + E(D_2) = 3.5 + 3.5 = 7 $$
+L'espérance de la somme est 7.
+\end{correctionbox}
+
+\begin{exercicebox}[Espérance binomiale]
+Un étudiant répond au hasard à un QCM de 20 questions, chaque question ayant 4 options de réponse (une seule correcte). Quelle est l'espérance du nombre de bonnes réponses ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Soit $X$ le nombre de bonnes réponses. Chaque question est une épreuve de Bernoulli avec une probabilité de succès $p=1/4$. Le nombre total d'épreuves est $n=20$.
+$X$ suit donc une loi binomiale $X \sim \text{Bin}(n=20, p=0.25)$.
+L'espérance d'une loi binomiale est $E(X) = np$.
+$$ E(X) = 20 \times 0.25 = 5 $$
+L'étudiant peut s'attendre à avoir 5 bonnes réponses en moyenne.
+\end{correctionbox}
+
+\begin{exercicebox}[Loi Géométrique]
+On lance une pièce de monnaie jusqu'à obtenir "Pile" pour la première fois. La probabilité d'obtenir "Pile" est $p=0.5$.
+\begin{enumerate}
+    \item Quelle est la probabilité que le premier "Pile" apparaisse au 4ème lancer (c'est-à-dire après 3 "Face") ?
+    \item Quel est le nombre moyen d'échecs ("Face") attendu avant le premier succès ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{correctionbox}
+Soit $X$ le nombre d'échecs avant le premier succès. $X \sim \text{Geom}(p=0.5)$.
+1. On cherche $P(X=3)$. La PMF est $P(X=k) = (1-p)^k p$.
+$$ P(X=3) = (0.5)^3 \times 0.5 = 0.125 \times 0.5 = 0.0625 $$
+La probabilité est de 6.25\%.
+
+2. On cherche l'espérance $E(X)$.
+$$ E(X) = \frac{1-p}{p} = \frac{0.5}{0.5} = 1 $$
+On s'attend en moyenne à 1 échec ("Face") avant le premier "Pile".
+\end{correctionbox}
+
+\begin{exercicebox}[Variance d'un dé]
+Calculez la variance du résultat $X$ d'un lancer de dé équilibré.
+\end{exercicebox}
+
+\begin{correctionbox}
+On utilise la formule $\text{Var}(X) = E(X^2) - [E(X)]^2$.
+On sait déjà que $E(X)=3.5$.
+Calculons $E(X^2)$ avec LOTUS :
+$$ E(X^2) = \sum_{k=1}^6 k^2 P(X=k) = \frac{1}{6}(1^2+2^2+3^2+4^2+5^2+6^2) $$
+$$ E(X^2) = \frac{1}{6}(1+4+9+16+25+36) = \frac{91}{6} \approx 15.167 $$
+Maintenant, la variance :
+$$ \text{Var}(X) = \frac{91}{6} - (3.5)^2 = \frac{91}{6} - 12.25 = \frac{91 - 73.5}{6} = \frac{17.5}{6} \approx 2.917 $$
+\end{correctionbox}
+
+\begin{exercicebox}[Loi de Poisson]
+Un livre de 500 pages contient 250 fautes de frappe distribuées au hasard.
+\begin{enumerate}
+    \item Quel est le nombre moyen de fautes par page ?
+    \item Quelle est la probabilité qu'une page choisie au hasard contienne exactement 2 fautes ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{correctionbox}
+1. Le taux moyen d'erreurs est $\lambda = \frac{250 \text{ fautes}}{500 \text{ pages}} = 0.5$ fautes par page.
+Le nombre de fautes par page, $X$, suit une loi de Poisson $X \sim \text{Poisson}(\lambda=0.5)$.
+
+2. On cherche $P(X=2)$. La PMF de Poisson est $P(X=k) = \frac{e^{-\lambda}\lambda^k}{k!}$.
+$$ P(X=2) = \frac{e^{-0.5}(0.5)^2}{2!} = \frac{0.6065 \times 0.25}{2} \approx 0.0758 $$
+La probabilité est d'environ 7.58\%.
+\end{correctionbox}
+
+\begin{exercicebox}[Variance et constante]
+Soit $X$ une variable aléatoire avec $E(X)=10$ et $\text{Var}(X)=2$. Calculez l'espérance et la variance de $Y = 3X + 5$.
+\end{exercicebox}
+
+\begin{correctionbox}
+On utilise les propriétés de l'espérance et de la variance.
+Pour l'espérance :
+$E(Y) = E(3X+5) = E(3X) + E(5) = 3E(X) + 5$.
+$$ E(Y) = 3(10) + 5 = 35 $$
+Pour la variance :
+$\text{Var}(Y) = \text{Var}(3X+5) = \text{Var}(3X) = 3^2 \text{Var}(X)$.
+$$ \text{Var}(Y) = 9 \times 2 = 18 $$
+\end{correctionbox}
+
+\begin{exercicebox}[Variable indicatrice]
+On lance une pièce deux fois. Soit $A$ l'événement "obtenir au moins un Pile". Soit $I_A$ la variable indicatrice de cet événement. Donnez la PMF, l'espérance et la variance de $I_A$.
+\end{exercicebox}
+
+\begin{correctionbox}
+L'univers est $\{PP, PF, FP, FF\}$. L'événement $A$ est $\{PP, PF, FP\}$.
+La probabilité de A est $P(A) = 3/4$.
+La variable $I_A$ vaut 1 si $A$ se produit, 0 sinon. C'est une loi de Bernoulli.
+$I_A \sim \text{Bern}(p=3/4)$.
+
+PMF : $P(I_A=1) = 3/4$ et $P(I_A=0) = 1/4$.
+Espérance : $E(I_A) = p = 3/4$.
+Variance : $\text{Var}(I_A) = p(1-p) = \frac{3}{4} \left(1-\frac{3}{4}\right) = \frac{3}{4} \cdot \frac{1}{4} = \frac{3}{16}$.
+\end{correctionbox}
+
+\begin{exercicebox}[Poisson comme approximation]
+Une compagnie aérienne observe que 0.2\% des passagers qui réservent un vol ne se présentent pas. Si un avion a 200 sièges et que la compagnie vend 200 billets, quelle est la probabilité qu'exactement 3 passagers ne se présentent pas ? Utilisez l'approximation de Poisson.
+\end{exercicebox}
+
+\begin{correctionbox}
+C'est une situation binomiale avec $n=200$ (grand) et $p=0.002$ (petit). On peut l'approximer par une loi de Poisson.
+Le paramètre $\lambda$ est $\lambda = np = 200 \times 0.002 = 0.4$.
+Soit $X$ le nombre de passagers absents, $X \sim \text{Poisson}(0.4)$. On cherche $P(X=3)$.
+$$ P(X=3) = \frac{e^{-0.4}(0.4)^3}{3!} = \frac{0.6703 \times 0.064}{6} \approx 0.00715 $$
+La probabilité est d'environ 0.715\%.
+\end{correctionbox}
+
+\begin{exercicebox}[LOTUS]
+Une variable aléatoire discrète $X$ a la PMF suivante : $P(X=-1)=0.2$, $P(X=0)=0.5$, $P(X=1)=0.3$. Calculez $E[ (X+1)^2 ]$.
+\end{exercicebox}
+
+\begin{correctionbox}
+On utilise le théorème de transfert (LOTUS) avec la fonction $g(x) = (x+1)^2$.
+$$ E[g(X)] = \sum_x g(x) P(X=x) $$
+$$ E[(X+1)^2] = (-1+1)^2 P(X=-1) + (0+1)^2 P(X=0) + (1+1)^2 P(X=1) $$
+$$ E[(X+1)^2] = (0)^2 \cdot (0.2) + (1)^2 \cdot (0.5) + (2)^2 \cdot (0.3) $$
+$$ E[(X+1)^2] = 0 + 1 \cdot 0.5 + 4 \cdot 0.3 = 0.5 + 1.2 = 1.7 $$
+\end{correctionbox}
+
+\begin{exercicebox}[Espérance d'une fonction]
+Soit $X$ une variable aléatoire représentant le résultat d'un lancer d'un dé équilibré à 4 faces (valeurs 1, 2, 3, 4). Calculez l'espérance de $Y = 1/X$.
+\end{exercicebox}
+
+\begin{correctionbox}
+Chaque face a une probabilité de $1/4$. On utilise le théorème de transfert (LOTUS) avec $g(x) = 1/x$.
+$$ E(Y) = E(1/X) = \sum_{k=1}^4 \frac{1}{k} P(X=k) $$
+$$ E(1/X) = \frac{1}{1}\left(\frac{1}{4}\right) + \frac{1}{2}\left(\frac{1}{4}\right) + \frac{1}{3}\left(\frac{1}{4}\right) + \frac{1}{4}\left(\frac{1}{4}\right) $$
+$$ E(1/X) = \frac{1}{4} \left(1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4}\right) = \frac{1}{4} \left(\frac{12+6+4+3}{12}\right) = \frac{1}{4} \cdot \frac{25}{12} = \frac{25}{48} \approx 0.521 $$
+\end{correctionbox}
+
+\begin{exercicebox}[Loi Géométrique : "Sans mémoire"]
+Un archer touche sa cible avec une probabilité $p=1/3$. Sachant qu'il a déjà manqué ses 5 premiers tirs, quelle est la probabilité qu'il touche la cible au 8ème tir (c'est-à-dire après 2 échecs supplémentaires) ?
+\end{exercicebox}
+
+\begin{correctionbox}
+La loi géométrique est "sans mémoire". Le fait qu'il ait déjà manqué 5 tirs ne change pas les probabilités pour les tirs futurs. Le problème revient à se demander la probabilité qu'il lui faille 3 tirs supplémentaires pour réussir, ce qui équivaut à 2 échecs suivis d'un succès.
+Soit $X$ le nombre d'échecs avant le premier succès. On cherche $P(X=2)$.
+$$ P(X=2) = (1-p)^2 p = \left(\frac{2}{3}\right)^2 \left(\frac{1}{3}\right) = \frac{4}{9} \cdot \frac{1}{3} = \frac{4}{27} $$
+\end{correctionbox}
+
+\begin{exercicebox}[Loi de Poisson : Événements rares]
+Dans une grande forêt, on observe en moyenne 0.8 ours par kilomètre carré. On étudie une zone de 5 km².
+\begin{enumerate}
+    \item Quel est le nombre moyen d'ours attendu dans cette zone ?
+    \item Quelle est la probabilité de n'observer aucun ours dans cette zone ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{correctionbox}
+1. Le taux d'ours est de 0.8 par km². Pour une zone de 5 km², le paramètre $\lambda$ de la loi de Poisson est :
+$$ \lambda = 0.8 \text{ ours/km²} \times 5 \text{ km²} = 4 $$
+On s'attend donc à observer 4 ours en moyenne dans cette zone.
+
+2. Soit $X$ le nombre d'ours observés, $X \sim \text{Poisson}(\lambda=4)$. On cherche $P(X=0)$.
+$$ P(X=0) = \frac{e^{-4} 4^0}{0!} = e^{-4} \approx 0.0183 $$
+La probabilité de n'observer aucun ours est d'environ 1.83\%.
+\end{correctionbox}
+
+\begin{exercicebox}[Variance d'une loi de Bernoulli]
+Soit $X \sim \text{Bern}(p)$. Montrez en utilisant la formule $\text{Var}(X) = E(X^2) - [E(X)]^2$ que $\text{Var}(X) = p(1-p)$.
+\end{exercicebox}
+
+\begin{correctionbox}
+Pour une variable de Bernoulli, $X$ ne peut prendre que les valeurs 0 et 1.
+L'espérance est $E(X) = 1 \cdot p + 0 \cdot (1-p) = p$.
+Pour calculer $E(X^2)$, on utilise LOTUS. Comme $X$ ne prend que les valeurs 0 et 1, $X^2$ est identique à $X$.
+En effet, $0^2=0$ et $1^2=1$. Donc $X^2=X$.
+Par conséquent, $E(X^2) = E(X) = p$.
+On applique la formule de la variance :
+$$ \text{Var}(X) = E(X^2) - [E(X)]^2 = p - p^2 = p(1-p) $$
+\end{correctionbox}
+
+\begin{exercicebox}[Loi Hypergéométrique]
+Dans un groupe de 10 amis (6 hommes et 4 femmes), on tire au sort 3 personnes pour organiser une fête. Quelle est la probabilité que le groupe tiré au sort soit composé exclusivement de femmes ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Il s'agit d'un tirage sans remise. Soit $X$ le nombre de femmes tirées.
+$X \sim \text{HG}(w=4 \text{ femmes}, b=6 \text{ hommes}, m=3 \text{ tirages})$.
+On cherche $P(X=3)$.
+$$ P(X=3) = \frac{\binom{\text{femmes}}{3} \binom{\text{hommes}}{0}}{\binom{\text{total}}{3}} = \frac{\binom{4}{3} \binom{6}{0}}{\binom{10}{3}} $$
+$$ \binom{4}{3} = 4 \quad ; \quad \binom{6}{0} = 1 \quad ; \quad \binom{10}{3} = \frac{10 \cdot 9 \cdot 8}{3 \cdot 2 \cdot 1} = 120 $$
+$$ P(X=3) = \frac{4 \times 1}{120} = \frac{4}{120} = \frac{1}{30} \approx 0.0333 $$
+La probabilité est d'environ 3.33\%.
+\end{correctionbox}
+
+\begin{exercicebox}[Loi Binomiale : "Au moins"]
+Un test de dépistage rapide a une probabilité de 0.1 de donner un faux positif. Si 10 personnes saines passent ce test, quelle est la probabilité qu'au moins deux d'entre elles reçoivent un faux positif ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Soit $X$ le nombre de faux positifs. $X \sim \text{Bin}(n=10, p=0.1)$.
+On cherche $P(X \ge 2)$. Il est plus simple de calculer le complémentaire : $1 - P(X < 2)$.
+$P(X < 2) = P(X=0) + P(X=1)$.
+$$ P(X=0) = \binom{10}{0}(0.1)^0(0.9)^{10} = (0.9)^{10} \approx 0.3487 $$
+$$ P(X=1) = \binom{10}{1}(0.1)^1(0.9)^9 = 10 \cdot 0.1 \cdot (0.9)^9 \approx 0.3874 $$
+$P(X < 2) \approx 0.3487 + 0.3874 = 0.7361$.
+$$ P(X \ge 2) = 1 - 0.7361 = 0.2639 $$
+La probabilité d'avoir au moins deux faux positifs est d'environ 26.39\%.
+\end{correctionbox}
+
+\begin{exercicebox}[Écart-type]
+Une machine distribue des boissons. La quantité versée $X$ (en cL) a pour espérance $E(X)=20$ et on a $E(X^2)=404$. Quel est l'écart-type de la quantité versée ?
+\end{exercicebox}
+
+\begin{correctionbox}
+L'écart-type est la racine carrée de la variance. Calculons d'abord la variance.
+$$ \text{Var}(X) = E(X^2) - [E(X)]^2 = 404 - (20)^2 = 404 - 400 = 4 $$
+La variance est de 4 cL².
+L'écart-type est :
+$$ \text{SD}(X) = \sqrt{\text{Var}(X)} = \sqrt{4} = 2 $$
+L'écart-type est de 2 cL.
+\end{correctionbox}
+
+\begin{exercicebox}[Espérance et prise de décision]
+Vous avez le choix entre deux loteries.
+Loterie A : Vous gagnez 100€ avec une probabilité de 0.1, sinon rien.
+Loterie B : Vous gagnez 20€ avec une probabilité de 0.4, sinon rien.
+Quelle loterie est la plus avantageuse en termes d'espérance de gain ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Calculons l'espérance de gain pour chaque loterie.
+Soit $G_A$ le gain de la loterie A.
+$$ E(G_A) = 100 \cdot P(G_A=100) + 0 \cdot P(G_A=0) = 100 \cdot 0.1 = 10€ $$
+Soit $G_B$ le gain de la loterie B.
+$$ E(G_B) = 20 \cdot P(G_B=20) + 0 \cdot P(G_B=0) = 20 \cdot 0.4 = 8€ $$
+L'espérance de gain de la loterie A (10€) est supérieure à celle de la loterie B (8€). La loterie A est donc plus avantageuse en moyenne.
+\end{correctionbox}
+
+\begin{exercicebox}[Poisson : Somme de variables]
+Deux sources radioactives émettent des particules indépendamment. La source 1 émet des particules selon une loi de Poisson de paramètre $\lambda_1=2$ par minute. La source 2 suit une loi de Poisson de paramètre $\lambda_2=3$ par minute. Quelle est la probabilité qu'un total de 4 particules soit émis en une minute ?
+\end{exercicebox}
+
+\begin{correctionbox}
+Une propriété importante de la loi de Poisson est que la somme de deux variables de Poisson indépendantes est aussi une variable de Poisson dont le paramètre est la somme des paramètres.
+Soit $X_1 \sim \text{Poisson}(2)$ et $X_2 \sim \text{Poisson}(3)$.
+Le nombre total de particules $Y = X_1 + X_2$ suit une loi de Poisson de paramètre $\lambda = \lambda_1 + \lambda_2 = 2+3=5$.
+Donc, $Y \sim \text{Poisson}(5)$.
+On cherche $P(Y=4)$.
+$$ P(Y=4) = \frac{e^{-5} 5^4}{4!} = \frac{e^{-5} \cdot 625}{24} \approx 0.1755 $$
+La probabilité est d'environ 17.55\%.
+\end{correctionbox}
+
+\begin{exercicebox}[Contexte et choix du modèle]
+Une petite ville compte 5000 habitants. En moyenne, 1 personne sur 1000 est allergique à une substance X.
+\begin{enumerate}
+    \item Quel modèle (Binomial ou Poisson) utiliseriez-vous pour estimer la probabilité qu'il y ait exactement 5 personnes allergiques dans cette ville ? Justifiez.
+    \item Calculez cette probabilité.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{correctionbox}
+1. Le modèle exact est une loi binomiale avec $n=5000$ et $p=1/1000=0.001$. Cependant, comme $n$ est très grand et $p$ est très petit, la loi de Poisson est une excellente approximation et bien plus simple à calculer. On utilisera donc une loi de Poisson.
+
+2. Le paramètre de la loi de Poisson est $\lambda = np = 5000 \times 0.001 = 5$.
+Soit $X$ le nombre de personnes allergiques, $X \sim \text{Poisson}(5)$.
+On cherche $P(X=5)$.
+$$ P(X=5) = \frac{e^{-5} 5^5}{5!} = \frac{e^{-5} \cdot 3125}{120} \approx 0.1755 $$
+La probabilité est d'environ 17.55\%.
+\end{correctionbox}
