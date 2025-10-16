@@ -18,6 +18,9 @@
 \usepackage{etoolbox} % Pour les conditions
 \usepackage[dvipsnames]{xcolor}
 \usepackage{pgfplots} % Le package principal pour les graphiques
+\usepackage{enumitem}
+\setlist[itemize,1]{label=$\cdot$}
+
 \usetikzlibrary{
     matrix, 
     patterns.meta,
@@ -26,6 +29,11 @@
     decorations.pathreplacing,
     trees
 }
+
+% Redéfinir le symbole pour le premier niveau de la liste
+\renewcommand{\labelitemi}{$\cdot$}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemiii}{$\ast$}
 
 % Styles de hachures (inchangés)
 \tikzset{
