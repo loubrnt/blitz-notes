@@ -43,7 +43,7 @@ $P(X=1) = 1/6$, $P(X=2) = 1/6$, ..., $P(X=6) = 1/6$.
 Pour toute autre valeur $x$ (par exemple $x=2.5$ ou $x=7$), $P(X=x) = 0$.
 \end{examplebox}
 
-\subsection{Distribution de Bernoulli}
+\subsection{Loi de Bernoulli}
 
 \begin{definitionbox}[Distribution de Bernoulli]
 Une variable aléatoire $X$ suit la distribution de Bernoulli avec paramètre $p$ si $P(X=1) = p$ et $P(X=0) = 1-p$, où $0 < p < 1$. On note cela $X \sim \text{Bern}(p)$.
@@ -53,17 +53,7 @@ Une variable aléatoire $X$ suit la distribution de Bernoulli avec paramètre $p
 La distribution de Bernoulli est le modèle le plus simple pour une expérience aléatoire avec seulement deux issues : "succès" (codé par 1) et "échec" (codé par 0). C'est la brique de base de nombreuses autres distributions. Pensez à un unique lancer de pièce (Pile/Face), un unique tir au but (Marqué/Manqué), ou la réponse à une question par oui/non. Le paramètre $p$ est simplement la probabilité du "succès".
 \end{intuitionbox}
 
-\subsection{Variable Aléatoire Indicatrice}
-
-\begin{definitionbox}[Variable Aléatoire Indicatrice]
-La variable aléatoire indicatrice d'un événement $A$ est la variable aléatoire qui vaut 1 si $A$ se produit et 0 sinon. Nous la noterons $I_A$. Notez que $I_A \sim \text{Bern}(p)$ avec $p=P(A)$.
-\end{definitionbox}
-
-\begin{intuitionbox}
-Une variable indicatrice est un interrupteur. Elle est sur "ON" (valeur 1) si un événement qui nous intéresse se produit, et sur "OFF" (valeur 0) sinon. C'est un outil extrêmement puissant car il transforme les questions sur les probabilités des événements en questions sur les espérances des variables aléatoires, ce qui simplifie souvent les calculs.
-\end{intuitionbox}
-
-\subsection{Distribution Binomiale}
+\subsection{Loi Binomiale}
 
 \begin{theorembox}[PMF Binomiale]
 Si $X \sim \text{Bin}(n, p)$, alors la PMF de $X$ est :
@@ -82,7 +72,7 @@ $$ P(X=6) = \binom{10}{6} (0.5)^6 (1-0.5)^{10-6} = \frac{10!}{6!4!} (0.5)^{10} =
 Il y a environ 20.5\% de chance d'obtenir exactement 6 Piles.
 \end{examplebox}
 
-\subsection{Distribution Hypergéométrique}
+\subsection{Loi Hypergéométrique}
 
 \begin{theorembox}[PMF Hypergéométrique]
 Si $X \sim \text{HG}(w, b, m)$, alors la PMF de $X$ est :
@@ -100,6 +90,70 @@ Ici, on tire 5 personnes ($m=5$) d'une population de 18 personnes. On s'intéres
 $$ P(X=2) = \frac{\binom{8}{2} \binom{10}{3}}{\binom{18}{5}} = \frac{28 \times 120}{8568} \approx 0.392 $$
 Il y a environ 39.2\% de chance que le comité ait exactement cette composition.
 \end{examplebox}
+
+\subsection{Loi Géométrique}
+
+\begin{theorembox}[PMF de la loi géométrique]
+Une variable aléatoire $X$ suit la loi géométrique de paramètre $p$, notée $X \sim \text{Geom}(p)$, si elle modélise le nombre d'échecs avant le premier succès dans une série d'épreuves de Bernoulli indépendantes. Sa fonction de masse (PMF) est :
+$$ P(X=k) = (1-p)^k p \quad \text{pour } k=0, 1, 2, \dots $$
+où $q = 1-p$ est la probabilité d'échec.
+\end{theorembox}
+
+\begin{intuitionbox}
+La formule $P(X=k) = q^k p$ décrit la probabilité d'une séquence très spécifique : $k$ échecs consécutifs (chacun avec une probabilité $q$, donc $q^k$ pour la série), suivis immédiatement d'un succès (avec une probabilité $p$). C'est la loi de "l'attente du premier succès".
+\end{intuitionbox}
+
+\begin{examplebox}[Premier 6 au lancer de dé]
+On lance un dé jusqu'à obtenir un 6. La probabilité de succès est $p=1/6$, et celle d'échec est $q=5/6$. Quelle est la probabilité que l'on ait besoin de 3 lancers (donc 2 échecs avant le premier succès) ?
+Ici, $k=2$. La probabilité est :
+$$ P(X=2) = (5/6)^2 \cdot (1/6) = \frac{25}{216} \approx 0.116 $$
+\end{examplebox}
+
+\subsection{Loi de Poisson}
+
+\begin{definitionbox}[Distribution de Poisson]
+Une variable aléatoire $X$ suit la loi de Poisson de paramètre $\lambda > 0$ si sa PMF est donnée par :
+$$ P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!} \quad \text{pour } k=0, 1, 2, \dots $$
+Elle modélise typiquement le nombre d'événements se produisant dans un intervalle de temps ou d'espace fixe.
+\end{definitionbox}
+
+\begin{intuitionbox}
+La loi de Poisson est la loi des événements rares. Imaginez que vous comptez le nombre d'appels arrivant à un standard téléphonique en une minute. Il y a de nombreux instants où un appel pourrait arriver, mais la probabilité à chaque instant est infime. La loi de Poisson modélise ce type de scénario, où l'on connaît seulement le taux moyen d'arrivée des événements ($\lambda$).
+\end{intuitionbox}
+
+\begin{examplebox}[Appels à un centre de service]
+Un centre de service reçoit en moyenne $\lambda=3$ appels par minute. La probabilité de recevoir exactement 2 appels dans une minute donnée est :
+$$ P(X=2) = \frac{e^{-3} 3^2}{2!} = \frac{9e^{-3}}{2} \approx 0.224 $$
+Il y a environ 22.4\% de chance de recevoir exactement 2 appels.
+\end{examplebox}
+
+\begin{theorembox}[La loi de Poisson comme limite de la loi binomiale]
+Soit $X_n \sim \text{Bin}(n, p_n)$, où $\lambda = np_n$ est une constante positive fixée. Alors, pour tout $k \in \{0, 1, 2, \dots\}$, nous avons :
+$$ \lim_{n \to \infty} P(X_n=k) = \frac{e^{-\lambda}\lambda^k}{k!} $$
+En pratique, la loi de Poisson est une excellente approximation de la loi binomiale quand $n$ est grand et $p$ est petit.
+\end{theorembox}
+
+\begin{intuitionbox}
+Cette relation est la raison pour laquelle la loi de Poisson est si utile. Pensez au nombre de fautes de frappe sur une page de livre. Il y a un grand nombre de caractères ($n$ est grand), et la probabilité qu'un caractère donné soit une faute de frappe est très faible ($p$ est petit). Calculer avec la loi binomiale serait fastidieux. La loi de Poisson, avec $\lambda=np$, offre une approximation simple et très précise.
+\end{intuitionbox}
+
+\begin{proofbox}[Dérivation de la loi de Poisson à partir de la binomiale]
+On part de la PMF de la loi binomiale $X_n \sim \text{Bin}(n, p)$ avec $p=\lambda/n$.
+\begin{align*}
+\lim_{n \to \infty} P(X_n=k) &= \lim_{n \to \infty} \binom{n}{k} p^k (1-p)^{n-k} \\
+&= \lim_{n \to \infty} \frac{n!}{k!(n-k)!} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} \\
+&= \frac{\lambda^k}{k!} \lim_{n \to \infty} \frac{n(n-1)\cdots(n-k+1)}{n^k} \left(1-\frac{\lambda}{n}\right)^n \left(1-\frac{\lambda}{n}\right)^{-k}
+\end{align*}
+Analysons chaque terme de la limite :
+\begin{enumerate}
+    \item $\displaystyle \lim_{n \to \infty} \frac{n(n-1)\cdots(n-k+1)}{n^k} = \lim_{n \to \infty} \left(\frac{n}{n}\right)\left(\frac{n-1}{n}\right)\cdots\left(\frac{n-k+1}{n}\right) = 1$
+    \item $\displaystyle \lim_{n \to \infty} \left(1-\frac{\lambda}{n}\right)^n = e^{-\lambda}$
+    \item $\displaystyle \lim_{n \to \infty} \left(1-\frac{\lambda}{n}\right)^{-k} = 1$
+\end{enumerate}
+En rassemblant ces résultats, on obtient :
+$$ \lim_{n \to \infty} P(X_n=k) = \frac{\lambda^k}{k!} \cdot 1 \cdot e^{-\lambda} \cdot 1 = \frac{e^{-\lambda}\lambda^k}{k!} $$
+\end{proofbox}
+
 
 \subsection{Fonction de Répartition (CDF)}
 
@@ -129,6 +183,16 @@ $F(6) = P(X \le 6) = 1$
 \newline
 $F(100) = P(X \le 100) = 1$
 \end{examplebox}
+
+\subsection{Variable Aléatoire Indicatrice}
+
+\begin{definitionbox}[Variable Aléatoire Indicatrice]
+La variable aléatoire indicatrice d'un événement $A$ est la variable aléatoire qui vaut 1 si $A$ se produit et 0 sinon. Nous la noterons $I_A$. Notez que $I_A \sim \text{Bern}(p)$ avec $p=P(A)$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+Une variable indicatrice est un interrupteur. Elle est sur "ON" (valeur 1) si un événement qui nous intéresse se produit, et sur "OFF" (valeur 0) sinon. C'est un outil extrêmement puissant car il transforme les questions sur les probabilités des événements en questions sur les espérances des variables aléatoires, ce qui simplifie souvent les calculs.
+\end{intuitionbox}
 
 \subsection{Exercices}
 
