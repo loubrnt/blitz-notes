@@ -1,3 +1,7 @@
+Voici la section réécrite avec un ordre plus logique.
+
+J'ai regroupé les concepts de base (distributions et espérance), puis tous les outils liés à la covariance et à la corrélation (définitions, propriétés, standardisation), et enfin les applications de ces concepts (variance d'une somme) et les théorèmes spécifiques.
+
 \newpage
 \section{Distributions Multivariées et Concepts Associés}
 
@@ -5,9 +9,9 @@
 
 \begin{definitionbox}[Distribution Jointe (Cas Discret)]
 Pour deux variables aléatoires discrètes $X$ et $Y$, la \textbf{distribution jointe} (ou loi jointe) spécifie la probabilité de chaque paire d'issues. La fonction de masse de probabilité jointe (joint PMF) est :
-$$ P(X=x, Y=y) $$
+$$P(X=x, Y=y)$$
 Si $X$ prend ses valeurs dans un ensemble $S$ et $Y$ dans un ensemble $T$, alors la somme de toutes les probabilités jointes est égale à 1 :
-$$ \sum_{x \in S} \sum_{y \in T} P(X=x, Y=y) = 1 $$
+$$\sum_{x \in S} \sum_{y \in T} P(X=x, Y=y) = 1$$
 \end{definitionbox}
 
 \begin{intuitionbox}
@@ -16,7 +20,7 @@ La distribution jointe est la "carte" complète de toutes les issues possibles. 
 
 \begin{definitionbox}[Distribution Marginale]
 À partir de la distribution jointe, on peut obtenir la distribution \textbf{marginale} (ou loi marginale) de chaque variable. Pour obtenir la probabilité que $X$ prenne une valeur $x$, on somme sur toutes les valeurs possibles de $Y$ :
-$$ P(X=x) = \sum_{y \in T} P(X=x, Y=y) $$
+$$P(X=x) = \sum_{y \in T} P(X=x, Y=y)$$
 \end{definitionbox}
 
 \begin{intuitionbox}
@@ -29,9 +33,9 @@ On lance un dé rouge ($X$) et un dé bleu ($Y$). Il y a 36 issues, chacune avec
 Par exemple, $P(X=2, Y=5) = 1/36$.
 
 \textbf{Loi marginale} de $X$ : Cherchons $P(X=2)$. C'est la probabilité d'obtenir 2 sur le dé rouge, quel que soit le résultat du bleu.
-$$ P(X=2) = \sum_{y=1}^6 P(X=2, Y=y) $$
-$$ P(X=2) = P(X=2,Y=1) + \dots + P(X=2,Y=6) $$
-$$ P(X=2) = \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} = \frac{6}{36} = \frac{1}{6} $$
+$$P(X=2) = \sum_{y=1}^6 P(X=2, Y=y)$$
+$$P(X=2) = P(X=2,Y=1) + \dots + P(X=2,Y=6)$$
+$$P(X=2) = \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} = \frac{6}{36} = \frac{1}{6}$$
 Ceci est bien la loi d'un seul dé.
 \end{examplebox}
 
@@ -39,7 +43,7 @@ Ceci est bien la loi d'un seul dé.
 
 \begin{definitionbox}[Espérance d'une fonction $g(X,Y)$]
 L'espérance d'une fonction $g(X,Y)$ de deux variables aléatoires discrètes $X$ et $Y$ est une généralisation du théorème de transfert (LOTUS) :
-$$ E[g(X,Y)] = \sum_{x \in S} \sum_{y \in T} g(x,y) P(X=x, Y=y) $$
+$$E[g(X,Y)] = \sum_{x \in S} \sum_{y \in T} g(x,y) P(X=x, Y=y)$$
 \end{definitionbox}
 
 \begin{intuitionbox}
@@ -69,7 +73,7 @@ E[X+Y] = E[X] + E[Y] = 3.5 + 3.5 = 7.
 
 \begin{definitionbox}[Covariance]
 La \textbf{covariance} entre deux variables aléatoires $X$ et $Y$, avec pour moyennes respectives $\mu_X$ et $\mu_Y$, mesure la façon dont elles varient ensemble.
-$$ \text{Cov}(X,Y) = E[(X - \mu_X)(Y - \mu_Y)] $$
+$$\text{Cov}(X,Y) = E[(X - \mu_X)(Y - \mu_Y)]$$
 \end{definitionbox}
 
 \begin{intuitionbox}
@@ -78,7 +82,7 @@ La covariance est positive si les variables ont tendance à "bouger" dans la mê
 
 \begin{theorembox}[Formule de calcul de la covariance]
 Une formule computationnelle plus simple pour la covariance est :
-$$ \text{Cov}(X,Y) = E[XY] - E[X]E[Y] $$
+$$\text{Cov}(X,Y) = E[XY] - E[X]E[Y]$$
 \end{theorembox}
 
 \begin{examplebox}[Calcul de covariance]
@@ -98,7 +102,7 @@ La covariance est positive, ce qui est logique : si $X$ est grand, $Y$ l'est aus
 
 \begin{definitionbox}[Corrélation]
 La \textbf{corrélation} (ou coefficient de corrélation de Pearson, $r$) est une version normalisée de la covariance, qui se situe toujours entre -1 et 1.
-$$ \text{Corr}(X,Y) = r = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} $$
+$$\text{Corr}(X,Y) = r = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}$$
 \end{definitionbox}
 
 \begin{intuitionbox}
@@ -121,9 +125,65 @@ On a $\text{Cov}(X,Y) = 5.833... = 35/6$.
 $\text{Var}(X) = E[X^2] - E[X]^2 = 91/6 - (3.5)^2 = 35/12$.
 $\text{Var}(Y) = \text{Var(2X)} = 2^2 \text{Var}(X) = 4(35/12) = 35/3$.
 $\sigma_X \sigma_Y = \sqrt{35/12} \cdot \sqrt{35/3} = \sqrt{(35 \cdot 35) / (12 \cdot 3)} = \sqrt{35^2 / 36} = 35/6$.
-$$ \text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} = \frac{35/6}{35/6} = 1 $$
+$$\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} = \frac{35/6}{35/6} = 1$$
 La corrélation est de 1, ce qui est parfait : $Y$ est une fonction linéaire parfaite de $X$.
 \end{examplebox}
+
+\subsection{Linéarité de la Covariance}
+
+\begin{definitionbox}[Linéarité de la Covariance]
+Pour des variables aléatoires $X, Y, Z$ et des constantes $a, b, c$ :
+\begin{align*}
+\text{Cov}(aX + bY + c, Z) &= a\text{Cov}(X, Z) + b\text{Cov}(Y, Z) \\
+\text{Cov}(X, aY + bZ + c) &= a\text{Cov}(X, Y) + b\text{Cov}(X, Z)
+\end{align*}
+La covariance est linéaire pour chaque argument (elle est \textbf{bilinéaire}). Les constantes additives disparaissent.
+\end{definitionbox}
+
+\subsection{Résultats sur la Corrélation}
+
+\begin{theorembox}[Bornes du Coefficient de Corrélation de Pearson]
+Pour toutes variables aléatoires $X$ et $Y$, le coefficient de corrélation $\text{Corr}(X,Y)$ est borné :
+$$-1 \le \text{Corr}(X,Y) \le 1$$
+De plus, si $\text{Corr}(X,Y) = \pm 1$, alors il existe des constantes $a$ et $b$ telles que $Y = aX + b$, indiquant une relation linéaire parfaite.
+\end{theorembox}
+
+\begin{proofbox}[Démonstration des Bornes de la Corrélation]
+La preuve repose sur le fait que la variance d'une variable aléatoire est toujours positive ou nulle.
+
+\textbf{Étape 1 : Variables Standardisées}
+\newline
+On définit les versions standardisées de $X$ et $Y$ :
+$$X^* = \frac{X - \mu_X}{\sigma_X} \quad ; \quad Y^* = \frac{Y - \mu_Y}{\sigma_Y}$$
+Par construction, $E[X^*]=E[Y^*]=0$ et $\text{Var}(X^*) = \text{Var}(Y^*) = 1$.
+
+\textbf{Étape 2 : Covariance des variables standardisées}
+\newline
+Calculons la covariance de $X^*$ et $Y^*$, qui est, par définition, la corrélation de $X$ et $Y$.
+\begin{align*}
+\text{Cov}(X^*, Y^*) &= \text{Cov}\left( \frac{X - \mu_X}{\sigma_X}, \frac{Y - \mu_Y}{\sigma_Y} \right) \\
+&= \frac{1}{\sigma_X \sigma_Y} \text{Cov}(X - \mu_X, Y - \mu_Y) \\
+&= \frac{1}{\sigma_X \sigma_Y} \text{Cov}(X, Y) \\
+&= \text{Corr}(X,Y)
+\end{align*}
+
+\textbf{Étape 3 : Variance de la somme et de la différence}
+\newline
+Considérons la variance de la somme et de la différence de ces variables standardisées.
+$$\text{Var}(X^* + Y^*) = \text{Var}(X^*) + \text{Var}(Y^*) + 2\text{Cov}(X^*, Y^*)$$
+$$\text{Var}(X^* + Y^*) = 1 + 1 + 2\text{Corr}(X,Y) = 2 + 2\text{Corr}(X,Y)$$
+De même :
+$$\text{Var}(X^* - Y^*) = \text{Var}(X^*) + \text{Var}(Y^*) - 2\text{Cov}(X^*, Y^*)$$
+$$\text{Var}(X^* - Y^*) = 1 + 1 - 2\text{Corr}(X,Y) = 2 - 2\text{Corr}(X,Y)$$
+
+\textbf{Étape 4 : La variance est toujours $\ge 0$}
+\newline
+La variance d'une variable aléatoire ne peut pas être négative.
+$$\text{Var}(X^* + Y^*) \ge 0 \implies 2 + 2\text{Corr}(X,Y) \ge 0 \implies \text{Corr}(X,Y) \ge -1$$
+$$\text{Var}(X^* - Y^*) \ge 0 \implies 2 - 2\text{Corr}(X,Y) \ge 0 \implies \text{Corr}(X,Y) \le 1$$
+Ceci nous donne le résultat final :
+$$-1 \le \text{Corr}(X,Y) \le 1$$
+\end{proofbox}
 
 \subsection{Standardisation et Non-Corrélation}
 
@@ -134,7 +194,7 @@ Soit $X$ une variable aléatoire avec :
     \item écart-type $\sigma_X = \sqrt{\operatorname{Var}(X)} > 0$
 \end{itemize}
 On définit sa version \textbf{centrée réduite} (standardisée) $Z$ par :
-$$ Z = \frac{X - \mu_X}{\sigma_X} $$
+$$Z = \frac{X - \mu_X}{\sigma_X}$$
 Alors, $Z$ a les propriétés suivantes :
 \begin{enumerate}
     \item \textbf{Centrée (moyenne nulle)} :
@@ -183,25 +243,13 @@ Obtenir 6 est à 1.46 écarts-types au-dessus de la moyenne.
 
 \begin{definitionbox}[Variables Non Corréelées]
 On dit que deux variables aléatoires $X$ et $Y$ sont \textbf{non corrélées} si leur covariance est nulle :
-$$ \text{Cov}(X,Y) = 0 $$
+$$\text{Cov}(X,Y) = 0$$
 Cela est équivalent à dire que $E[XY] = E[X]E[Y]$.
 \end{definitionbox}
 
 \begin{intuitionbox}
 "Non corrélées" signifie qu'il n'y a \textbf{pas de relation linéaire} entre les variables. C'est plus faible que l'indépendance. Si $X$ et $Y$ sont indépendantes, elles sont forcément non corrélées. Mais l'inverse n'est pas vrai : $X$ et $Y$ peuvent être non corrélées (Cov=0) mais quand même dépendantes (par exemple si $Y=X^2$ pour un $X$ centré).
 \end{intuitionbox}
-
-\subsection{Linéarité de la Covariance}
-
-\begin{definitionbox}[Linéarité de la Covariance]
-Pour des variables aléatoires $X, Y, Z$ et des constantes $a, b, c$ :
-\begin{align*}
-\text{Cov}(aX + bY + c, Z) &= a\text{Cov}(X, Z) + b\text{Cov}(Y, Z) \\
-\text{Cov}(X, aY + bZ + c) &= a\text{Cov}(X, Y) + b\text{Cov}(X, Z)
-\end{align*}
-La covariance est linéaire pour chaque argument (elle est \textbf{bilinéaire}). Les constantes additives disparaissent.
-\end{definitionbox}
-
 
 \subsection{Variance d'une Somme de Variables Aléatoires}
 
@@ -220,20 +268,20 @@ Si $\text{Cov}(X,Y) < 0$ (elles bougent en sens inverse), elles s'amortissent mu
 
 \begin{theorembox}[Cas Particulier : Variables Non Corréelées]
 Si $X$ et $Y$ sont non corrélées (Cov=0), la formule se simplifie :
-$$ \text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) $$
+$$\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y)$$
 \end{theorembox}
 
 \begin{examplebox}[Variance d'une somme de dés]
 Soit $S = X+Y$ la somme de deux dés indépendants.
 Puisqu'ils sont indépendants, ils sont non corrélés ($\text{Cov}(X,Y)=0$).
 On sait $\text{Var}(X) = 35/12$ et $\text{Var}(Y) = 35/12$.
-$$ \text{Var}(S) = \text{Var}(X) + \text{Var}(Y) = \frac{35}{12} + \frac{35}{12} = \frac{70}{12} = \frac{35}{6} \approx 5.833 $$
+$$\text{Var}(S) = \text{Var}(X) + \text{Var}(Y) = \frac{35}{12} + \frac{35}{12} = \frac{70}{12} = \frac{35}{6} \approx 5.833$$
 C'est bien plus simple que de calculer $E[S^2]$ et $E[S]$.
 \end{examplebox}
 
 \begin{theorembox}[Variance d'une somme de N variables]
 La formule générale pour la somme de $N$ variables aléatoires $X_1, \dots, X_n$ est :
-$$ \text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j) $$
+$$\text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j)$$
 \end{theorembox}
 
 \begin{intuitionbox}
@@ -244,9 +292,9 @@ La variance totale d'un système (comme un portefeuille d'actions) est la somme 
 
 \begin{theorembox}[La Somme de v.a. de Poisson Indépendantes est Poisson]
 Soit $X_1, \dots, X_k$ une séquence de variables aléatoires de Poisson indépendantes, avec des paramètres respectifs $\lambda_1, \dots, \lambda_k$.
-$$ X_i \sim \text{Poisson}(\lambda_i) \quad \text{pour } i=1, \dots, k $$
+$$X_i \sim \text{Poisson}(\lambda_i) \quad \text{pour } i=1, \dots, k$$
 Alors leur somme $Y = X_1 + \dots + X_k$ suit également une loi de Poisson, dont le paramètre est la somme des paramètres :
-$$ Y \sim \text{Poisson}(\lambda_1 + \dots + \lambda_k) $$
+$$Y \sim \text{Poisson}(\lambda_1 + \dots + \lambda_k)$$
 \end{theorembox}
 
 \begin{intuitionbox}
@@ -257,53 +305,8 @@ Si des événements rares se produisent indépendamment à des taux constants, l
 Un centre d'appels reçoit des appels "Ventes" selon $X_1 \sim \text{Poisson}(10 \text{ appels/heure})$ et des appels "Support" selon $X_2 \sim \text{Poisson}(15 \text{ appels/heure})$. Les deux types d'appels sont indépendants.
 Le nombre total d'appels $Y = X_1 + X_2$ suit une loi $Y \sim \text{Poisson}(10+15=25 \text{ appels/heure})$.
 La probabilité de recevoir exactement 20 appels en une heure est :
-$$ P(Y=20) = \frac{e^{-25} 25^{20}}{20!} $$
+$$P(Y=20) = \frac{e^{-25} 25^{20}}{20!}$$
 \end{examplebox}
-
-\subsection{Résultats sur la Corrélation}
-
-\begin{theorembox}[Bornes du Coefficient de Corrélation de Pearson]
-Pour toutes variables aléatoires $X$ et $Y$, le coefficient de corrélation $\text{Corr}(X,Y)$ est borné :
-$$ -1 \le \text{Corr}(X,Y) \le 1 $$
-De plus, si $\text{Corr}(X,Y) = \pm 1$, alors il existe des constantes $a$ et $b$ telles que $Y = aX + b$, indiquant une relation linéaire parfaite.
-\end{theorembox}
-
-\begin{proofbox}[Démonstration des Bornes de la Corrélation]
-La preuve repose sur le fait que la variance d'une variable aléatoire est toujours positive ou nulle.
-
-\textbf{Étape 1 : Variables Standardisées}
-\newline
-On définit les versions standardisées de $X$ et $Y$ :
-$$ X^* = \frac{X - \mu_X}{\sigma_X} \quad ; \quad Y^* = \frac{Y - \mu_Y}{\sigma_Y} $$
-Par construction, $E[X^*]=E[Y^*]=0$ et $\text{Var}(X^*) = \text{Var}(Y^*) = 1$.
-
-\textbf{Étape 2 : Covariance des variables standardisées}
-\newline
-Calculons la covariance de $X^*$ et $Y^*$, qui est, par définition, la corrélation de $X$ et $Y$.
-\begin{align*}
-\text{Cov}(X^*, Y^*) &= \text{Cov}\left( \frac{X - \mu_X}{\sigma_X}, \frac{Y - \mu_Y}{\sigma_Y} \right) \\
-&= \frac{1}{\sigma_X \sigma_Y} \text{Cov}(X - \mu_X, Y - \mu_Y) \\
-&= \frac{1}{\sigma_X \sigma_Y} \text{Cov}(X, Y) \\
-&= \text{Corr}(X,Y)
-\end{align*}
-
-\textbf{Étape 3 : Variance de la somme et de la différence}
-\newline
-Considérons la variance de la somme et de la différence de ces variables standardisées.
-$$ \text{Var}(X^* + Y^*) = \text{Var}(X^*) + \text{Var}(Y^*) + 2\text{Cov}(X^*, Y^*) $$
-$$ \text{Var}(X^* + Y^*) = 1 + 1 + 2\text{Corr}(X,Y) = 2 + 2\text{Corr}(X,Y) $$
-De même :
-$$ \text{Var}(X^* - Y^*) = \text{Var}(X^*) + \text{Var}(Y^*) - 2\text{Cov}(X^*, Y^*) $$
-$$ \text{Var}(X^* - Y^*) = 1 + 1 - 2\text{Corr}(X,Y) = 2 - 2\text{Corr}(X,Y) $$
-
-\textbf{Étape 4 : La variance est toujours $\ge 0$}
-\newline
-La variance d'une variable aléatoire ne peut pas être négative.
-$$ \text{Var}(X^* + Y^*) \ge 0 \implies 2 + 2\text{Corr}(X,Y) \ge 0 \implies \text{Corr}(X,Y) \ge -1 $$
-$$ \text{Var}(X^* - Y^*) \ge 0 \implies 2 - 2\text{Corr}(X,Y) \ge 0 \implies \text{Corr}(X,Y) \le 1 $$
-Ceci nous donne le résultat final :
-$$ -1 \le \text{Corr}(X,Y) \le 1 $$
-\end{proofbox}
 
 \subsection{Exercices}
 
