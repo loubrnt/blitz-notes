@@ -1,0 +1,239 @@
+\newpage
+
+\section{Variables Aléatoires Continues}
+
+\subsection{Fonction de Densité de Probabilité (PDF)}
+
+\begin{definitionbox}[Fonction de Densité de Probabilité (PDF)]
+Soit $X$ une variable aléatoire continue. Une fonction $f$ est une \textbf{fonction de densité de probabilité} (Probability Density Function, ou PDF) de $X$ si, pour tout $x$ :
+\begin{enumerate}
+    \item $f(x) \ge 0$, pour tout $-\infty < x < \infty$
+    \item $\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = 1$ (l'aire totale sous la courbe vaut 1)
+\end{enumerate}
+\end{definitionbox}
+
+\begin{intuitionbox}
+Dans le cas discret, la PMF donnait une "masse" de probabilité à chaque point. Dans le cas continu, la probabilité en un point exact est nulle ($P(X=x)=0$). La PDF, $f(x)$, n'est \textbf{pas} une probabilité.
+\newline
+Il faut voir $f(x)$ comme une \textbf{densité} : elle décrit la "concentration" de probabilité autour de $x$. Pour obtenir une probabilité (une "masse"), il faut intégrer cette densité sur un intervalle. La probabilité que $X$ tombe dans un intervalle $[a, b]$ est l'aire sous la courbe de la PDF entre $a$ et $b$ :
+$$ P(a \le X \le b) = \int_a^b f(x) \, \mathrm{d}x $$
+\end{intuitionbox}
+
+\begin{remarquebox}[PDF vs Probabilité]
+Une erreur fréquente est de confondre la valeur $f(x)$ avec $P(X=x)$. Pour une variable continue, $P(X=x)$ est \textbf{toujours zéro}. La PDF $f(x)$ peut être supérieure à 1 (contrairement à une probabilité), tant que l'aire totale sous la courbe reste égale à 1. Pensez-y comme à une densité de population : elle peut être très élevée en un point, mais la "population" (probabilité) exacte en ce point infinitésimal est nulle.
+\end{remarquebox}
+
+\begin{examplebox}[Une PDF simple]
+Soit $X$ une v.a. avec la PDF $f(x) = 2x$ pour $x \in [0, 1]$, et $f(x)=0$ sinon.
+\begin{enumerate}
+    \item Est-ce une PDF valide ?
+    \newline
+    (1) $f(x) \ge 0$ pour tout $x$ dans $[0, 1]$.
+    \newline
+    (2) $\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = \int_0^1 2x \, \mathrm{d}x = [x^2]_0^1 = 1-0 = 1$.
+    \newline
+    Oui, c'est une PDF valide.
+    \item Quelle est la probabilité $P(X \le 0.5)$ ?
+    $$ P(X \le 0.5) = \int_0^{0.5} 2x \, \mathrm{d}x = [x^2]_0^{0.5} = (0.5)^2 - 0 = 0.25 $$
+\end{enumerate}
+\end{examplebox}
+
+\subsection{Fonction de Répartition (CDF)}
+
+\begin{definitionbox}[Fonction de Répartition Continue (CDF)]
+Soit $X$ une variable aléatoire continue. La \textbf{fonction de répartition} (Cumulative Distribution Function, ou CDF) de $X$ est la fonction $F$ définie par :
+$$ F(x) = P(X \le x) = \int_{-\infty}^x f(t) \, \mathrm{d}t $$
+Pour être une CDF valide, la fonction $F$ doit respecter les propriétés suivantes :
+\begin{enumerate}
+    \item $\lim_{x \to \infty} F(x) = 1$
+    \item $\lim_{x \to -\infty} F(x) = 0$
+    \item $F$ est continue et non décroissante.
+\end{enumerate}
+\end{definitionbox}
+
+\begin{intuitionbox}
+La CDF est "l'accumulateur" de probabilité. Elle part de 0 (à $-\infty$) et "accumule" l'aire sous la PDF à mesure qu'on avance sur l'axe des $x$, pour finalement atteindre 1 (à $+\infty$).
+\newline
+Le lien fondamental est que la PDF est la dérivée de la CDF :
+$$ f(x) = F'(x) $$
+Cela signifie que la valeur de la PDF $f(x)$ représente le \textbf{taux d'accumulation} de la probabilité au point $x$.
+\end{intuitionbox}
+
+\begin{remarquebox}[Calcul de Probabilités via la CDF]
+La CDF est très pratique pour calculer des probabilités sur des intervalles :
+$$ P(a < X \le b) = F(b) - F(a) $$
+Pour les variables continues, les inégalités strictes ou larges ne changent rien ($P(X=a)=0$).
+\end{remarquebox}
+
+\begin{examplebox}[CDF de l'exemple précédent]
+Pour $f(x) = 2x$ sur $[0, 1]$, la CDF $F(x)$ est :
+\begin{itemize}
+    \item Si $x < 0$ : $F(x) = \int_{-\infty}^x 0 \, \mathrm{d}t = 0$.
+    \item Si $0 \le x \le 1$ : $F(x) = \int_{-\infty}^0 f(t) \mathrm{d}t + \int_0^x 2t \, \mathrm{d}t = 0 + [t^2]_0^x = x^2$.
+    \item Si $x > 1$ : $F(x) = \int_{-\infty}^1 f(t) \mathrm{d}t + \int_1^x 0 \, \mathrm{d}t = \int_0^1 2t \, \mathrm{d}t = 1$.
+\end{itemize}
+Donc, $F(x) = \begin{cases} 0 & \text{si } x < 0 \\ x^2 & \text{si } 0 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases}$
+\end{examplebox}
+
+\subsection{Espérance et Variance (Cas Continu)}
+
+\begin{definitionbox}[Espérance et Variance (Cas Continu)]
+Pour une variable aléatoire $X$ de fonction de densité $f$ :
+\newline
+L'\textbf{espérance} de $X$ est le centre de gravité de la densité :
+$$ E[X] = \int_{-\infty}^{\infty} x f(x) \, \mathrm{d}x $$
+La \textbf{variance} de $X$ est l'espérance du carré de l'écart à la moyenne :
+$$ \text{Var}(X) = E[(X - E[X])^2] = \int_{-\infty}^{\infty} (x - E[X])^2 f(x) \, \mathrm{d}x $$
+\end{definitionbox}
+
+\begin{theorembox}[Formule de calcul de la Variance]
+Une formule plus simple pour le calcul de la variance est :
+$$ \text{Var}(X) = E[X^2] - (E[X])^2 $$
+où $E[X^2] = \int_{-\infty}^{\infty} x^2 f(x) \, \mathrm{d}x$. (Ceci est une application de LOTUS).
+\end{theorembox}
+
+\begin{theorembox}[Théorème de Transfert (LOTUS)]
+Si $X$ est une v.a. continue de densité $f(x)$, et $g$ une fonction, alors :
+$$ E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, \mathrm{d}x $$
+\end{theorembox}
+
+\begin{remarquebox}[Linéarité de l'Espérance]
+Comme dans le cas discret, l'espérance reste linéaire pour les variables continues :
+$E[aX+bY] = aE[X]+bE[Y]$.
+\end{remarquebox}
+
+\begin{examplebox}[Espérance et Variance de l'exemple précédent]
+Pour $f(x) = 2x$ sur $[0, 1]$ :
+\newline
+$E[X] = \int_0^1 x \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^2 \, \mathrm{d}x = \left[ \frac{2x^3}{3} \right]_0^1 = \frac{2}{3}$.
+\newline
+$E[X^2] = \int_0^1 x^2 \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^3 \, \mathrm{d}x = \left[ \frac{2x^4}{4} \right]_0^1 = \frac{1}{2}$.
+\newline
+$\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{1}{2} - \left(\frac{2}{3}\right)^2 = \frac{1}{2} - \frac{4}{9} = \frac{9-8}{18} = \frac{1}{18}$.
+\end{examplebox}
+
+\subsection{Loi Uniforme}
+
+\begin{definitionbox}[Loi Uniforme]
+Une variable aléatoire $X$ est \textbf{uniformément distribuée} sur un intervalle $[a, b]$ si sa densité est une constante sur cet intervalle. Pour que l'aire totale soit 1, cette constante doit être $\frac{1}{b-a}$.
+$$ f(x) = \begin{cases} \frac{1}{b-a} & \text{pour } x \in [a, b] \\ 0 & \text{sinon} \end{cases} $$
+On note cela $X \sim \text{Unif}(a, b)$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+C'est la distribution du "hasard pur" dans un intervalle borné. La probabilité de tomber dans un sous-intervalle ne dépend que de la \textbf{longueur} de ce sous-intervalle, pas de sa position (tant qu'il est dans $[a, b]$). 
+\end{intuitionbox}
+
+\begin{theorembox}[Propriétés de la Loi Uniforme]
+Si $X \sim \text{Unif}(a, b)$ :
+\begin{itemize}
+    \item \textbf{CDF :} $F(x) = \frac{x-a}{b-a}$ pour $x \in [a, b]$.
+    \item \textbf{Espérance :} $E[X] = \frac{a+b}{2}$ (le point milieu de l'intervalle).
+    \item \textbf{Variance :} $\text{Var}(X) = \frac{(b-a)^2}{12}$.
+\end{itemize}
+\end{theorembox}
+
+\subsection{Loi Exponentielle}
+
+\begin{definitionbox}[Loi Exponentielle]
+Une variable aléatoire $X$ suit une \textbf{loi exponentielle} de paramètre $\lambda > 0$ si sa fonction de densité a la forme :
+$$ f(x) = \begin{cases} \lambda e^{-\lambda x} & \text{pour } x \ge 0 \\ 0 & \text{sinon} \end{cases} $$
+On note $X \sim \text{Exp}(\lambda)$.
+\end{definitionbox}
+
+\begin{intuitionbox}[Lien entre les lois de Poisson et Exponentielle]
+La loi exponentielle modélise le temps d'attente \textit{avant} le prochain événement dans un processus de Poisson.
+\newline
+Posons la question : « Si je commence à observer maintenant, combien de temps $T$ vais-je devoir attendre avant de voir le prochain événement ? »
+\begin{enumerate}
+    \item Dans un processus de Poisson de taux $\lambda$, le nombre d'événements $N(t)$ dans un intervalle de temps $t$ suit une loi de Poisson de paramètre $\lambda t$ :
+    $$ P(N(t)=k) = \frac{(\lambda t)^k e^{-\lambda t}}{k!} $$
+    \item La probabilité de ne voir \textbf{aucun} événement ($k=0$) pendant une durée $t$ est :
+    $$ P(N(t)=0) = \frac{(\lambda t)^0 e^{-\lambda t}}{0!} = e^{-\lambda t} $$
+    \item Mais ne voir aucun événement pendant un temps $t$, c'est exactement dire que le temps d'attente $T$ du premier événement est \textit{plus grand} que $t$.
+    $$ P(T > t) = P(N(t)=0) = e^{-\lambda t} $$
+    \item À partir de là, on déduit la fonction de répartition (CDF) de $T$ :
+    $$ F_T(t) = P(T \le t) = 1 - P(T > t) = 1 - e^{-\lambda t} \quad (\text{pour } t \ge 0) $$
+    \item En dérivant la CDF pour obtenir la densité (PDF) :
+    $$ f_T(t) = F_T'(t) = \frac{d}{dt}(1 - e^{-\lambda t}) = -(-\lambda e^{-\lambda t}) = \lambda e^{-\lambda t} $$
+\end{enumerate}
+C'est exactement la densité de la loi exponentielle de paramètre $\lambda$.
+\end{intuitionbox}
+
+\begin{theorembox}[Propriétés de la Loi Exponentielle]
+Si $X \sim \text{Exp}(\lambda)$ :
+\begin{itemize}
+    \item \textbf{CDF :} $F(x) = 1 - e^{-\lambda x}$ pour $x \ge 0$.
+    \item \textbf{Espérance :} $E[X] = \frac{1}{\lambda}$.
+    \item \textbf{Variance :} $\text{Var}(X) = \frac{1}{\lambda^2}$.
+    \item \textbf{Propriété de non-mémoire :} Pour $s, t \ge 0$, $P(X > s+t \mid X > s) = P(X > t)$.
+\end{itemize}
+\end{theorembox}
+
+\begin{remarquebox}[Interprétation du paramètre $\lambda$]
+Le paramètre $\lambda$ représente le \textbf{taux} moyen d'occurrence des événements dans le processus de Poisson sous-jacent (par exemple, nombre moyen d'appels par minute). L'espérance $1/\lambda$ est alors le \textbf{temps moyen entre les événements}.
+\end{remarquebox}
+
+\begin{intuitionbox}[La Propriété de Non-Mémoire]
+C'est la propriété la plus contre-intuitive et la plus importante de la loi exponentielle. Elle signifie que le processus "oublie" le passé. [...]
+\end{intuitionbox}
+
+\subsection{Distributions Conjointes (Cas Continu)}
+
+\begin{definitionbox}[Fonction de Densité Conjointe]
+Pour des variables aléatoires continues $X$ et $Y$, la \textbf{fonction de densité conjointe} $f(x, y)$ décrit la densité de probabilité sur le plan $(x, y)$. Elle doit respecter :
+\begin{enumerate}
+    \item $f(x, y) \ge 0$, pour tous $x, y$.
+    \item $\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}x \, \mathrm{d}y = 1$.
+\end{enumerate}
+\end{definitionbox}
+
+\begin{intuitionbox}[Volume = Probabilité]
+La probabilité que le couple $(X, Y)$ tombe dans une région $A$ du plan $xy$ est le \textbf{volume} sous la surface $z=f(x,y)$ au-dessus de cette région $A$.
+$$ P((X, Y) \in A) = \iint_A f(x, y) \, \mathrm{d}A $$
+
+\end{intuitionbox}
+
+\begin{definitionbox}[Densités Marginales]
+On peut retrouver les densités individuelles (marginales) en "écrasant" le volume 3D sur un seul axe. Pour obtenir la PDF de $X$ seul, on intègre $f(x,y)$ sur toutes les valeurs possibles de $y$ :
+$$ f_X(x) = \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}y $$
+$$ f_Y(y) = \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}x $$
+\end{definitionbox}
+
+\begin{definitionbox}[CDF Conjointe]
+La \textbf{fonction de répartition conjointe} (CDF) est :
+$$ F(x, y) = P(X \le x, Y \le y) = \int_{-\infty}^y \int_{-\infty}^x f(s, t) \, \mathrm{d}s \, \mathrm{d}t $$
+Elle représente le volume "au sud-ouest" du point $(x, y)$.
+\end{definitionbox}
+
+\subsection{Espérance, Indépendance et Covariance (Cas Conjoint)}
+
+\begin{theorembox}[LOTUS pour les v.a. conjointes]
+Si $X$ et $Y$ ont une densité conjointe $f(x, y)$, et $g(x, y)$ est une fonction :
+$$ E[g(X, Y)] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(x, y) f(x, y) \, \mathrm{d}x \, \mathrm{d}y $$
+\end{theorembox}
+
+\begin{definitionbox}[Indépendance et Densité]
+Les variables aléatoires continues $X$ et $Y$ sont \textbf{indépendantes} si et seulement si leur densité conjointe est le produit de leurs densités marginales :
+$$ f(x, y) = f_X(x) f_Y(y), \quad \text{pour tous } x, y $$
+\end{definitionbox}
+
+\begin{intuitionbox}
+Intuitivement, l'indépendance signifie que le "profil" de la densité en $x$ ne change pas quelle que soit la valeur de $y$ (et vice-versa).
+\end{intuitionbox}
+
+\begin{definitionbox}[Covariance (cas continu)]
+La \textbf{covariance} de $X$ et $Y$ mesure leur variation linéaire commune :
+$$ \text{Cov}(X, Y) = E[(X - \mu_X)(Y - \mu_Y)] $$
+$$ = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x - \mu_X)(y - \mu_Y) f(x, y) \, \mathrm{d}x \, \mathrm{d}y $$
+\end{definitionbox}
+
+\begin{theorembox}[Formule de calcul de la Covariance]
+Une formule plus simple pour le calcul de la covariance est :
+$$ \text{Cov}(X, Y) = E[XY] - E[X]E[Y] $$
+où $E[XY]$ est calculé via LOTUS : $E[XY] = \iint xy f(x, y) \, \mathrm{d}x \mathrm{d}y$.
+\end{theorembox}
+
+\begin{remarquebox}[Indépendance et Covariance]
+Si $X$ et $Y$ sont indépendantes, alors $\text{Cov}(X, Y) = 0$. Cependant, la réciproque n'est \textbf{pas} toujours vraie pour les variables aléatoires en général (bien qu'elle le soit dans certains cas importants comme pour les variables gaussiennes). Une covariance nulle signifie seulement une absence de \textit{relation linéaire}, mais il peut exister d'autres formes de dépendance.
+\end{remarquebox}

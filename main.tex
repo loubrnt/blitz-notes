@@ -193,13 +193,13 @@
     title=Correction\ifstrempty{#1}{}{ : #1}
 }
 
-% --- DÉFINITION D'UNE CELLULE INTERLUDE ---
-\definecolor{interludeColor}{HTML}{D35400} 
+% --- DÉFINITION D'UNE CELLULE remarque ---
+\definecolor{remarqueColor}{HTML}{D35400} 
 
-\newtcolorbox{interludebox}[1][]{
-  baseboxstyle, colframe=interludeColor, colback=interludeColor!10, coltitle=interludeColor,
+\newtcolorbox{remarquebox}[1][]{
+  baseboxstyle, colframe=remarqueColor, colback=remarqueColor!10, coltitle=remarqueColor,
   fonttitle=\bfseries\color{white},
-  title=Interlude\ifstrempty{#1}{}{ : #1}
+  title=Remarque\ifstrempty{#1}{}{ : #1}
 }
 
 % =============================================
@@ -222,6 +222,8 @@
 \input{section4.tex}
 \input{section5.tex}
 \input{section6.tex}
+\input{section7.tex}
+\input{section8.tex}
 \input{appendice1.tex}
 \input{test.tex}
 
