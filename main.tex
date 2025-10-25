@@ -8,6 +8,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[french]{babel}
+\usepackage{parskip} % NOUVEAU : Supprime l'indentation et ajoute espace inter-paragraphe
 \usepackage{xcolor}
 \usepackage{tcolorbox}
 \usepackage{listings}
@@ -19,6 +20,7 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{pgfplots} % Le package principal pour les graphiques
 \usepackage{enumitem}
+\usepackage{diagbox}
 
 \setlist[itemize,1]{label=$\cdot$}
 
@@ -122,7 +124,7 @@
     frame=none
 }
 
-% --- DÉFINITION DES CELLULES DE CODE ET OUTPUT ---
+% --- DÉFINITION DES CELLULES DE CODE ET OUTPUT (Inchangé) ---
 \newtcblisting{codecell}{
   arc=2mm, boxrule=0.8pt, colframe=vscodeBlue, colback=codeBackground,
   coltitle=white, fonttitle=\bfseries, title=Code Python,
@@ -137,75 +139,96 @@
 }
 
 % --- DÉFINITION DES COULEURS POUR DÉF/THÉO/PREUVE/INTUITION/EXEMPLE ---
-\definecolor{defColor}{HTML}{1b1f3a}       % Bleu nuit pour les définitions
-\definecolor{theoColor}{HTML}{53354a}      % Violet aubergine pour les théorèmes
-\definecolor{proofColor}{HTML}{a64942}     % Rouge brique pour les preuves
-\definecolor{intuitionColor}{HTML}{16A085} % Turquoise pour l'intuition
-\definecolor{exampleColor}{HTML}{4a6982}   % Bleu ardoise pour les exemples
-\definecolor{exoColor}{HTML}{1E8449}       % Vert
-\definecolor{corrColor}{HTML}{7F8C8D}      % Gris
+\definecolor{defColor}{HTML}{1b1f3a}        % Bleu nuit pour les définitions
+\definecolor{theoColor}{HTML}{53354a}       % Violet aubergine pour les théorèmes
+\definecolor{proofColor}{HTML}{a64942}      % Rouge brique pour les preuves
+\definecolor{intuitionColor}{HTML}{16A085}  % Turquoise pour l'intuition
+\definecolor{exampleColor}{HTML}{4a6982}    % Bleu ardoise pour les exemples
+\definecolor{exoColor}{HTML}{1E8449}        % Vert
+\definecolor{corrColor}{HTML}{7F8C8D}       % Gris
+\definecolor{remarqueColor}{HTML}{D35400} 
 
-% --- DÉFINITION D'UN STYLE DE BASE COMMUN ---
+% ==================================================================
+% --- MODIFIÉ : DÉFINITION DU STYLE DE BASE (MARGES RÉDUITES) ---
+% ==================================================================
+
+% --- STYLE "ORGANIQUE" AVEC BARRE LATÉRALE (Pour TOUTES les boîtes) ---
 \tcbset{
-    baseboxstyle/.style={
-        arc=2mm, boxrule=0.8pt,
-        fontupper=\color{black}, left=6mm, right=6mm, top=3mm, bottom=3mm,
-        boxsep=4mm, breakable
+    sidebarstyle/.style={
+        skin=enhanced, % Nécessaire pour les bordures partielles
+        arc=0mm,       % Coins carrés
+        boxrule=0pt,   % Pas de cadre
+        colback=white, % Fond blanc
+        colframe=white,
+        coltitle=white,
+        fontupper=\color{black},
+        left=3mm, right=3mm, top=2mm, bottom=2mm, % Padding interne réduit
+        boxsep=0mm, % TRÈS IMPORTANT
+        breakable
     }
 }
 
-% --- DÉFINITION DES CELLULES THÉORIQUES AVEC FOND DE COULEUR ---
+% (Le style "fullboxstyle" a été supprimé car il n'est plus utilisé)
+
+% ==================================================================
+% --- MODIFIÉ : DÉFINITION DE TOUTES LES CELLULES ---
+% ==================================================================
+
+% --- CELLULES "SIDEBAR" (Pour le contenu théorique) ---
 \newtcolorbox{definitionbox}[1][]{
-  baseboxstyle, colframe=defColor, colback=defColor!10, coltitle=defColor,
-  fonttitle=\bfseries\color{white},
+  sidebarstyle,
+  borderline west={2pt}{0pt}{defColor}, % Barre latérale gauche
+  fonttitle=\bfseries\color{defColor},  % Titre en couleur (sans fond)
   title=Définition\ifstrempty{#1}{}{ : #1}
 }
 \newtcolorbox{theorembox}[1][]{
-  baseboxstyle, colframe=theoColor, colback=theoColor!10, coltitle=theoColor,
-  fonttitle=\bfseries\color{white},
+  sidebarstyle,
+  borderline west={2pt}{0pt}{theoColor},
+  fonttitle=\bfseries\color{theoColor},
   title=Théorème\ifstrempty{#1}{}{ : #1}
 }
 \newtcolorbox{proofbox}[1][]{
-  baseboxstyle, colframe=proofColor, colback=proofColor!10, coltitle=proofColor,
-  fonttitle=\bfseries\color{white},
+  sidebarstyle,
+  borderline west={2pt}{0pt}{proofColor},
+  fonttitle=\bfseries\color{proofColor},
   title=Preuve\ifstrempty{#1}{}{ : #1}
 }
 \newtcolorbox{intuitionbox}[1][]{
-  baseboxstyle, colframe=intuitionColor, colback=intuitionColor!10, coltitle=intuitionColor,
-  fonttitle=\bfseries\color{white},
+  sidebarstyle,
+  borderline west={2pt}{0pt}{intuitionColor},
+  fonttitle=\bfseries\color{intuitionColor},
   title=Intuition\ifstrempty{#1}{}{ : #1}
 }
-\newtcolorbox{examplebox}[1][]{
-  baseboxstyle, colframe=exampleColor, colback=exampleColor!10, coltitle=exampleColor,
-  fonttitle=\bfseries\color{white},
-  title=Exemple\ifstrempty{#1}{}{ : #1}
-}
-
-% --- DÉFINITION DES CELLULES EXERCICE (GRIS) ET CORRECTION (VERT) ---
-\newtcolorbox{exercicebox}[1][]{
-    baseboxstyle, colframe=corrColor, colback=corrColor!10, coltitle=corrColor,
-    fonttitle=\bfseries\color{white},
-    title=Exercice\ifstrempty{#1}{}{ : #1}
-}
-
-\newtcolorbox{correctionbox}[1][]{
-    baseboxstyle, colframe=exoColor, colback=exoColor!10, coltitle=exoColor,
-    fonttitle=\bfseries\color{white},
-    title=Correction\ifstrempty{#1}{}{ : #1}
-}
-
-% --- DÉFINITION D'UNE CELLULE remarque ---
-\definecolor{remarqueColor}{HTML}{D35400} 
-
 \newtcolorbox{remarquebox}[1][]{
-  baseboxstyle, colframe=remarqueColor, colback=remarqueColor!10, coltitle=remarqueColor,
-  fonttitle=\bfseries\color{white},
+  sidebarstyle,
+  borderline west={2pt}{0pt}{remarqueColor},
+  fonttitle=\bfseries\color{remarqueColor},
   title=Remarque\ifstrempty{#1}{}{ : #1}
 }
 
-% =============================================
-% --- CORPS DU DOCUMENT ---
-% =============================================
+
+% --- MODIFIÉ : CELLULES "SIDEBAR" (Pour les applications) ---
+% Elles utilisent maintenant "sidebarstyle" au lieu de "fullboxstyle"
+\newtcolorbox{examplebox}[1][]{
+  sidebarstyle,
+  borderline west={2pt}{0pt}{exampleColor},
+  fonttitle=\bfseries\color{exampleColor},
+  title=Exemple\ifstrempty{#1}{}{ : #1}
+}
+\newtcolorbox{exercicebox}[1][]{
+    sidebarstyle,
+    borderline west={2pt}{0pt}{corrColor},
+    fonttitle=\bfseries\color{corrColor},
+    title=#1 % <-- On utilise directement l'argument fourni
+}
+\newtcolorbox{correctionbox}[1][]{
+    sidebarstyle,
+    borderline west={2pt}{0pt}{exoColor},
+    fonttitle=\bfseries\color{exoColor},
+    title=Correction\ifstrempty{#1}{}{ : #1}
+}
+
+
 % =============================================
 % --- CORPS DU DOCUMENT ---
 % =============================================
@@ -225,8 +248,7 @@
 \input{section6.tex}
 \input{section7.tex}
 \input{section8.tex}
-\input{section9.tex}
+
 \input{appendice1.tex}
-\input{test.tex}
 
 \end{document}

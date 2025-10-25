@@ -1,324 +1,756 @@
 \newpage
+\section{Variables Aléatoires Discrètes}
 
-\section{Probabilité conditionnelle}
+\subsection{Variable Aléatoire}
 
-\begin{intuitionbox}[Question Fondamentale]
-La probabilité conditionnelle est le concept qui répond à la question fondamentale : comment devons-nous mettre à jour nos croyances à la lumière des nouvelles informations que nous observons ?
-\end{intuitionbox}
+Jusqu'à présent, nous avons parlé d'événements (comme "obtenir Pile" ou "tirer un Roi"). Pour analyser ces phénomènes avec des outils mathématiques plus puissants, nous devons traduire ces résultats concrets en nombres. C'est le rôle de la variable aléatoire.
 
-\subsection{Définition de la Probabilité Conditionnelle}
-
-\begin{definitionbox}[Probabilité Conditionnelle]
-Si $A$ et $B$ sont deux événements avec $P(B) > 0$, alors la probabilité conditionnelle de $A$ sachant $B$, notée $P(A|B)$, est définie comme :
-$$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
+\begin{definitionbox}[Variable Aléatoire]
+Étant donné une expérience avec un univers $S$, une variable aléatoire est une fonction de l'univers $S$ vers les nombres réels $\mathbb{R}$.
 \end{definitionbox}
 
-\begin{intuitionbox}
-Imaginez que l'ensemble de tous les résultats possibles est un grand terrain. Savoir que l'événement $B$ s'est produit, c'est comme si on vous disait que le résultat se trouve dans une zone spécifique de ce terrain. La probabilité conditionnelle $P(A|B)$ ne s'intéresse plus au terrain entier, mais seulement à la proportion de la zone $B$ qui est également occupée par $A$. On "zoome" sur le monde où $B$ est vrai, et on recalcule les probabilités dans ce nouveau monde plus petit.
-\end{intuitionbox}
-
-\subsection{Règle du Produit (Intersection de deux événements)}
-
-\begin{theorembox}[Probabilité de l'intersection de deux événements]
-Pour tous événements $A$ et $B$ avec des probabilités positives, nous avons :
-$$P(A \cap B) = P(A)P(B|A) = P(B)P(A|B)$$
-Cela découle directement de la définition de la probabilité conditionnelle.
-\end{theorembox}
+Cette définition formelle masque une idée très simple :
 
 \begin{intuitionbox}
-Pour que deux événements se produisent, le premier doit se produire, PUIS le second doit se produire, sachant que le premier a eu lieu. Cette formule exprime mathématiquement cette idée séquentielle.
+Une variable aléatoire est une manière de traduire les résultats d'une expérience en nombres. Au lieu de travailler avec des concepts comme "Pile" ou "Face", on leur assigne des valeurs numériques (par exemple, 1 pour Pile, 0 pour Face). Cela nous permet d'utiliser toute la puissance des outils mathématiques (fonctions, calculs, etc.) pour analyser le hasard. C'est un pont entre le monde concret des événements et le monde abstrait des nombres.
 \end{intuitionbox}
+
+Prenons un exemple classique :
 
 \begin{examplebox}
-Quelle est la probabilité de tirer deux As d'un jeu de 52 cartes sans remise ?
-Soit $A$ l'événement "le premier tirage est un As", avec $P(A) = \frac{4}{52}$. Soit $B$ l'événement "le deuxième tirage est un As". Nous cherchons $P(A \cap B)$, que l'on calcule avec la formule $P(A \cap B) = P(A) \times P(B|A)$. La probabilité $P(B|A)$ correspond à tirer un As sachant que la première carte était un As. Il reste alors 51 cartes, dont 3 As. Donc, $P(B|A) = \frac{3}{51}$. Finalement, la probabilité de l'intersection est $P(A \cap B) = \frac{4}{52} \times \frac{3}{51} = \frac{12}{2652} \approx 0.0045$.
+On lance deux dés. L'univers $S$ est l'ensemble des 36 paires de résultats, comme $(1,1), (1,2), \dots, (6,6)$. On peut définir une variable aléatoire $X$ comme étant la \textbf{somme des deux dés}.
+Pour le résultat $(2, 5)$, la valeur de la variable aléatoire est $X(2, 5) = 2 + 5 = 7$.
 \end{examplebox}
 
-\subsection{Règle de la Chaîne (Intersection de n événements)}
+\subsection{Variable Aléatoire Discrète}
 
-\begin{theorembox}[Probabilité de l'intersection de n événements]
-Pour tous événements $A_1, \dots, A_n$ avec $P(A_1 \cap A_2 \cap \dots \cap A_{n-1}) > 0$, nous avons :
-$$P(A_1 \cap \dots \cap A_n) = P(A_1)P(A_2|A_1)P(A_3|A_1 \cap A_2) \cdots P(A_n|A_1 \cap \dots \cap A_{n-1})$$
-\end{theorembox}
+Les variables aléatoires peuvent être de différents types. Nous commençons par le type le plus simple à "compter".
+
+\begin{definitionbox}[Variable Aléatoire Discrète]
+Une variable aléatoire $X$ est dite discrète s'il existe une liste finie ou infinie dénombrable de valeurs $a_1, a_2, \dots$ telle que $P(X=a_j \text{ pour un certain } j) = 1$.
+\end{definitionbox}
+
+L'analogie la plus simple pour comprendre le terme "discret" est celle d'un escalier.
 
 \begin{intuitionbox}
-Ceci est une généralisation de l'idée précédente, souvent appelée "règle de la chaîne" (chain rule). Pour qu'une séquence d'événements se produise, chaque événement doit se réaliser tour à tour, en tenant compte de tous les événements précédents qui se sont déjà produits.
+Une variable aléatoire est "discrète" si on peut lister (compter) toutes les valeurs qu'elle peut prendre, même si cette liste est infinie. Pensez aux "sauts" d'une valeur à l'autre, sans possibilité de prendre une valeur intermédiaire. C'est comme monter un escalier : on peut être sur la marche 1, 2 ou 3, mais jamais sur la marche 2.5. Le nombre de têtes en 10 lancers, le résultat d'un dé, le nombre d'emails que vous recevez en une heure sont des exemples. À l'opposé, une variable continue pourrait être la taille exacte d'une personne, qui peut prendre n'importe quelle valeur dans un intervalle.
 \end{intuitionbox}
+
+\subsection{Fonction de Masse (PMF)}
+
+Maintenant que nous avons une variable aléatoire qui produit des nombres discrets, nous avons besoin d'une fonction pour décrire la probabilité de chacun de ces nombres.
+
+\begin{definitionbox}[Probability Mass Function (PMF)]
+La fonction de masse (PMF) d'une variable aléatoire discrète $X$ est la fonction $P_X$ donnée par $P_X(x) = P(X=x)$.
+\end{definitionbox}
+
+C'est la "carte d'identité" probabiliste de la variable :
+
+\begin{intuitionbox}
+La PMF est la "carte d'identité" probabiliste d'une variable aléatoire discrète. Pour chaque valeur que la variable peut prendre, la PMF nous donne la probabilité exacte associée à cette valeur. C'est comme si chaque résultat possible avait une "étiquette de prix" qui indique sa chance de se produire. La somme de toutes ces probabilités doit bien sûr valoir 1.
+\end{intuitionbox}
+
+Un exemple très simple est le lancer de dé :
 
 \begin{examplebox}
-On tire 3 cartes sans remise. Quelle est la probabilité d'obtenir la séquence Roi, Dame, Valet ?
-La probabilité de tirer un Roi en premier ($A_1$) est $P(A_1) = \frac{4}{52}$.
-Ensuite, la probabilité de tirer une Dame ($A_2$) sachant qu'un Roi a été tiré est $P(A_2|A_1) = \frac{4}{51}$.
-Enfin, la probabilité de tirer un Valet ($A_3$) sachant qu'un Roi et une Dame ont été tirés est $P(A_3|A_1 \cap A_2) = \frac{4}{50}$.
-La probabilité totale de la séquence est donc le produit de ces probabilités : $P(A_1 \cap A_2 \cap A_3) = \frac{4}{52} \times \frac{4}{51} \times \frac{4}{50} \approx 0.00048$.
+Soit $X$ le résultat d'un lancer de dé équilibré. La variable $X$ peut prendre les valeurs $\{1, 2, 3, 4, 5, 6\}$.
+La PMF de $X$ est la fonction qui assigne $1/6$ à chaque valeur :
+$P(X=1) = 1/6$, $P(X=2) = 1/6$, ..., $P(X=6) = 1/6$.
+Pour toute autre valeur $x$ (par exemple $x=2.5$ ou $x=7$), $P(X=x) = 0$.
 \end{examplebox}
 
-\subsection{Règle de Bayes}
+\subsection{Loi de Bernoulli}
 
-\begin{theorembox}[Règle de Bayes]
-$$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$$
-\end{theorembox}
+Commençons par la loi de probabilité discrète la plus simple.
+
+\begin{definitionbox}[Distribution de Bernoulli]
+Une variable aléatoire $X$ suit la distribution de Bernoulli avec paramètre $p$ si $P(X=1) = p$ et $P(X=0) = 1-p$, où $0 < p < 1$. On note cela $X \sim \text{Bern}(p)$.
+\end{definitionbox}
+
+C'est la brique fondamentale de nombreuses autres distributions.
 
 \begin{intuitionbox}
-La règle de Bayes est la formule pour "inverser" une probabilité conditionnelle. Souvent, il est facile de connaître la probabilité d'un effet étant donné une cause ($P(\text{symptôme}|\text{maladie})$), mais ce qui nous intéresse vraiment, c'est la probabilité de la cause étant donné l'effet observé ($P(\text{maladie}|\text{symptôme})$). La règle de Bayes nous permet de faire ce retournement en utilisant notre connaissance initiale de la probabilité de la cause ($P(\text{maladie})$). C'est le fondement mathématique de la mise à jour de nos croyances.
+La distribution de Bernoulli est le modèle le plus simple pour une expérience aléatoire avec seulement deux issues : "succès" (codé par 1) et "échec" (codé par 0). C'est la brique de base de nombreuses autres distributions. Pensez à un unique lancer de pièce (Pile/Face), un unique tir au but (Marqué/Manqué), ou la réponse à une question par oui/non. Le paramètre $p$ est simplement la probabilité du "succès".
 \end{intuitionbox}
 
-\begin{examplebox}[Dépistage médical]
-Une maladie touche 1\% de la population ($P(M) = 0.01$). Un test de dépistage est fiable à 95\% : il est positif pour 95\% des malades ($P(T|M)=0.95$) et négatif pour 95\% des non-malades, ce qui implique un taux de faux positifs de $P(T|\neg M) = 0.05$.
-Une personne est testée positive. Quelle est la probabilité qu'elle soit réellement malade, $P(M|T)$ ?
-On cherche $P(M|T) = \frac{P(T|M)P(M)}{P(T)}$.
-D'abord, on calcule $P(T)$ avec la formule des probabilités totales :
-$P(T) = P(T|M)P(M) + P(T|\neg M)P(\neg M) = (0.95 \times 0.01) + (0.05 \times 0.99) = 0.0095 + 0.0495 = 0.059$.
-Ensuite, on applique la règle de Bayes : $P(M|T) = \frac{0.95 \times 0.01}{0.059} \approx 0.161$.
-Malgré un test positif, il n'y a que 16.1\% de chance que la personne soit malade.
-\end{examplebox}
+\subsection{Loi Binomiale}
 
-\subsection{Formule des Probabilités Totales}
+Que se passe-t-il si nous répétons une expérience de Bernoulli $n$ fois et que nous comptons le nombre total de succès ?
 
-\begin{theorembox}[Formule des probabilités totales]
-Soit $A_1, \dots, A_n$ une partition de l'espace échantillon $S$ (c'est-à-dire que les $A_i$ sont des événements disjoints et leur union est $S$), avec $P(A_i) > 0$ pour tout $i$. Alors pour tout événement $B$ :
-$$P(B) = \sum_{i=1}^{n} P(B|A_i)P(A_i)$$
+\begin{theorembox}[PMF Binomiale]
+Si $X \sim \text{Bin}(n, p)$, alors la PMF de $X$ est :
+$$ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $$
+pour $k = 0, 1, \dots, n$.
 \end{theorembox}
 
-\begin{intuitionbox}
-C'est une stratégie de "diviser pour régner". Pour calculer la probabilité totale d'un événement $B$, on peut décomposer le monde en plusieurs scénarios mutuellement exclusifs (la partition $A_i$). On calcule ensuite la probabilité de $B$ dans chacun de ces scénarios ($P(B|A_i)$), on pondère chaque résultat par la probabilité du scénario en question ($P(A_i)$), et on additionne le tout.
+La preuve de cette formule est un argument combinatoire direct.
 
-\begin{center}
-\begin{tikzpicture}
-% 1. Dessiner le grand rectangle et les lignes verticales de partition
-\draw (0,0) rectangle (12,7);
-
-% 3. Dessiner une grande ellipse pour la forme B
-\filldraw[
-    fill=gray!30, % Remplissage gris clair
-    thick % Trait épais pour le contour
-] (6, 3.5) ellipse (5.5cm and 2.5cm); % Centre (6,3.5), rayon x=5.5cm, rayon y=2.5cm
-
-\foreach \x in {2,4,6,8,10} {
-    \draw (\x,0) -- (\x,7);
-}
-
-% 2. Placer les étiquettes A_1, A_2, ... en bas
-\foreach \i [evaluate=\i as \xpos using \i*2-1] in {1,...,6} {
-    \node at (\xpos, -0.5) {$A_{\i}$};
-}
-
-% 4. Placer l'étiquette pour l'ensemble B
-\node at (11, 6) {$B$}; % Ajusté pour être au-dessus de l'ellipse
-
-% 5. Placer les étiquettes pour les intersections B ∩ A_i, toutes au même niveau
-\node at (1.2, 3.5) {$B \cap A_1$};
-\node at (3, 3.5) {$B \cap A_2$};
-\node at (5, 3.5) {$B \cap A_3$};
-\node at (7, 3.5) {$B \cap A_4$};
-\node at (9, 3.5) {$B \cap A_5$};
-\node at (10.8, 3.5) {$B \cap A_6$};
-\end{tikzpicture}
-\end{center}
-\end{intuitionbox}
-
-\begin{examplebox}
-Une usine possède trois machines, M1, M2, et M3, qui produisent respectivement 50\%, 30\% et 20\% des articles. Leurs taux de production défectueuse sont de 4\%, 2\% et 5\%. Quelle est la probabilité qu'un article choisi au hasard soit défectueux ?
-Soit $D$ l'événement "l'article est défectueux". Les machines forment une partition avec $P(M1)=0.5$, $P(M2)=0.3$, et $P(M3)=0.2$. Les probabilités conditionnelles de défaut sont $P(D|M1)=0.04$, $P(D|M2)=0.02$, et $P(D|M3)=0.05$.
-En appliquant la formule, on obtient :
-$P(D) = P(D|M1)P(M1) + P(D|M2)P(M2) + P(D|M3)P(M3) = (0.04 \times 0.5) + (0.02 \times 0.3) + (0.05 \times 0.2) = 0.02 + 0.006 + 0.01 = 0.036$.
-La probabilité qu'un article soit défectueux est de 3.6\%.
-\end{examplebox}
-
-\begin{proofbox}[Démonstration de la formule des probabilités totales]
-Puisque les $A_i$ forment une partition de $S$, on peut décomposer $B$ comme :
-$$B = (B \cap A_1) \cup (B \cap A_2) \cup \cdots \cup (B \cap A_n)$$
-Comme les $A_i$ sont disjoints, les événements $(B \cap A_i)$ le sont aussi. On peut donc sommer leurs probabilités :
-$$P(B) = P(B \cap A_1) + P(B \cap A_2) + \cdots + P(B \cap A_n)$$
-En appliquant le théorème de l'intersection des probabilités à chaque terme, on obtient :
-$$P(B) = P(B|A_1)P(A_1) + P(B|A_2)P(A_2) + \cdots + P(B|A_n) = \sum_{i=1}^{n} P(B|A_i)P(A_i)$$
+\begin{proofbox}
+Nous voulons trouver la probabilité d'obtenir exactement $k$ succès au cours de $n$ essais indépendants.
+\begin{enumerate}
+    \item \textbf{Probabilité d'une séquence spécifique :} Considérons d'abord une séquence spécifique contenant $k$ succès (S) et $n-k$ échecs (E), par exemple $S, S, \dots, S, E, E, \dots, E$.
+    Puisque les essais sont indépendants, la probabilité de cette séquence est le produit des probabilités individuelles :
+    $$ \underbrace{p \times p \times \dots \times p}_{k \text{ fois}} \times \underbrace{(1-p) \times \dots \times (1-p)}_{n-k \text{ fois}} = p^k (1-p)^{n-k} $$
+    
+    \item \textbf{Nombre de séquences possibles :} La séquence ci-dessus n'est qu'une des nombreuses façons d'obtenir $k$ succès. Le nombre total de façons d'arranger $k$ succès parmi $n$ positions (essais) est donné par le coefficient binomial $\binom{n}{k}$.
+    
+    \item \textbf{Probabilité totale :} Chacune de ces $\binom{n}{k}$ séquences a la même probabilité $p^k (1-p)^{n-k}$. Puisque toutes ces séquences sont des événements disjoints, la probabilité totale d'obtenir $k$ succès (dans n'importe quel ordre) est la somme de leurs probabilités :
+    $$ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $$
+\end{enumerate}
 \end{proofbox}
 
-\subsection{Règle de Bayes avec Conditionnement Additionnel}
+Chaque partie de cette formule a une signification logique claire.
 
-\begin{theorembox}[Règle de Bayes avec conditionnement additionnel]
-À condition que $P(A \cap E) > 0$ et $P(B \cap E) > 0$, nous avons :
-$$P(A|B, E) = \frac{P(B|A, E)P(A|E)}{P(B|E)}$$
+\begin{intuitionbox}
+La distribution binomiale répond à la question : "Si je répète $n$ fois la même expérience de Bernoulli (qui a une probabilité de succès $p$), quelle est la probabilité d'obtenir exactement $k$ succès ?"
+La formule est construite logiquement en multipliant trois composantes. D'abord, $\mathbf{p^k}$ représente la probabilité d'obtenir $k$ succès. Ensuite, $\mathbf{(1-p)^{n-k}}$ est la probabilité que les $n-k$ échecs restants se produisent. Finalement, comme les $k$ succès peuvent apparaître n'importe où parmi les $n$ essais, on multiplie par $\mathbf{\binom{n}{k}}$, qui compte le nombre de manières distinctes de placer ces succès.
+\end{intuitionbox}
+
+Appliquons cela à un exemple classique :
+
+\begin{examplebox}
+On lance une pièce équilibrée 10 fois ($n=10$, $p=0.5$). Quelle est la probabilité d'obtenir exactement 6 Piles ($k=6$) ?
+$$ P(X=6) = \binom{10}{6} (0.5)^6 (1-0.5)^{10-6} = \frac{10!}{6!4!} (0.5)^{10} = 210 \times (0.5)^{10} \approx 0.205 $$
+Il y a environ 20.5\% de chance d'obtenir exactement 6 Piles.
+\end{examplebox}
+
+\subsection{Loi Hypergéométrique}
+
+La loi binomiale suppose que les essais sont indépendants, ce qui est vrai si l'on tire *avec remise*. Que se passe-t-il si l'on tire *sans remise* ?
+
+\begin{theorembox}[PMF Hypergéométrique]
+Si $X \sim \text{HG}(w, b, m)$, alors la PMF de $X$ est :
+$$ P(X=k) = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}} $$
 \end{theorembox}
 
-\begin{intuitionbox}
-Cette formule est simplement la règle de Bayes standard, mais appliquée à l'intérieur d'un univers que l'on a déjà "rétréci".
+La preuve de cette formule est un argument de dénombrement pur, basé sur la définition naïve de la probabilité.
 
-Imaginez que vous recevez une information \textbf{E} qui élimine une grande partie des possibilités. C'est votre nouveau point de départ, votre monde est plus petit. Toutes les probabilités que vous calculez désormais sont relatives à ce monde restreint.
+\begin{proofbox}
+Nous utilisons la définition naïve $P(A) = |A| / |S|$.
+Nous tirons $m$ boules d'une urne contenant $w$ blanches et $b$ noires, soit $w+b$ boules au total.
 
-Dans ce nouveau monde, vous recevez une autre information, l'évidence \textbf{B}. La règle de Bayes conditionnelle vous permet alors de mettre à jour votre croyance sur un événement \textbf{A}, en utilisant exactement la même logique que la règle de Bayes classique, mais en vous assurant que chaque calcul reste confiné à l'intérieur des frontières de l'univers défini par \textbf{E}.
-\end{intuitionbox}
-
-\subsection{Formule des Probabilités Totales avec Conditionnement Additionnel}
-
-\begin{theorembox}[Formule des probabilités totales avec conditionnement additionnel]
-Soit $A_1, \dots, A_n$ une partition de $S$. À condition que $P(A_i \cap E) > 0$ pour tout $i$, nous avons :
-$$P(B|E) = \sum_{i=1}^{n} P(B|A_i, E)P(A_i|E)$$
-\end{theorembox}
-
-\begin{intuitionbox}
-\begin{center}
-\begin{tikzpicture}
-  % Matrice principale, nommée "m"
-  \matrix (m) [
-    matrix of nodes,
-    row sep = -\pgflinewidth,
-    column sep = -\pgflinewidth,
-    nodes={
-      rectangle, draw=black, anchor=center,
-      text height=4ex, text depth=0.5ex, minimum width=4em, fill=intuitionColor!10
-    }
-  ]
-  {
-    | |              & | |              & |[red_hatch]|    & | |              & | |              & | |            \\
-    |[red_hatch]|    & |[purple_hatch]| & |[purple_hatch]| & | |              & |[red_hatch]|    & |[red_hatch]|  \\
-    |[red_hatch]|    & |[blue_hatch]|   & |[red_hatch]|    & |[red_hatch]|    & |[red_hatch]|    & | |            \\
-  };
-
-  % --- DÉLIMITATION DES COLONNES AVEC ACCOLADES ---
-  \draw [decorate, decoration={brace, amplitude=5pt, raise=4mm}]
-    (m-1-1.north west) -- (m-1-2.north east) 
-    node [midway, yshift=8mm, font=\bfseries] {A1};
-    
-  \draw [decorate, decoration={brace, amplitude=5pt, raise=4mm}]
-    (m-1-3.north west) -- (m-1-4.north east) 
-    node [midway, yshift=8mm, font=\bfseries] {A2};
-    
-  \draw [decorate, decoration={brace, amplitude=5pt, raise=4mm}]
-    (m-1-5.north west) -- (m-1-6.north east) 
-    node [midway, yshift=8mm, font=\bfseries] {A3};
-\end{tikzpicture}
-\end{center}
-Imaginez que le graphique ci-dessus représente la carte d'un trésor. La carte est partitionnée en trois grandes régions : \textbf{A1}, \textbf{A2}, et \textbf{A3}. Sur cette carte, on a identifié deux types de terrains : une \textbf{zone marécageuse} (événement E, hachures rouges) qui s'étend sur \textbf{10 parcelles}, et une \textbf{zone près d'un vieux chêne} (événement B, hachures bleues) qui couvre \textbf{3 parcelles}.
-
-On vous donne un premier indice : "Le trésor est dans la zone marécageuse (E)". Votre univers de recherche se réduit instantanément à ces 10 parcelles rouges. Puis, on vous donne un second indice : "Le trésor est aussi près d'un chêne (B)". Votre recherche se concentre alors sur les parcelles qui sont à la fois marécageuses et proches d'un chêne (les cases violettes, $B \cap E$).
-
-La question est : "Sachant que le trésor est dans une parcelle violette, quelle est la probabilité qu'il se trouve dans la région A2 ?". On cherche donc $P(A_2 | B, E)$. La règle de Bayes nous permet de le calculer.
-
-\textbf{Calcul des termes nécessaires :} D'abord, nous devons évaluer les probabilités à l'intérieur du "monde marécageux" (sachant E).
-
-La \textbf{vraisemblance} est $P(B|A_2, E)$. En se limitant aux 4 parcelles marécageuses de la région A2, une seule est aussi près d'un chêne. Donc, $P(B|A_2, E) = 1/4$.
-
-La \textbf{probabilité a priori} est $P(A_2|E)$. Sur les 10 parcelles marécageuses, 4 sont dans la région A2. Donc, $P(A_2|E) = 4/10$.
-
-L'\textbf{évidence}, $P(B|E)$, est la probabilité de trouver un chêne dans l'ensemble de la zone marécageuse. On peut la calculer avec la formule des probabilités totales :
-$$P(B|E) = P(B|A_1, E)P(A_1|E) + P(B|A_2, E)P(A_2|E) + P(B|A_3, E)P(A_3|E)$$
-$$P(B|E) = (\frac{1}{3} \times \frac{3}{10}) + (\frac{1}{4} \times \frac{4}{10}) + (0 \times \frac{3}{10}) = \frac{1}{10} + \frac{1}{10} = \frac{2}{10}$$
-
-\textbf{Application de la règle de Bayes :} Maintenant, nous assemblons le tout.
-$$P(A_2|B, E) = \frac{P(B|A_2, E)P(A_2|E)}{P(B|E)} = \frac{(1/4) \times (4/10)}{2/10} = \frac{1/10}{2/10} = \frac{1}{2}$$
-L'intuition confirme le calcul : sachant que le trésor est sur une parcelle violette, et qu'il n'y en a que deux (une en A1, une en A2), il y a bien une chance sur deux qu'il se trouve dans la région A2.
-\end{intuitionbox}
-
-\subsection{Indépendance de Deux Événements}
-
-\begin{definitionbox}[Indépendance de deux événements]
-Les événements $A$ et $B$ sont indépendants si :
-$$P(A \cap B) = P(A)P(B)$$
-Si $P(A) > 0$ et $P(B) > 0$, cela est équivalent à :
-$$P(A|B) = P(A)$$
-\end{definitionbox}
-
-\begin{intuitionbox}
-L'indépendance est l'absence d'information. Si deux événements sont indépendants, apprendre que l'un s'est produit ne change absolument rien à la probabilité de l'autre. Savoir qu'il pleut à Tokyo ($B$) ne modifie pas la probabilité que vous obteniez pile en lançant une pièce ($A$).
-\end{intuitionbox}
-
-\subsection{Indépendance Conditionnelle}
-
-\begin{definitionbox}[Indépendance Conditionnelle]
-Les événements $A$ et $B$ sont dits conditionnellement indépendants étant donné $E$ si :
-$$P(A \cap B | E) = P(A|E)P(B|E)$$
-\end{definitionbox}
-
-\begin{intuitionbox}
-L'indépendance peut apparaître ou disparaître quand on observe un autre événement. Par exemple, vos notes en maths ($A$) et en physique ($B$) ne sont probablement pas indépendantes. Mais si l'on sait que vous avez beaucoup travaillé ($E$), alors vos notes en maths et en physique pourraient devenir indépendantes. L'information "vous avez beaucoup travaillé" explique la corrélation ; une fois qu'on la connaît, connaître votre note en maths n'apporte plus d'information sur votre note en physique.
-\end{intuitionbox}
-
-\subsection{Le Problème de Monty Hall}
-
-\begin{remarquebox}[Le problème de Monty Hall]
-Imaginez que vous êtes à un jeu télévisé. Face à vous se trouvent trois portes fermées. Derrière l'une d'elles se trouve une voiture, et derrière les deux autres, des chèvres.
 \begin{enumerate}
-    \item Vous choisissez une porte (disons, la porte n°1).
-    \item L'animateur, qui sait où se trouve la voiture, ouvre une autre porte (par exemple, la n°3) derrière laquelle se trouve une chèvre.
-    \item Il vous demande alors : "Voulez-vous conserver votre choix initial (porte n°1) ou changer pour l'autre porte restante (la n°2) ?"
+    \item \textbf{Taille de l'univers ($|S|$)} : Le nombre total de façons de choisir $m$ boules parmi $w+b$ est $\binom{w+b}{m}$.
+    
+    \item \textbf{Taille de l'événement favorable ($|A|$)} : Nous voulons l'événement $A$ = "obtenir exactement $k$ boules blanches ET $m-k$ boules noires".
+    \begin{itemize}
+        \item Le nombre de façons de choisir $k$ blanches parmi $w$ est $\binom{w}{k}$.
+        \item Le nombre de façons de choisir $m-k$ noires parmi $b$ est $\binom{b}{m-k}$.
+    \end{itemize}
+    Par le principe de la multiplication (dénombrement), le nombre total de façons de réaliser $A$ est $|A| = \binom{w}{k} \binom{b}{m-k}$.
+    
+    \item \textbf{Probabilité :} En divisant le nombre d'issues favorables par le nombre total d'issues, on obtient :
+    $$ P(X=k) = \frac{|A|}{|S|} = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}} $$
 \end{enumerate}
-\textbf{Question :} Avez-vous intérêt à changer de porte ? Votre probabilité de gagner la voiture est-elle plus grande si vous changez, si vous ne changez pas, ou est-elle la même dans les deux cas ?
-\end{remarquebox}
+\end{proofbox}
 
-\begin{correctionbox}[Solution du problème de Monty Hall]
-La réponse est sans équivoque : il faut \textbf{toujours changer de porte}. Cette stratégie fait passer la probabilité de gagner de $1/3$ à $2/3$. L'intuition et la preuve ci-dessous détaillent ce résultat surprenant.
+Chaque terme de cette fraction a un sens très concret :
+
+\begin{intuitionbox}
+La distribution hypergéométrique est la "cousine" de la binomiale pour les tirages \textbf{sans remise}. Imaginez une urne avec des boules de deux couleurs (par exemple, $w$ blanches et $b$ noires). Vous tirez $m$ boules d'un coup. Quelle est la probabilité que vous ayez exactement $k$ boules blanches ?
+La formule est un simple ratio issu du dénombrement. Le \textbf{dénominateur}, $\binom{w+b}{m}$, compte le nombre total de façons de tirer $m$ boules parmi toutes celles disponibles. Le \textbf{numérateur} compte les issues favorables : c'est le produit du nombre de façons de choisir $k$ blanches parmi les $w$ ($\binom{w}{k}$) ET de choisir les $m-k$ boules restantes parmi les noires ($\binom{b}{m-k}$). La différence clé avec la loi binomiale est que les tirages ne sont pas indépendants.
+\end{intuitionbox}
+
+Un exemple typique est la formation de comités à partir d'un groupe.
+
+\begin{examplebox}
+Un comité de 5 personnes est choisi au hasard parmi un groupe de 8 hommes et 10 femmes. Quelle est la probabilité que le comité soit composé de 2 hommes et 3 femmes ?
+Ici, on tire 5 personnes ($m=5$) d'une population de 18 personnes. On s'intéresse au nombre d'hommes ($k=2$) parmi les 8 disponibles ($w=8$). Le reste du comité sera composé de femmes ($b=10$).
+$$ P(X=2) = \frac{\binom{8}{2} \binom{10}{3}}{\binom{18}{5}} = \frac{28 \times 120}{8568} \approx 0.392 $$
+Il y a environ 39.2\% de chance que le comité ait exactement cette composition.
+\end{examplebox}
+
+\subsection{Loi Géométrique}
+
+Revenons aux essais de Bernoulli (indépendants). Au lieu de fixer le nombre d'essais $n$, demandons-nous : combien d'essais faut-il avant d'obtenir notre premier succès ?
+
+\begin{theorembox}[PMF de la loi géométrique]
+Une variable aléatoire $X$ suit la loi géométrique de paramètre $p$, notée $X \sim \text{Geom}(p)$, si elle modélise le nombre d'échecs avant le premier succès dans une série d'épreuves de Bernoulli indépendantes. Sa fonction de masse (PMF) est :
+$$ P(X=k) = (1-p)^k p \quad \text{pour } k=0, 1, 2, \dots $$
+où $q = 1-p$ est la probabilité d'échec.
+\end{theorembox}
+
+La preuve de cette formule est une application directe de l'indépendance des essais.
+
+\begin{proofbox}
+Soit $S_i$ l'événement "succès au $i$-ème essai" et $E_i$ l'événement "échec au $i$-ème essai".
+L'événement $\{X=k\}$ signifie que nous avons observé exactement $k$ échecs, suivis d'un succès au $(k+1)$-ème essai.
+C'est la séquence d'événements : $E_1 \cap E_2 \cap \dots \cap E_k \cap S_{k+1}$.
+
+Puisque tous les essais sont indépendants, la probabilité de cette intersection est le produit des probabilités individuelles :
+\begin{align*}
+P(X=k) &= P(E_1) \times P(E_2) \times \dots \times P(E_k) \times P(S_{k+1}) \\
+&= \underbrace{(1-p) \times (1-p) \times \dots \times (1-p)}_{k \text{ fois}} \times p \\
+&= (1-p)^k p
+\end{align*}
+\end{proofbox}
+
+La formule est donc très littérale :
+
+\begin{intuitionbox}
+La formule $P(X=k) = q^k p$ décrit la probabilité d'une séquence très spécifique : $k$ échecs consécutifs (chacun avec une probabilité $q$, donc $q^k$ pour la série), suivis immédiatement d'un succès (avec une probabilité $p$). C'est la loi de "l'attente du premier succès".
+\end{intuitionbox}
+
+Un exemple classique est l'attente d'un résultat spécifique sur un dé.
+
+\begin{examplebox}[Premier 6 au lancer de dé]
+On lance un dé jusqu'à obtenir un 6. La probabilité de succès est $p=1/6$, et celle d'échec est $q=5/6$. Quelle est la probabilité que l'on ait besoin de 3 lancers (donc 2 échecs avant le premier succès) ?
+Ici, $k=2$. La probabilité est :
+$$ P(X=2) = (5/6)^2 \cdot (1/6) = \frac{25}{216} \approx 0.116 $$
+\end{examplebox}
+
+\subsection{Loi de Poisson}
+
+Introduisons maintenant une loi utilisée pour modéliser le nombre d'événements se produisant dans un intervalle de temps ou d'espace fixe.
+
+\begin{definitionbox}[Distribution de Poisson]
+Une variable aléatoire $X$ suit la loi de Poisson de paramètre $\lambda > 0$ si sa PMF est donnée par :
+$$ P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!} \quad \text{pour } k=0, 1, 2, \dots $$
+Elle modélise typiquement le nombre d'événements se produisant dans un intervalle de temps ou d'espace fixe.
+\end{definitionbox}
+
+Cette loi est souvent appelée la loi des événements rares.
+
+\begin{intuitionbox}
+La loi de Poisson est la loi des événements rares. Imaginez que vous comptez le nombre d'appels arrivant à un standard téléphonique en une minute. Il y a de nombreux instants où un appel pourrait arriver, mais la probabilité à chaque instant est infime. La loi de Poisson modélise ce type de scénario, où l'on connaît seulement le taux moyen d'arrivée des événements ($\lambda$).
+\end{intuitionbox}
+
+Mais d'où vient cette formule avec $e$ et une factorielle ? Elle vient d'une approximation de la loi binomiale lorsque $n$ est très grand et $p$ très petit.
+
+\begin{theorembox}[La loi de Poisson comme limite de la loi binomiale]
+Soit $X_n \sim \text{Bin}(n, p_n)$, où $\lambda = np_n$ est une constante positive fixée. Alors, pour tout $k \in \{0, 1, 2, \dots\}$, nous avons :
+$$ \lim_{n \to \infty} P(X_n=k) = \frac{e^{-\lambda}\lambda^k}{k!} $$
+En pratique, la loi de Poisson est une excellente approximation de la loi binomiale quand $n$ est grand et $p$ est petit.
+\end{theorembox}
+
+% --- INTUITION AMÉLIORÉE ---
+\begin{intuitionbox}[Convergence Binomiale vers Poisson : L'Exemple des Naissances]
+Supposons que les bébés naissent dans une grande ville à un taux moyen de $\lambda=10$ naissances par jour. Comment modéliser le nombre $X$ de naissances un jour donné ?
+
+\textbf{1. Approche Binomiale (Découpage du Temps) :}
+On peut diviser la journée (24h) en $n$ très petits intervalles de temps (par exemple, $n = 24 \times 60 \times 60 = 86400$ secondes).
+\begin{itemize}
+    \item Si $n$ est très grand, la chance $p$ qu'une naissance se produise \textit{exactement} pendant une seconde donnée est minuscule. On peut calculer cette probabilité $p$ comme le taux moyen divisé par le nombre d'intervalles : $p = \lambda / n = 10 / 86400$.
+    \item On peut aussi supposer que la probabilité d'avoir *deux* naissances ou plus dans la même seconde est négligeable. Chaque seconde est donc comme un mini-essai de Bernoulli : soit 1 naissance (avec probabilité $p$), soit 0 naissance (avec probabilité $1-p$).
+    \item Le nombre total de naissances $X$ sur la journée est la somme de ces $n$ essais de Bernoulli quasi-indépendants. $X$ suit donc approximativement une loi binomiale : $X \approx \text{Bin}(n, p=\lambda/n)$.
+\end{itemize}
+La probabilité d'avoir exactement $k$ naissances serait $P(X=k) \approx \binom{n}{k} p^k (1-p)^{n-k}$.
+
+\textbf{2. Le Passage à la Limite (Modèle Continu) :}
+Que se passe-t-il si on rend les intervalles de temps infiniment petits ($n \to \infty$) ? C'est là que la magie opère :
+\begin{itemize}
+    \item Le terme $\binom{n}{k}$ (combien de façons de choisir $k$ secondes parmi $n$) se comporte comme $n^k/k!$ pour $n$ grand.
+    \item Le terme $p^k = (\lambda/n)^k$ devient $\lambda^k / n^k$.
+    \item Le terme $(1-p)^{n-k} = (1-\lambda/n)^{n-k}$. Comme $k$ est petit par rapport à $n$, ceci est très proche de $(1-\lambda/n)^n$, qui tend vers $e^{-\lambda}$.
+\end{itemize}
+En combinant ces approximations (expliquées plus en détail dans la preuve formelle), on trouve que la probabilité $P(X=k)$ tend vers $\frac{n^k}{k!} \frac{\lambda^k}{n^k} e^{-\lambda} = \frac{e^{-\lambda}\lambda^k}{k!}$.
+
+\textbf{Conclusion :}
+La loi de Poisson apparaît naturellement comme la limite d'un processus binomial où l'on a un très grand nombre d'opportunités ($n$) pour qu'un événement rare (probabilité $p$) se produise, tout en maintenant un taux moyen constant ($\lambda = np$).
+\end{intuitionbox}
+% --- FIN INTUITION AMÉLIORÉE ---
+
+La preuve formelle montre comment les termes de la formule binomiale se transforment en ceux de la formule de Poisson lorsque $n \to \infty$.
+
+% --- PROOFBOX (IDENTIQUE À LA PRÉCÉDENTE) ---
+\begin{proofbox}[Dérivation de la loi de Poisson à partir de la loi Binomiale (Détaillée)]
+On part de la fonction de masse (PMF) d'une variable aléatoire $X_n$ suivant une loi binomiale $\text{Bin}(n, p)$, où l'on pose $p = \lambda/n$. L'objectif est de trouver la limite de cette PMF lorsque $n$ tend vers l'infini, tout en gardant $\lambda = np$ constant (ce qui implique que $p$ doit tendre vers 0).
+
+La PMF binomiale est :
+$$ P(X_n=k) = \binom{n}{k} p^k (1-p)^{n-k} $$
+Substituons $p = \lambda/n$ :
+$$ P(X_n=k) = \binom{n}{k} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} $$
+Maintenant, développons le coefficient binomial $\binom{n}{k} = \frac{n!}{k!(n-k)!} = \frac{n(n-1)(n-2)\cdots(n-k+1)}{k!}$ :
+$$ P(X_n=k) = \frac{n(n-1)\cdots(n-k+1)}{k!} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} $$
+Réorganisons les termes pour isoler ceux qui dépendent de $n$ :
+$$ P(X_n=k) = \frac{\lambda^k}{k!} \times \frac{n(n-1)\cdots(n-k+1)}{n^k} \times \left(1-\frac{\lambda}{n}\right)^n \times \left(1-\frac{\lambda}{n}\right)^{-k} $$
+Nous allons maintenant examiner la limite de chaque partie lorsque $n \to \infty$, pour $k$ et $\lambda$ fixés.
+
+\begin{enumerate}
+    \item $\mathbf{\frac{\lambda^k}{k!}}$ : Ce terme est constant par rapport à $n$, donc sa limite est lui-même.
+    
+    \item $\mathbf{\frac{n(n-1)\cdots(n-k+1)}{n^k}}$ : Ce terme est un produit de $k$ facteurs divisé par $n^k$. On peut le réécrire comme :
+    $$ \frac{n}{n} \times \frac{n-1}{n} \times \frac{n-2}{n} \times \cdots \times \frac{n-k+1}{n} $$
+    $$ = 1 \times \left(1-\frac{1}{n}\right) \times \left(1-\frac{2}{n}\right) \times \cdots \times \left(1-\frac{k-1}{n}\right) $$
+    Lorsque $n \to \infty$, chacun des termes $\frac{1}{n}, \frac{2}{n}, \dots, \frac{k-1}{n}$ tend vers 0 (car $k$ est fixe). Donc, chaque parenthèse tend vers $(1-0)=1$. Puisqu'il y a un nombre \textit{fixe} $k$ de termes dans le produit, la limite du produit est le produit des limites :
+    $$ \lim_{n \to \infty} \frac{n(n-1)\cdots(n-k+1)}{n^k} = 1 \times 1 \times \cdots \times 1 = 1 $$
+    \textit{Intuition : Pour $n$ très grand par rapport à $k$, les $k$ termes $n, n-1, \dots, n-k+1$ sont tous "presque" égaux à $n$. Leur produit est donc "presque" $n^k$, et le ratio est "presque" 1.}
+
+    \item $\mathbf{\left(1-\frac{\lambda}{n}\right)^n}$ : C'est une limite fondamentale en analyse. On sait que pour tout réel $x$, $\lim_{n \to \infty} (1 + x/n)^n = e^x$. Ici, nous avons $x = -\lambda$. Donc :
+    $$ \lim_{n \to \infty} \left(1-\frac{\lambda}{n}\right)^n = e^{-\lambda} $$
+    \textit{Intuition : C'est la définition même de l'exponentielle comme limite d'intérêts composés continus (ici, avec un taux négatif).}
+
+    \item $\mathbf{\left(1-\frac{\lambda}{n}\right)^{-k}}$ : Lorsque $n \to \infty$, le terme $\lambda/n$ tend vers 0. L'expression à l'intérieur de la parenthèse tend donc vers $(1-0) = 1$. Puisque $k$ est un exposant fixe :
+    $$ \lim_{n \to \infty} \left(1-\frac{\lambda}{n}\right)^{-k} = 1^{-k} = 1 $$
+    \textit{Intuition : Pour $n$ très grand, $(1-\lambda/n)$ est très proche de 1. Élever ce nombre très proche de 1 à une puissance fixe $k$ le laisse très proche de 1.}
+\end{enumerate}
+Finalement, en multipliant les limites de chaque partie (puisque la limite d'un produit est le produit des limites) :
+$$ \lim_{n \to \infty} P(X_n=k) = \left(\frac{\lambda^k}{k!}\right) \times (1) \times (e^{-\lambda}) \times (1) = \frac{e^{-\lambda}\lambda^k}{k!} $$
+Ceci est exactement la fonction de masse de probabilité d'une loi de Poisson de paramètre $\lambda$.
+\end{proofbox}
+% --- FIN PROOFBOX ---
+
+
+Un ensemble de données historiques célèbres illustre parfaitement cette loi.
+
+\begin{examplebox}[Décès par ruade de cheval : Les données de Bortkiewicz]
+En 1898, le statisticien Ladislaus Bortkiewicz a publié des données célèbres sur le nombre de soldats de la cavalerie prussienne tués par des ruades de cheval. Ces données sont un exemple classique d'application de la loi de Poisson pour modéliser des événements rares.
+
+\noindent\textbf{Contexte et calcul du paramètre $\lambda$ :}
+Sur une période de 20 ans, en observant 10 corps d'armée, il a collecté des données sur 200 "corps-années". Durant cette période, il y a eu un total de 122 décès. Le taux moyen de décès par corps-année est donc :
+$$ \lambda = \frac{\text{Nombre total de décès}}{\text{Nombre total de corps-années}} = \frac{122}{200} = 0.61 $$
+Le nombre de décès par corps-année, $X$, est donc modélisé par une loi de Poisson : $X \sim \text{Poisson}(\lambda=0.61)$.
+
+\noindent\textbf{Comparaison des données observées et des prédictions du modèle :}
+On peut calculer la probabilité d'observer $k$ décès en une année-corps en utilisant la PMF de Poisson : $P(X=k) = \frac{e^{-0.61} (0.61)^k}{k!}$. En multipliant cette probabilité par le nombre total d'observations (200), on obtient le nombre de cas attendus (nombre de corps d'armes dans lequels il y a k deces).
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Nombre de décès (k)} & \textbf{Observé} & \textbf{Probabilité de Poisson} & \textbf{Attendu} \\
+\hline
+0 & 109 & $P(X=0) \approx 0.543$ & 108.7 \\
+1 & 65 & $P(X=1) \approx 0.331$ & 66.3 \\
+2 & 22 & $P(X=2) \approx 0.101$ & 20.2 \\
+3 & 3 & $P(X=3) \approx 0.021$ & 4.1 \\
+4 & 1 & $P(X=4) \approx 0.003$ & 0.6 \\
+5+ & 0 & $P(X \ge 5) \approx 0.000$ & 0.0 \\
+\hline
+\end{tabular}
+\end{center}
+
+L'adéquation remarquable entre les fréquences observées et les valeurs attendues par le modèle de Poisson a contribué à populariser cette distribution pour l'analyse d'événements rares.
+\end{examplebox}
+
+\subsection{Fonction de Répartition (CDF)}
+
+Nous avons la PMF, qui donne $P(X=x)$. Une autre fonction tout aussi importante est la fonction de répartition (CDF), qui "accumule" ces probabilités.
+
+\begin{definitionbox}[Cumulative Distribution Function (CDF)]
+La fonction de répartition (CDF) d'une variable aléatoire $X$ est la fonction $F_X$ donnée par $F_X(x) = P(X \le x)$.
+\end{definitionbox}
+
+Cette fonction répond à une question différente de celle de la PMF.
+
+\begin{intuitionbox}
+Alors que la PMF répond à la question "Quelle est la probabilité d'obtenir \textit{exactement} $x$ ?", la CDF répond à la question "Quelle est la probabilité d'obtenir \textit{au plus} $x$ ?". C'est une fonction cumulative : pour une valeur $x$ donnée, elle additionne les probabilités de tous les résultats inférieurs ou égaux à $x$.
+La CDF a toujours une forme d'escalier pour les variables discrètes. Elle commence à 0 (très loin à gauche) et monte par "sauts" à chaque valeur possible de la variable, pour finalement atteindre 1 (très loin à droite). La hauteur de chaque saut correspond à la valeur de la PMF à ce point.
+\end{intuitionbox}
+
+Traçons cette fonction "en escalier" pour notre exemple du dé.
+
+\begin{examplebox}
+Reprenons le lancer d'un dé équilibré ($X$). Calculons quelques valeurs de la CDF, notée $F(x)$.
+
+$F(0.5) = P(X \le 0.5) = 0$
+
+$F(1) = P(X \le 1) = P(X=1) = 1/6$
+
+$F(1.5) = P(X \le 1.5) = P(X=1) = 1/6$
+
+$F(2) = P(X \le 2) = P(X=1) + P(X=2) = 2/6$
+
+$F(5.9) = P(X \le 5.9) = P(X=1) + \dots + P(X=5) = 5/6$
+
+$F(6) = P(X \le 6) = 1$
+
+$F(100) = P(X \le 100) = 1$
+\end{examplebox}
+
+\subsection{Variable Aléatoire Indicatrice}
+
+Enfin, nous introduisons un outil simple mais qui s'avérera extraordinairement puissant pour les preuves, notamment celles concernant l'espérance.
+
+\begin{definitionbox}[Variable Aléatoire Indicatrice]
+La variable aléatoire indicatrice d'un événement $A$ est la variable aléatoire qui vaut 1 si $A$ se produit et 0 sinon. Nous la noterons $I_A$. Notez que $I_A \sim \text{Bern}(p)$ avec $p=P(A)$.
+\end{definitionbox}
+
+C'est un simple interrupteur "on/off".
+
+\begin{intuitionbox}
+Une variable indicatrice est un interrupteur. Elle est sur "ON" (valeur 1) si un événement qui nous intéresse se produit, et sur "OFF" (valeur 0) sinon. C'est un outil extrêmement puissant car il transforme les questions sur les probabilités des événements en questions sur les espérances des variables aléatoires, ce qui simplifie souvent les calculs.
+\end{intuitionbox}
+
+\subsection{Exercices}
+
+% --- Concepts de Base (PMF, CDF) ---
+
+\begin{exercicebox}[Exercice 1 : Identification de Variables Aléatoires]
+Pour chacune des situations suivantes, indiquez si la variable aléatoire $X$ est discrète ou continue.
+\begin{enumerate}
+    \item $X$ est le nombre de Piles obtenues en lançant 10 fois une pièce.
+    \item $X$ est le temps exact nécessaire pour courir un marathon.
+    \item $X$ est le nombre d'emails que vous recevez un jour donné.
+    \item $X$ est la température exacte à midi à Paris.
+    \item $X$ est le nombre de lancers d'un dé jusqu'à obtenir un 6.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Construction d'une PMF]
+On lance un dé équilibré à 4 faces (un tétraèdre) numérotées de 1 à 4. Soit $X$ le résultat du lancer.
+\begin{enumerate}
+    \item Quelles sont les valeurs possibles pour $X$ ?
+    \item Donnez la fonction de masse de probabilité (PMF) $P(X=k)$ pour chaque valeur $k$.
+    \item Vérifiez que la somme des probabilités est égale à 1.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : PMF d'une Somme]
+On lance deux dés équilibrés à 4 faces (ceux de l'exercice 2). Soit $Y$ la somme des deux résultats.
+\begin{enumerate}
+    \item Quelles sont les valeurs possibles pour $Y$ ?
+    \item Calculez la PMF $P(Y=k)$ pour chaque valeur $k$ possible (Indice : listez les 16 issues possibles).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Construction d'une CDF]
+En utilisant la variable $Y$ et sa PMF de l'exercice 3 (somme de deux dés à 4 faces) :
+\begin{enumerate}
+    \item Calculez $F_Y(y) = P(Y \le y)$ pour toutes les valeurs $y$ de 2 à 8.
+    \item Quelle est la valeur de $F_Y(1.5)$ ?
+    \item Quelle est la valeur de $F_Y(5.2)$ ?
+    \item Quelle est la valeur de $F_Y(10)$ ?
+\end{enumerate}
+\end{exercicebox}
+
+% --- Loi de Bernoulli et Loi Binomiale ---
+
+\begin{exercicebox}[Exercice 5 : Loi de Bernoulli]
+Une machine produit des pièces, avec une probabilité $p=0.05$ que la pièce soit défectueuse. Soit $X$ une variable aléatoire qui vaut 1 si une pièce est défectueuse et 0 sinon.
+\begin{enumerate}
+    \item Quelle loi suit $X$ ? Donnez son (ou ses) paramètre(s).
+    \item Quelle est la PMF de $X$ ? (Donnez $P(X=0)$ et $P(X=1)$).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 6 : Loi Binomiale (Calcul Direct)]
+On lance une pièce truquée 5 fois ($n=5$). La probabilité d'obtenir Pile (succès) est $p=0.7$. Soit $X$ le nombre de Piles obtenus.
+\begin{enumerate}
+    \item Quelle loi suit $X$ ? Donnez ses paramètres.
+    \item Quelle est la probabilité d'obtenir exactement 3 Piles, $P(X=3)$ ?
+    \item Quelle est la probabilité d'obtenir exactement 5 Piles, $P(X=5)$ ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 7 : Loi Binomiale (Calcul Cumulé)]
+On reprend la situation de l'exercice 6 ($X \sim \text{Bin}(5, 0.7)$).
+\begin{enumerate}
+    \item Quelle est la probabilité d'obtenir 0 Pile, $P(X=0)$ ?
+    \item En déduire la probabilité d'obtenir au moins 1 Pile, $P(X \ge 1)$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 8 : Problème Binomial (Contrôle Qualité)]
+Un lot de 10000 articles contient 10\% d'articles défectueux. On prélève un échantillon de 20 articles \textit{avec remise} pour inspection.
+Quelle est la probabilité que l'échantillon contienne exactement 2 articles défectueux ?
+\end{exercicebox}
+
+% --- Loi Hypergéométrique ---
+
+\begin{exercicebox}[Exercice 9 : Loi Hypergéométrique (Urne)]
+Une urne contient 7 boules blanches et 5 boules noires (total 12). On tire $m=4$ boules \textit{sans remise}. Soit $X$ le nombre de boules blanches tirées.
+\begin{enumerate}
+    \item Quelle loi suit $X$ ? Donnez ses paramètres ($w, b, m$).
+    \item Quelle est la probabilité d'obtenir exactement 2 boules blanches, $P(X=2)$ ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : Problème Hypergéométrique (Comité)]
+Un département est composé de 10 hommes et 8 femmes. On choisit un comité de 6 personnes au hasard.
+Quelle est la probabilité que le comité soit composé d'exactement 3 hommes et 3 femmes ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 11 : Binomiale vs Hypergéométrique]
+Reprenons le problème de l'exercice 8 (lot de 10000 articles, 10\% défectueux), mais cette fois on prélève les 20 articles \textit{sans remise}.
+\begin{enumerate}
+    \item Quelle est la loi exacte du nombre $X$ d'articles défectueux ? (Donnez son nom et ses paramètres).
+    \item Calculez la probabilité exacte $P(X=2)$.
+    \item Comparez ce résultat à celui obtenu à l'exercice 8. L'approximation binomiale était-elle bonne ? Pourquoi ?
+\end{enumerate}
+\end{exercicebox}
+
+% --- Loi Géométrique ---
+
+\begin{exercicebox}[Exercice 12 : Loi Géométrique (Calcul Direct)]
+On lance un dé équilibré à 6 faces jusqu'à obtenir un 6. Soit $X$ le nombre d'échecs \textit{avant} le premier 6.
+\begin{enumerate}
+    \item Quelle loi suit $X$ ? Donnez son paramètre $p$.
+    \item Quelle est la probabilité que le premier 6 apparaisse au 3ème lancer ? (C'est-à-dire $P(X=2)$).
+    \item Quelle est la probabilité que le premier 6 apparaisse au 1er lancer ? (C'est-à-dire $P(X=0)$).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 13 : Loi Géométrique (Calcul Cumulé)]
+Un archer touche sa cible avec une probabilité $p=0.2$ à chaque tir. Les tirs sont indépendants. Il tire jusqu'à ce qu'il touche la cible. Soit $X$ le nombre d'échecs avant son premier succès.
+\begin{enumerate}
+    \item Quelle est la probabilité qu'il ait besoin d'exactement 4 tirs au total ? (C'est-à-dire $P(X=3)$).
+    \item Quelle est la probabilité qu'il ait besoin de plus de 2 tirs au total ? (C'est-à-dire $P(X \ge 2)$ ou $P(\text{les 2 premiers tirs sont des échecs})$).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 14 : Variante de la Loi Géométrique]
+Certains manuels définissent la loi géométrique $Y$ comme le \textit{nombre total d'essais} (et non le nombre d'échecs). Si $Y \sim \text{Geom}(p)$ selon cette définition :
+\begin{enumerate}
+    \item Quelle est la PMF $P(Y=k)$ pour $k=1, 2, 3, \dots$ ?
+    \item En utilisant $p=1/6$ (lancer de dé), calculez $P(Y=3)$. Comparez avec $P(X=2)$ de l'exercice 12.
+\end{enumerate}
+\end{exercicebox}
+
+% --- Loi de Poisson ---
+
+\begin{exercicebox}[Exercice 15 : Loi de Poisson (Calcul Direct)]
+Un centre d'appels reçoit en moyenne $\lambda = 5$ appels par heure. Soit $X$ le nombre d'appels reçus en une heure donnée. On suppose que $X$ suit une loi de Poisson.
+\begin{enumerate}
+    \item Quelle est la probabilité qu'il n'y ait aucun appel ($P(X=0)$) ?
+    \item Quelle est la probabilité qu'il y ait exactement 5 appels ($P(X=5)$) ? (Laissez $e^{-5}$ dans votre réponse).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 16 : Loi de Poisson (Calcul Cumulé)]
+Un site web reçoit en moyenne $\lambda = 2$ visiteurs par minute. Soit $X$ le nombre de visiteurs en une minute.
+Calculez la probabilité de recevoir au plus 2 visiteurs, $P(X \le 2)$. (Laissez $e^{-2}$ dans votre réponse).
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 17 : Loi de Poisson (Changement de $\lambda$)]
+Un livre contient en moyenne 0.5 faute de frappe par page ($\lambda=0.5$).
+\begin{enumerate}
+    \item Quelle est la probabilité qu'une page donnée contienne 0 faute ?
+    \item Soit $Y$ le nombre de fautes dans un chapitre de 10 pages. Quel est le nouveau paramètre $\lambda_Y$ pour $Y$ ?
+    \item Quelle est la probabilité que ce chapitre de 10 pages contienne 0 faute ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 18 : Approximation Binomiale par Poisson]
+Une compagnie d'assurance a 10000 clients ($n=10000$). La probabilité qu'un client ait un accident dans l'année est $p=0.0003$.
+\begin{enumerate}
+    \item Quelle est la loi exacte $X$ du nombre d'accidents ?
+    \item Calculez le paramètre $\lambda = np$ pour une approximation par la loi de Poisson.
+    \item En utilisant la loi de Poisson, estimez la probabilité qu'il y ait exactement 2 accidents cette année, $P(X=2)$.
+\end{enumerate}
+\end{exercicebox}
+
+% --- Synthèse et Variables Indicatrices ---
+
+\begin{exercicebox}[Exercice 19 : Choisir la Bonne Loi]
+Pour chaque scénario, identifiez la loi discrète la plus appropriée (Binomiale, Hypergéométrique, Géométrique, Poisson).
+\begin{enumerate}
+    \item On compte le nombre de Rois en tirant 5 cartes d'un jeu, sans remise.
+    \item On compte le nombre de clients arrivant à une banque entre 10h et 11h.
+    \item On compte le nombre de lancers de pièce jusqu'à obtenir le premier Pile.
+    \item On compte le nombre de "6" obtenus en lançant un dé 20 fois.
+    \item On compte le nombre de soldats tués par ruade de cheval dans un corps d'armée en un an.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 20 : Variable Indicatrice]
+Soit $A$ l'événement "obtenir un 6 en lançant un dé équilibré".
+Soit $I_A$ la variable indicatrice de l'événement $A$.
+\begin{enumerate}
+    \item Quelle loi suit $I_A$ ? Donnez son nom et son paramètre.
+    \item Écrivez la PMF de $I_A$.
+\end{enumerate}
+\end{exercicebox}
+
+\subsection{Corrections des Exercices}
+
+% --- Corrections : Concepts de Base (PMF, CDF) ---
+
+\begin{correctionbox}[Correction Exercice 1 : Identification de Variables Aléatoires]
+1.  \textbf{Discrète}. $X$ ne peut prendre que des valeurs entières $\{0, 1, \dots, 10\}$.
+2.  \textbf{Continue}. Le temps peut prendre n'importe quelle valeur dans un intervalle (par ex. $T \in [2.5, 5]$ heures).
+3.  \textbf{Discrète}. $X$ ne peut prendre que des valeurs entières $\{0, 1, 2, \dots\}$.
+4.  \textbf{Continue}. La température peut prendre n'importe quelle valeur dans un intervalle (par ex. $T \in [15.0, 25.0]^\circ\text{C}$).
+5.  \textbf{Discrète}. $X$ ne peut prendre que des valeurs entières $\{0, 1, 2, \dots\}$ (si on compte les échecs) ou $\{1, 2, 3, \dots\}$ (si on compte les lancers).
 \end{correctionbox}
 
-\begin{intuitionbox}[Le secret : l'information de l'animateur]
-L'erreur commune est de supposer qu'il reste deux portes avec une chance égale de $1/2$. Cela ignore une information capitale : le choix de l'animateur n'est \textbf{pas aléatoire}. Il sait où se trouve la voiture et ouvrira toujours une porte perdante.
+\begin{correctionbox}[Correction Exercice 2 : Construction d'une PMF]
+On lance un dé à 4 faces (1, 2, 3, 4). $X$ est le résultat.
+1.  Valeurs possibles : $S_X = \{1, 2, 3, 4\}$.
+2.  PMF : Le dé est équilibré, donc chaque face a la même probabilité $1/4$.
+    $P(X=1) = 1/4$
+    $P(X=2) = 1/4$
+    $P(X=3) = 1/4$
+    $P(X=4) = 1/4$
+    Et $P(X=k) = 0$ pour tout autre $k$.
+3.  Vérification : $\sum P(X=k) = 1/4 + 1/4 + 1/4 + 1/4 = 4/4 = 1$.
+\end{correctionbox}
 
-Le raisonnement correct se déroule en deux temps. D'abord, votre choix initial a $\mathbf{1/3}$ de chance d'être correct. Cela implique qu'il y a $\mathbf{2/3}$ de chance que la voiture soit derrière l'une des \textit{deux autres portes}. Ensuite, lorsque l'animateur ouvre l'une de ces deux portes, il ne fait que vous montrer où la voiture n'est \textit{pas} dans cet ensemble. La probabilité de $2/3$ se \textbf{concentre} alors entièrement sur la seule porte qu'il a laissée fermée. Changer de porte revient à miser sur cette probabilité de $2/3$.
-\end{intuitionbox}
+\begin{correctionbox}[Correction Exercice 3 : PMF d'une Somme]
+$Y = D_1 + D_2$, où $D_1, D_2 \in \{1, 2, 3, 4\}$. Il y a $4 \times 4 = 16$ issues équiprobables (prob. 1/16 chacune).
+1.  Valeurs possibles : Min = $1+1=2$. Max = $4+4=8$. $S_Y = \{2, 3, 4, 5, 6, 7, 8\}$.
+2.  PMF (en comptant les issues favorables sur 16) :
+    - $P(Y=2) = P(1,1) \implies 1/16$
+    - $P(Y=3) = P(1,2) + P(2,1) \implies 2/16$
+    - $P(Y=4) = P(1,3) + P(2,2) + P(3,1) \implies 3/16$
+    - $P(Y=5) = P(1,4) + P(2,3) + P(3,2) + P(4,1) \implies 4/16$
+    - $P(Y=6) = P(2,4) + P(3,3) + P(4,2) \implies 3/16$
+    - $P(Y=7) = P(3,4) + P(4,3) \implies 2/16$
+    - $P(Y=8) = P(4,4) \implies 1/16$
+    (Vérification : $1+2+3+4+3+2+1 = 16$. La somme est $16/16 = 1$).
+\end{correctionbox}
 
-\begin{proofbox}[Preuve par l'arbre de décision]
-L'analyse de la meilleure stratégie peut être visualisée à l'aide de l'arbre de décision ci-dessous. Il décompose le problème en deux scénarios initiaux : avoir choisi la bonne porte (probabilité $1/3$) ou une mauvaise porte (probabilité $2/3$).
+\begin{correctionbox}[Correction Exercice 4 : Construction d'une CDF]
+On utilise la PMF de l'exercice 3. $F_Y(y) = P(Y \le y)$.
+1.  CDF aux points de masse :
+    - $F_Y(2) = P(Y \le 2) = P(Y=2) = 1/16$
+    - $F_Y(3) = P(Y \le 3) = P(Y=2)+P(Y=3) = 1/16 + 2/16 = 3/16$
+    - $F_Y(4) = P(Y \le 4) = 3/16 + P(Y=4) = 3/16 + 3/16 = 6/16$
+    - $F_Y(5) = P(Y \le 5) = 6/16 + P(Y=5) = 6/16 + 4/16 = 10/16$
+    - $F_Y(6) = P(Y \le 6) = 10/16 + P(Y=6) = 10/16 + 3/16 = 13/16$
+    - $F_Y(7) = P(Y \le 7) = 13/16 + P(Y=7) = 13/16 + 2/16 = 15/16$
+    - $F_Y(8) = P(Y \le 8) = 15/16 + P(Y=8) = 15/16 + 1/16 = 16/16 = 1$
+2.  $F_Y(1.5) = P(Y \le 1.5) = 0$ (car la valeur minimale est 2).
+3.  $F_Y(5.2) = P(Y \le 5.2) = P(Y \le 5) = F_Y(5) = 10/16$.
+4.  $F_Y(10) = P(Y \le 10) = 1$ (car la valeur maximale est 8).
+\end{correctionbox}
 
-\vspace{0.5cm}
-\begin{center}
-\begin{tikzpicture}[
-  grow=right,
-  level distance=4.5cm,
-  level 1/.style={sibling distance=3cm},
-  level 2/.style={sibling distance=2.5cm},
-  edge from parent/.style={draw, -latex},
-  % --- Définition des styles pour les cadres ---
-  porte_style/.style={rectangle, rounded corners, draw=black, fill=gray!20, thick, inner sep=4pt, text width=2.5cm, align=center},
-  gain_style/.style={rectangle, rounded corners, draw=green!60!black, fill=green!20, thick, inner sep=4pt},
-  perte_style/.style={rectangle, rounded corners, draw=red!60!black, fill=red!20, thick, inner sep=4pt}
-]
+% --- Corrections : Loi de Bernoulli et Loi Binomiale ---
 
-\node {S}
-    % --- Branche du haut ---
-    child {
-        node[porte_style] {Bonne porte}
-        child {
-            node[gain_style] {Gain}
-            edge from parent
-            node[above, sloped] {$1/2$}
-        }
-        child {
-            node[perte_style] {Perte}
-            edge from parent
-            node[below, sloped] {$1/2$}
-        }
-        edge from parent
-        node[above, sloped] {1/3}
-    }
-    % --- Branche du bas ---
-    child {
-        node[porte_style] {Mauvaise porte}
-        child {
-            node[gain_style] {Gain}
-            edge from parent
-            node[above, sloped] {1}
-        }
-        edge from parent
-        node[below, sloped] {2/3}
-    };
-\end{tikzpicture}
-\end{center}
-\vspace{0.5cm}
+\begin{correctionbox}[Correction Exercice 5 : Loi de Bernoulli]
+1.  $X$ suit une \textbf{loi de Bernoulli}. Le paramètre est $p=0.05$. On note $X \sim \text{Bern}(0.05)$.
+2.  La PMF est :
+    $P(X=1) = p = 0.05$ (succès = défectueux)
+    $P(X=0) = 1-p = 0.95$ (échec = non défectueux)
+\end{correctionbox}
 
-\noindent\textbf{Analyse de l'arbre :}
+\begin{correctionbox}[Correction Exercice 6 : Loi Binomiale (Calcul Direct)]
+1.  $X$ est le nombre de succès (Pile) en $n=5$ essais indépendants avec probabilité $p=0.7$.
+    $X$ suit une \textbf{loi Binomiale}. $X \sim \text{Bin}(n=5, p=0.7)$.
+2.  $P(X=k) = \binom{n}{k} p^k (1-p)^{n-k}$.
+    $P(X=3) = \binom{5}{3} (0.7)^3 (1-0.7)^{5-3} = 10 \times (0.343) \times (0.3)^2 = 10 \times 0.343 \times 0.09 = 0.3087$.
+3.  $P(X=5) = \binom{5}{5} (0.7)^5 (0.3)^0 = 1 \times (0.7)^5 \times 1 = 0.16807$.
+\end{correctionbox}
 
-\vspace{0.3cm}
-\noindent\textbf{Branche du bas (cas le plus probable) :}
-\newline
-Avec une probabilité de $\mathbf{2/3}$, votre choix initial se porte sur une "Mauvaise porte". L'animateur est alors obligé de révéler l'autre porte perdante. La seule porte restante est donc la bonne. L'arbre montre que cela mène à un "Gain" avec une probabilité de $\mathbf{1}$. Ce chemin correspond au résultat de la stratégie \textbf{"Changer"}.
+\begin{correctionbox}[Correction Exercice 7 : Loi Binomiale (Calcul Cumulé)]
+On a $X \sim \text{Bin}(5, 0.7)$.
+1.  $P(X=0) = \binom{5}{0} (0.7)^0 (0.3)^5 = 1 \times 1 \times (0.3)^5 = 0.00243$.
+2.  L'événement "au moins 1 Pile" ($X \ge 1$) est le complémentaire de "0 Pile" ($X=0$).
+    $P(X \ge 1) = 1 - P(X=0) = 1 - 0.00243 = 0.99757$.
+\end{correctionbox}
 
-\vspace{0.3cm}
-\noindent\textbf{Branche du haut (cas le moins probable) :}
-\newline
-Avec une probabilité de $\mathbf{1/3}$, vous avez choisi la "Bonne porte" du premier coup. L'arbre se divise alors en deux issues équiprobables ($1/2$ chacune). L'issue "Gain" correspond à la stratégie \textbf{"Garder"} votre choix initial, tandis que l'issue "Perte" correspond à la stratégie \textbf{"Changer"} pour la porte perdante restante.
+\begin{correctionbox}[Correction Exercice 8 : Problème Binomial (Contrôle Qualité)]
+Le tirage est \textit{avec remise}, donc les essais sont indépendants. C'est une loi binomiale.
+$n = 20$ (nombre d'essais).
+$p = 0.10$ (probabilité de succès = défectueux).
+On cherche $P(X=2)$.
+$P(X=2) = \binom{20}{2} (0.1)^2 (1-0.1)^{20-2}$
+$P(X=2) = \frac{20 \times 19}{2} (0.1)^2 (0.9)^{18} = 190 \times 0.01 \times (0.9)^{18}$
+$P(X=2) = 1.9 \times (0.9)^{18} \approx 1.9 \times 0.15009 \approx 0.2852$.
+\end{correctionbox}
 
-\vspace{0.3cm}
-\noindent\textbf{Conclusion :}
-\newline
-Pour évaluer la meilleure stratégie, il suffit de sommer les probabilités de gain. La \textbf{probabilité de gain en changeant} est de $\mathbf{2/3}$, car vous gagnez uniquement si votre choix initial était mauvais (branche du bas). La \textbf{probabilité de gain en gardant} est de $\mathbf{1/3}$, car vous gagnez uniquement si votre choix initial était bon (branche "Gain" du haut). La stratégie optimale est donc bien de toujours changer de porte.
-\end{proofbox}
+% --- Corrections : Loi Hypergéométrique ---
+
+\begin{correctionbox}[Correction Exercice 9 : Loi Hypergéométrique (Urne)]
+Le tirage est \textit{sans remise} d'une population finie.
+1.  $X$ suit une \textbf{loi Hypergéométrique}.
+    Paramètres : $w=7$ (blanches, succès), $b=5$ (noires, échecs), $m=4$ (nombre de tirages).
+    $X \sim \text{HG}(w=7, b=5, m=4)$.
+2.  On cherche $P(X=2)$.
+    $P(X=k) = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}}$
+    $P(X=2) = \frac{\binom{7}{2} \binom{5}{4-2}}{\binom{12}{4}} = \frac{\binom{7}{2} \binom{5}{2}}{\binom{12}{4}}$
+    $P(X=2) = \frac{(\frac{7 \times 6}{2}) \times (\frac{5 \times 4}{2})}{(\frac{12 \times 11 \times 10 \times 9}{4 \times 3 \times 2 \times 1})} = \frac{21 \times 10}{495} = \frac{210}{495} = \frac{14}{33} \approx 0.4242$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 10 : Problème Hypergéométrique (Comité)]
+Tirage sans remise. C'est une loi Hypergéométrique.
+$w=10$ (hommes), $b=8$ (femmes), $m=6$ (taille du comité). Total $N=18$.
+On cherche $P(X=3)$ (exactement 3 hommes, ce qui implique $m-k = 6-3=3$ femmes).
+$P(X=3) = \frac{\binom{10}{3} \binom{8}{3}}{\binom{18}{6}}$
+$P(X=3) = \frac{(\frac{10 \times 9 \times 8}{3 \times 2 \times 1}) \times (\frac{8 \times 7 \times 6}{3 \times 2 \times 1})}{(\frac{18 \times 17 \times 16 \times 15 \times 14 \times 13}{6 \times 5 \times 4 \times 3 \times 2 \times 1})} = \frac{120 \times 56}{18564} = \frac{6720}{18564} \approx 0.362$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 11 : Binomiale vs Hypergéométrique]
+Population totale $N=10000$. 10\% défectueux, donc $w=1000$ (défectueux), $b=9000$ (non défectueux).
+Tirage de $m=20$ \textit{sans remise}.
+1.  Loi exacte : \textbf{Loi Hypergéométrique}.
+    $X \sim \text{HG}(w=1000, b=9000, m=20)$.
+2.  Probabilité exacte $P(X=2)$ :
+    $P(X=2) = \frac{\binom{1000}{2} \binom{9000}{18}}{\binom{10000}{20}}$
+    $P(X=2) = \frac{(\frac{1000 \times 999}{2}) \times (\frac{9000 \times \dots \times 8983}{18!})}{(\frac{10000 \times \dots \times 9981}{20!})} \approx 0.2854$.
+    (Le calcul est très complexe, mais on peut montrer qu'il est très proche de la binomiale).
+3.  Le résultat de l'exercice 8 (Binomiale) était $\approx 0.2852$.
+    L'approximation binomiale est excellente. La raison est que la taille de l'échantillon ($m=20$) est très petite par rapport à la taille de la population ($N=10000$). Le fait de ne pas remettre les 20 articles change à peine les probabilités pour les tirages suivants.
+\end{correctionbox}
+
+% --- Corrections : Loi Géométrique ---
+
+\begin{correctionbox}[Correction Exercice 12 : Loi Géométrique (Calcul Direct)]
+1.  $X$ est le nombre d'échecs avant le premier succès. $X$ suit une \textbf{loi Géométrique}.
+    Le succès est "obtenir 6", donc $p = 1/6$. $X \sim \text{Geom}(p=1/6)$.
+2.  "Premier 6 au 3ème lancer" signifie 2 échecs (lancers 1 et 2) puis 1 succès (lancer 3).
+    C'est $P(X=2)$. $q = 1-p = 5/6$.
+    $P(X=2) = q^2 p^1 = (5/6)^2 (1/6) = 25/216 \approx 0.1157$.
+3.  "Premier 6 au 1er lancer" signifie 0 échec. C'est $P(X=0)$.
+    $P(X=0) = q^0 p^1 = 1 \times (1/6) = 1/6$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 13 : Loi Géométrique (Calcul Cumulé)]
+$p=0.2$ (succès), $q=0.8$ (échec). $X$ compte les échecs. $X \sim \text{Geom}(0.2)$.
+1.  "Exactement 4 tirs au total" signifie 3 échecs suivis d'un succès. On cherche $P(X=3)$.
+    $P(X=3) = q^3 p^1 = (0.8)^3 (0.2) = 0.512 \times 0.2 = 0.1024$.
+2.  "Plus de 2 tirs au total" signifie qu'il faut au moins 3 tirs. C'est l'événement "les 2 premiers tirs sont des échecs".
+    La probabilité est $P(\text{Echec 1} \cap \text{Echec 2}) = q \times q = q^2$.
+    $P(X \ge 2) = (0.8)^2 = 0.64$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 14 : Variante de la Loi Géométrique]
+$Y$ est le nombre total d'essais ($k=1, 2, 3, \dots$). $p$ est la prob. de succès.
+1.  Pour que $Y=k$, il faut $k-1$ échecs, suivis d'un succès.
+    $P(Y=k) = (1-p)^{k-1} p = q^{k-1} p$, pour $k=1, 2, \dots$
+2.  Avec $p=1/6$, on cherche $P(Y=3)$.
+    $P(Y=3) = (5/6)^{3-1} (1/6) = (5/6)^2 (1/6) = 25/216$.
+    C'est le même résultat que $P(X=2)$ de l'exercice 12. Les deux définitions décrivent la même situation (3 lancers au total).
+\end{correctionbox}
+
+% --- Corrections : Loi de Poisson ---
+
+\begin{correctionbox}[Correction Exercice 15 : Loi de Poisson (Calcul Direct)]
+$X \sim \text{Poisson}(\lambda=5)$. PMF : $P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!}$.
+1.  $P(X=0) = \frac{e^{-5} 5^0}{0!} = \frac{e^{-5} \times 1}{1} = e^{-5} \approx 0.0067$.
+2.  $P(X=5) = \frac{e^{-5} 5^5}{5!} = \frac{e^{-5} \times 3125}{120} = e^{-5} \times \frac{625}{24} \approx 26.04 \times e^{-5} \approx 0.1755$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 16 : Loi de Poisson (Calcul Cumulé)]
+$X \sim \text{Poisson}(\lambda=2)$. On cherche $P(X \le 2)$.
+$P(X \le 2) = P(X=0) + P(X=1) + P(X=2)$
+$P(X=0) = \frac{e^{-2} 2^0}{0!} = e^{-2}$
+$P(X=1) = \frac{e^{-2} 2^1}{1!} = 2e^{-2}$
+$P(X=2) = \frac{e^{-2} 2^2}{2!} = \frac{4e^{-2}}{2} = 2e^{-2}$
+$P(X \le 2) = e^{-2} + 2e^{-2} + 2e^{-2} = 5e^{-2} \approx 5 \times 0.1353 = 0.6767$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 17 : Loi de Poisson (Changement de $\lambda$)]
+1.  Pour une page, $X \sim \text{Poisson}(\lambda=0.5)$.
+    $P(X=0) = \frac{e^{-0.5} (0.5)^0}{0!} = e^{-0.5} \approx 0.6065$.
+2.  Si le taux est 0.5 faute/page, le taux pour 10 pages est $\lambda_Y = 0.5 \times 10 = 5$.
+    $Y \sim \text{Poisson}(\lambda_Y=5)$.
+3.  On cherche $P(Y=0)$.
+    $P(Y=0) = \frac{e^{-5} 5^0}{0!} = e^{-5} \approx 0.0067$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 18 : Approximation Binomiale par Poisson]
+1.  C'est un tirage de $n=10000$ clients, où chaque client est un essai de Bernoulli avec $p=0.0003$. La loi exacte est $X \sim \text{Bin}(10000, 0.0003)$.
+2.  Le paramètre $\lambda$ pour l'approximation Poisson est $\lambda = np = 10000 \times 0.0003 = 3$.
+3.  On utilise $Y \sim \text{Poisson}(\lambda=3)$ pour approximer $X$.
+    $P(X=2) \approx P(Y=2) = \frac{e^{-3} 3^2}{2!} = \frac{9e^{-3}}{2} = 4.5 e^{-3} \approx 4.5 \times 0.04979 \approx 0.224$.
+\end{correctionbox}
+
+% --- Corrections : Synthèse et Variables Indicatrices ---
+
+\begin{correctionbox}[Correction Exercice 19 : Choisir la Bonne Loi]
+1.  Tirage sans remise d'une population finie : \textbf{Loi Hypergéométrique}.
+2.  Comptage d'événements sur un intervalle de temps fixe : \textbf{Loi de Poisson}.
+3.  Comptage d'essais jusqu'au premier succès : \textbf{Loi Géométrique}.
+4.  Comptage de succès sur un nombre fixe d'essais indépendants : \textbf{Loi Binomiale}.
+5.  Comptage d'événements rares sur un intervalle (temps/espace) : \textbf{Loi de Poisson}.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 20 : Variable Indicatrice]
+$A$ = "obtenir 6". $P(A) = 1/6$.
+$I_A = 1$ si $A$ se produit, $I_A = 0$ sinon.
+1.  C'est une expérience avec deux issues (succès/échec). $I_A$ suit une \textbf{Loi de Bernoulli}.
+    Le paramètre est $p = P(A) = 1/6$. $I_A \sim \text{Bern}(1/6)$.
+2.  La PMF de $I_A$ est :
+    $P(I_A = 1) = p = 1/6$
+    $P(I_A = 0) = 1-p = 5/6$
+\end{correctionbox}

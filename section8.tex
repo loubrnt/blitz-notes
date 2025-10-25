@@ -1,311 +1,677 @@
 \newpage
-\section{La Loi Normale (ou Gaussienne)}
 
-\subsection{Introduction et Fonction de Densité (PDF)}
+\section{Moments d'une distribution}
 
-\begin{definitionbox}[Loi Normale]
-Une variable aléatoire continue $X$ suit une \textbf{loi normale} (ou loi de Gauss) de paramètres $\mu$ (l'espérance) et $\sigma^2$ (la variance), notée $X \sim \mathcal{N}(\mu, \sigma^2)$, si sa fonction de densité de probabilité (PDF) est donnée par :
-$$ f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^2 } $$
-pour tout $x \in (-\infty, \infty)$, où $\sigma > 0$.
+\subsection{Définitions fondamentales des moments}
+
+Après avoir défini l'espérance ($\mu$) et la variance ($\sigma^2$), qui sont les moments d'ordre 1 et 2, nous pouvons généraliser cette idée pour capturer des informations plus subtiles sur la forme d'une distribution.
+
+\begin{definitionbox}[Types de Moments]
+Soit $X$ une variable aléatoire ayant une espérance $\mu$ et une variance $\sigma^2$. Pour tout entier positif $m$, on définit les moments suivants :
+\begin{itemize}
+    \item \textbf{$m$-ième moment (non centré)} : $E[X^m]$.
+    \item \textbf{$m$-ième moment centré} : $E[(X - \mu)^m]$.
+    \item \textbf{$m$-ième moment standardisé} : $E\left[\left(\frac{X - \mu}{\sigma}\right)^m\right]$.
+\end{itemize}
+Les moments centrés et standardisés permettent d'étudier les propriétés de la distribution indépendamment de sa position ($\mu$) et de son échelle ($\sigma$).
 \end{definitionbox}
 
-\begin{intuitionbox}[La Courbe en Cloche]
-La loi normale est sans doute la distribution la plus importante en probabilités et statistiques. Pourquoi ? Parce qu'elle modélise remarquablement bien de nombreux phénomènes naturels et processus aléatoires où les valeurs tendent à se regrouper autour d'une moyenne, avec des écarts symétriques devenant de plus en plus rares à mesure qu'on s'éloigne de cette moyenne. Pensez à la taille des individus dans une population, aux erreurs de mesure répétées, ou même aux notes d'un grand groupe d'étudiants à un examen bien conçu. 
+\subsection{Asymétrie (Skewness)}
 
-Sa densité a une forme caractéristique de \textbf{cloche symétrique} :
+Le premier moment nous donne la tendance centrale. Le deuxième moment (la variance) nous donne la dispersion. Le troisième moment, lui, va nous renseigner sur la \textit{symétrie} de la distribution.
+
+\begin{definitionbox}[Asymétrie (Skewness)]
+L'\textbf{asymétrie} (ou \textit{skewness}) d'une variable aléatoire $X$ de moyenne $\mu$ et d'écart-type $\sigma$ est définie comme le \textbf{troisième moment standardisé} :
+$$ \text{Skew}(X) = E\left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right]. $$
+\end{definitionbox}
+
+\begin{intuitionbox}[Comprendre la Formule du Skewness]
+Pour une variable aléatoire $X$ de moyenne $\mu$ et d'écart-type $\sigma$, le \textbf{skewness} est défini comme :
+\[
+\text{Skew}(X) = \frac{E[(X - \mu)^3]}{\sigma^3}
+\]
+
+\medskip
+
+\textbf{Logique du numérateur : le moment centré d'ordre 3}
 \begin{itemize}
-    \item \textbf{Le Centre ($\mu$)} : Le paramètre $\mu$ représente l'\textbf{espérance} (la moyenne) de la distribution. C'est le centre de symétrie de la courbe, là où la cloche atteint son \textbf{sommet}. C'est la valeur la plus probable (le mode) et aussi la valeur qui coupe la distribution en deux moitiés égales (la médiane). Changer $\mu$ \textit{translate} la cloche horizontalement sans changer sa forme.
-    \item \textbf{La Dispersion ($\sigma$)} : Le paramètre $\sigma$ est l'\textbf{écart-type} ($\sigma^2$ est la variance). Il mesure la \textbf{dispersion} des valeurs autour de la moyenne $\mu$. Géométriquement, $\sigma$ contrôle la \textbf{largeur} de la cloche.
-        \begin{itemize}
-            \item Un \textit{petit} $\sigma$ signifie que les données sont très concentrées autour de la moyenne, donnant une cloche \textbf{étroite et pointue}.
-            \item Un \textit{grand} $\sigma$ signifie que les données sont plus étalées, donnant une cloche \textbf{large et aplatie}.
-        \end{itemize}
-    Les points d'inflexion de la courbe (là où la courbure change de sens) se situent exactement à $\mu \pm \sigma$.
+    \item Le terme $(X - \mu)^3$ est le \textbf{cube de l'écart à la moyenne}
+    \item Contrairement à $(X - \mu)^2$ (toujours positif), le cube \textbf{conserve le signe} de l'écart
+    \item Il pondère différemment les observations à gauche et à droite de la moyenne
 \end{itemize}
 
-\tcblower
-\centering
-\begin{tikzpicture}
-    \begin{axis}[
-        title={La Courbe en Cloche (PDF de la Loi Normale)},
-        xlabel={$x$},
-        ylabel={$f(x)$},
-        axis lines=middle,
-        no markers,
-        samples=100,
-        domain=-4:4,
-        height=8cm,
-        width=\linewidth-1cm,
-        tick label style={font=\tiny},
-        legend style={at={(0.5,-0.15)}, anchor=north, font=\small},
-        legend columns=2
-    ]
-    % N(0, 1)
-    \addplot [blue, ultra thick] {1/(sqrt(2*pi))*exp(-x^2/2)};
-    \addlegendentry{$\mu=0, \sigma=1$};
-    % N(0, 0.25) => sigma=0.5
-    \addplot [red, ultra thick] {1/(0.5*sqrt(2*pi))*exp(-x^2/(2*0.5^2))};
-    \addlegendentry{$\mu=0, \sigma=0.5$ (étroite)};
-    % N(1, 2.25) => sigma=1.5
-    \addplot [green!70!black, ultra thick] {1/(1.5*sqrt(2*pi))*exp(-(x-1)^2/(2*1.5^2))};
-    \addlegendentry{$\mu=1, \sigma=1.5$ (large, décalée)};
+\medskip
 
-    \draw [dashed] (axis cs:0,0) -- (axis cs:0, {1/(sqrt(2*pi))}) node[above, font=\tiny] {pic à $\mu=0$}; % Ligne pour mu=0
-    \draw [dashed] (axis cs:1,0) -- (axis cs:1, {1/(1.5*sqrt(2*pi))}) node[above right, font=\tiny] {pic à $\mu=1$}; % Ligne pour mu=1
-    \end{axis}
-\end{tikzpicture}
-\par\small\textit{Influence de $\mu$ (position) et $\sigma$ (largeur) sur la forme de la cloche.}
+% --- MODIFIÉ : Tableau supprimé et fusionné dans la liste ---
+\textbf{Interprétation intuitive}
+\begin{itemize}
+    \item \textbf{Skewness = 0 (Symétrique)} : La distribution est symétrique. Les écarts positifs et négatifs s'annulent. Typiquement : Moyenne = Médiane = Mode.
+    \item \textbf{Skewness > 0 (Queue à droite)} : La distribution présente une queue longue à droite. Les grandes valeurs positives sont amplifiées par le cube. Les valeurs extrêmes tirent la moyenne vers la droite.
+    \item \textbf{Skewness < 0 (Queue à gauche)} : La distribution présente une queue longue à gauche. Les écarts négatifs dominent. Les valeurs extrêmes tirent la moyenne vers la gauche.
+\end{itemize}
+% --- FIN MODIFICATION ---
+
+\medskip
+
+\textbf{Pourquoi $\sigma^3$ au dénominateur ?}
+\begin{itemize}
+    \item Le moment d'ordre 3 est homogène à des unités au cube
+    \item On divise par $\sigma^3$ pour obtenir un coefficient \textbf{sans dimension}
+    \item Permet la comparaison entre distributions de différentes échelles
+\end{itemize}
 \end{intuitionbox}
 
-\begin{proofbox}[Dérivation de la Densité Normale à partir des Principes Fondamentaux]
+\begin{remarquebox}[Pourquoi Standardiser ?]
+En standardisant d'abord ($\frac{X-\mu}{\sigma}$), la définition de $\text{Skew}(X)$ ne dépend ni de la position ($\mu$) ni de l'échelle ($\sigma$) de la distribution, ce qui est raisonnable puisque ces informations sont déjà fournies par la moyenne et l'écart-type. De plus, cette standardisation garantit que l'asymétrie est invariante par changement d'unité de mesure (par exemple, passer des pouces aux mètres n'affecte pas la valeur de l'asymétrie).
+\end{remarquebox}
 
-\textbf{Contexte Visuel :} Imaginons un nuage de points dispersés autour d'une cible à l'origine $(0,0)$, comme des impacts de fléchettes. Le graphique ci-dessous illustre cette dispersion. On s'intéresse à la probabilité de tomber dans une petite zone, comme $dA$, autour d'un point $(x, y)$.
+\subsection{Propriétés de symétrie}
+
+Le skewness est une mesure numérique de l'asymétrie. Mais nous pouvons aussi définir la symétrie de manière formelle.
+
+\begin{definitionbox}[Symétrie d'une Variable Aléatoire]
+On dit qu'une variable aléatoire $X$ a une distribution \textbf{symétrique} autour de $\mu$ si la variable $X - \mu$ a la même distribution que $\mu - X$. On dit aussi que $X$ est symétrique ou que sa distribution est symétrique. Ces trois formulations ont le même sens.
+\end{definitionbox}
+
+\begin{theorembox}[Symétrie en Termes de Fonction de Densité]
+Soit $X$ une variable aléatoire continue de fonction de densité de probabilité (PDF) $f$. Alors, $X$ est symétrique autour de $\mu$ si et seulement si :
+$$ f(x) = f(2\mu - x) \quad \text{pour tout } x. $$
+\end{theorembox}
+
+\begin{proofbox}[Preuve du Théorème de Symétrie]
+Soit $F$ la fonction de répartition (CDF) de $X$. Si la symétrie tient, alors :
+$$ F(x) = P(X \le x) = P(X - \mu \le x - \mu) = P(\mu - X \le x - \mu) = P(X \ge 2\mu - x) = 1 - F(2\mu - x). $$
+
+En prenant la dérivée des deux côtés par rapport à $x$, on obtient :
+$$ f(x) = \frac{d}{dx}F(x) = \frac{d}{dx}[1 - F(2\mu - x)] = f(2\mu - x). $$
+
+Cela démontre que la condition $f(x) = f(2\mu - x)$ est nécessaire et suffisante pour la symétrie.
+\end{proofbox}
+
+\subsection{Aplatissement (Kurtosis)}
+
+Après l'asymétrie (ordre 3), le moment d'ordre 4 nous informe sur "l'épaisseur" des queues de la distribution, c'est-à-dire la probabilité d'obtenir des valeurs très éloignées de la moyenne.
+
+\begin{definitionbox}[Kurtosis (Aplatissement)]
+Pour une variable aléatoire $X$ de moyenne $\mu$ et d'écart-type $\sigma$, le \textbf{kurtosis} est défini comme le \textbf{quatrième moment standardisé} :
+$$ \text{Kurtosis}(X) = E\left[ \left( \frac{X - \mu}{\sigma} \right)^4 \right]. $$
+
+Dans la pratique, on utilise plus souvent le \textbf{kurtosis excessif} (ou excès de kurtosis), défini comme :
+$$ \text{Excess Kurtosis}(X) = E\left[ \left( \frac{X - \mu}{\sigma} \right)^4 \right] - 3. $$
+La soustraction de 3 fait en sorte que le kurtosis d'une loi normale soit égal à 0.
+\end{definitionbox}
+
+\begin{intuitionbox}[Comprendre la Kurtosis]
+Pour une variable aléatoire $X$, le \textbf{kurtosis} est défini comme :
+\[
+\text{Kurt}(X) = \frac{E[(X - \mu)^4]}{\sigma^4}
+\]
+et l'\textbf{excess kurtosis} (kurtosis excédentaire) comme : $\text{Excess Kurtosis} = \text{Kurt}(X) - 3$.
+
+\medskip
+
+\textbf{Pourquoi le moment d'ordre 4 ?}
+\begin{itemize}
+    \item Comme la variance, on utilise une puissance paire (pas d'effet de signe)
+    \item La puissance 4 \textbf{amplifie énormément les écarts extrêmes}
+    \item Mesure le \textbf{poids des queues} et la \textbf{concentration autour de la moyenne}
+\end{itemize}
+
+\medskip
+
+% --- MODIFIÉ : Tableau supprimé et fusionné dans la liste ---
+\textbf{Interprétation intuitive (basée sur l'Excess Kurtosis)}
+\begin{itemize}
+    \item \textbf{Leptokurtique (Excess Kurtosis > 0)} : Kurtosis total > 3. Distribution pointue avec des queues épaisses. Les événements extrêmes sont plus probables que pour une loi normale.
+    \item \textbf{Mésocurtique (Excess Kurtosis = 0)} : Kurtosis total = 3. C'est la référence (loi normale).
+    \item \textbf{Platykurtique (Excess Kurtosis < 0)} : Kurtosis total < 3. Distribution aplatie avec des queues légères et un centre large. Les événements extrêmes sont moins probables.
+\end{itemize}
+% --- FIN MODIFICATION ---
+
+\medskip
+
+\textbf{Application en finance}
+\begin{itemize}
+    \item Les rendements financiers ont souvent un excès de kurtosis positif
+    \item Indique une probabilité plus élevée d'événements extrêmes que la loi normale
+    \item Justifie le "vol smile" dans les options
+\end{itemize}
+
+\medskip
+
+\textbf{Pourquoi $\sigma^4$ au dénominateur ?}
+\begin{itemize}
+    \item Le moment d'ordre 4 est homogène à des unités$^4$
+    \item On divise par $\sigma^4$ pour un coefficient \textbf{sans dimension}
+\end{itemize}
+\end{intuitionbox}
+
+\subsection{Exemples de distributions}
+
+Pour bien fixer les idées, comparons le skewness et le kurtosis de plusieurs distributions classiques. Notez que dans les graphiques suivants, le "Kurtosis" affiché est l'\textit{excess kurtosis} (centré à 0).
+
+\begin{examplebox}[La Distribution Normale (Mésokurtique)]
 
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[
-    axis lines=middle, % Axes qui passent par l'origine (0,0)
-    xlabel=$x$,       % Étiquette axe X
-    ylabel=$y$,       % Étiquette axe Y
-    axis line style={magenta}, % Couleur des axes
-    xlabel style={anchor=west, magenta}, % Style de l'étiquette X
-    ylabel style={anchor=south, magenta}, % Style de l'étiquette Y
-    xmin=-3.5, xmax=3.5, % Limites du graphique
-    ymin=-3.5, ymax=3.5,
-    tick label style={font=\tiny} % Police plus petite pour les graduations
-]
-
-% Ajout des points du nuage. Ce sont des coordonnées approximatives.
-\addplot [only marks, mark=*, cyan, mark size=1.5pt]
-coordinates {
-    (0.2, 0.1) (-0.5, 0.2) (0.1, -0.3) (0.5, -0.8) (-0.3, -1.2) (0,0.1)
-    (1.5, 1.5) (0.8, 0.8) (2.0, -0.5) (2.8, -1.4) (2.5, -0.2)
-    (-1.8, -1.3) (-2.5, 0.5) (-1.5, 0.3) (-2.2, -0.8) (-0.8, 0.5)
-    (0.5, 1.2) (0.7, 2.8) (0.2, 3.2) (-0.5, 1.5) (-1.0, -2.0)
-    (1.8, -1.0) (1.0, -1.5) (0.3, -2.5) (-1.8, -2.8) (1.2, 0.5)
-    (-1.2, -1.5) (-0.8, 1.1)
-};
-
-% --- Annotations ---
-
-% Points et boîte pour 'dA'
-\addplot [only marks, mark=*, red, mark size=1.5pt] coordinates {(1.3, 2.0)};
-\draw [red, thick] (axis cs:1.1, 1.8) rectangle (axis cs:1.5, 2.2);
-\node [red, above] at (axis cs:1.3, 2.2) {$dA$};
-
-% Points et boîte pour 'dB'
-\addplot [only marks, mark=*, cyan, mark size=1.5pt] 
-coordinates {(-1.2, 2.0) (-1.3, 2.3) (-1.0, 2.2) (-1.1, 1.9)};
-\draw [blue, thick] (axis cs:-1.8, 1.2) rectangle (axis cs:-0.8, 2.8);
-\node [blue, above] at (axis cs:-1.3, 2.8) {$dB$};
-
-\end{axis}
+  \begin{axis}[
+    width=0.8\textwidth,
+    height=0.5\textwidth,
+    xlabel={$x$},
+    title={Densité Normale ($\mu=0$, $\sigma=1$)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    major grid style={line width=.2pt,draw=gray!50},
+    domain=-4:4,
+    samples=100,
+    enlargelimits=false,
+    axis lines=middle,
+    xmin=-4, xmax=4,
+    ymin=0, ymax=0.55
+  ]
+ 
+  % Courbe de densité
+  \addplot [thick, color=blue, fill=blue!20, fill opacity=0.5] 
+    {1/(sqrt(2*pi))*exp(-x^2/2)} \closedcycle;
+ 
+  % Ligne de la moyenne
+  \addplot [red, dashed, thick] coordinates {(0,0) (0,0.4)};
+  \node[red, fill=white, font=\scriptsize, rounded corners, inner sep=2pt, opacity=0.8] at (axis cs:0.5,0.35) {Moyenne};
+ 
+  % Boîte de texte avec moments seulement
+  \node [draw=black, fill=white, rounded corners, font=\scriptsize, align=left, anchor=north east, opacity=0.8] 
+    at (axis description cs:0.95,0.95) { % MODIFIÉ
+    \textbf{Moments :}\\
+    • Moyenne = 0.00\\
+    • Variance = 1.00\\
+    • Skewness = 0.00\\
+    • Kurtosis = 0.00
+    };
+    
+  \end{axis}
 \end{tikzpicture}
 \end{center}
 
-\textbf{Objectif :} Expliquer comment arriver à la formule mathématique de la courbe en cloche (densité de probabilité normale) en partant de principes fondamentaux sur les erreurs aléatoires.
+La distribution normale est l'archétype de la courbe en cloche. Imaginez une cible : la majorité des flèches touchent le centre, et plus on s'éloigne du centre, moins il y a de chances d'être touché. C'est une distribution parfaitement symétrique, ce qui se traduit par un \textbf{skewness nul (0.00)}. Son pic est ni trop pointu, ni trop plat : c'est notre point de référence, on dit qu'elle est \textbf{mésokurtique}, d'où son kurtosis de \textbf{0.00}. C'est la base de nombreuses analyses statistiques car elle modélise naturellement beaucoup de phénomènes.
 
-\textbf{1. Le Point de Départ : Densité et Aire $dA$}
-\newline
-Dans une distribution continue, la probabilité de tomber \textit{exactement} sur un point $(x, y)$ est nulle. On ne peut donc pas parler de "probabilité d'un point". On parle de la probabilité de tomber \textit{dans une petite zone}, comme un rectangle $dA = dx \cdot dy$ autour du point $(x, y)$.
+\end{examplebox}
 
-Cette probabilité, notée $P(\text{dans } dA)$, est \textit{proportionnelle} à l'aire de la zone $dA$. La \textit{constante de proportionnalité} est la \textbf{fonction de densité de probabilité} $p(x, y)$ évaluée en ce point. En d'autres termes, la densité $p(x, y)$ \textit{représente} localement la concentration de probabilité. Ainsi, la probabilité de tomber dans la zone $dA$ est approximativement :
+\begin{examplebox}[La Distribution Exponentielle (Asymétrique à Droite)]
 
-$$ P(\text{dans } dA) \approx p(x, y) \cdot dA $$
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+    width=0.8\textwidth,
+    height=0.5\textwidth,
+    xlabel={$x$},
+    title={Densité Exponentielle ($\lambda=1$)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    major grid style={line width=.2pt,draw=gray!50},
+    domain=0:6,
+    samples=100,
+    enlargelimits=false,
+    axis lines=middle,
+    xmin=0, xmax=6,
+    ymin=0, ymax=1.1
+  ]
+ 
+  % Courbe de densité exponentielle
+  \addplot [thick, color=blue, fill=blue!20, fill opacity=0.5] 
+    {exp(-x)} \closedcycle;
+ 
+  % Ligne de la moyenne
+  \addplot [red, dashed, thick] coordinates {(1,0) (1,0.37)};
+  \node[red, fill=white, font=\scriptsize, rounded corners, inner sep=2pt, opacity=0.8] at (axis cs:1.5,0.3) {Moyenne};
+ 
+  % Boîte de texte avec moments seulement
+  \node [draw=black, fill=white, rounded corners, font=\scriptsize, align=left, anchor=north east, opacity=0.8] 
+    at (axis description cs:0.95,0.95) { % MODIFIÉ
+    \textbf{Moments :}\\
+    • Moyenne = 1.00\\
+    • Variance = 1.00\\
+    • Skewness = 2.00\\
+    • Kurtosis = 6.00
+    };
+    
+  \end{axis}
+\end{tikzpicture}
+\end{center}
 
-Donc, $p(x, y)$ est la \textit{densité de probabilité} en $(x, y)$, et non la probabilité elle-même multipliée par l'aire. La probabilité totale sur une zone finie est obtenue en intégrant cette densité sur cette zone.
+Imaginez le temps d'attente avant un événement rare, comme un appel téléphonique. La plupart du temps, l'appel arrive vite, mais il peut parfois y avoir de longues attentes. C'est exactement ce que modélise la distribution exponentielle : un pic à gauche et une longue queue à droite. Cela se traduit par un \textbf{skewness positif élevé (2.00)}, indiquant une asymétrie marquée. Elle est aussi \textbf{leptokurtique} (\textbf{kurtosis = 6.00}) : son pic est pointu, et la longue queue droite signifie qu'il y a une probabilité non négligeable de valeurs extrêmes.
 
-\textbf{2. Les Hypothèses Fondamentales}
-\newline
-On pose deux hypothèses sur la nature de ces erreurs (représentées par la densité $p(x, y)$) :
+\end{examplebox}
+
+\begin{examplebox}[La Distribution Uniforme (Platykurtique)]
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+    width=0.8\textwidth,
+    height=0.5\textwidth,
+    xlabel={$x$},
+    title={Densité Uniforme ($a=0$, $b=2$)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    major grid style={line width=.2pt,draw=gray!50},
+    domain=-0.5:2.5,
+    samples=100,
+    enlargelimits=false,
+    axis lines=middle,
+    ymin=0,
+    ymax=.75,
+    xmin=-1, xmax=4
+  ]
+ 
+  % Courbe de densité uniforme
+  \addplot [thick, color=blue, fill=blue!20, fill opacity=0.5, const plot] 
+    coordinates {(-0.5,0) (0,0) (0,0.5) (2,0.5) (2,0) (2.5,0)};
+ 
+  % Ligne de la moyenne
+  \addplot [red, dashed, thick] coordinates {(1,0) (1,0.5)};
+  \node[red, fill=white, font=\scriptsize, rounded corners, inner sep=2pt, opacity=0.8] at (axis cs:1.3,0.4) {Moyenne};
+ 
+  % Boîte de texte avec moments seulement
+  \node [draw=black, fill=white, rounded corners, font=\scriptsize, align=left, anchor=north east, opacity=0.8] 
+    at (axis description cs:0.95,0.95) { % MODIFIÉ
+    \textbf{Moments :}\\
+    • Moyenne = 1.00\\
+    • Variance = 0.33\\
+    • Skewness = 0.00\\
+    • Kurtosis = -1.20
+    };
+    
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+La distribution uniforme, c'est le "tirage au sort parfait" : chaque valeur sur un intervalle a la même chance d'être tirée. Visuellement, c'est un rectangle, donc aucune valeur n'est privilégiée. Elle est symétrique (\textbf{skewness = 0.00}), mais contrairement à la normale, elle est "plate", sans pic central. Cela se traduit par un \textbf{kurtosis négatif (-1.20)}, ce qui signifie qu'elle est \textbf{platykurtique}. Elle est donc très différente des distributions avec un pic central comme la normale.
+
+\end{examplebox}
+
+\begin{examplebox}[La Distribution Log-Normale (Fortement Leptokurtique)]
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+    width=0.8\textwidth,
+    height=0.5\textwidth,
+    xlabel={$x$},
+    title={Densité Log-Normale ($\sigma=0.7$)},
+    grid=both,
+    grid style={line width=.1pt, draw=gray!30},
+    major grid style={line width=.2pt,draw=gray!50},
+    domain=0:6,
+    samples=100,
+    enlargelimits=false,
+    axis lines=middle,
+    xmin=0, xmax=6,
+    ymin=0, ymax=1
+  ]
+ 
+  % Courbe de densité log-normale
+  \addplot [thick, color=blue, fill=blue!20, fill opacity=0.5] 
+    {1/(x*0.7*sqrt(2*pi))*exp(-(ln(x))^2/(2*0.7^2))};
+ 
+  % Ligne de la moyenne
+  \addplot [red, dashed, thick] coordinates {(1.28,0) (1.28,0.4)};
+  \node[red, fill=white, font=\scriptsize, rounded corners, inner sep=2pt, opacity=0.8] at (axis cs:1.8,0.5) {Moyenne};
+ 
+  % Boîte de texte avec moments seulement
+  \node [draw=black, fill=white, rounded corners, font=\scriptsize, align=left, anchor=north east, opacity=0.8] 
+    at (axis description cs:0.95,0.95) { % MODIFIÉ
+    \textbf{Moments :}\\
+    • Moyenne = 1.28\\
+    • Variance = 1.03\\
+    • Skewness = 2.89\\
+    • Kurtosis = 20.78
+    };
+    
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+La log-normale est une distribution très asymétrique. Imaginez la richesse d'une population : la majorité est modeste, mais il existe une petite proportion de très riches, ce qui "étire" la droite de la courbe. Cela donne un \textbf{skewness très élevé (2.89)}. Elle est extrêmement \textbf{leptokurtique} (\textbf{kurtosis = 20.78}) : un pic très aigu et une queue droite très lourde. Cela signifie qu'il y a un risque élevé de valeurs extrêmement grandes, ce qui la rend très utile pour modéliser des phénomènes avec de rares événements extrêmes.
+
+\end{examplebox}
+
+
+\subsection{Exercices}
+
+% --- Définitions Fondamentales des Moments ---
+
+\begin{exercicebox}[Exercice 1 : Associer les Moments]
+Associez chaque description au moment correspondant :
 \begin{enumerate}
-    \item \textbf{Indépendance des axes :} L'erreur horizontale ($x$) est indépendante de l'erreur verticale ($y$). Cela implique que la densité jointe $p(x, y)$ peut s'écrire comme le produit de la densité marginale sur $x$, notée $f(x)$, et de la densité marginale sur $y$, notée $f(y)$. Donc, $p(x, y) = f(x) \cdot f(y)$.
-    \item \textbf{Symétrie de rotation (Isotropie) :} La densité ne dépend que de la distance $r = \sqrt{x^2 + y^2}$ au centre, pas de l'angle. Il existe donc une fonction $\phi(r)$ telle que la densité en $(x,y)$ est $p(x, y) = \phi(\sqrt{x^2 + y^2})$.
+    \item $E[X]$
+    \item $\sqrt{E[(X-\mu)^2]}$
+    \item $E[(X-\mu)^2]$
+    \item $E[\left(\frac{X-\mu}{\sigma}\right)^3]$
+    \item $E[\left(\frac{X-\mu}{\sigma}\right)^4] - 3$
 \end{enumerate}
 
-\textbf{3. L'Équation Fonctionnelle}
-\newline
-En égalant les deux expressions pour la même densité $p(x, y)$ (à une constante près, car la densité peut être définie à un facteur près avant normalisation), on obtient :
-$$ f(x) \cdot f(y) = \phi(\sqrt{x^2 + y^2}) $$
-Pour $y=0$, on a $f(x) \cdot f(0) = \phi(x)$. Posons $f(0) = \lambda$ (la densité maximale au centre). Alors $\phi(x) = \lambda f(x)$.
-L'équation devient :
-$$ f(x) \cdot f(y) = \lambda f(\sqrt{x^2 + y^2}) $$
+\textbf{Termes :} Variance, Asymétrie (Skewness), Espérance (Moyenne), Écart-type, Excès de Kurtosis.
+\end{exercicebox}
 
-\textbf{4. Résolution de l'Équation Fonctionnelle}
+\begin{exercicebox}[Exercice 2 : Calcul des Moments Centrés]
+Soit $X$ une v.a. avec $\mu = 2$. La PMF de $X$ est :
+$P(X=0)=0.2$, $P(X=2)=0.6$, $P(X=4)=0.2$.
 \begin{enumerate}
-    \item \textbf{Normalisation :} Posons $g(x) = f(x)/\lambda$, avec $g(0)=1$. L'équation se simplifie en :
-    $$ g(x) g(y) = g(\sqrt{x^2 + y^2}) $$
-    \item \textbf{Changement de variable :} Posons $g(x) = h(x^2)$. L'équation devient $h(x^2)h(y^2) = h(x^2+y^2)$. Avec $a=x^2$ et $b=y^2$, on a :
-    $$ h(a) h(b) = h(a+b) $$
-    \item \textbf{Solution exponentielle :} La solution continue de cette équation de Cauchy est $h(a) = e^{Aa}$ pour une constante $A$.
-    \item \textbf{Retour aux fonctions et contrainte physique :}
-    $g(x) = h(x^2) = e^{Ax^2}$.
-    $f(x) = \lambda g(x) = \lambda e^{Ax^2}$.
-    Comme la densité doit diminuer loin du centre, la constante $A$ doit être négative. Posons $A = -k$ avec $k>0$.
-    $$ f(x) = \lambda e^{-k x^2} $$
+    \item Vérifiez que $E[X] = 2$.
+    \item Calculez le 2ème moment centré, $E[(X-\mu)^2]$ (la Variance).
+    \item Calculez le 3ème moment centré, $E[(X-\mu)^3]$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Calcul des Moments Standardisés]
+En utilisant la v.a. $X$ de l'exercice 2 (avec $\mu=2$ et $\text{Var}(X) = 1.6$) :
+\begin{enumerate}
+    \item Calculez le Skewness, $\text{Skew}(X)$.
+    \item Que pouvez-vous conclure sur la symétrie de cette distribution ?
+\end{enumerate}
+(Rappel : $\sigma = \sqrt{1.6} \approx 1.265$).
+\end{exercicebox}
+
+% --- Asymétrie (Skewness) ---
+
+\begin{exercicebox}[Exercice 4 : Interprétation Visuelle du Skewness]
+Pour chacune des distributions décrites, indiquez si le skewness est \textbf{positif (> 0)}, \textbf{négatif (< 0)} ou \textbf{nul (= 0)}.
+\begin{enumerate}
+    \item La distribution $\text{Exp}(\lambda)$ (queue longue à droite).
+    \item Une distribution où Moyenne = 10, Médiane = 12, Mode = 13 (queue longue à gauche).
+    \item La distribution $\mathcal{N}(\mu, \sigma^2)$.
+    \item La distribution des revenus dans un pays (beaucoup de salaires bas, quelques salaires très élevés).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Skewness d'une Distribution Simple]
+Soit $X$ une v.a. : $P(X=0)=0.1$, $P(X=1)=0.8$, $P(X=10)=0.1$.
+\begin{enumerate}
+    \item Calculez $\mu = E[X]$.
+    \item Calculez $\sigma^2 = \text{Var}(X)$.
+    \item Calculez $E[(X-\mu)^3]$.
+    \item Le skewness est-il positif, négatif ou nul ? (Le calcul complet n'est pas nécessaire si vous justifiez).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 6 : Skewness d'une Variable de Bernoulli]
+Soit $X \sim \text{Bern}(p)$. On rappelle que $\mu = p$ et $\sigma^2 = p(1-p)$.
+\begin{enumerate}
+    \item Calculez $E[X^3]$. (Indice : $X^3 = X$).
+    \item Calculez le 3ème moment centré $E[(X-p)^3]$ en développant l'expression.
+    \item Calculez le skewness $\text{Skew}(X) = \frac{E[(X-p)^3]}{\sigma^3}$.
+    \item Pour quelle valeur de $p$ cette distribution est-elle symétrique ?
+\end{enumerate}
+\end{exercicebox}
+
+% --- Symétrie ---
+
+\begin{exercicebox}[Exercice 7 : Définition de la Symétrie]
+Soit $X \sim \text{Unif}(-5, 5)$.
+\begin{enumerate}
+    \item Autour de quel point $\mu$ cette distribution est-elle symétrique ?
+    \item Montrez que $f(x) = f(2\mu - x)$ en utilisant la PDF de la loi uniforme.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 8 : Symétrie et Moments Centrés]
+Soit $X$ une v.a. symétrique autour de sa moyenne $\mu$.
+Montrez que tous ses moments centrés d'ordre impair sont nuls, c'est-à-dire $E[(X-\mu)^k] = 0$ pour $k=1, 3, 5, \dots$
+(Indice : Soit $Y = X-\mu$. $Y$ est symétrique autour de 0. Que vaut $E[Y^k]$ ?).
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 9 : Symétrie de la Loi Normale]
+Soit $X \sim \mathcal{N}(\mu, \sigma^2)$.
+\begin{enumerate}
+    \item La distribution est-elle symétrique ?
+    \item Que vaut $\text{Skew}(X)$ ? (Sans calcul, en utilisant le résultat de l'exercice 8).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : Symétrie et Skewness]
+Si $\text{Skew}(X) = 0$, peut-on affirmer que la distribution de $X$ est symétrique ?
+(Indice : Pensez à une distribution qui n'est pas symétrique mais où les asymétries se compensent, ex: $P(X=-4)=0.1, P(X=-1)=0.4, P(X=2)=0.5$).
+\end{exercicebox}
+
+% --- Aplatissement (Kurtosis) ---
+
+\begin{exercicebox}[Exercice 11 : Interprétation du Kurtosis]
+Associez chaque type de distribution à sa description du kurtosis (excédentaire) :
+\begin{enumerate}
+    \item \textbf{Leptokurtique}
+    \item \textbf{Mésokurtique}
+    \item \textbf{Platykurtique}
 \end{enumerate}
 
-\textbf{5. Normalisation et Identification des Paramètres}
+\textbf{Descriptions :}
+A. Excès de Kurtosis = 0 (Référence de la loi normale).
+B. Excès de Kurtosis < 0 (Distribution "plate" avec des queues fines).
+C. Excès de Kurtosis > 0 (Distribution "pointue" avec des queues épaisses).
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 12 : Kurtosis et queues]
+Une distribution A a un excès de kurtosis de 5. Une distribution B a un excès de kurtosis de 1.
+Laquelle des deux distributions est la plus susceptible de produire des valeurs "extrêmes" (très loin de la moyenne) ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 13 : Kurtosis de la Loi Normale]
+Soit $Z \sim \mathcal{N}(0, 1)$.
 \begin{enumerate}
-    \item \textbf{Condition $\int f(x) dx = 1$} :
-    $\int_{-\infty}^{\infty} \lambda e^{-k x^2} \, \mathrm{d}x = \lambda \sqrt{\frac{\pi}{k}} = 1 \implies \lambda = \sqrt{\frac{k}{\pi}}$.
-    \item \textbf{Lien avec la Variance ($\sigma^2$)} : Pour une distribution centrée, $\sigma^2 = E[X^2] = \int x^2 f(x) dx$.
-    $$ \sigma^2 = \int_{-\infty}^{\infty} x^2 \left( \sqrt{\frac{k}{\pi}} e^{-k x^2} \right) \, \mathrm{d}x = \sqrt{\frac{k}{\pi}} \left( \frac{1}{2k} \sqrt{\frac{\pi}{k}} \right) = \frac{1}{2k} $$
-    Donc, $k = \frac{1}{2\sigma^2}$.
-    \item \textbf{Substitution Finale :} Remplaçons $k$ dans $\lambda$ et $f(x)$.
-    $$ \lambda = \sqrt{\frac{1/(2\sigma^2)}{\pi}} = \frac{1}{\sigma\sqrt{2\pi}} $$
-    $$ f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2\sigma^2} x^2} = \frac{1}{\sigma\sqrt{2\pi}} e^{ -\frac{x^2}{2\sigma^2} } $$
-    \item \textbf{Généralisation (Moyenne $\mu$)} : Pour centrer la distribution sur $\mu$, on remplace $x$ par $(x-\mu)$ dans l'exposant :
-    $$ f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{(x-\mu)^2}{2\sigma^2} } $$
+    \item Que vaut le 4ème moment standardisé $E[Z^4]$ ? (Indice : Pour une $\mathcal{N}(0,1)$, $E[Z^4]=3$).
+    \item Que vaut l'excès de kurtosis de $Z$ ?
 \end{enumerate}
-C'est la fonction de densité de la loi normale $\mathcal{N}(\mu, \sigma^2)$, dérivée des hypothèses fondamentales sur les erreurs aléatoires.
-\end{proofbox}
+\end{exercicebox}
 
-\subsection{La Loi Normale Centrée Réduite $\mathcal{N}(0, 1)$}
+\begin{exercicebox}[Exercice 14 : Kurtosis de la Loi Uniforme]
+D'après les exemples du cours, la loi $\text{Unif}(a, b)$ a un excès de kurtosis de -1.2.
+Est-elle leptokurtique, mésokurtique ou platykurtique ?
+\end{exercicebox}
 
-\begin{definitionbox}[Loi Normale Standard (ou Centrée Réduite)]
-Un cas particulier extraordinairement utile est la loi normale avec une moyenne $\mu=0$ et une variance $\sigma^2=1$ (donc $\sigma=1$). On l'appelle la \textbf{loi normale standard} ou \textbf{centrée réduite}, et on la note souvent $Z$. Sa PDF est traditionnellement notée $\phi(z)$ :
-$$ \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2} $$
-Sa fonction de répartition (CDF), qui donne $P(Z \le z)$, est notée $\Phi(z)$ :
-$$ \Phi(z) = P(Z \le z) = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{-t^2/2} \, \mathrm{d}t $$
-\end{definitionbox}
+% --- Synthèse et Propriétés ---
 
-\begin{intuitionbox}[La Référence Universelle et le Changement d'Unités]
-Pourquoi cette loi $\mathcal{N}(0, 1)$ est-elle si centrale ? Imaginez que vous ayez des mesures en degrés Celsius ($\mathcal{N}(\mu_C, \sigma_C^2)$) et d'autres en degrés Fahrenheit ($\mathcal{N}(\mu_F, \sigma_F^2)$). Comment les comparer ? La loi normale standard fournit un \textbf{système d'unités universel}.
-\newline
-Toute variable normale $X \sim \mathcal{N}(\mu, \sigma^2)$ peut être transformée ("standardisée") en une variable $Z \sim \mathcal{N}(0, 1)$ par un simple changement d'échelle et de position : $Z = (X-\mu)/\sigma$. 
-\newline
-Cela signifie qu'au lieu de devoir calculer des aires (probabilités) pour une infinité de courbes en cloche différentes (une pour chaque paire $\mu, \sigma$), on peut tout ramener à \textbf{une seule courbe de référence}, $\mathcal{N}(0, 1)$. Les aires sous cette courbe standard ($\Phi(z)$) ont été calculées une fois pour toutes et sont disponibles dans des tables ou des logiciels. On n'a plus qu'à convertir notre problème dans cette "langue" standard, trouver la probabilité, et interpréter le résultat.
-\end{intuitionbox}
-
-\begin{remarquebox}[Notation $\phi$ et $\Phi$]
-Les symboles $\phi$ (phi minuscule) pour la PDF et $\Phi$ (phi majuscule) pour la CDF de la loi normale standard sont quasi universels. Il est important de ne pas les confondre. $\phi(z)$ est la \textit{hauteur} de la courbe en $z$, tandis que $\Phi(z)$ est l'\textit{aire} sous la courbe à gauche de $z$.
-\end{remarquebox}
-
-\begin{remarquebox}[Absence de Primitive Simple]
-L'intégrale $\int e^{-t^2/2} \, \mathrm{d}t$, nécessaire pour calculer $\Phi(z)$, n'a \textbf{pas d'expression analytique} en termes de fonctions élémentaires (polynômes, exponentielles, log, sin, cos...). C'est une fonction spéciale, connue sous le nom de \textbf{fonction d'erreur} (liée à $\Phi$ par une transformation simple). C'est la raison pour laquelle on dépend de tables ou de calculs numériques pour obtenir les valeurs de $\Phi(z)$. Heureusement, ces outils sont omniprésents aujourd'hui.
-\end{remarquebox}
-
-\subsection{Standardisation : Le Score Z}
-
-\begin{theorembox}[Standardisation d'une Variable Normale]
-Si $X \sim \mathcal{N}(\mu, \sigma^2)$, alors la variable $Z$ définie par :
-$$ Z = \frac{X - \mu}{\sigma} $$
-suit la loi normale standard, $Z \sim \mathcal{N}(0, 1)$.
-\end{theorembox}
-
-\begin{intuitionbox}[Mesurer en "Unités d'Écart-Type"]
-Transformer $X$ en $Z$ s'appelle \textbf{standardiser} la variable. Le résultat, $z = \frac{x-\mu}{\sigma}$, est appelé le \textbf{Score Z} (ou cote Z). Ce score Z est une mesure \textit{sans unité} qui indique \textbf{à combien d'écarts-types} une valeur observée $x$ se situe par rapport à la moyenne $\mu$ de sa distribution.
-\begin{itemize}
-    \item $z = 0$ : $x$ est exactement à la moyenne ($\mathbf{x = \mu}$).
-    \item $z = +1$ : $x$ est un écart-type \textit{au-dessus} de la moyenne ($\mathbf{x = \mu + \sigma}$).
-    \item $z = -2$ : $x$ est deux écarts-types \textit{en dessous} de la moyenne ($\mathbf{x = \mu - 2\sigma}$).
-\end{itemize}
-Cette transformation est extrêmement utile pour :
+\begin{exercicebox}[Exercice 15 : Invariance des Moments Standardisés]
+Soit $X$ une v.a. avec $\mu=10$, $\sigma=2$, $\text{Skew}(X) = 0.5$ et $\text{Excess Kurtosis}(X) = 1$.
+Soit $Y = 3X + 5$.
 \begin{enumerate}
-    \item \textbf{Comparer des valeurs} issues de distributions normales différentes. Un score Z de +1.5 a toujours la même signification relative, que l'on parle de QI, de taille, ou de température.
-    \item \textbf{Calculer des probabilités} en utilisant la table unique de la loi $\mathcal{N}(0, 1)$.
+    \item Calculez $E[Y]$ et $\text{Var}(Y)$.
+    \item Que vaut $\text{Skew}(Y)$ ?
+    \item Que vaut $\text{Excess Kurtosis}(Y)$ ?
 \end{enumerate}
-\end{intuitionbox}
+(Indice : Les moments standardisés sont invariants par transformation linéaire $aX+b$ avec $a>0$).
+\end{exercicebox}
 
-\begin{examplebox}[Comparaison de Performances]
-Un étudiant A obtient 80 points à un examen où la moyenne est $\mu_A=70$ et l'écart-type $\sigma_A=5$. Un étudiant B obtient 85 points à un autre examen où $\mu_B=75$ et $\sigma_B=10$. Qui a le mieux réussi relativement à son groupe ?
-\newline
-Calculons les Z-scores :
-$$ Z_A = \frac{80 - 70}{5} = \frac{10}{5} = +2.0 $$
-$$ Z_B = \frac{85 - 75}{10} = \frac{10}{10} = +1.0 $$
-L'étudiant A a un score Z plus élevé (+2.0 contre +1.0), ce qui signifie qu'il se situe plus d'écarts-types au-dessus de la moyenne de son groupe que l'étudiant B. L'étudiant A a donc relativement mieux réussi.
-\end{examplebox}
+\begin{exercicebox}[Exercice 16 : Moments d'une Distribution Inconnue]
+Une v.a. $Z$ a été standardisée ($E[Z]=0, \text{Var}(Z)=1$).
+On sait que $E[Z^3] = 0.8$ et $E[Z^4] = 4.5$.
+\begin{enumerate}
+    \item Calculez le skewness de $Z$.
+    \item Calculez l'excès de kurtosis de $Z$.
+\end{enumerate}
+\end{exercicebox}
 
-\subsection{Propriétés Importantes de la Loi Normale}
+\begin{exercicebox}[Exercice 17 : Identifier la Distribution]
+Une distribution $X$ est analysée. On trouve :
+$\text{Skew}(X) = 0$ et $\text{Excess Kurtosis}(X) = 0$.
+Quelle distribution célèbre partage ces deux propriétés ?
+\end{exercicebox}
 
-\begin{theorembox}[Stabilité par Transformation Linéaire]
-Si $X \sim \mathcal{N}(\mu, \sigma^2)$ et $Y = aX + b$ (avec $a \neq 0$), alors $Y$ suit aussi une loi normale :
-$$ Y \sim \mathcal{N}(a\mu + b, \, (a\sigma)^2) $$
-L'espérance est transformée linéairement ($E[aX+b] = aE[X]+b$), et la variance est multipliée par $a^2$ ($\text{Var}(aX+b) = a^2\text{Var}(X)$).
-\end{theorembox}
+\begin{exercicebox}[Exercice 18 : Identifier la Distribution (2)]
+Une distribution $Y$ est analysée. On trouve :
+$\text{Skew}(Y) = 2.0$ et $\text{Excess Kurtosis}(Y) = 6.0$.
+Quelle distribution vue en cours (et dans les exemples) correspond à ces valeurs ?
+\end{exercicebox}
 
-\begin{examplebox}[Changement d'Unités]
-Si la température en Celsius $T_C$ suit $\mathcal{N}(20, 5^2)$, quelle est la loi de la température en Fahrenheit $T_F = \frac{9}{5}T_C + 32$ ?
-\newline
-$a = 9/5$, $b=32$.
-\newline
-Nouvelle moyenne : $E[T_F] = \frac{9}{5}(20) + 32 = 36 + 32 = 68$.
-\newline
-Nouvel écart-type : $\sigma_{T_F} = |a|\sigma_{T_C} = \frac{9}{5}(5) = 9$. Nouvelle variance : $\sigma_{T_F}^2 = 9^2 = 81$.
-\newline
-Donc, $T_F \sim \mathcal{N}(68, 9^2)$.
-\end{examplebox}
+\begin{exercicebox}[Exercice 19 : Moments non centrés vs centrés]
+Soit $X$ une v.a. avec $E[X] = \mu$.
+Exprimez le 2ème moment centré $E[(X-\mu)^2]$ en fonction des moments non centrés $E[X^2]$ et $E[X]$. (C'est la formule de calcul de la variance).
+\end{exercicebox}
 
-\begin{theorembox}[Stabilité par Addition (Indépendance)]
-Si $X \sim \mathcal{N}(\mu_X, \sigma_X^2)$ et $Y \sim \mathcal{N}(\mu_Y, \sigma_Y^2)$ sont des variables aléatoires \textbf{indépendantes}, alors leur somme $S = X + Y$ suit aussi une loi normale :
-$$ S \sim \mathcal{N}(\mu_X + \mu_Y, \, \sigma_X^2 + \sigma_Y^2) $$
-Les moyennes s'ajoutent, et (grâce à l'indépendance) les variances s'ajoutent.
-\end{theorembox}
+\begin{exercicebox}[Exercice 20 : Moments centrés vs non centrés]
+Soit $X$ une v.a. avec $E[X] = \mu$.
+Exprimez le 3ème moment centré $E[(X-\mu)^3]$ en fonction des moments non centrés ($E[X^3]$, $E[X^2]$, $E[X]$).
+(Indice : Développez $(X-\mu)^3 = X^3 - 3X^2\mu + 3X\mu^2 - \mu^3$ et prenez l'espérance).
+\end{exercicebox}
 
-\begin{remarquebox}[Attention à l'Indépendance]
-La propriété d'addition des variances ($\sigma_S^2 = \sigma_X^2 + \sigma_Y^2$) est cruciale et ne tient \textbf{que si $X$ et $Y$ sont indépendantes}. Si elles ne le sont pas, la variance de la somme inclut un terme de covariance : $\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X, Y)$. Cependant, la somme de variables normales (même dépendantes) reste normale (si elles sont conjointement normales).
-\end{remarquebox}
+\subsection{Corrections des Exercices}
 
-\begin{examplebox}[Poids Total]
-Le poids d'une pomme suit $\mathcal{N}(150g, 10^2)$. Le poids d'une orange suit $\mathcal{N}(200g, 15^2)$. On suppose les poids indépendants. Quel est la loi du poids total d'une pomme et d'une orange ?
-\newline
-Soit $P$ le poids de la pomme, $O$ celui de l'orange. $T = P+O$.
-\newline
-$E[T] = E[P] + E[O] = 150 + 200 = 350g$.
-\newline
-$\text{Var}(T) = \text{Var}(P) + \text{Var}(O) = 10^2 + 15^2 = 100 + 225 = 325$.
-\newline
-Donc, $T \sim \mathcal{N}(350, 325)$. L'écart-type du poids total est $\sqrt{325} \approx 18.03g$.
-\end{examplebox}
+% --- Corrections : Définitions Fondamentales des Moments ---
 
-\subsection{La Règle Empirique (68-95-99.7)}
+\begin{correctionbox}[Correction Exercice 1 : Associer les Moments]
+1.  $E[X]$ $\rightarrow$ \textbf{Espérance (Moyenne)}
+2.  $\sqrt{E[(X-\mu)^2]}$ $\rightarrow$ \textbf{Écart-type}
+3.  $E[(X-\mu)^2]$ $\rightarrow$ \textbf{Variance}
+4.  $E[\left(\frac{X-\mu}{\sigma}\right)^3]$ $\rightarrow$ \textbf{Asymétrie (Skewness)}
+5.  $E[\left(\frac{X-\mu}{\sigma}\right)^4] - 3$ $\rightarrow$ \textbf{Excès de Kurtosis}
+\end{correctionbox}
 
-\begin{theorembox}[Règle Empirique]
-Pour toute variable $X \sim \mathcal{N}(\mu, \sigma^2)$ :
-\begin{itemize}
-    \item $P(\mu - \sigma \le X \le \mu + \sigma) \approx 0.6827$ (Environ \textbf{68\%} des valeurs dans $\mu \pm \sigma$).
-    \item $P(\mu - 2\sigma \le X \le \mu + 2\sigma) \approx 0.9545$ (Environ \textbf{95\%} des valeurs dans $\mu \pm 2\sigma$).
-    \item $P(\mu - 3\sigma \le X \le \mu + 3\sigma) \approx 0.9973$ (Environ \textbf{99.7\%} des valeurs dans $\mu \pm 3\sigma$).
-\end{itemize}
-\end{theorembox}
+\begin{correctionbox}[Correction Exercice 2 : Calcul des Moments Centrés]
+$P(X=0)=0.2$, $P(X=2)=0.6$, $P(X=4)=0.2$.
+1.  $E[X] = (0)(0.2) + (2)(0.6) + (4)(0.2) = 0 + 1.2 + 0.8 = 2.0$. $\mu=2$.
+2.  Variance = $E[(X-2)^2]$
+    $= (0-2)^2(0.2) + (2-2)^2(0.6) + (4-2)^2(0.2)$
+    $= (-2)^2(0.2) + (0)^2(0.6) + (2)^2(0.2)$
+    $= 4(0.2) + 0 + 4(0.2) = 0.8 + 0.8 = 1.6$.
+3.  3ème moment centré = $E[(X-2)^3]$
+    $= (0-2)^3(0.2) + (2-2)^3(0.6) + (4-2)^3(0.2)$
+    $= (-8)(0.2) + (0)(0.6) + (8)(0.2)$
+    $= -1.6 + 0 + 1.6 = 0$.
+\end{correctionbox}
 
-\begin{intuitionbox}[Repères Essentiels sur la Cloche]
-Cette règle, dérivée directement des aires sous la courbe $\mathcal{N}(0, 1)$ entre $z=\pm 1$, $z=\pm 2$ et $z=\pm 3$, fournit des repères extrêmement utiles pour interpréter l'écart-type $\sigma$. Elle nous dit où se trouve la grande majorité des données.
-\newline
-Une observation qui tombe en dehors de l'intervalle $\mu \pm 3\sigma$ est très inhabituelle (elle n'a que 0.3pct de chances de se produire). C'est souvent considéré comme une \textit{valeur aberrante} (outlier) potentielle.
-\end{intuitionbox}
+\begin{correctionbox}[Correction Exercice 3 : Calcul des Moments Standardisés]
+De l'exercice 2, $\mu=2$, $\text{Var}(X) = 1.6$ et $E[(X-\mu)^3] = 0$.
+1.  $\text{Skew}(X) = \frac{E[(X-\mu)^3]}{\sigma^3} = \frac{0}{(1.6)^{3/2}} = 0$.
+2.  Le skewness est nul. Cela indique que la distribution est symétrique, ce que l'on peut vérifier (les probabilités $P(\mu-2k)$ et $P(\mu+2k)$ sont égales).
+\end{correctionbox}
 
-\subsection{Calcul de Probabilités Normales}
+% --- Corrections : Asymétrie (Skewness) ---
 
-\begin{examplebox}[Utilisation du Z-score]
-Supposons que le QI d'une population suit $\mathcal{N}(100, 15^2)$. Quelle est la probabilité $P(X > 130)$ ?
+\begin{correctionbox}[Correction Exercice 4 : Interprétation Visuelle du Skewness]
+1.  \textbf{Positif (> 0)}. La loi exponentielle a une queue longue à droite.
+2.  \textbf{Négatif (< 0)}. L'ordre $\text{Moyenne} < \text{Médiane} < \text{Mode}$ est caractéristique d'une queue à gauche.
+3.  \textbf{Nul (= 0)}. La loi normale est parfaitement symétrique.
+4.  \textbf{Positif (> 0)}. La grande majorité des gens a un revenu bas/moyen, et une petite minorité a un revenu très élevé, créant une queue longue à droite.
+\end{correctionbox}
 
-1.  \textbf{Standardiser :} $z = \frac{130 - 100}{15} = 2$. On cherche $P(Z > 2)$.
-2.  \textbf{Utiliser la CDF Standard :} $P(Z > 2) = 1 - P(Z \le 2) = 1 - \Phi(2)$.
-3.  \textbf{Chercher dans la table / Calculer :} $\Phi(2) \approx 0.9772$.
-4.  \textbf{Résultat :} $P(X > 130) = 1 - 0.9772 = 0.0228$.
-\end{examplebox}
+\begin{correctionbox}[Correction Exercice 5 : Skewness d'une Distribution Simple]
+$P(X=0)=0.1$, $P(X=1)=0.8$, $P(X=10)=0.1$.
+1.  $\mu = E[X] = (0)(0.1) + (1)(0.8) + (10)(0.1) = 0 + 0.8 + 1.0 = 1.8$.
+2.  $E[X^2] = (0^2)(0.1) + (1^2)(0.8) + (10^2)(0.1) = 0 + 0.8 + 10 = 10.8$.
+    $\sigma^2 = E[X^2] - \mu^2 = 10.8 - (1.8)^2 = 10.8 - 3.24 = 7.56$.
+3.  $E[(X-\mu)^3] = (0-1.8)^3(0.1) + (1-1.8)^3(0.8) + (10-1.8)^3(0.1)$
+    $= (-5.832)(0.1) + (-0.512)(0.8) + (551.368)(0.1)$
+    $= -0.5832 - 0.4096 + 55.1368 = 54.144$.
+4.  Puisque $E[(X-\mu)^3] = 54.144 > 0$, le skewness est \textbf{positif}. Cela est dû à la valeur extrême $X=10$ qui tire la distribution vers la droite.
+\end{correctionbox}
 
-\begin{examplebox}[Probabilité entre deux valeurs]
-Quelle est la probabilité $P(85 \le X \le 115)$ ?
+\begin{correctionbox}[Correction Exercice 6 : Skewness d'une Variable de Bernoulli]
+$X \sim \text{Bern}(p)$, $\mu=p$, $\sigma^2=p(1-p)$.
+1.  $X$ ne vaut que 0 ou 1, donc $X^3 = X$. $E[X^3] = E[X] = p$.
+2.  $E[(X-p)^3] = E[X^3 - 3X^2p + 3Xp^2 - p^3]$
+    $= E[X^3] - 3pE[X^2] + 3p^2E[X] - p^3$
+    (Car $X^2=X$ et $X^3=X$)
+    $= E[X] - 3pE[X] + 3p^2E[X] - p^3$
+    $= p - 3p(p) + 3p^2(p) - p^3 = p - 3p^2 + 3p^3 - p^3 = p - 3p^2 + 2p^3$
+    $= p(1 - 3p + 2p^2) = p(1-p)(1-2p)$.
+3.  $\text{Skew}(X) = \frac{E[(X-p)^3]}{\sigma^3} = \frac{p(1-p)(1-2p)}{[p(1-p)]^{3/2}} = \frac{1-2p}{\sqrt{p(1-p)}}$.
+4.  La distribution est symétrique si $\text{Skew}(X) = 0$. Cela se produit si $1-2p = 0$, donc $p=0.5$.
+\end{correctionbox}
 
-1.  \textbf{Standardiser :} $z_1 = \frac{85 - 100}{15} = -1$, $z_2 = \frac{115 - 100}{15} = 1$. On cherche $P(-1 \le Z \le 1)$.
-2.  \textbf{Utiliser la CDF Standard :} $P(-1 \le Z \le 1) = \Phi(1) - \Phi(-1)$.
-3.  \textbf{Utiliser la symétrie :} $\Phi(-z) = 1 - \Phi(z)$. Donc $\Phi(-1) = 1 - \Phi(1)$.
-    $P(-1 \le Z \le 1) = \Phi(1) - (1 - \Phi(1)) = 2\Phi(1) - 1$.
-4.  \textbf{Chercher dans la table / Calculer :} $\Phi(1) \approx 0.8413$.
-5.  \textbf{Résultat :} $P(85 \le X \le 115) \approx 2(0.8413) - 1 = 1.6826 - 1 = 0.6826$.
-\end{examplebox}
+% --- Corrections : Symétrie ---
 
-\begin{examplebox}[Trouver une valeur pour une probabilité donnée (Problème Inverse)]
-Quel est le QI minimum requis pour être dans le top 10\% de la population ? ($\mu=100, \sigma=15$).
+\begin{correctionbox}[Correction Exercice 7 : Définition de la Symétrie]
+$X \sim \text{Unif}(-5, 5)$.
+1.  La moyenne est $\mu = (-5+5)/2 = 0$. La distribution est symétrique autour de $\mu=0$.
+2.  On doit montrer $f(x) = f(2\mu - x) = f(-x)$.
+    La PDF est $f(x) = 1/10$ si $x \in [-5, 5]$ et $0$ sinon.
+    - Si $x \in [-5, 5]$, alors $-x \in [-5, 5]$. $f(x) = 1/10$ et $f(-x) = 1/10$. Ils sont égaux.
+    - Si $x > 5$, $f(x) = 0$. Alors $-x < -5$, $f(-x) = 0$. Ils sont égaux.
+    La condition est vérifiée pour tout $x$.
+\end{correctionbox}
 
-1.  \textbf{Trouver le Z-score correspondant :} On cherche $x$ tel que $P(X > x) = 0.10$. Cela équivaut à $P(Z > z) = 0.10$, où $z = (x-100)/15$.
-    Si $P(Z > z) = 0.10$, alors $P(Z \le z) = \Phi(z) = 1 - 0.10 = 0.90$.
-2.  \textbf{Chercher dans la table inverse / Calculer :} On cherche la valeur $z$ pour laquelle l'aire à gauche est 0.90. On trouve $z \approx 1.28$.
-3.  \textbf{Convertir en X :} On utilise la relation $z = (x-\mu)/\sigma$ pour trouver $x$:
-    $1.28 = \frac{x - 100}{15}$
-    $x = 100 + 1.28 \times 15 = 100 + 19.2 = 119.2$.
-    Il faut un QI d'environ 119.2 pour être dans le top 10\%.
-\end{examplebox}
+\begin{correctionbox}[Correction Exercice 8 : Symétrie et Moments Centrés]
+Soit $Y = X-\mu$. Si $X$ est symétrique autour de $\mu$, $Y$ est symétrique autour de 0. Sa PDF $f_Y(y)$ est paire : $f_Y(y) = f_Y(-y)$.
+On veut calculer $E[Y^k] = \int_{-\infty}^{\infty} y^k f_Y(y) dy$ pour $k$ impair.
+La fonction $y^k$ est impaire (car $k$ est impair).
+La fonction $f_Y(y)$ est paire.
+Le produit d'une fonction impaire et d'une fonction paire est une fonction impaire.
+L'intégrale d'une fonction impaire sur un intervalle symétrique $(-\infty, \infty)$ est 0.
+Donc, $E[(X-\mu)^k] = E[Y^k] = 0$ pour $k=1, 3, 5, \dots$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 9 : Symétrie de la Loi Normale]
+1.  Oui, la PDF de la loi normale est parfaitement symétrique autour de sa moyenne $\mu$.
+2.  Le Skewness est basé sur le 3ème moment centré ($k=3$, qui est impair). D'après l'exercice 8, tous les moments centrés impairs d'une distribution symétrique sont nuls.
+    Donc $\text{Skew}(X) = 0$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 10 : Symétrie et Skewness]
+Non. $\text{Skew}(X)=0$ est une condition nécessaire mais non suffisante pour la symétrie. Une distribution peut avoir un skewness nul tout en n'étant pas symétrique, si les asymétries de gauche et de droite "s'annulent" dans le calcul du 3ème moment.
+\end{correctionbox}
+
+% --- Corrections : Aplatissement (Kurtosis) ---
+
+\begin{correctionbox}[Correction Exercice 11 : Interprétation du Kurtosis]
+1.  \textbf{Leptokurtique} $\rightarrow$ \textbf{C.} Excès de Kurtosis > 0 (Pointue, queues épaisses).
+2.  \textbf{Mésokurtique} $\rightarrow$ \textbf{A.} Excès de Kurtosis = 0 (Référence normale).
+3.  \textbf{Platykurtique} $\rightarrow$ \textbf{B.} Excès de Kurtosis < 0 (Plate, queues fines).
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 12 : Kurtosis et queues]
+Un excès de kurtosis plus élevé signifie des queues plus épaisses.
+La \textbf{Distribution A} (kurtosis=5) est beaucoup plus susceptible de produire des valeurs extrêmes que la Distribution B (kurtosis=1).
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 13 : Kurtosis de la Loi Normale]
+$Z \sim \mathcal{N}(0, 1)$.
+1.  $E[Z^4]$ est le 4ème moment standardisé. Par définition, c'est le kurtosis (non excessif). Pour la loi normale, $\text{Kurtosis}(Z) = 3$. Donc $E[Z^4] = 3$.
+2.  Excès de Kurtosis = $\text{Kurtosis}(Z) - 3 = 3 - 3 = 0$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 14 : Kurtosis de la Loi Uniforme]
+L'excès de kurtosis est -1.2, ce qui est négatif.
+La distribution uniforme est \textbf{platykurtique} (plus "plate" que la normale).
+\end{correctionbox}
+
+% --- Corrections : Synthèse et Propriétés ---
+
+\begin{correctionbox}[Correction Exercice 15 : Invariance des Moments Standardisés]
+$Y = 3X + 5$.
+1.  $E[Y] = 3E[X] + 5 = 3(10) + 5 = 35$.
+    $\text{Var}(Y) = 3^2 \text{Var}(X) = 9 (2^2) = 36$.
+2.  Le skewness est invariant par transformation linéaire affine (si $a>0$). $\text{Skew}(Y) = \text{Skew}(X) = 0.5$.
+3.  L'excès de kurtosis est invariant par transformation linéaire affine. $\text{Excess Kurtosis}(Y) = \text{Excess Kurtosis}(X) = 1$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 16 : Moments d'une Distribution Inconnue]
+$Z$ est déjà standardisée ($\mu=0, \sigma=1$).
+1.  $\text{Skew}(Z) = E\left[ \left( \frac{Z - 0}{1} \right)^3 \right] = E[Z^3] = 0.8$.
+2.  $\text{Excess Kurtosis}(Z) = E\left[ \left( \frac{Z - 0}{1} \right)^4 \right] - 3 = E[Z^4] - 3 = 4.5 - 3 = 1.5$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 17 : Identifier la Distribution]
+La \textbf{Loi Normale} $\mathcal{N}(\mu, \sigma^2)$ est la distribution de référence qui est symétrique ($\text{Skew}=0$) et mésokurtique ($\text{Excess Kurtosis}=0$).
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 18 : Identifier la Distribution (2)]
+La \textbf{Loi Exponentielle} $\text{Exp}(\lambda)$ (pour n'importe quel $\lambda$) a un skewness de 2.0 et un excès de kurtosis de 6.0.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 19 : Moments non centrés vs centrés]
+C'est la dérivation de la formule de calcul de la variance.
+$E[(X-\mu)^2] = E[X^2 - 2X\mu + \mu^2]$
+$= E[X^2] - E[2X\mu] + E[\mu^2]$ (par linéarité)
+$= E[X^2] - 2\mu E[X] + \mu^2$ (car $\mu$ est une constante)
+$= E[X^2] - 2\mu(\mu) + \mu^2 = E[X^2] - 2\mu^2 + \mu^2$
+$= E[X^2] - \mu^2 = E[X^2] - (E[X])^2$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 20 : Moments centrés vs non centrés]
+On développe et on utilise la linéarité de l'espérance, en se rappelant que $\mu=E[X]$ est une constante.
+$E[(X-\mu)^3] = E[X^3 - 3X^2\mu + 3X\mu^2 - \mu^3]$
+$= E[X^3] - E[3X^2\mu] + E[3X\mu^2] - E[\mu^3]$
+$= E[X^3] - 3\mu E[X^2] + 3\mu^2 E[X] - \mu^3$
+En remplaçant $E[X]$ par $\mu$ :
+$= E[X^3] - 3\mu E[X^2] + 3\mu^2(\mu) - \mu^3$
+$= E[X^3] - 3\mu E[X^2] + 3\mu^3 - \mu^3$
+$= E[X^3] - 3E[X]E[X^2] + 2(E[X])^3$.
+\end{correctionbox}
