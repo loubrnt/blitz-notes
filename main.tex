@@ -117,39 +117,54 @@
 % --- STYLE DE L'OUTPUT ---
 \lstdefinestyle{outputstyle}{
     basicstyle=\ttfamily\small\color{white},
-    numbers=left,
-    numberstyle=\color{white}\def\thelstnumber{>>},
-    numbersep=5pt,
     breaklines=true,
     frame=none
 }
 
-% --- DÉFINITION DES CELLULES DE CODE ET OUTPUT (Inchangé) ---
+% ==================================================================
+% --- MODIFIÉ : DÉFINITION DES CELLULES DE CODE ET OUTPUT ---
+% ==================================================================
+% Elles utilisent maintenant le même style "sidebar" que les autres boîtes.
+
 \newtcblisting{codecell}{
-  arc=2mm, boxrule=0.8pt, colframe=vscodeBlue, colback=codeBackground,
-  coltitle=white, fonttitle=\bfseries, title=Code Python,
-  listing only, listing options={style=vscode, basicstyle=\ttfamily\footnotesize\color{white}},
-  left=6mm, right=6mm, top=3mm, bottom=3mm, boxsep=4mm
+  skin=enhanced, % Pour la bordure latérale
+  arc=0mm,       % Coins carrés
+  boxrule=0pt,   % Pas de cadre
+  colback=codeBackground, % Fond sombre (VS Code)
+  borderline west={2pt}{0pt}{vscodeBlue}, % Barre latérale bleue
+  fonttitle=\bfseries\color{vscodeBlue}, % Titre en bleu
+  listing only,
+  listing options={style=vscode, basicstyle=\ttfamily\footnotesize\color{white}},
+  left=3mm, right=3mm, top=2mm, bottom=2mm, % Padding (identique à sidebarstyle)
+  boxsep=0mm, % (identique à sidebarstyle)
+  breakable  % (identique à sidebarstyle)
 }
 \newtcblisting{outputcell}{
-  arc=2mm, boxrule=0.8pt, colframe=black!95, colback=black!85,
-  fonttitle=\bfseries\color{white}, title=Output, coltitle=black!95,
-  listing only, listing options={style=outputstyle, basicstyle=\ttfamily\footnotesize\color{white}},
-  left=6mm, right=6mm, top=3mm, bottom=3mm, boxsep=4mm
+  skin=enhanced, % Pour la bordure latérale
+  arc=0mm,       % Coins carrés
+  boxrule=0pt,   % Pas de cadre
+  colback=black!85, % Fond sombre (Output)
+  borderline west={2pt}{0pt}{corrColor}, % Barre latérale grise
+  fonttitle=\bfseries\color{corrColor}, % Titre en gris
+  listing only,
+  listing options={style=outputstyle, basicstyle=\ttfamily\footnotesize\color{white}},
+  left=3mm, right=3mm, top=2mm, bottom=2mm, % Padding (identique à sidebarstyle)
+  boxsep=0mm, % (identique à sidebarstyle)
+  breakable  % (identique à sidebarstyle)
 }
 
 % --- DÉFINITION DES COULEURS POUR DÉF/THÉO/PREUVE/INTUITION/EXEMPLE ---
-\definecolor{defColor}{HTML}{1b1f3a}        % Bleu nuit pour les définitions
-\definecolor{theoColor}{HTML}{53354a}       % Violet aubergine pour les théorèmes
-\definecolor{proofColor}{HTML}{a64942}      % Rouge brique pour les preuves
-\definecolor{intuitionColor}{HTML}{16A085}  % Turquoise pour l'intuition
-\definecolor{exampleColor}{HTML}{4a6982}    % Bleu ardoise pour les exemples
-\definecolor{exoColor}{HTML}{1E8449}        % Vert
-\definecolor{corrColor}{HTML}{7F8C8D}       % Gris
+\definecolor{defColor}{HTML}{1b1f3a}       % Bleu nuit pour les définitions
+\definecolor{theoColor}{HTML}{53354a}      % Violet aubergine pour les théorèmes
+\definecolor{proofColor}{HTML}{a64942}     % Rouge brique pour les preuves
+\definecolor{intuitionColor}{HTML}{16A085} % Turquoise pour l'intuition
+\definecolor{exampleColor}{HTML}{4a6982}   % Bleu ardoise pour les exemples
+\definecolor{exoColor}{HTML}{1E8449}       % Vert
+\definecolor{corrColor}{HTML}{7F8C8D}      % Gris
 \definecolor{remarqueColor}{HTML}{D35400} 
 
 % ==================================================================
-% --- MODIFIÉ : DÉFINITION DU STYLE DE BASE (MARGES RÉDUITES) ---
+% --- DÉFINITION DU STYLE DE BASE (MARGES RÉDUITES) ---
 % ==================================================================
 
 % --- STYLE "ORGANIQUE" AVEC BARRE LATÉRALE (Pour TOUTES les boîtes) ---
@@ -168,10 +183,8 @@
     }
 }
 
-% (Le style "fullboxstyle" a été supprimé car il n'est plus utilisé)
-
 % ==================================================================
-% --- MODIFIÉ : DÉFINITION DE TOUTES LES CELLULES ---
+% --- DÉFINITION DE TOUTES LES CELLULES (TEXTE) ---
 % ==================================================================
 
 % --- CELLULES "SIDEBAR" (Pour le contenu théorique) ---
@@ -207,8 +220,7 @@
 }
 
 
-% --- MODIFIÉ : CELLULES "SIDEBAR" (Pour les applications) ---
-% Elles utilisent maintenant "sidebarstyle" au lieu de "fullboxstyle"
+% --- CELLULES "SIDEBAR" (Pour les applications) ---
 \newtcolorbox{examplebox}[1][]{
   sidebarstyle,
   borderline west={2pt}{0pt}{exampleColor},
@@ -250,5 +262,46 @@
 \input{section8.tex}
 
 \input{appendice1.tex}
+
+\section{Exemples de Code}
+
+\begin{examplebox}[Simulation d'un lancer de dé]
+On peut simuler $n$ lancers d'un dé équilibré à 6 faces en utilisant la bibliothèque \texttt{random} de Python.
+
+\begin{codecell}
+import random
+import numpy
+\end{codecell}
+
+\begin{outputcell}
+>> "vamonos"
+\end{outputcell}
+
+\end{examplebox}
+
+\begin{definitionbox}[Variable Aléatoire]
+Une variable aléatoire est une fonction qui associe un nombre réel à chaque résultat possible d'une expérience aléatoire.
+\end{definitionbox}
+
+\begin{codecell}
+import math
+import random
+
+def poisson_knuth(lmbda: float) -> int:
+  """
+  Simule une variable aleatoire suivant une loi de Poisson()
+  en utilisant l algorithme de Knuth.
+  """
+  L = math.exp(-lmbda)
+  k = 0
+  p = 1.0
+
+  while p > L:
+  k += 1
+  p *= random.random()
+
+  return k - 1
+\end{codecell}
+
 
 \end{document}

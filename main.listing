@@ -1,0 +1,17 @@
+import math
+import random
+
+def poisson_knuth(lmbda: float) -> int:
+  """
+  Simule une variable aleatoire suivant une loi de Poisson()
+  en utilisant l algorithme de Knuth.
+  """
+  L = math.exp(-lmbda)
+  k = 0
+  p = 1.0
+
+  while p > L:
+  k += 1
+  p *= random.random()
+
+  return k - 1
