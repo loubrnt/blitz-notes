@@ -57,9 +57,109 @@ Sa densité a une forme caractéristique de \textbf{cloche symétrique} :
 \par\small\textit{Influence de $\mu$ (position) et $\sigma$ (largeur) sur la forme de la cloche.}
 \end{intuitionbox}
 
-\begin{remarquebox}[Pourquoi ce facteur $\frac{1}{\sigma \sqrt{2\pi}}$ ?]
-Ce terme devant l'exponentielle peut sembler arbitraire, mais il est absolument essentiel. C'est la \textbf{constante de normalisation}. Son rôle est de s'assurer que l'\textbf{aire totale} sous la courbe de densité vaut exactement 1, ce qui est une condition sine qua non pour toute fonction de densité de probabilité. Sans ce facteur, l'intégrale de $-\infty$ à $+\infty$ ne serait pas égale à 1, et on ne pourrait pas interpréter les aires comme des probabilités. Le $\sigma$ au dénominateur assure également que si la courbe s'élargit (grand $\sigma$), sa hauteur maximale diminue pour conserver une aire constante de 1.
-\end{remarquebox}
+\begin{proofbox}[Dérivation de la Densité Normale à partir des Principes Fondamentaux]
+
+\textbf{Contexte Visuel :} Imaginons un nuage de points dispersés autour d'une cible à l'origine $(0,0)$, comme des impacts de fléchettes. Le graphique ci-dessous illustre cette dispersion. On s'intéresse à la probabilité de tomber dans une petite zone, comme $dA$, autour d'un point $(x, y)$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle, % Axes qui passent par l'origine (0,0)
+    xlabel=$x$,       % Étiquette axe X
+    ylabel=$y$,       % Étiquette axe Y
+    axis line style={magenta}, % Couleur des axes
+    xlabel style={anchor=west, magenta}, % Style de l'étiquette X
+    ylabel style={anchor=south, magenta}, % Style de l'étiquette Y
+    xmin=-3.5, xmax=3.5, % Limites du graphique
+    ymin=-3.5, ymax=3.5,
+    tick label style={font=\tiny} % Police plus petite pour les graduations
+]
+
+% Ajout des points du nuage. Ce sont des coordonnées approximatives.
+\addplot [only marks, mark=*, cyan, mark size=1.5pt]
+coordinates {
+    (0.2, 0.1) (-0.5, 0.2) (0.1, -0.3) (0.5, -0.8) (-0.3, -1.2) (0,0.1)
+    (1.5, 1.5) (0.8, 0.8) (2.0, -0.5) (2.8, -1.4) (2.5, -0.2)
+    (-1.8, -1.3) (-2.5, 0.5) (-1.5, 0.3) (-2.2, -0.8) (-0.8, 0.5)
+    (0.5, 1.2) (0.7, 2.8) (0.2, 3.2) (-0.5, 1.5) (-1.0, -2.0)
+    (1.8, -1.0) (1.0, -1.5) (0.3, -2.5) (-1.8, -2.8) (1.2, 0.5)
+    (-1.2, -1.5) (-0.8, 1.1)
+};
+
+% --- Annotations ---
+
+% Points et boîte pour 'dA'
+\addplot [only marks, mark=*, red, mark size=1.5pt] coordinates {(1.3, 2.0)};
+\draw [red, thick] (axis cs:1.1, 1.8) rectangle (axis cs:1.5, 2.2);
+\node [red, above] at (axis cs:1.3, 2.2) {$dA$};
+
+% Points et boîte pour 'dB'
+\addplot [only marks, mark=*, cyan, mark size=1.5pt] 
+coordinates {(-1.2, 2.0) (-1.3, 2.3) (-1.0, 2.2) (-1.1, 1.9)};
+\draw [blue, thick] (axis cs:-1.8, 1.2) rectangle (axis cs:-0.8, 2.8);
+\node [blue, above] at (axis cs:-1.3, 2.8) {$dB$};
+
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\textbf{Objectif :} Expliquer comment arriver à la formule mathématique de la courbe en cloche (densité de probabilité normale) en partant de principes fondamentaux sur les erreurs aléatoires.
+
+\textbf{1. Le Point de Départ : Densité et Aire $dA$}
+\newline
+Dans une distribution continue, la probabilité de tomber \textit{exactement} sur un point $(x, y)$ est nulle. On ne peut donc pas parler de "probabilité d'un point". On parle de la probabilité de tomber \textit{dans une petite zone}, comme un rectangle $dA = dx \cdot dy$ autour du point $(x, y)$.
+
+Cette probabilité, notée $P(\text{dans } dA)$, est \textit{proportionnelle} à l'aire de la zone $dA$. La \textit{constante de proportionnalité} est la \textbf{fonction de densité de probabilité} $p(x, y)$ évaluée en ce point. En d'autres termes, la densité $p(x, y)$ \textit{représente} localement la concentration de probabilité. Ainsi, la probabilité de tomber dans la zone $dA$ est approximativement :
+
+$$ P(\text{dans } dA) \approx p(x, y) \cdot dA $$
+
+Donc, $p(x, y)$ est la \textit{densité de probabilité} en $(x, y)$, et non la probabilité elle-même multipliée par l'aire. La probabilité totale sur une zone finie est obtenue en intégrant cette densité sur cette zone.
+
+\textbf{2. Les Hypothèses Fondamentales}
+\newline
+On pose deux hypothèses sur la nature de ces erreurs (représentées par la densité $p(x, y)$) :
+\begin{enumerate}
+    \item \textbf{Indépendance des axes :} L'erreur horizontale ($x$) est indépendante de l'erreur verticale ($y$). Cela implique que la densité jointe $p(x, y)$ peut s'écrire comme le produit de la densité marginale sur $x$, notée $f(x)$, et de la densité marginale sur $y$, notée $f(y)$. Donc, $p(x, y) = f(x) \cdot f(y)$.
+    \item \textbf{Symétrie de rotation (Isotropie) :} La densité ne dépend que de la distance $r = \sqrt{x^2 + y^2}$ au centre, pas de l'angle. Il existe donc une fonction $\phi(r)$ telle que la densité en $(x,y)$ est $p(x, y) = \phi(\sqrt{x^2 + y^2})$.
+\end{enumerate}
+
+\textbf{3. L'Équation Fonctionnelle}
+\newline
+En égalant les deux expressions pour la même densité $p(x, y)$ (à une constante près, car la densité peut être définie à un facteur près avant normalisation), on obtient :
+$$ f(x) \cdot f(y) = \phi(\sqrt{x^2 + y^2}) $$
+Pour $y=0$, on a $f(x) \cdot f(0) = \phi(x)$. Posons $f(0) = \lambda$ (la densité maximale au centre). Alors $\phi(x) = \lambda f(x)$.
+L'équation devient :
+$$ f(x) \cdot f(y) = \lambda f(\sqrt{x^2 + y^2}) $$
+
+\textbf{4. Résolution de l'Équation Fonctionnelle}
+\begin{enumerate}
+    \item \textbf{Normalisation :} Posons $g(x) = f(x)/\lambda$, avec $g(0)=1$. L'équation se simplifie en :
+    $$ g(x) g(y) = g(\sqrt{x^2 + y^2}) $$
+    \item \textbf{Changement de variable :} Posons $g(x) = h(x^2)$. L'équation devient $h(x^2)h(y^2) = h(x^2+y^2)$. Avec $a=x^2$ et $b=y^2$, on a :
+    $$ h(a) h(b) = h(a+b) $$
+    \item \textbf{Solution exponentielle :} La solution continue de cette équation de Cauchy est $h(a) = e^{Aa}$ pour une constante $A$.
+    \item \textbf{Retour aux fonctions et contrainte physique :}
+    $g(x) = h(x^2) = e^{Ax^2}$.
+    $f(x) = \lambda g(x) = \lambda e^{Ax^2}$.
+    Comme la densité doit diminuer loin du centre, la constante $A$ doit être négative. Posons $A = -k$ avec $k>0$.
+    $$ f(x) = \lambda e^{-k x^2} $$
+\end{enumerate}
+
+\textbf{5. Normalisation et Identification des Paramètres}
+\begin{enumerate}
+    \item \textbf{Condition $\int f(x) dx = 1$} :
+    $\int_{-\infty}^{\infty} \lambda e^{-k x^2} \, \mathrm{d}x = \lambda \sqrt{\frac{\pi}{k}} = 1 \implies \lambda = \sqrt{\frac{k}{\pi}}$.
+    \item \textbf{Lien avec la Variance ($\sigma^2$)} : Pour une distribution centrée, $\sigma^2 = E[X^2] = \int x^2 f(x) dx$.
+    $$ \sigma^2 = \int_{-\infty}^{\infty} x^2 \left( \sqrt{\frac{k}{\pi}} e^{-k x^2} \right) \, \mathrm{d}x = \sqrt{\frac{k}{\pi}} \left( \frac{1}{2k} \sqrt{\frac{\pi}{k}} \right) = \frac{1}{2k} $$
+    Donc, $k = \frac{1}{2\sigma^2}$.
+    \item \textbf{Substitution Finale :} Remplaçons $k$ dans $\lambda$ et $f(x)$.
+    $$ \lambda = \sqrt{\frac{1/(2\sigma^2)}{\pi}} = \frac{1}{\sigma\sqrt{2\pi}} $$
+    $$ f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2\sigma^2} x^2} = \frac{1}{\sigma\sqrt{2\pi}} e^{ -\frac{x^2}{2\sigma^2} } $$
+    \item \textbf{Généralisation (Moyenne $\mu$)} : Pour centrer la distribution sur $\mu$, on remplace $x$ par $(x-\mu)$ dans l'exposant :
+    $$ f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{(x-\mu)^2}{2\sigma^2} } $$
+\end{enumerate}
+C'est la fonction de densité de la loi normale $\mathcal{N}(\mu, \sigma^2)$, dérivée des hypothèses fondamentales sur les erreurs aléatoires.
+\end{proofbox}
 
 \subsection{La Loi Normale Centrée Réduite $\mathcal{N}(0, 1)$}
 
@@ -209,37 +309,3 @@ Quel est le QI minimum requis pour être dans le top 10\% de la population ? ($\
     $x = 100 + 1.28 \times 15 = 100 + 19.2 = 119.2$.
     Il faut un QI d'environ 119.2 pour être dans le top 10\%.
 \end{examplebox}
-
-\subsection{Le Théorème Central Limite (TCL)}
-
-\begin{theorembox}[Théorème Central Limite (TCL)]
-Soit $X_1, X_2, \dots, X_n$ une suite de variables aléatoires indépendantes et identiquement distribuées (i.i.d.) avec une espérance $\mu$ et une variance $\sigma^2$ finies. Alors, la distribution de la \textbf{moyenne empirique} $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$ converge vers une loi normale lorsque $n$ tend vers l'infini. Plus précisément :
-$$ \frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} \mathcal{N}(0, 1) \quad \text{quand } n \to \infty $$
-Cela signifie que pour $n$ grand, $\bar{X}_n$ suit approximativement la loi $\mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right)$.
-\end{theorembox}
-
-\begin{intuitionbox}[La Convergence Universelle vers la Cloche ]
-Le TCL est l'un des joyaux des probabilités. Il nous dit quelque chose de remarquable : \textbf{peu importe la forme de la distribution initiale} des $X_i$ (elle peut être quelconque : uniforme, exponentielle, bimodale, inconnue...), la \textbf{moyenne d'un grand nombre d'observations indépendantes issues de cette distribution tendra inévitablement à suivre une distribution normale} ! 
-\newline
-Pourquoi ? Intuitivement, quand on fait la moyenne de nombreuses variables aléatoires, les extrêmes ont tendance à se compenser. Une valeur très grande sera souvent moyennée avec une valeur très petite, et le résultat se rapprochera de la moyenne générale $\mu$. Les fluctuations autour de $\mu$ résultent de la combinaison de nombreux petits écarts aléatoires, et cette combinaison tend à produire la forme symétrique de la cloche gaussienne.
-\newline
-C'est la raison fondamentale de l'omniprésence de la loi normale :
-\begin{itemize}
-    \item \textbf{Phénomènes Naturels :} Beaucoup de caractéristiques biologiques (taille, poids...) résultent de l'influence combinée de nombreux gènes et facteurs environnementaux.
-    \item \textbf{Erreurs de Mesure :} Les erreurs dans les mesures physiques sont souvent la somme de multiples petites perturbations aléatoires.
-    \item \textbf{Processus Industriels :} La qualité d'un produit peut dépendre de la moyenne de nombreuses variables de production.
-    \item \textbf{Finance :} Les rendements boursiers sur une période peuvent être vus comme la somme de petits changements journaliers.
-\end{itemize}
-Le TCL nous assure que même si les composantes individuelles ne sont pas normales, leur somme ou leur moyenne le deviendra approximativement si elles sont assez nombreuses et indépendantes.
-\end{intuitionbox}
-
-\begin{remarquebox}[Conditions d'Application et Approximations]
-Le TCL est un théorème \textit{limite} ($n \to \infty$), mais l'approximation normale pour $\bar{X}_n$ est souvent jugée acceptable en pratique dès que $n$ est "suffisamment grand". La règle empirique la plus courante est $n \ge 30$, mais ce seuil dépend fortement de l'asymétrie de la distribution initiale. Si la distribution de départ est déjà proche d'une cloche, l'approximation sera bonne même pour des $n$ plus petits. Si elle est très asymétrique (comme une exponentielle), il faudra un $n$ plus grand.
-\newline
-Le TCL justifie aussi les approximations suivantes :
-\begin{itemize}
-    \item \textbf{Binomiale $\rightarrow$ Normale :} Si $X \sim \text{Bin}(n, p)$ avec $np \ge 5$ et $n(1-p) \ge 5$, alors $X \approx \mathcal{N}(np, np(1-p))$. C'est logique car une binomiale est une somme de $n$ Bernoulli i.i.d.
-    \item \textbf{Poisson $\rightarrow$ Normale :} Si $Y \sim \text{Poisson}(\lambda)$ avec $\lambda$ grand (par ex. $\lambda \ge 20$), alors $Y \approx \mathcal{N}(\lambda, \lambda)$.
-\end{itemize}
-\textbf{Correction de Continuité :} Lors de l'approximation d'une variable discrète (Binomiale, Poisson) par une variable continue (Normale), on améliore souvent la précision en ajustant les bornes de l'intervalle. Par exemple, pour calculer $P(X \le k)$ où $X$ est discrète, on calcule $P(Y \le k+0.5)$ où $Y$ est l'approximation normale. Pour $P(X=k)$, on calcule $P(k-0.5 \le Y \le k+0.5)$.
-\end{remarquebox}
