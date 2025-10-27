@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer and Downloader</title>
+    <!-- Loading Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Using Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 sm:p-8">
+
+        <h1 class="text-2xl sm:text-3xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">PDF Viewer & Downloader</h1>
+
+        <!-- Download Button -->
+        <div class="flex justify-center mb-6">
+            <a href="main.pdf" 
+               download="main.pdf" 
+               class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
+                Download main.pdf
+            </a>
+        </div>
+
+        <!-- Embedded PDF Viewer -->
+        <div class="border-2 border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden">
+            <embed src="main.pdf" type="application/pdf" width="100%" height="800px" />
+        </div>
+
+        <!-- Note about local file restrictions -->
+        <div class="mt-6 p-4 bg-yellow-100 dark:bg-yellow-900 border-l-4 border-yellow-500 dark:border-yellow-300 text-yellow-800 dark:text-yellow-100 rounded-md">
+            <p class="font-semibold">Note:</p>
+            <p class="text-sm">If the PDF does not display or download correctly, it might be due to your browser's security settings for local files. This HTML file will work most reliably when hosted on a web server.</p>
+        </div>
+
+    </div>
+</body>
+</html>
