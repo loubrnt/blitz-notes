@@ -754,3 +754,213 @@ $I_A = 1$ si $A$ se produit, $I_A = 0$ sinon.
     $P(I_A = 1) = p = 1/6$
     $P(I_A = 0) = 1-p = 5/6$
 \end{correctionbox}
+
+\subsection{Exercices Pratiques (Python)}
+
+Ces exercices vous aideront à implémenter et visualiser les fonctions de masse (PMF) des principales lois discrètes vues dans ce chapitre.
+
+Pour ces exercices, vous aurez besoin des bibliothèques \texttt{math} (incluse), \texttt{random} (incluse), \texttt{pandas} et \texttt{matplotlib}.
+
+\begin{codecell}
+pip install pandas matplotlib
+\end{codecell}
+
+\begin{exercicebox}[Exercice 1 : PMF Empirique (Somme de deux dés)]
+Nous allons simuler le lancer de deux dés à 6 faces et tracer la PMF empirique de leur somme, $Y = D_1 + D_2$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Créez une fonction \texttt{lancer\_deux\_des()} qui simule le lancer de deux dés (valeurs de 1 à 6) et retourne leur somme.
+    \item Appelez cette fonction 10000 fois et stockez les résultats dans une liste.
+    \item Convertissez cette liste en \texttt{pandas.Series}.
+    \item Utilisez la méthode \texttt{.value\_counts(normalize=True).sort\_index()} sur la Series pour obtenir la PMF empirique (les probabilités de chaque somme).
+    \item Utilisez \texttt{.plot(kind='bar')} pour visualiser cette PMF.
+\end{enumerate}
+
+\begin{codecell}
+import random
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def lancer_deux_des():
+    # ... votre code ...
+    pass
+
+N_simulations = 10000
+resultats = []
+
+# 2. Boucle de simulation
+# ... votre code ...
+
+# 3. Conversion en Series
+# ... votre code ...
+
+# 4. Calcul de la PMF empirique
+# ... votre code ...
+
+# 5. Affichage
+# ... votre code ...
+# plt.title("PMF Empirique de la Somme de Deux Des")
+# plt.xlabel("Somme Y")
+# plt.ylabel("Probabilite P(Y=k)")
+# plt.show()
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Loi Binomiale (Implémentation de la PMF)]
+Nous allons implémenter la formule de la PMF Binomiale $P(X=k) = \binom{n}{k} p^k (1-p)^{n-k}$ en utilisant le module \texttt{math}.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Importez \texttt{math}.
+    \item Écrivez une fonction \texttt{pmf\_binomiale(k, n, p)} qui prend $k$, $n$, et $p$ et retourne la probabilité $P(X=k)$.
+    \item Testez votre fonction en calculant la probabilité d'obtenir exactement 6 Piles ($k=6$) en 10 lancers ($n=10$) d'une pièce équilibrée ($p=0.5$).
+\end{enumerate}
+
+\begin{codecell}
+import math
+
+def pmf_binomiale(k, n, p):
+    # ... votre code ...
+    pass
+
+# 4. Test
+k, n, p = 6, 10, 0.5
+# probabilite = ...
+# print(f"P(X={k}) pour Bin({n}, {p}) = {probabilite:.5f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Loi Hypergéométrique (Implémentation de la PMF)]
+Implémentons la PMF de la loi Hypergéométrique $P(X=k) = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}}$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Écrivez une fonction \texttt{pmf\_hypergeometrique(k, w, b, m)} qui calcule $P(X=k)$.
+    \item Testez votre fonction avec l'exemple du cours : un comité de $m=5$ personnes choisi parmi $w=8$ hommes et $b=10$ femmes. Quelle est la probabilité d'avoir $k=2$ hommes ?
+\end{enumerate}
+
+\begin{codecell}
+import math
+
+def pmf_hypergeometrique(k, w, b, m):
+    # k = succes desires (parmi w)
+    # w = nombre total de succes dans la population
+    # b = nombre total d'echecs dans la population
+    # m = taille de l'echantillon
+    
+    # ... votre code ...
+    pass
+
+# 3. Test
+w, b, m, k = 8, 10, 5, 2
+# probabilite = ...
+# print(f"Probabilite d'avoir {k} hommes : {probabilite:.5f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Loi Géométrique (Simulation)]
+Nous allons simuler la loi Géométrique $X \sim \text{Geom}(p)$ qui compte le nombre d'échecs ($k$) avant le premier succès.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Écrivez une fonction \texttt{simuler\_geometrique(p)} qui simule des essais de Bernoulli (avec probabilité $p$) jusqu'à obtenir un succès, et qui retourne le nombre d'échecs.
+    \item Appelez cette fonction 10000 fois pour $p=1/6$ (lancer de dé) et stockez les $k$ (nombre d'échecs) dans une liste.
+    \item Calculez et affichez la moyenne du nombre d'échecs dans vos simulations.
+\end{enumerate}
+
+\begin{codecell}
+import random
+
+def simuler_geometrique(p):
+    # ... votre code ...
+    pass
+
+N_simulations = 10000
+p = 1/6.0
+resultats_geom = []
+
+# 3. Boucle de simulation
+# ... votre code ...
+
+# 4. Calculer la moyenne
+# ... votre code ...
+# print(f"Moyenne d'echecs avant succes (p={p:.3f}): {moyenne_echecs:.3f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Loi de Poisson (Implémentation de la PMF)]
+Implémentons la PMF de la loi de Poisson $P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!}$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Importez \texttt{math}.
+    \item Écrivez une fonction \texttt{pmf\_poisson(k, lmbda)} qui calcule $P(X=k)$.
+    \item Testez votre fonction en calculant les probabilités pour l'exemple de Bortkiewicz ($\lambda=0.61$) : $P(X=0)$, $P(X=1)$, et $P(X=2)$.
+\end{enumerate}
+
+\begin{codecell}
+import math
+
+def pmf_poisson(k, lmbda):
+    # ... votre code ...
+    pass
+
+# 4. Test avec l'exemple de Bortkiewicz
+lmbda = 0.61
+
+# p_k0 = ...
+# p_k1 = ...
+# p_k2 = ...
+
+# print(f"Parametre lambda = {lmbda}")
+# print(f"P(X=0) = {p_k0:.5f}")
+# print(f"P(X=1) = {p_k1:.5f}")
+# print(f"P(X=2) = {p_k2:.5f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 6 : Approximation Binomiale par Poisson]
+Nous avons vu que la loi de Poisson $\text{Poisson}(\lambda)$ est une excellente approximation de la loi Binomiale $\text{Bin}(n, p)$ lorsque $n$ est grand, $p$ est petit, et $\lambda = np$.
+
+\textbf{Votre tâche :}
+En utilisant vos fonctions \texttt{pmf\_binomiale} (Ex 2) et \texttt{pmf\_poisson} (Ex 5) :
+\begin{enumerate}
+    \item Choisissez des paramètres : $n=1000$ et $p=0.002$.
+    \item Calculez le paramètre $\lambda = np$ correspondant pour la loi de Poisson.
+    \item Calculez $P(X=k)$ pour $k=0, 1, 2, 3$ en utilisant la PMF \textbf{Binomiale}.
+    \item Calculez $P(Y=k)$ pour $k=0, 1, 2, 3$ en utilisant la PMF \textbf{Poisson}.
+    \item Affichez les résultats côte à côte pour comparer la précision de l'approximation.
+\end{enumerate}
+
+\begin{codecell}
+import math
+
+# Collez vos fonctions pmf_binomiale et pmf_poisson ici
+def pmf_binomiale(k, n, p):
+    # ... (code de l'exercice 2) ...
+    pass
+
+def pmf_poisson(k, lmbda):
+    # ... (code de l'exercice 5) ...
+    pass
+
+# 1. Parametres
+n = 1000
+p = 0.002
+
+# 2. Calculer lambda
+lmbda = n * p
+print(f"n={n}, p={p}, lambda={lmbda}")
+print("-" * 30)
+print(f"k \t Binomiale \t Poisson")
+print("-" * 30)
+
+# 3. & 4. Boucle de calcul et comparaison
+for k_val in [0, 1, 2, 3, 4]:
+    # prob_bin = ...
+    # prob_poi = ...
+    # print(f"{k_val} \t {prob_bin:.6f} \t {prob_poi:.6f}")
+    pass
+\end{codecell}
+\end{exercicebox}

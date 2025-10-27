@@ -768,3 +768,205 @@ $z = (0 - (-2)) / \sqrt{34} = 2 / \sqrt{34} \approx 0.342$.
 $P(D > 0) = P(Z > 0.342) = 1 - \Phi(0.342) \approx 1 - 0.6338 = 0.3662$.
 Il y a environ 36.6\% de chance que Bob ait une meilleure note.
 \end{correctionbox}
+
+\subsection{Exercices Pratiques (Python)}
+
+L'une des applications les plus célèbres de la loi normale est la modélisation des rendements financiers. Bien que ce modèle ne soit pas parfait (les krachs boursiers sont plus fréquents que ne le prédit la loi normale), il constitue la pierre angulaire de la finance moderne.
+
+Nous allons supposer que les \textbf{rendements logarithmiques} quotidiens d'un actif financier (comme l'indice S\&P 500) suivent une loi normale $X \sim \mathcal{N}(\mu, \sigma^2)$.
+
+\begin{itemize}
+    \item $\mu$ est le rendement moyen quotidien (souvent proche de zéro).
+    \item $\sigma$ est la volatilité quotidienne (l'écart-type du rendement).
+\end{itemize}
+
+Nous utiliserons \texttt{yfinance} pour obtenir des données réelles, \texttt{numpy} pour les calculs, et \texttt{scipy.stats} pour les fonctions $\Phi$ (CDF) et $\Phi^{-1}$ (PPF).
+
+\begin{codecell}
+# Cellule d'installation et d'importation
+pip install numpy pandas yfinance scipy
+\end{codecell}
+
+\begin{codecell}
+import numpy as np
+import pandas as pd
+import yfinance as yf
+from scipy.stats import norm
+\end{codecell}
+
+\begin{exercicebox}[Exercice 1 : Modélisation des Rendements du S\&P 500]
+Notre première étape est d'obtenir les données de l'indice S\&P 500 (ticker : GSPC) et d'estimer les paramètres $\mu$ et $\sigma$ de notre modèle normal.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Télécharger les données du GSPC des 5 dernières années.
+    \item Calculer les rendements logarithmiques quotidiens. La formule est $R = \log(P_t / P_{t-1})$. (Indice : utilisez \texttt{np.log(data['Close'] / data['Close'].shift(1))}).
+    \item Estimer $\mu$ (la moyenne) et $\sigma$ (l'écart-type) de ces rendements.
+    \item Afficher $\mu$ et $\sigma$. Vous avez maintenant votre modèle $X \sim \mathcal{N}(\mu, \sigma^2)$ !
+\end{enumerate}
+
+
+\begin{codecell}
+import numpy as np
+import yfinance as yf
+
+ticker = '^GSPC'
+data = yf.download(ticker, period='5y')
+
+# 1. Calculer les rendements log (log(P_t / P_{t-1}))
+# Indice : utilisez .shift(1) pour P_{t-1}
+# log_returns = ...
+log_returns = log_returns.dropna() # On enleve la premiere valeur (NaN)
+
+# 2. Estimer mu (moyenne) et sigma (ecart-type)
+# mu = ...
+# sigma = ...
+
+# 3. Afficher les parametres
+# print(f"Modele N(mu={mu:.6f}, sigma={sigma:.6f})")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Calcul de Probabilité (Z-score)]
+Utilisons notre modèle $\mathcal{N}(\mu, \sigma^2)$ de l'exercice 1. Un "krach" pourrait être défini comme une baisse de plus de 3\% en une seule journée.
+
+Quelle est la probabilité que cela se produise, selon notre modèle ?
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Définir la valeur $x$ d'une baisse de 3\% (en rendement log) : $x = \log(0.97)$.
+    \item Standardiser $x$ pour obtenir le Z-score : $z = (x - \mu) / \sigma$.
+    \item Utiliser \texttt{scipy.stats.norm.cdf(z)} (qui est $\Phi(z)$) pour trouver la probabilité $P(X \le x)$.
+\end{enumerate}
+
+\begin{codecell}
+from scipy.stats import norm
+
+# Supposons que mu et sigma sont definis (de l'Ex 1)
+# mu = ... (copiez votre valeur de l'Ex 1)
+# sigma = ... (copiez votre valeur de l'Ex 1)
+
+# 1. Definir x pour une baisse de 3%
+# x = np.log(...)
+
+# 2. Standardiser x pour obtenir le Z-score
+# z_score = ...
+
+# 3. Utiliser norm.cdf(z) pour trouver P(X <= x)
+# probability = ...
+
+# print(f"Probabilite d'une baisse > 3% : {probability:.8f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Problème Inverse (Value at Risk - VaR)]
+Le "Value at Risk" (VaR) est un concept financier qui répond à la question : "Quel est le montant minimum que je peux m'attendre à perdre avec une probabilité $p$ ?"
+
+Calculons le 5\% VaR quotidien. C'est la valeur $x$ (rendement) telle que $P(X \le x) = 0.05$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Trouver le Z-score $z$ qui correspond au 5ème percentile (probabilité 0.05).
+    (Indice : utilisez \texttt{scipy.stats.norm.ppf(0.05)}, qui est $\Phi^{-1}(0.05)$).
+    \item "Dé-standardiser" ce Z-score pour trouver la valeur $x$ : $x = \mu + z \cdot \sigma$.
+    \item Interpréter le résultat (convertir $x$ en pourcentage : $np.exp(x) - 1$).
+\end{enumerate}
+
+\begin{codecell}
+from scipy.stats import norm
+
+# Supposons que mu et sigma sont definis (de l'Ex 1)
+# mu = ...
+# sigma = ...
+
+probabilite = 0.05
+
+# 1. Trouver le Z-score pour 5% (Indice: norm.ppf)
+# z_score_var = ...
+
+# 2. De-standardiser pour trouver x (x = mu + z*sigma)
+# x_var = ...
+
+# 3. Convertir en pourcentage (Indice: np.exp(x_var) - 1)
+# percent_loss = ...
+
+# print(f"Le 5% VaR est une perte de {abs(percent_loss):.2f}%")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Règle Empirique (68-95-99.7)]
+Vérifions à quel point la règle empirique (68-95-99.7) s'applique à nos données réelles de \texttt{log\_returns}.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Définir les intervalles $1\sigma$, $2\sigma$, et $3\sigma$ autour de la moyenne $\mu$.
+    \item Calculer le pourcentage réel de rendements (dans \texttt{log\_returns}) qui tombent dans chacun de ces trois intervalles.
+    \item Comparer ces pourcentages empiriques aux valeurs théoriques (68.3\%, 95.4\%, 99.7\%).
+\end{enumerate}
+
+\begin{codecell}
+# Supposons que mu, sigma, et log_returns sont definis
+
+# 1. Definir les bornes
+borne_1s_inf = mu - 1 * sigma
+borne_1s_sup = mu + 1 * sigma
+# ... faire de meme pour 2s et 3s ...
+borne_2s_inf = ...
+borne_2s_sup = ...
+borne_3s_inf = ...
+borne_3s_sup = ...
+
+# 2. Compter le pourcentage de 'log_returns' dans chaque intervalle
+# Indice: ((log_returns > borne_inf) & (log_returns < borne_sup)).mean()
+# within_1s = ...
+# within_2s = ...
+# within_3s = ...
+
+# print(f"Empirique 1-sigma: {within_1s:.4f} (Theorique: 0.6827)")
+# print(f"Empirique 2-sigma: {within_2s:.4f} (Theorique: 0.9545)")
+# print(f"Empirique 3-sigma: {within_3s:.4f} (Theorique: 0.9973)")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Stabilité par Addition (Portfolio Simple)]
+Un portfolio est composé de 50\% de S\&P 500 (GSPC) et 50\% d'Or (GC=F).
+Nous allons modéliser la loi du rendement de ce portfolio, $P = 0.5 X_S + 0.5 X_G$.
+
+Nous utiliserons les théorèmes $E[aX+bY] = aE[X]+bE[Y]$ et, en supposant (pour cet exercice) l'indépendance : $\text{Var}(aX+bY) = a^2\text{Var}(X) + b^2\text{Var}(Y)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Télécharger les données de l'Or (\texttt{`GC=F`}) et calculer $\mu_G$ et $\sigma_G^2$ (variance) de ses rendements log.
+    \item Récupérer $\mu_S$ et $\sigma_S^2$ (variance) du S\&P 500 de l'exercice 1.
+    \item Calculer la moyenne du portfolio $\mu_P = 0.5\mu_S + 0.5\mu_G$.
+    \item Calculer la variance du portfolio $\sigma_P^2 = (0.5)^2\sigma_S^2 + (0.5)^2\sigma_G^2$.
+    \item Afficher l'écart-type $\sigma_P$ et le comparer à $\sigma_S$ et $\sigma_G$.
+\end{enumerate}
+
+\begin{codecell}
+# mu_S et sigma_S de l'Ex 1
+# mu_S = ...
+# var_S = sigma_S**2
+
+# 1. Obtenir les donnees pour l'Or ('GC=F') et calculer mu_G, var_G
+# gold_data = ...
+# gold_returns = ...
+# mu_G = ...
+# var_G = ...
+
+# 2. Poids
+w_S = 0.5
+w_G = 0.5
+
+# 3. Calculer mu_P (moyenne du portfolio)
+# mu_P = ...
+
+# 4. Calculer var_P (en supposant l'independance)
+# var_P = ...
+# sigma_P = np.sqrt(var_P)
+
+# print(f"Volatilite S&P 500: {sigma_S:.6f}")
+# print(f"Volatilite Or: {np.sqrt(var_G):.6f}")
+# print(f"Volatilite Portfolio (indep): {sigma_P:.6f}")
+\end{codecell}
+\end{exercicebox}

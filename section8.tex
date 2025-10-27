@@ -675,3 +675,132 @@ $= E[X^3] - 3\mu E[X^2] + 3\mu^2(\mu) - \mu^3$
 $= E[X^3] - 3\mu E[X^2] + 3\mu^3 - \mu^3$
 $= E[X^3] - 3E[X]E[X^2] + 2(E[X])^3$.
 \end{correctionbox}
+
+\subsection{Exercices Pratiques (Python)}
+
+Dans ce chapitre, nous avons vu que le 3ème moment (skewness) et le 4ème moment (kurtosis) décrivent la forme d'une distribution. En finance, ces mesures sont cruciales pour évaluer le risque.
+
+Un rendement avec un \textbf{skewness négatif} signifie que les pertes extrêmes sont plus probables que les gains extrêmes. Un \textbf{excès de kurtosis positif} (leptokurtique) signifie que les "queues" de la distribution sont épaisses, indiquant qu'il y a une probabilité plus élevée d'événements extrêmes (gains ou pertes majeurs) que ne le prédit une loi normale.
+
+Nous allons calculer ces moments pour des actifs financiers réels.
+
+\begin{codecell}
+# Cellule d'installation et d'importation
+pip install numpy pandas yfinance scipy
+\end{codecell}
+
+\begin{codecell}
+import numpy as np
+import pandas as pd
+import yfinance as yf
+from scipy import stats
+\end{codecell}
+
+\begin{exercicebox}[Exercice 1 : Calcul Manuel des Moments]
+Calculons les 4 moments des rendements quotidiens de l'action Tesla (TSLA), connue pour sa volatilité.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Télécharger 5 ans de données pour TSLA.
+    \item Calculer les rendements logarithmiques quotidiens $X$.
+    \item Calculer la moyenne $\mu = E[X]$ et l'écart-type $\sigma$.
+    \item Standardiser les rendements : $Z = (X - \mu) / \sigma$.
+    \item Calculer le Skewness (3ème moment standardisé) : $E[Z^3]$.
+    \item Calculer l'Excès de Kurtosis (4ème moment standardisé - 3) : $E[Z^4] - 3$.
+\end{enumerate}
+
+\begin{codecell}
+# 1. Telecharger les donnees
+ticker = 'TSLA'
+data = yf.download(ticker, period='5y')
+
+# 2. Calculer les rendements log
+log_returns = np.log(data['Close'] / data['Close'].shift(1)).dropna()
+
+# 3. Calculer mu et sigma
+# mu = ...
+# sigma = ...
+
+# 4. Standardiser les rendements
+# z_scores = ...
+
+# 5. Calculer le Skewness
+# Indice : (z_scores**3).mean()
+# skewness_manuel = ...
+
+# 6. Calculer l'Exces de Kurtosis
+# Indice : (z_scores**4).mean() - 3
+# kurtosis_manuel = ...
+
+# print(f"--- Calculs Manuels pour {ticker} ---")
+# print(f"Skewness: {skewness_manuel:.4f}")
+# print(f"Exces de Kurtosis: {kurtosis_manuel:.4f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Vérification avec SciPy]
+Vérifions nos calculs manuels de l'exercice 1 en utilisant les fonctions optimisées de la bibliothèque scipy.stats.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Utiliser stats.skew(log\_returns) pour calculer le skewness.
+    \item Utiliser stats.kurtosis(log\_returns) pour calculer l'excès de kurtosis. (Note : cette fonction calcule l'excès de kurtosis par défaut, en soustrayant 3).
+    \item Afficher et comparer les résultats avec ceux de l'exercice 1.
+\end{enumerate}
+
+\begin{codecell}
+from scipy import stats
+
+# log_returns de l'exercice 1
+
+# 1. Calculer le skewness avec scipy
+# skew_scipy = ...
+
+# 2. Calculer l'exces de kurtosis avec scipy
+# kurtosis_scipy = ...
+
+# print(f"--- Verification avec SciPy pour {ticker} ---")
+# print(f"Skewness: {skew_scipy:.4f}")
+# print(f"Exces de Kurtosis: {kurtosis_scipy:.4f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Interprétation des Moments]
+Cet exercice est purement théorique et ne nécessite pas de code. Répondez en vous basant sur les résultats (probablement) obtenus aux exercices 1 et 2 pour TSLA.
+
+\begin{enumerate}
+    \item Le skewness calculé est-il positif, négatif ou proche de zéro ? Que cela implique-t-il sur la probabilité des gains quotidiens extrêmes par rapport aux pertes quotidiennes extrêmes ?
+    \item L'excès de kurtosis est-il positif, négatif ou proche de zéro ? La distribution est-elle leptokurtique, mésokurtique ou platykurtique ?
+    \item Que signifie cette valeur de kurtosis pour un investisseur en termes de risque, comparé à une distribution normale ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Comparaison de Distributions]
+Comparons les moments de TSLA (actif volatil) à ceux d'un indice large comme le S\&P 500 (GSPC) (actif plus stable).
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Télécharger 5 ans de données pour GSPC.
+    \item Calculer ses rendements logarithmiques (log\_returns\_sp500).
+    \item Calculer le skewness et l'excès de kurtosis pour GSPC en utilisant scipy.stats
+    \item Comparer les kurtosis de TSLA et GSPC. Lequel a les "queues les plus épaisses" (fatter tails) ?
+\end{enumerate}
+
+\begin{codecell}
+# 1. Telecharger les donnees pour S&P 500
+ticker_sp500 = 'GSPC'
+# data_sp500 = ...
+
+# 2. Calculer les rendements log
+# log_returns_sp500 = ...
+log_returns_sp500 = log_returns_sp500.dropna()
+
+# 3. Calculer skew et kurtosis pour S&P 500
+# skew_sp500 = ...
+# kurtosis_sp500 = ...
+
+# print(f"--- Comparaison des Moments (5 ans) ---")
+# print(f"TSLA Skew: {skew_scipy:.4f} | Kurtosis: {kurtosis_scipy:.4f}")
+# print(f"SP500 Skew: {skew_sp500:.4f} | Kurtosis: {kurtosis_sp500:.4f}")
+\end{codecell}
+\end{exercicebox}

@@ -1,758 +1,948 @@
 \newpage
-\section{Distributions Multivariées et Concepts Associés}
 
-\subsection{Distributions Jointes et Marginales}
+\section{Variables Aléatoires Continues}
 
-Jusqu'à présent, nous avons étudié les variables aléatoires isolément. Nous allons maintenant examiner comment analyser les relations entre *plusieurs* variables aléatoires.
+\subsection{Fonction de Densité de Probabilité (PDF)}
 
-\begin{definitionbox}[Distribution Jointe (Cas Discret)]
-Pour deux variables aléatoires discrètes $X$ et $Y$, la \textbf{distribution jointe} (ou loi jointe) spécifie la probabilité de chaque paire d'issues. La fonction de masse de probabilité jointe (joint PMF) est :
-$$P(X=x, Y=y)$$
-Si $X$ prend ses valeurs dans un ensemble $S$ et $Y$ dans un ensemble $T$, alors la somme de toutes les probabilités jointes est égale à 1 :
-$$\sum_{x \in S} \sum_{y \in T} P(X=x, Y=y) = 1$$
+Nous passons maintenant aux variables aléatoires qui peuvent prendre n'importe quelle valeur dans un intervalle, comme la taille d'une personne ou le temps d'attente exact. Pour ces variables, la notion de PMF n'a plus de sens, car la probabilité d'obtenir une valeur *exacte* est nulle. Nous introduisons donc le concept de densité.
+
+\begin{definitionbox}[Fonction de Densité de Probabilité (PDF)]
+Soit $X$ une variable aléatoire continue. Une fonction $f$ est une \textbf{fonction de densité de probabilité} (Probability Density Function, ou PDF) de $X$ si, pour tout $x$ :
+\begin{enumerate}
+    \item $f(x) \ge 0$, pour tout $-\infty < x < \infty$
+    \item $\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = 1$ (l'aire totale sous la courbe vaut 1)
+\end{enumerate}
 \end{definitionbox}
 
-Cette loi jointe est la "carte" complète de toutes les issues possibles.
+Il est crucial de comprendre que $f(x)$ n'est *pas* une probabilité.
 
 \begin{intuitionbox}
-La distribution jointe est la "carte" complète de toutes les issues possibles. Elle répond à la question : "Quelle est la probabilité que $X$ prenne cette valeur ET que $Y$ prenne cette autre valeur en même temps ?". Si vous imaginez un tableau à double entrée pour $X$ et $Y$, la loi jointe est l'ensemble de toutes les probabilités à l'intérieur du tableau.
+Dans le cas discret, la PMF donnait une "masse" de probabilité à chaque point. Dans le cas continu, la probabilité en un point exact est nulle ($P(X=x)=0$). La PDF, $f(x)$, n'est \textbf{pas} une probabilité.
+
+Il faut voir $f(x)$ comme une \textbf{densité} : elle décrit la "concentration" de probabilité autour de $x$. Pour obtenir une probabilité (une "masse"), il faut intégrer cette densité sur un intervalle. La probabilité que $X$ tombe dans un intervalle $[a, b]$ est l'aire sous la courbe de la PDF entre $a$ et $b$ :
+$$ P(a \le X \le b) = \int_a^b f(x) \, \mathrm{d}x $$
 \end{intuitionbox}
 
-Cette "carte" complète contient toutes les informations. Si nous ne nous intéressons qu'à une seule variable, nous pouvons la "réduire" en calculant sa distribution marginale.
+Cette distinction est fondamentale.
 
-\begin{definitionbox}[Distribution Marginale]
-À partir de la distribution jointe, on peut obtenir la distribution \textbf{marginale} (ou loi marginale) de chaque variable. Pour obtenir la probabilité que $X$ prenne une valeur $x$, on somme sur toutes les valeurs possibles de $Y$ :
-$$P(X=x) = \sum_{y \in T} P(X=x, Y=y)$$
-\end{definitionbox}
+\begin{remarquebox}[PDF vs Probabilité]
+Une erreur fréquente est de confondre la valeur $f(x)$ avec $P(X=x)$. Pour une variable continue, $P(X=x)$ est \textbf{toujours zéro}. La PDF $f(x)$ peut être supérieure à 1 (contrairement à une probabilité), tant que l'aire totale sous la courbe reste égale à 1. Pensez-y comme à une densité de population : elle peut être très élevée en un point, mais la "population" (probabilité) exacte en ce point infinitésimal est nulle.
+\end{remarquebox}
 
-Visuellement, cela correspond à "écraser" le tableau de probabilités sur un seul de ses axes.
+Vérifions un exemple simple.
 
-\begin{intuitionbox}
-Les distributions marginales sont les "ombres" ou "projections" de la carte jointe sur un seul axe. Si la loi jointe est un tableau, les lois marginales sont les totaux de chaque ligne et de chaque colonne, que l'on écrirait "dans la marge" du tableau. Elles nous disent la probabilité d'une issue pour $X$ sans se soucier de ce qu'il advient de $Y$.
-\end{intuitionbox}
-
-L'exemple le plus simple est le lancer de deux dés.
-
-\begin{examplebox}[Lois jointe et marginale]
-On lance un dé rouge ($X$) et un dé bleu ($Y$). Il y a 36 issues, chacune avec une probabilité de 1/36.
-\textbf{Loi jointe} : $P(X=x, Y=y) = 1/36$ pour tout $x, y \in \{1, \dots, 6\}$.
-Par exemple, $P(X=2, Y=5) = 1/36$.
-
-\textbf{Loi marginale} de $X$ : Cherchons $P(X=2)$. C'est la probabilité d'obtenir 2 sur le dé rouge, quel que soit le résultat du bleu.
-$$P(X=2) = \sum_{y=1}^6 P(X=2, Y=y)$$
-$$P(X=2) = P(X=2,Y=1) + \dots + P(X=2,Y=6)$$
-$$P(X=2) = \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} = \frac{6}{36} = \frac{1}{6}$$
-Ceci est bien la loi d'un seul dé.
+\begin{examplebox}[Une PDF simple]
+Soit $X$ une v.a. avec la PDF $f(x) = 2x$ pour $x \in [0, 1]$, et $f(x)=0$ sinon.
+\begin{enumerate}
+    \item Est-ce une PDF valide ?
+    
+    (1) $f(x) \ge 0$ pour tout $x$ dans $[0, 1]$.
+    
+    (2) $\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = \int_0^1 2x \, \mathrm{d}x = [x^2]_0^1 = 1-0 = 1$.
+    
+    Oui, c'est une PDF valide.
+    \item Quelle est la probabilité $P(X \le 0.5)$ ?
+    $$ P(X \le 0.5) = \int_0^{0.5} 2x \, \mathrm{d}x = [x^2]_0^{0.5} = (0.5)^2 - 0 = 0.25 $$
+\end{enumerate}
 \end{examplebox}
 
-\subsection{Espérance d'une fonction de deux variables}
+\subsection{Fonction de Répartition (CDF)}
 
-Maintenant que nous avons la loi jointe (la carte des probabilités), nous pouvons l'utiliser pour calculer l'espérance de n'importe quelle fonction qui dépend des deux variables, $g(X,Y)$.
+Comme dans le cas discret, nous pouvons définir une fonction qui accumule la probabilité. Pour le cas continu, cette accumulation se fait via une intégrale.
 
-\begin{definitionbox}[Espérance d'une fonction $g(X,Y)$]
-L'espérance d'une fonction $g(X,Y)$ de deux variables aléatoires discrètes $X$ et $Y$ est une généralisation du théorème de transfert (LOTUS) :
-$$E[g(X,Y)] = \sum_{x \in S} \sum_{y \in T} g(x,y) P(X=x, Y=y)$$
+\begin{definitionbox}[Fonction de Répartition Continue (CDF)]
+Soit $X$ une variable aléatoire continue. La \textbf{fonction de répartition} (Cumulative Distribution Function, ou CDF) de $X$ est la fonction $F$ définie par :
+$$ F(x) = P(X \le x) = \int_{-\infty}^x f(t) \, \mathrm{d}t $$
+Pour être une CDF valide, la fonction $F$ doit respecter les propriétés suivantes :
+\begin{enumerate}
+    \item $\lim_{x \to \infty} F(x) = 1$
+    \item $\lim_{x \to -\infty} F(x) = 0$
+    \item $F$ est continue et non décroissante.
+\end{enumerate}
 \end{definitionbox}
 
-C'est la moyenne de $g$, pondérée par les probabilités jointes.
+La CDF est l'intégrale de la PDF, et inversement, la PDF est la dérivée de la CDF.
 
 \begin{intuitionbox}
-C'est la valeur moyenne attendue de la fonction $g$. Pour la calculer, on prend chaque résultat possible de $g(x,y)$, on le pondère par la probabilité que cette combinaison $(x,y)$ se produise (donnée par la loi jointe), et on somme le tout.
+La CDF est "l'accumulateur" de probabilité. Elle part de 0 (à $-\infty$) et "accumule" l'aire sous la PDF à mesure qu'on avance sur l'axe des $x$, pour finalement atteindre 1 (à $+\infty$).
+
+Le lien fondamental est que la PDF est la dérivée de la CDF (par le théorème fondamental de l'analyse) :
+$$ f(x) = F'(x) $$
+Cela signifie que la valeur de la PDF $f(x)$ représente le \textbf{taux d'accumulation} de la probabilité au point $x$.
 \end{intuitionbox}
 
-Le cas le plus important de $g(X,Y)$ est la somme $X+Y$.
+La CDF est souvent le moyen le plus simple de calculer des probabilités sur des intervalles.
 
-\begin{examplebox}{Espérance de $E[X+Y]$}
-Avec nos deux dés, calculons l'espérance de la somme $S = X + Y$.  
-La fonction est $g(X,Y) = X + Y$.
+\begin{remarquebox}[Calcul de Probabilités via la CDF]
+La CDF est très pratique pour calculer des probabilités sur des intervalles :
+$$ P(a < X \le b) = F(b) - F(a) $$
+Pour les variables continues, les inégalités strictes ou larges ne changent rien ($P(X=a)=0$).
+\end{remarquebox}
 
-\[
-E[X+Y] = \sum_{x=1}^6 \sum_{y=1}^6 (x+y)\, P(X=x, Y=y)
-\]
-\[
-E[X+Y] = \sum_{x=1}^6 \sum_{y=1}^6 (x+y)\, \frac{1}{36}
-\]
+Calculons la CDF de notre exemple précédent.
 
-Plutôt que de faire ce long calcul, on peut utiliser la linéarité de l'espérance (qui est un cas particulier de ce théorème) :
-
-\[
-E[X+Y] = E[X] + E[Y] = 3.5 + 3.5 = 7.
-\]
+\begin{examplebox}[CDF de l'exemple précédent]
+Pour $f(x) = 2x$ sur $[0, 1]$, la CDF $F(x)$ est :
+\begin{itemize}
+    \item Si $x < 0$ : $F(x) = \int_{-\infty}^x 0 \, \mathrm{d}t = 0$.
+    \item Si $0 \le x \le 1$ : $F(x) = \int_{-\infty}^0 f(t) \mathrm{d}t + \int_0^x 2t \, \mathrm{d}t = 0 + [t^2]_0^x = x^2$.
+    \item Si $x > 1$ : $F(x) = \int_{-\infty}^1 f(t) \mathrm{d}t + \int_1^x 0 \, \mathrm{d}t = \int_0^1 2t \, \mathrm{d}t = 1$.
+\end{itemize}
+Donc, $F(x) = \begin{cases} 0 & \text{si } x < 0 \\ x^2 & \text{si } 0 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases}$
 \end{examplebox}
 
-\subsection{Covariance et Corrélation}
+\subsection{Espérance et Variance (Cas Continu)}
 
-La linéarité $E[X+Y] = E[X] + E[Y]$ est un outil puissant. Mais l'espérance ne nous dit rien sur la *relation* entre $X$ et $Y$. Pour cela, nous introduisons la covariance.
+Les concepts d'espérance et de variance s'étendent naturellement au cas continu, en remplaçant les sommes par des intégrales.
 
-\begin{definitionbox}[Covariance]
-La \textbf{covariance} entre deux variables aléatoires $X$ et $Y$, avec pour moyennes respectives $\mu_X$ et $\mu_Y$, mesure la façon dont elles varient ensemble.
-$$\text{Cov}(X,Y) = E[(X - \mu_X)(Y - \mu_Y)]$$
+\begin{definitionbox}[Espérance et Variance (Cas Continu)]
+Pour une variable aléatoire $X$ de fonction de densité $f$ :
+
+L'\textbf{espérance} de $X$ est le centre de gravité de la densité :
+$$ E[X] = \int_{-\infty}^{\infty} x f(x) \, \mathrm{d}x $$
+La \textbf{variance} de $X$ est l'espérance du carré de l'écart à la moyenne :
+$$ \text{Var}(X) = E[(X - E[X])^2] = \int_{-\infty}^{\infty} (x - E[X])^2 f(x) \, \mathrm{d}x $$
 \end{definitionbox}
 
-Elle mesure la direction de leur relation.
+Comme dans le cas discret, une formule alternative existe pour la variance.
 
-\begin{intuitionbox}
-La covariance est positive si les variables ont tendance à "bouger" dans la même direction (quand $X$ est au-dessus de sa moyenne, $Y$ a tendance à l'être aussi). Elle est négative si elles bougent en sens opposé (quand $X$ est au-dessus de sa moyenne, $Y$ a tendance à être en dessous). Si elle est nulle, il n'y a pas de tendance linéaire entre elles.
-\end{intuitionbox}
-
-La définition $E[(X - \mu_X)(Y - \mu_Y)]$ est bonne pour l'intuition, mais difficile à calculer. Une formule alternative est presque toujours utilisée.
-
-\begin{theorembox}[Formule de calcul de la covariance]
-Une formule computationnelle plus simple pour la covariance est :
-$$\text{Cov}(X,Y) = E[XY] - E[X]E[Y]$$
+\begin{theorembox}[Formule de calcul de la Variance]
+Une formule plus simple pour le calcul de la variance est :
+$$ \text{Var}(X) = E[X^2] - (E[X])^2 $$
+où $E[X^2] = \int_{-\infty}^{\infty} x^2 f(x) \, \mathrm{d}x$. (Ceci est une application de LOTUS).
 \end{theorembox}
 
-La preuve est une simple expansion algébrique.
+La preuve est identique à celle du cas discret, en utilisant la linéarité de l'espérance.
 
 \begin{proofbox}
-Soit $\mu_X = E[X]$ et $\mu_Y = E[Y]$. On part de la définition :
+Soit $\mu = E(X)$. On part de la définition de la variance :
+\begin{align*}
+\text{Var}(X) &= E[ (X - \mu)^2 ] \\
+&= E[ X^2 - 2X\mu + \mu^2 ] \quad \text{(On développe le carré)} \\
+&= E(X^2) - E(2\mu X) + E(\mu^2) \quad \text{(Par linéarité de l'espérance, qui s'applique aussi au cas continu)} \\
+&= E(X^2) - 2\mu E(X) + \mu^2 \quad \text{(Car $2\mu$ et $\mu^2$ sont des constantes)} \\
+&= E(X^2) - 2\mu(\mu) + \mu^2 \quad \text{(Car $E(X) = \mu$)} \\
+&= E(X^2) - 2\mu^2 + \mu^2 \\
+&= E(X^2) - \mu^2 = E(X^2) - [E(X)]^2
+\end{align*}
+\end{proofbox}
+
+Le calcul de $E[X^2]$ (et plus généralement de $E[g(X)]$) repose sur le théorème de transfert, adapté au cas continu.
+
+\begin{theorembox}[Théorème de Transfert (LOTUS)]
+Si $X$ est une v.a. continue de densité $f(x)$, et $g$ une fonction, alors :
+$$ E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, \mathrm{d}x $$
+\end{theorembox}
+
+La preuve formelle est plus avancée, mais l'idée est analogue au cas discret : on pondère chaque valeur $g(x)$ par la densité de probabilité $f(x)$ au voisinage de $x$.
+
+\begin{proofbox}[Idée de la preuve]
+La preuve formelle repose sur la théorie de la mesure ou sur un argument de changement de variable pour l'intégrale, en passant par la fonction de répartition de $Y=g(X)$. Intuitivement, pour un petit intervalle $dx$ autour de $x$, la "masse" de probabilité est $f(x)dx$. Cette masse correspond à une valeur $g(x)$ pour la nouvelle variable. L'espérance est la somme (intégrale) de ces valeurs pondérées par leur masse : $\int g(x) f(x)dx$.
+\end{proofbox}
+
+La propriété la plus importante de l'espérance reste valide.
+
+\begin{remarquebox}[Linéarité de l'Espérance]
+Comme dans le cas discret, l'espérance reste linéaire pour les variables continues :
+$E[aX+bY] = aE[X]+bE[Y]$.
+\end{remarquebox}
+
+Calculons l'espérance et la variance pour notre exemple.
+
+\begin{examplebox}[Espérance et Variance de l'exemple précédent]
+Pour $f(x) = 2x$ sur $[0, 1]$ :
+
+$E[X] = \int_0^1 x \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^2 \, \mathrm{d}x = \left[ \frac{2x^3}{3} \right]_0^1 = \frac{2}{3}$.
+
+$E[X^2] = \int_0^1 x^2 \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^3 \, \mathrm{d}x = \left[ \frac{2x^4}{4} \right]_0^1 = \frac{1}{2}$.
+
+$\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{1}{2} - \left(\frac{2}{3}\right)^2 = \frac{1}{2} - \frac{4}{9} = \frac{9-8}{18} = \frac{1}{18}$.
+\end{examplebox}
+
+\subsection{Loi Uniforme}
+
+La loi continue la plus simple est celle où la densité est constante sur un intervalle.
+
+\begin{definitionbox}[Loi Uniforme]
+Une variable aléatoire $X$ est \textbf{uniformément distribuée} sur un intervalle $[a, b]$ si sa densité est une constante sur cet intervalle. Pour que l'aire totale soit 1, cette constante doit être $\frac{1}{b-a}$.
+$$ f(x) = \begin{cases} \frac{1}{b-a} & \text{pour } x \in [a, b] \\ 0 & \text{sinon} \end{cases} $$
+On note cela $X \sim \text{Unif}(a, b)$.
+\end{definitionbox}
+
+C'est le modèle du "hasard pur" sur un segment.
+
+\begin{intuitionbox}
+C'est la distribution du "hasard pur" dans un intervalle borné. La probabilité de tomber dans un sous-intervalle ne dépend que de la \textbf{longueur} de ce sous-intervalle, pas de sa position (tant qu'il est dans $[a, b]$). 
+\end{intuitionbox}
+
+Les propriétés de cette loi sont faciles à dériver par intégration directe.
+
+\begin{theorembox}[Propriétés de la Loi Uniforme]
+Si $X \sim \text{Unif}(a, b)$ :
+\begin{itemize}
+    \item \textbf{CDF :} $F(x) = \frac{x-a}{b-a}$ pour $x \in [a, b]$.
+    \item \textbf{Espérance :} $E[X] = \frac{a+b}{2}$ (le point milieu de l'intervalle).
+    \item \textbf{Variance :} $\text{Var}(X) = \frac{(b-a)^2}{12}$.
+\end{itemize}
+\end{theorembox}
+
+\begin{proofbox}[Dérivation des propriétés]
+Soit $f(x) = \frac{1}{b-a}$ pour $x \in [a, b]$ et $0$ sinon.
+
+\textbf{CDF :} Pour $x \in [a, b]$,
+$$ F(x) = \int_{-\infty}^x f(t) \, dt = \int_a^x \frac{1}{b-a} \, dt = \frac{1}{b-a} [t]_a^x = \frac{x-a}{b-a} $$
+(Pour $x<a$, $F(x)=0$. Pour $x>b$, $F(x)=1$.)
+
+\textbf{Espérance :}
+$$ E[X] = \int_a^b x \frac{1}{b-a} \, dx = \frac{1}{b-a} \left[ \frac{x^2}{2} \right]_a^b = \frac{1}{b-a} \frac{b^2 - a^2}{2} = \frac{(b-a)(b+a)}{2(b-a)} = \frac{a+b}{2} $$
+
+\textbf{Variance :} D'abord, calculons $E[X^2]$.
+$$ E[X^2] = \int_a^b x^2 \frac{1}{b-a} \, dx = \frac{1}{b-a} \left[ \frac{x^3}{3} \right]_a^b = \frac{1}{b-a} \frac{b^3 - a^3}{3} $$
+En utilisant $b^3 - a^3 = (b-a)(b^2 + ab + a^2)$, on obtient $E[X^2] = \frac{b^2 + ab + a^2}{3}$.
+Maintenant, appliquons la formule $\text{Var}(X) = E[X^2] - (E[X])^2$ :
+\begin{align*}
+\text{Var}(X) &= \frac{b^2 + ab + a^2}{3} - \left(\frac{a+b}{2}\right)^2 \\
+&= \frac{b^2 + ab + a^2}{3} - \frac{a^2 + 2ab + b^2}{4} \\
+&= \frac{4(b^2 + ab + a^2) - 3(a^2 + 2ab + b^2)}{12} \\
+&= \frac{4b^2 + 4ab + 4a^2 - 3a^2 - 6ab - 3b^2}{12} \\
+&= \frac{b^2 - 2ab + a^2}{12} = \frac{(b-a)^2}{12}
+\end{align*}
+\end{proofbox}
+
+\subsection{Loi Exponentielle}
+
+Passons à une loi fondamentale pour modéliser les temps d'attente.
+
+\begin{definitionbox}[Loi Exponentielle]
+Une variable aléatoire $X$ suit une \textbf{loi exponentielle} de paramètre $\lambda > 0$ si sa fonction de densité a la forme :
+$$ f(x) = \begin{cases} \lambda e^{-\lambda x} & \text{pour } x \ge 0 \\ 0 & \text{sinon} \end{cases} $$
+On note $X \sim \text{Exp}(\lambda)$.
+\end{definitionbox}
+
+Cette loi est intimement liée au processus de Poisson.
+
+\begin{intuitionbox}[Lien entre les lois de Poisson et Exponentielle]
+La loi exponentielle modélise le temps d'attente \textit{avant} le prochain événement dans un processus de Poisson.
+
+Posons la question : « Si je commence à observer maintenant, combien de temps $T$ vais-je devoir attendre avant de voir le prochain événement ? »
+\begin{enumerate}
+    \item Dans un processus de Poisson de taux $\lambda$, le nombre d'événements $N(t)$ dans un intervalle de temps $t$ suit une loi de Poisson de paramètre $\lambda t$ :
+    $$ P(N(t)=k) = \frac{(\lambda t)^k e^{-\lambda t}}{k!} $$
+    \item La probabilité de ne voir \textbf{aucun} événement ($k=0$) pendant une durée $t$ est :
+    $$ P(N(t)=0) = \frac{(\lambda t)^0 e^{-\lambda t}}{0!} = e^{-\lambda t} $$
+    \item Mais ne voir aucun événement pendant un temps $t$, c'est exactement dire que le temps d'attente $T$ du premier événement est \textit{plus grand} que $t$.
+    $$ P(T > t) = P(N(t)=0) = e^{-\lambda t} $$
+    \item À partir de là, on déduit la fonction de répartition (CDF) de $T$ :
+    $$ F_T(t) = P(T \le t) = 1 - P(T > t) = 1 - e^{-\lambda t} \quad (\text{pour } t \ge 0) $$
+    \item En dérivant la CDF pour obtenir la densité (PDF) :
+    $$ f_T(t) = F_T'(t) = \frac{d}{dt}(1 - e^{-\lambda t}) = -(-\lambda e^{-\lambda t}) = \lambda e^{-\lambda t} $$
+\end{enumerate}
+C'est exactement la densité de la loi exponentielle de paramètre $\lambda$.
+\end{intuitionbox}
+
+Cette loi possède des propriétés remarquables.
+
+\begin{theorembox}[Propriétés de la Loi Exponentielle]
+Si $X \sim \text{Exp}(\lambda)$ :
+\begin{itemize}
+    \item \textbf{CDF :} $F(x) = 1 - e^{-\lambda x}$ pour $x \ge 0$.
+    \item \textbf{Espérance :} $E[X] = \frac{1}{\lambda}$.
+    \item \textbf{Variance :} $\text{Var}(X) = \frac{1}{\lambda^2}$.
+    \item \textbf{Propriété de non-mémoire :} Pour $s, t \ge 0$, $P(X > s+t \mid X > s) = P(X > t)$.
+\end{itemize}
+\end{theorembox}
+
+Les preuves de l'espérance et de la variance nécessitent une intégration par parties. La preuve de la non-mémoire est plus directe.
+
+\begin{proofbox}[Dérivation des propriétés]
+Soit $f(x) = \lambda e^{-\lambda x}$ pour $x \ge 0$.
+
+\textbf{CDF :} A été dérivée dans l'intuition ci-dessus.
+$$ F(x) = \int_0^x \lambda e^{-\lambda t} \, dt = [ -e^{-\lambda t} ]_0^x = -e^{-\lambda x} - (-e^0) = 1 - e^{-\lambda x} $$
+
+\textbf{Espérance :} On utilise l'intégration par parties ($\int u dv = uv - \int v du$) avec $u=x$ et $dv=\lambda e^{-\lambda x}dx$. Alors $du=dx$ et $v=-e^{-\lambda x}$.
+\begin{align*}
+E[X] &= \int_0^\infty x (\lambda e^{-\lambda x}) \, dx \\
+&= \left[ x (-e^{-\lambda x}) \right]_0^\infty - \int_0^\infty (-e^{-\lambda x}) \, dx \\
+&= (0 - 0) + \int_0^\infty e^{-\lambda x} \, dx \quad \text{(car } \lim_{x\to\infty} -xe^{-\lambda x} = 0 \text{)} \\
+&= \left[ -\frac{1}{\lambda} e^{-\lambda x} \right]_0^\infty = (0) - (-\frac{1}{\lambda} e^0) = \frac{1}{\lambda}
+\end{align*}
+
+\textbf{Variance :} D'abord $E[X^2]$. Intégration par parties avec $u=x^2$, $dv=\lambda e^{-\lambda x}dx$. $du=2xdx$, $v=-e^{-\lambda x}$.
+\begin{align*}
+E[X^2] &= \int_0^\infty x^2 (\lambda e^{-\lambda x}) \, dx \\
+&= \left[ x^2 (-e^{-\lambda x}) \right]_0^\infty - \int_0^\infty (-e^{-\lambda x}) (2x \, dx) \\
+&= 0 + \int_0^\infty 2x e^{-\lambda x} \, dx \\
+&= \frac{2}{\lambda} \int_0^\infty x (\lambda e^{-\lambda x}) \, dx \quad \text{(On fait apparaître } E[X] \text{)} \\
+&= \frac{2}{\lambda} E[X] = \frac{2}{\lambda} \left( \frac{1}{\lambda} \right) = \frac{2}{\lambda^2}
+\end{align*}
+Donc, $\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{2}{\lambda^2} - \left(\frac{1}{\lambda}\right)^2 = \frac{1}{\lambda^2}$.
+
+\textbf{Propriété de non-mémoire :}
+Rappelons que $P(X>t) = e^{-\lambda t}$.
+\begin{align*}
+P(X > s+t \mid X > s) &= \frac{P(X > s+t \text{ et } X > s)}{P(X > s)} \\
+&= \frac{P(X > s+t)}{P(X > s)} \quad \text{(car si } X>s+t \text{, alors } X>s \text{)} \\
+&= \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = \frac{e^{-\lambda s} e^{-\lambda t}}{e^{-\lambda s}} = e^{-\lambda t} \\
+&= P(X > t)
+\end{align*}
+\end{proofbox}
+
+Le paramètre $\lambda$ a une interprétation concrète.
+
+\begin{remarquebox}[Interprétation du paramètre $\lambda$]
+Le paramètre $\lambda$ représente le \textbf{taux} moyen d'occurrence des événements dans le processus de Poisson sous-jacent (par exemple, nombre moyen d'appels par minute). L'espérance $1/\lambda$ est alors le \textbf{temps moyen entre les événements}.
+\end{remarquebox}
+
+La propriété de non-mémoire est unique à la loi exponentielle (dans le cas continu).
+
+\begin{intuitionbox}[La Propriété de Non-Mémoire]
+C'est la propriété la plus contre-intuitive et la plus importante de la loi exponentielle. Elle signifie que le processus "oublie" le passé. Si vous attendez un bus qui arrive selon un processus de Poisson (et donc le temps d'attente suit une loi exponentielle), et que vous avez déjà attendu 5 minutes ($X>5$), la probabilité que vous deviez attendre encore au moins 2 minutes ($X>5+2$) est la même que si vous veniez juste d'arriver à l'arrêt et deviez attendre au moins 2 minutes ($X>2$). L'information "j'ai déjà attendu 5 minutes" est inutile pour prédire l'attente future.
+\end{intuitionbox}
+
+\subsection{Distributions Conjointes (Cas Continu)}
+
+Comme pour le cas discret, nous pouvons définir des lois conjointes pour plusieurs variables aléatoires continues.
+
+\begin{definitionbox}[Fonction de Densité Conjointe]
+Pour des variables aléatoires continues $X$ et $Y$, la \textbf{fonction de densité conjointe} $f(x, y)$ décrit la densité de probabilité sur le plan $(x, y)$. Elle doit respecter :
+\begin{enumerate}
+    \item $f(x, y) \ge 0$, pour tous $x, y$.
+    \item $\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}x \, \mathrm{d}y = 1$.
+\end{enumerate}
+\end{definitionbox}
+
+Ici, la probabilité est associée à un volume sous la surface de densité.
+
+\begin{intuitionbox}[Volume = Probabilité]
+La probabilité que le couple $(X, Y)$ tombe dans une région $A$ du plan $xy$ est le \textbf{volume} sous la surface $z=f(x,y)$ au-dessus de cette région $A$.
+$$ P((X, Y) \in A) = \iint_A f(x, y) \, \mathrm{d}A $$
+
+\end{intuitionbox}
+
+On retrouve les lois marginales en intégrant (en "écrasant" le volume).
+
+\begin{definitionbox}[Densités Marginales]
+On peut retrouver les densités individuelles (marginales) en "écrasant" le volume 3D sur un seul axe. Pour obtenir la PDF de $X$ seul, on intègre $f(x,y)$ sur toutes les valeurs possibles de $y$ :
+$$ f_X(x) = \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}y $$
+$$ f_Y(y) = \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}x $$
+\end{definitionbox}
+
+La CDF conjointe accumule ce volume.
+
+\begin{definitionbox}[CDF Conjointe]
+La \textbf{fonction de répartition conjointe} (CDF) est :
+$$ F(x, y) = P(X \le x, Y \le y) = \int_{-\infty}^y \int_{-\infty}^x f(s, t) \, \mathrm{d}s \, \mathrm{d}t $$
+Elle représente le volume "au sud-ouest" du point $(x, y)$.
+\end{definitionbox}
+
+\subsection{Espérance, Indépendance et Covariance (Cas Conjoint)}
+
+Les concepts clés s'étendent naturellement au cas conjoint continu.
+
+\begin{theorembox}[LOTUS pour les v.a. conjointes]
+Si $X$ et $Y$ ont une densité conjointe $f(x, y)$, et $g(x, y)$ est une fonction :
+$$ E[g(X, Y)] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(x, y) f(x, y) \, \mathrm{d}x \, \mathrm{d}y $$
+\end{theorembox}
+
+La preuve est analogue à celle de LOTUS 1D, mais en dimension supérieure.
+
+\begin{proofbox}[Idée de la preuve]
+Comme pour LOTUS 1D, la preuve rigoureuse utilise des arguments de théorie de la mesure. L'intuition est que pour un petit rectangle $dx dy$ autour de $(x,y)$, la "masse" de probabilité est $f(x,y)dx dy$. Cette masse correspond à la valeur $g(x,y)$. L'espérance est la somme (double intégrale) de ces valeurs $g(x,y)$ pondérées par leur masse $f(x,y)dx dy$.
+\end{proofbox}
+
+La condition d'indépendance s'exprime via la factorisation de la densité.
+
+\begin{definitionbox}[Indépendance et Densité]
+Les variables aléatoires continues $X$ et $Y$ sont \textbf{indépendantes} si et seulement si leur densité conjointe est le produit de leurs densités marginales :
+$$ f(x, y) = f_X(x) f_Y(y), \quad \text{pour tous } x, y $$
+\end{definitionbox}
+
+Cela signifie que le profil selon $x$ ne dépend pas de $y$.
+
+\begin{intuitionbox}
+Intuitivement, l'indépendance signifie que le "profil" de la densité en $x$ ne change pas quelle que soit la valeur de $y$ (et vice-versa). La surface de densité $z=f(x,y)$ peut être "séparée" en une fonction de $x$ multipliée par une fonction de $y$.
+\end{intuitionbox}
+
+La covariance se définit et se calcule de manière similaire.
+
+\begin{definitionbox}[Covariance (cas continu)]
+La \textbf{covariance} de $X$ et $Y$ mesure leur variation linéaire commune :
+$$ \text{Cov}(X, Y) = E[(X - \mu_X)(Y - \mu_Y)] $$
+$$ = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x - \mu_X)(y - \mu_Y) f(x, y) \, \mathrm{d}x \, \mathrm{d}y $$
+\end{definitionbox}
+
+La formule de calcul reste la même.
+
+\begin{theorembox}[Formule de calcul de la Covariance]
+Une formule plus simple pour le calcul de la covariance est :
+$$ \text{Cov}(X, Y) = E[XY] - E[X]E[Y] $$
+où $E[XY]$ est calculé via LOTUS : $E[XY] = \iint xy f(x, y) \, \mathrm{d}x \mathrm{d}y$.
+\end{theorembox}
+
+La preuve est identique à celle du cas discret.
+
+\begin{proofbox}
+La preuve est identique à celle vue pour les variables discrètes, car elle ne repose que sur la linéarité de l'espérance, qui est vraie aussi dans le cas continu.
+Soit $\mu_X = E[X]$ et $\mu_Y = E[Y]$.
 \begin{align*}
 \text{Cov}(X,Y) &= E[(X - \mu_X)(Y - \mu_Y)] \\
-&= E[XY - X\mu_Y - Y\mu_X + \mu_X\mu_Y] \quad \text{(On développe)} \\
-&= E[XY] - E[X\mu_Y] - E[Y\mu_X] + E[\mu_X\mu_Y] \quad \text{(Par linéarité)} \\
-&= E[XY] - \mu_Y E[X] - \mu_X E[Y] + \mu_X\mu_Y \quad \text{(Les moyennes sont des constantes)} \\
+&= E[XY - X\mu_Y - Y\mu_X + \mu_X\mu_Y] \\
+&= E[XY] - E[X\mu_Y] - E[Y\mu_X] + E[\mu_X\mu_Y] \\
+&= E[XY] - \mu_Y E[X] - \mu_X E[Y] + \mu_X\mu_Y \\
 &= E[XY] - \mu_Y \mu_X - \mu_X \mu_Y + \mu_X\mu_Y \\
-&= E[XY] - \mu_X \mu_Y \\
 &= E[XY] - E[X]E[Y]
 \end{align*}
 \end{proofbox}
 
-Voyons cette formule en action.
+La relation entre indépendance et covariance reste la même.
 
-\begin{examplebox}[Calcul de covariance]
-\textbf{Cas 1 : Dés indépendants}. $X$ et $Y$ sont les résultats de deux dés. $E[X]=3.5, E[Y]=3.5$.
-Calculons $E[XY]$. Puisqu'ils sont indépendants, $E[XY] = E[X]E[Y] = 3.5 \times 3.5 = 12.25$.
-$\text{Cov}(X,Y) = E[XY] - E[X]E[Y] = 12.25 - 12.25 = 0$.
-La covariance est nulle, ce qui est attendu pour des variables indépendantes.
-
-\textbf{Cas 2 : Variables dépendantes}. Soit $X$ un lancer de dé, et $Y = 2X$.
-$E[X] = 3.5$. $E[Y] = E[2X] = 2E[X] = 7$.
-$E[XY] = E[X \cdot 2X] = E[2X^2] = 2 E[X^2]$.
-On sait que $E[X^2] = \frac{1^2+...+6^2}{6} = 91/6$.
-$E[XY] = 2(91/6) = 91/3$.
-$\text{Cov}(X,Y) = E[XY] - E[X]E[Y] = \frac{91}{3} - (3.5)(7) = \frac{91}{3} - 24.5 = 30.33... - 24.5 \approx 5.833$.
-La covariance est positive, ce qui est logique : si $X$ est grand, $Y$ l'est aussi.
-\end{examplebox}
-
-La covariance est un bon indicateur de la direction de la relation, mais sa magnitude est difficile à interpréter. Pour cela, nous la normalisons.
-
-\begin{definitionbox}[Corrélation]
-La \textbf{corrélation} (ou coefficient de corrélation de Pearson, $r$) est une version normalisée de la covariance, qui se situe toujours entre -1 et 1.
-$$\text{Corr}(X,Y) = r = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}$$
-\end{definitionbox}
-
-La corrélation résout le problème des unités.
-
-\begin{intuitionbox}
-Le problème de la covariance est qu'elle dépend des unités de $X$ et $Y$ (par ex., $\text{kg} \cdot \text{cm}$). Si vous changez les unités (grammes et mètres), la valeur de la covariance change, même si la relation est identique. La corrélation résout ce problème : elle est sans unité. Un coefficient de +1 indique une relation linéaire positive parfaite, -1 une relation linéaire négative parfaite, et 0 une absence de relation linéaire.
-\end{intuitionbox}
-
-Cette normalisation se comprend mieux en voyant la corrélation comme une covariance de variables standardisées.
-
-\begin{intuitionbox}[Interprétation de la formule]
-On peut voir la corrélation de Pearson comme un processus en 3 étapes :
-\begin{enumerate}
-    \item \textbf{Centrer les variables :} On calcule l'écart de chaque valeur à sa moyenne ($x_i - \bar{x}$ et $y_i - \bar{y}$). Cela élimine "l'effet de base" (ex: une personne de 180cm vs 170cm ; la moyenne change mais les écarts relatifs restent les mêmes).
-    \item \textbf{Normaliser les variables :} On divise chaque écart par l'écart-type de sa variable ($z_{xi} = (x_i - \bar{x})/\sigma_X$ et $z_{yi} = (y_i - \bar{y})/\sigma_Y$). Ces nouvelles variables $Z_X$ et $Z_Y$ sont \textbf{standardisées} : elles ont une moyenne de 0, un écart-type de 1, et sont sans unité.
-    \item \textbf{Calculer la covariance des variables standardisées :} La corrélation n'est rien d'autre que la covariance de ces deux nouvelles variables standardisées : $r = \text{Cov}(Z_X, Z_Y)$.
-\end{enumerate}
-Parce que les deux variables sont maintenant sur la même échelle (écart-type de 1), leur covariance (la corrélation) ne peut pas dépasser 1 en valeur absolue.
-\end{intuitionbox}
-
-Reprenons notre exemple de dépendance parfaite :
-
-\begin{examplebox}[Calcul de corrélation]
-Reprenons l'exemple $Y=2X$, où $X$ est un lancer de dé.
-On a $\text{Cov}(X,Y) = 5.833... = 35/6$.
-$\text{Var}(X) = E[X^2] - E[X]^2 = 91/6 - (3.5)^2 = 35/12$.
-$\text{Var}(Y) = \text{Var(2X)} = 2^2 \text{Var}(X) = 4(35/12) = 35/3$.
-$\sigma_X \sigma_Y = \sqrt{35/12} \cdot \sqrt{35/3} = \sqrt{(35 \cdot 35) / (12 \cdot 3)} = \sqrt{35^2 / 36} = 35/6$.
-$$\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} = \frac{35/6}{35/6} = 1$$
-La corrélation est de 1, ce qui est parfait : $Y$ est une fonction linéaire parfaite de $X$.
-\end{examplebox}
-
-\subsection{Linéarité de la Covariance}
-
-Tout comme l'espérance, la covariance possède d'importantes propriétés de linéarité qui simplifient les calculs.
-
-\begin{definitionbox}[Linéarité de la Covariance]
-Pour des variables aléatoires $X, Y, Z$ et des constantes $a, b, c$ :
-\begin{align*}
-\text{Cov}(aX + bY + c, Z) &= a\text{Cov}(X, Z) + b\text{Cov}(Y, Z) \\
-\text{Cov}(X, aY + bZ + c) &= a\text{Cov}(X, Y) + b\text{Cov}(X, Z)
-\end{align*}
-La covariance est linéaire pour chaque argument (elle est \textbf{bilinéaire}). Les constantes additives disparaissent.
-\end{definitionbox}
-
-\subsection{Résultats sur la Corrélation}
-
-La propriété la plus importante de la corrélation, qui découle de sa normalisation, est qu'elle est bornée.
-
-\begin{theorembox}[Bornes du Coefficient de Corrélation de Pearson]
-Pour toutes variables aléatoires $X$ et $Y$, le coefficient de corrélation $\text{Corr}(X,Y)$ est borné :
-$$-1 \le \text{Corr}(X,Y) \le 1$$
-De plus, si $\text{Corr}(X,Y) = \pm 1$, alors il existe des constantes $a$ et $b$ telles que $Y = aX + b$, indiquant une relation linéaire parfaite.
-\end{theorembox}
-
-La preuve de ces bornes repose sur le fait que la variance est toujours positive.
-
-\begin{proofbox}[Démonstration des Bornes de la Corrélation]
-La preuve repose sur le fait que la variance d'une variable aléatoire est toujours positive ou nulle.
-
-\textbf{Étape 1 : Variables Standardisées}
-On définit les versions standardisées de $X$ et $Y$ :
-$$X^* = \frac{X - \mu_X}{\sigma_X} \quad ; \quad Y^* = \frac{Y - \mu_Y}{\sigma_Y}$$
-Par construction, $E[X^*]=E[Y^*]=0$ et $\text{Var}(X^*) = \text{Var}(Y^*) = 1$.
-
-\textbf{Étape 2 : Covariance des variables standardisées}
-Calculons la covariance de $X^*$ et $Y^*$, qui est, par définition, la corrélation de $X$ et $Y$.
-\begin{align*}
-\text{Cov}(X^*, Y^*) &= \text{Cov}\left( \frac{X - \mu_X}{\sigma_X}, \frac{Y - \mu_Y}{\sigma_Y} \right) \\
-&= \frac{1}{\sigma_X \sigma_Y} \text{Cov}(X - \mu_X, Y - \mu_Y) \\
-&= \frac{1}{\sigma_X \sigma_Y} \text{Cov}(X, Y) \\
-&= \text{Corr}(X,Y)
-\end{align*}
-
-\textbf{Étape 3 : Variance de la somme et de la différence}
-Considérons la variance de la somme et de la différence de ces variables standardisées.
-$$\text{Var}(X^* + Y^*) = \text{Var}(X^*) + \text{Var}(Y^*) + 2\text{Cov}(X^*, Y^*)$$
-$$\text{Var}(X^* + Y^*) = 1 + 1 + 2\text{Corr}(X,Y) = 2 + 2\text{Corr}(X,Y)$$
-De même :
-$$\text{Var}(X^* - Y^*) = \text{Var}(X^*) + \text{Var}(Y^*) - 2\text{Cov}(X^*, Y^*)$$
-$$\text{Var}(X^* - Y^*) = 1 + 1 - 2\text{Corr}(X,Y) = 2 - 2\text{Corr}(X,Y)$$
-
-\textbf{Étape 4 : La variance est toujours $\ge 0$}
-La variance d'une variable aléatoire ne peut pas être négative.
-$$\text{Var}(X^* + Y^*) \ge 0 \implies 2 + 2\text{Corr}(X,Y) \ge 0 \implies \text{Corr}(X,Y) \ge -1$$
-$$\text{Var}(X^* - Y^*) \ge 0 \implies 2 - 2\text{Corr}(X,Y) \ge 0 \implies \text{Corr}(X,Y) \le 1$$
-Ceci nous donne le résultat final :
-$$-1 \le \text{Corr}(X,Y) \le 1$$
-\end{proofbox}
-
-\subsection{Standardisation et Non-Corrélation}
-
-Le processus de 'standardisation' utilisé dans la preuve de la corrélation et dans l'intuition est un concept fondamental en soi.
-
-\begin{definitionbox}[Variable Centrée Réduite]
-Soit $X$ une variable aléatoire avec :
-\begin{itemize}
-    \item moyenne $\mu_X = E[X]$
-    \item écart-type $\sigma_X = \sqrt{\operatorname{Var}(X)} > 0$
-\end{itemize}
-On définit sa version \textbf{centrée réduite} (standardisée) $Z$ par :
-$$Z = \frac{X - \mu_X}{\sigma_X}$$
-Alors, $Z$ a les propriétés suivantes :
-\begin{enumerate}
-    \item \textbf{Centrée (moyenne nulle)} :
-    \begin{align*}
-    E[Z] &= E\left[\frac{X - \mu_X}{\sigma_X}\right] \\
-         &= \frac{1}{\sigma_X} E[X - \mu_X] \quad (\text{par linéarité, } \sigma_X \text{ est une constante}) \\
-         &= \frac{1}{\sigma_X} (E[X] - E[\mu_X]) \\
-         &= \frac{1}{\sigma_X} (E[X] - \mu_X) \quad (\text{car } \mu_X \text{ est une constante}) \\
-         &= \frac{\mu_X - \mu_X}{\sigma_X} = 0
-    \end{align*}
-    \item \textbf{Réduite (écart-type égal à 1)} :
-    \begin{align*}
-    \operatorname{Var}(Z) &= \operatorname{Var}\left(\frac{X - \mu_X}{\sigma_X}\right) \\
-         &= \left(\frac{1}{\sigma_X}\right)^2 \operatorname{Var}(X - \mu_X) \quad (\text{propriété } \operatorname{Var}(aY) = a^2 \operatorname{Var}(Y)) \\
-         &= \frac{1}{\sigma_X^2} \operatorname{Var}(X) \quad (\text{propriété } \operatorname{Var}(Y+b) = \operatorname{Var}(Y)) \\
-         &= \frac{1}{\sigma_X^2} \cdot \sigma_X^2 = 1
-    \end{align*}
-    L'écart-type est donc $\sigma_Z = \sqrt{\operatorname{Var}(Z)} = \sqrt{1} = 1$.
-\end{enumerate}
-\end{definitionbox}
-
-Cette transformation permet de comparer des variables sur des échelles différentes.
-
-\begin{intuitionbox}[Que signifie centrer-réduire ?]
-Standardiser une variable se fait en deux temps, comme le montre la formule $Z = \frac{X - \mu_X}{\sigma_X}$ :
-\begin{enumerate}
-    \item \textbf{Centrer ($X - \mu_X$)} : C'est la première étape. On soustrait la moyenne $\mu_X$. Cela revient à "déplacer" la distribution pour que son centre de gravité (sa moyenne) soit maintenant à 0. On ne regarde plus les valeurs brutes $X$, mais leurs \textbf{écarts} par rapport à la moyenne. (Propriété 1 : $E[Z]=0$)
-    \item \textbf{Réduire ($... / \sigma_X$)} : C'est la deuxième étape. On divise ces écarts par l'écart-type $\sigma_X$. Cela revient à changer d'unité de mesure. L'ancienne unité (kg, cm, points...) est remplacée par une nouvelle unité universelle : "le nombre d'écarts-types". (Propriété 2 : $\text{Var}(Z)=1$)
-\end{enumerate}
-Au final, une variable $Z$ avec une valeur de 1.5 signifie "cette observation est 1.5 écarts-types au-dessus de la moyenne de sa distribution d'origine", peu importe ce que $X$ mesurait.
-\end{intuitionbox}
-
-\begin{intuitionbox}[Analogie simple]
-Imaginons 2 élèves :
-\begin{itemize}
-    \item Alice a des notes entre 80 et 100 (moyenne 90, écart-type 5).
-    \item Bob a des notes entre 0 et 20 (moyenne 10, écart-type 4).
-\end{itemize}
-Comparer leurs notes brutes n'a pas de sens. Mais si on les standardise, on peut se demander : "quand Alice est 1 écart-type au-dessus de sa moyenne (une note de 95), Bob est-il aussi 1 écart-type au-dessus de sa propre moyenne (une note de 14) ?". La standardisation permet cette comparaison.
-\end{intuitionbox}
-
-\begin{examplebox}[Centrer-réduire un dé]
-Pour un lancer de dé $X$, on a $\mu_X = 3.5$ et $\sigma_X = \sqrt{35/12} \approx 1.708$.
-Si on obtient $X=6$ : $Z = (6 - 3.5) / 1.708 \approx 1.46$.
-Si on obtient $X=1$ : $Z = (1 - 3.5) / 1.708 \approx -1.46$.
-Obtenir 6 est à 1.46 écarts-types au-dessus de la moyenne.
-\end{examplebox}
-
-Maintenant, formalisons le concept d'une covariance nulle.
-
-\begin{definitionbox}[Variables Non Corréelées]
-On dit que deux variables aléatoires $X$ et $Y$ sont \textbf{non corrélées} si leur covariance est nulle :
-$$\text{Cov}(X,Y) = 0$$
-Cela est équivalent à dire que $E[XY] = E[X]E[Y]$.
-\end{definitionbox}
-
-Il est crucial de ne pas confondre "non corrélées" et "indépendantes".
-
-\begin{intuitionbox}
-"Non corrélées" signifie qu'il n'y a \textbf{pas de relation linéaire} entre les variables. C'est plus faible que l'indépendance. Si $X$ et $Y$ sont indépendantes, elles sont forcément non corrélées. Mais l'inverse n'est pas vrai : $X$ et $Y$ peuvent être non corrélées (Cov=0) mais quand même dépendantes (par exemple si $Y=X^2$ pour un $X$ centré).
-\end{intuitionbox}
-
-\subsection{Variance d'une Somme de Variables Aléatoires}
-
-Nous pouvons maintenant combiner nos connaissances de la variance et de la covariance pour répondre à une question cruciale : quelle est la variance d'une somme de variables, $X+Y$ ?
-
-\begin{theorembox}[Formules pour la variance d'une somme de deux variables]
-Pour deux variables aléatoires $X$ et $Y$ :
-\begin{align*}
-\text{Var}(X+Y) &= \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y) \\
-\end{align*}
-\end{theorembox}
-
-La preuve découle de la définition de la variance et de la linéarité de l'espérance.
-
-\begin{proofbox}
-Soit $\mu_X = E[X]$ et $\mu_Y = E[Y]$.
-\begin{align*}
-\text{Var}(X+Y) &= E\left[ ((X+Y) - E[X+Y])^2 \right] \\
-&= E\left[ ((X+Y) - (\mu_X + \mu_Y))^2 \right] \quad \text{(Par linéarité de E)} \\
-&= E\left[ ((X - \mu_X) + (Y - \mu_Y))^2 \right] \quad \text{(On regroupe les termes)} \\
-\text{Posons } A = (X - \mu_X) \text{ et } B = (Y - \mu_Y). \\
-&= E[ (A + B)^2 ] = E[ A^2 + 2AB + B^2 ] \\
-&= E[A^2] + 2E[AB] + E[B^2] \quad \text{(Par linéarité de E)} \\
-\text{Or, par définition :} \\
-E[A^2] &= E[(X-\mu_X)^2] = \text{Var}(X) \\
-E[B^2] &= E[(Y-\mu_Y)^2] = \text{Var}(Y) \\
-E[AB] &= E[(X-\mu_X)(Y-\mu_Y)] = \text{Cov}(X,Y) \\
-\text{Donc, } \text{Var}(X+Y) &= \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)
-\end{align*}
-\end{proofbox}
-
-Cette formule est fondamentale en finance et en ingénierie.
-
-\begin{intuitionbox}
-La "volatilité" (variance) d'une somme n'est pas juste la somme des volatilités. Il faut ajouter le terme d'interaction (covariance).
-Si $\text{Cov}(X,Y) > 0$ (elles bougent ensemble), la somme est \textbf{plus} volatile que la somme des parties.
-Si $\text{Cov}(X,Y) < 0$ (elles bougent en sens inverse), elles s'amortissent mutuellement. La somme est \textbf{moins} volatile. C'est le principe de la diversification en finance.
-\end{intuitionbox}
-
-Cela mène à un corollaire très important lorsque la covariance est nulle.
-
-\begin{theorembox}[Cas Particulier : Variables Non Corréelées]
-Si $X$ et $Y$ sont non corrélées (Cov=0), la formule se simplifie :
-$$\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y)$$
-\end{theorembox}
-
-\begin{proofbox}
-Cela découle directement du théorème précédent. Si $X$ et $Y$ sont non corrélées, alors $\text{Cov}(X,Y) = 0$.
-Le terme $2\text{Cov}(X,Y)$ dans la formule générale $\text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)$ devient nul, laissant :
-$$\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y)$$
-\end{proofbox}
-
-C'est le cas pour nos dés indépendants.
-
-\begin{examplebox}[Variance d'une somme de dés]
-Soit $S = X+Y$ la somme de deux dés indépendants.
-Puisqu'ils sont indépendants, ils sont non corrélés ($\text{Cov}(X,Y)=0$).
-On sait $\text{Var}(X) = 35/12$ et $\text{Var}(Y) = 35/12$.
-$$\text{Var}(S) = \text{Var}(X) + \text{Var}(Y) = \frac{35}{12} + \frac{35}{12} = \frac{70}{12} = \frac{35}{6} \approx 5.833$$
-C'est bien plus simple que de calculer $E[S^2]$ et $E[S]$.
-\end{examplebox}
-
-On peut généraliser cette formule à $N$ variables.
-
-\begin{theorembox}[Variance d'une somme de N variables]
-La formule générale pour la somme de $N$ variables aléatoires $X_1, \dots, X_n$ est :
-$$\text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j)$$
-\end{theorembox}
-
-\begin{proofbox}
-On utilise la propriété $\text{Var}(S) = \text{Cov}(S, S)$ et la bilinéarité de la covariance.
-Soit $S = \sum_{i=1}^n X_i$.
-\begin{align*}
-\text{Var}(S) &= \text{Cov}(S, S) = \text{Cov}\left(\sum_{i=1}^n X_i, \sum_{j=1}^n X_j\right) \\
-&= \sum_{i=1}^n \sum_{j=1}^n \text{Cov}(X_i, X_j) \quad \text{(Par bilinéarité)}
-\end{align*}
-On peut séparer cette double somme en deux parties : le cas où $i=j$ et le cas où $i \neq j$.
-$$ \text{Var}(S) = \sum_{i=1}^n \text{Cov}(X_i, X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j) $$
-Puisque $\text{Cov}(X_i, X_i) = E[(X_i - \mu_i)(X_i - \mu_i)] = E[(X_i - \mu_i)^2] = \text{Var}(X_i)$, on obtient :
-$$ \text{Var}(S) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j) $$
-\end{proofbox}
-
-Cette formule est au cœur de la théorie moderne du portefeuille.
-
-\begin{intuitionbox}
-La variance totale d'un système (comme un portefeuille d'actions) est la somme de toutes les variances individuelles ("risques propres") plus la somme de \textbf{toutes} les paires de covariances ("risques d'interaction"). Dans un grand portefeuille, le nombre de termes de covariance (environ $n^2$) est bien plus grand que le nombre de termes de variance ($n$), donc le risque total est dominé par la façon dont les actifs interagissent.
-\end{intuitionbox}
-
-\subsection{Théorème sur la somme de lois de Poisson}
-
-Terminons avec un théorème très utile qui combine les idées d'indépendance et de somme de variables aléatoires pour une distribution spécifique.
-
-\begin{theorembox}[La Somme de v.a. de Poisson Indépendantes est Poisson]
-Soit $X_1, \dots, X_k$ une séquence de variables aléatoires de Poisson indépendantes, avec des paramètres respectifs $\lambda_1, \dots, \lambda_k$.
-$$X_i \sim \text{Poisson}(\lambda_i) \quad \text{pour } i=1, \dots, k$$
-Alors leur somme $Y = X_1 + \dots + X_k$ suit également une loi de Poisson, dont le paramètre est la somme des paramètres :
-$$Y \sim \text{Poisson}(\lambda_1 + \dots + \lambda_k)$$
-\end{theorembox}
-
-La preuve pour $k=2$ (qui se généralise par récurrence) utilise l'indépendance et la formule du binôme de Newton.
-
-\begin{proofbox}[Preuve pour la somme de deux v.a.]
-Soit $X \sim \text{Poisson}(\lambda_1)$ et $Y \sim \text{Poisson}(\lambda_2)$, indépendantes.
-Soit $S = X+Y$. Nous cherchons $P(S=k)$.
-Pour que $S=k$, il faut que $X=j$ et $Y=k-j$, pour toutes les valeurs possibles de $j$ (de $0$ à $k$).
-$$ P(S=k) = \sum_{j=0}^k P(X=j, Y=k-j) $$
-Par indépendance, $P(X=j, Y=k-j) = P(X=j)P(Y=k-j)$.
-\begin{align*}
-P(S=k) &= \sum_{j=0}^k \left( \frac{e^{-\lambda_1}\lambda_1^j}{j!} \right) \left( \frac{e^{-\lambda_2}\lambda_2^{k-j}}{(k-j)!} \right) \\
-&= e^{-(\lambda_1 + \lambda_2)} \sum_{j=0}^k \frac{\lambda_1^j \lambda_2^{k-j}}{j!(k-j)!}
-\end{align*}
-On multiplie et on divise par $k!$ pour faire apparaître le coefficient binomial :
-\begin{align*}
-P(S=k) &= \frac{e^{-(\lambda_1 + \lambda_2)}}{k!} \sum_{j=0}^k \frac{k!}{j!(k-j)!} \lambda_1^j \lambda_2^{k-j} \\
-&= \frac{e^{-(\lambda_1 + \lambda_2)}}{k!} \sum_{j=0}^k \binom{k}{j} \lambda_1^j \lambda_2^{k-j}
-\end{align*}
-La somme est l'expansion du binôme de Newton pour $(\lambda_1 + \lambda_2)^k$.
-$$ P(S=k) = \frac{e^{-(\lambda_1 + \lambda_2)} (\lambda_1 + \lambda_2)^k}{k!} $$
-C'est la PMF d'une loi $\text{Poisson}(\lambda_1 + \lambda_2)$.
-\end{proofbox}
-
-Ce résultat est très intuitif :
-
-\begin{intuitionbox}
-Si des événements rares se produisent indépendamment à des taux constants, le nombre total d'événements se produisant est aussi un événement rare se produisant au taux total. Si les emails arrivent à $\lambda_1=5$/heure et les appels à $\lambda_2=10$/heure, les "communications totales" arrivent simplement à $\lambda = 5+10 = 15$/heure.
-\end{intuitionbox}
-
-\begin{examplebox}[Centre d'appels]
-Un centre d'appels reçoit des appels "Ventes" selon $X_1 \sim \text{Poisson}(10 \text{ appels/heure})$ et des appels "Support" selon $X_2 \sim \text{Poisson}(15 \text{ appels/heure})$. Les deux types d'appels sont indépendants.
-Le nombre total d'appels $Y = X_1 + X_2$ suit une loi $Y \sim \text{Poisson}(10+15=25 \text{ appels/heure})$.
-La probabilité de recevoir exactement 20 appels en une heure est :
-$$P(Y=20) = \frac{e^{-25} 25^{20}}{20!}$$
-\end{examplebox}
+\begin{remarquebox}[Indépendance et Covariance]
+Si $X$ et $Y$ sont indépendantes, alors $\text{Cov}(X, Y) = 0$. Cependant, la réciproque n'est \textbf{pas} toujours vraie pour les variables aléatoires en général (bien qu'elle le soit dans certains cas importants comme pour les variables gaussiennes). Une covariance nulle signifie seulement une absence de \textit{relation linéaire}, mais il peut exister d'autres formes de dépendance.
+\end{remarquebox}
 
 \subsection{Exercices}
 
-% --- Lois Jointes et Marginales (Discret) ---
+% --- PDF, CDF, et Espérance de Base ---
 
-\begin{exercicebox}[Exercice 1 : Loi Jointe et Marginales]
-Soit le tableau suivant représentant la loi de probabilité jointe $P(X=x, Y=y)$ d'un couple de variables aléatoires $(X, Y)$.
-
-\begin{center}
-\begin{tabular}{|c|ccc|}
-\hline
-\diagbox{$X$}{$Y$} & 0 & 1 & 2 \\ \hline
-0 & 0.1 & 0.2 & 0.1 \\
-1 & 0.3 & 0.1 & 0.2 \\ \hline
-\end{tabular}
-\end{center}
-
+\begin{exercicebox}[Exercice 1 : Validation d'une PDF]
+Soit $X$ une variable aléatoire continue. On propose la fonction $f(x) = c x^2$ pour $x \in [0, 1]$ et $f(x) = 0$ sinon.
 \begin{enumerate}
-    \item Vérifiez qu'il s'agit bien d'une loi de probabilité.
-    \item Calculez la loi marginale de $X$, $P(X=x)$.
-    \item Calculez la loi marginale de $Y$, $P(Y=y)$.
+    \item Trouvez la constante $c$ pour que $f(x)$ soit une fonction de densité de probabilité (PDF) valide.
+    \item En utilisant la valeur de $c$ trouvée, calculez $P(X \le 0.5)$.
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 2 : Calcul de Probabilité Jointe]
-En utilisant la loi jointe de l'exercice 1 :
+\begin{exercicebox}[Exercice 2 : PDF à partir d'une CDF]
+La fonction de répartition (CDF) d'une variable aléatoire $Y$ est donnée par :
+$$ F(y) = \begin{cases} 0 & \text{si } y < 0 \\ y^3 & \text{si } 0 \le y \le 1 \\ 1 & \text{si } y > 1 \end{cases} $$
 \begin{enumerate}
-    \item Calculez $P(X=0, Y \le 1)$.
-    \item Calculez $P(X=Y)$.
-    \item Calculez $P(X > Y)$.
+    \item Trouvez la fonction de densité de probabilité (PDF) $f(y)$ de $Y$.
+    \item Calculez $P(0.1 \le Y \le 0.5)$ en utilisant la CDF.
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 3 : Indépendance (Loi Jointe)]
-En utilisant la loi jointe de l'exercice 1 :
-\begin{enumerate}
-    \item Calculez $P(X=0) \times P(Y=0)$.
-    \item Comparez ce résultat à $P(X=0, Y=0)$.
-    \item Les variables $X$ et $Y$ sont-elles indépendantes ? Justifiez.
-\end{enumerate}
-\end{exercicebox}
-
-% --- Espérance, Covariance et Corrélation ---
-
-\begin{exercicebox}[Exercice 4 : Espérances Marginales]
-En utilisant les lois marginales calculées à l'exercice 1 :
+\begin{exercicebox}[Exercice 3 : Calcul d'Espérance et Variance (PDF Simple)]
+Utilisez la PDF $f(x)$ trouvée dans l'exercice 1 ($f(x) = 3x^2$ pour $x \in [0, 1]$).
 \begin{enumerate}
     \item Calculez l'espérance $E[X]$.
-    \item Calculez l'espérance $E[Y]$.
+    \item Calculez $E[X^2]$ en utilisant le théorème de transfert (LOTUS).
+    \item Déduisez-en la variance $\text{Var}(X)$.
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 5 : Espérance d'une Fonction (LOTUS)]
-En utilisant la loi jointe de l'exercice 1, calculez $E[XY]$.
-(Indice : $E[XY] = \sum_x \sum_y (xy) P(X=x, Y=y)$).
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 6 : Covariance (Calcul)]
-En utilisant les résultats des exercices 4 et 5, calculez la covariance $\text{Cov}(X,Y)$.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 7 : Variances Marginales]
-En utilisant les lois marginales de l'exercice 1 et les espérances de l'exercice 4 :
+\begin{exercicebox}[Exercice 4 : PDF Triangulaire]
+Soit $X$ une v.a. avec la PDF $f(x) = 1 - |x|$ pour $x \in [-1, 1]$ et $f(x)=0$ sinon.
 \begin{enumerate}
-    \item Calculez $E[X^2]$ et $\text{Var}(X)$.
-    \item Calculez $E[Y^2]$ et $\text{Var}(Y)$.
+    \item Vérifiez que l'aire totale sous la courbe est 1. (Indice : c'est un triangle).
+    \item Calculez $E[X]$. (Indice : utilisez la symétrie).
+    \item Calculez $P(X > 0.5)$.
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 8 : Corrélation (Calcul)]
-En utilisant les résultats des exercices 6 et 7, calculez le coefficient de corrélation $\text{Corr}(X,Y)$.
-\end{exercicebox}
+% --- Loi Uniforme ---
 
-% --- Propriétés de la Variance et de la Covariance ---
-
-\begin{exercicebox}[Exercice 9 : Variance d'une Somme (Non Indépendant)]
-Soient $X$ et $Y$ deux variables aléatoires telles que $\text{Var}(X) = 10$, $\text{Var}(Y) = 5$ et $\text{Cov}(X,Y) = 2$.
-Calculez $\text{Var}(X+Y)$.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 10 : Variance d'une Différence (Indépendant)]
-Soient $X$ et $Y$ deux variables aléatoires \textbf{indépendantes} telles que $\text{Var}(X) = 16$ et $\text{Var}(Y) = 9$.
+\begin{exercicebox}[Exercice 5 : Loi Uniforme (Bus)]
+Un bus arrive à un arrêt toutes les 15 minutes. Vous arrivez à l'arrêt à un moment aléatoire. Soit $X$ votre temps d'attente. On suppose $X \sim \text{Unif}(0, 15)$.
 \begin{enumerate}
-    \item Que vaut $\text{Cov}(X,Y)$ ?
-    \item Calculez $\text{Var}(X-Y)$. (Rappel : $\text{Var}(X-Y) = \text{Var}(X) + \text{Var}(Y) - 2\text{Cov}(X,Y)$).
+    \item Quelle est la PDF $f(x)$ de $X$ ?
+    \item Quelle est la probabilité que vous attendiez moins de 5 minutes ?
+    \item Quelle est l'espérance de votre temps d'attente $E[X]$ ?
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 11 : Bilinéarité de la Covariance]
-Soient $X, Y, Z$ trois variables aléatoires. Exprimez $\text{Cov}(X+Y, Z)$ en fonction des covariances des variables individuelles.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 12 : Variance d'une Combinaison Linéaire]
-Soient $X$ et $Y$ deux variables aléatoires indépendantes avec $\text{Var}(X) = 4$ et $\text{Var}(Y) = 2$.
-Calculez $\text{Var}(3X - 5Y + 1)$.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 13 : Variance d'une Somme (Dés)]
-On lance deux dés équilibrés $D_1$ et $D_2$. Soit $S = D_1 + D_2$.
-On rappelle que pour un dé, $\text{Var}(D_i) = 35/12$.
+\begin{exercicebox}[Exercice 6 : Loi Uniforme (Variance)]
+Soit $X \sim \text{Unif}(a, b)$. On rappelle que $\text{Var}(X) = \frac{(b-a)^2}{12}$.
+Un signal est uniformément distribué entre 5 Volts et 10 Volts.
 \begin{enumerate}
-    \item Les variables $D_1$ et $D_2$ sont-elles indépendantes ?
-    \item Calculez $\text{Var}(S)$.
+    \item Quelle est l'espérance du signal ?
+    \item Quelle est la variance du signal ?
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 14 : Covariance et Variance]
-Soit $X$ une variable aléatoire. En utilisant la bilinéarité de la covariance, montrez que $\text{Cov}(X, X) = \text{Var}(X)$.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 15 : Covariance avec une Constante]
-Soit $X$ une variable aléatoire et $c$ une constante.
-Montrez que $\text{Cov}(X, c) = 0$. (Indice : $E[c]=c$ et $E[Xc] = cE[X]$).
-\end{exercicebox}
-
-% --- Standardisation et Somme de Poissons ---
-
-\begin{exercicebox}[Exercice 16 : Standardisation (Centrer-Réduire)]
-Soit $X$ une variable aléatoire avec $E[X] = 10$ et $\text{Var}(X) = 4$.
-Soit $Z = \frac{X - E[X]}{\sqrt{\text{Var}(X)}} = \frac{X - 10}{2}$ la variable standardisée.
+\begin{exercicebox}[Exercice 7 : Loi Uniforme (CDF)]
+Soit $X \sim \text{Unif}(-1, 3)$.
 \begin{enumerate}
-    \item Calculez $E[Z]$.
-    \item Calculez $\text{Var}(Z)$.
+    \item Calculez la CDF $F(x) = P(X \le x)$. (N'oubliez pas les 3 parties : $x < -1$, $-1 \le x \le 3$, $x > 3$).
+    \item Utilisez la CDF pour calculer $P(0 \le X \le 2)$.
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 17 : Corrélation et Standardisation]
-Soit $\text{Corr}(X,Y) = 0.5$. Soient $Z_X$ et $Z_Y$ les versions standardisées de $X$ et $Y$.
-Que vaut $\text{Cov}(Z_X, Z_Y)$ ? (Indice : regardez l'intuition de la corrélation).
-\end{exercicebox}
+% --- Loi Exponentielle ---
 
-\begin{exercicebox}[Exercice 18 : Somme de Lois de Poisson]
-Un magasin reçoit des clients au comptoir A selon $X \sim \text{Poisson}(\lambda_1=5 \text{ clients/heure})$ et au comptoir B selon $Y \sim \text{Poisson}(\lambda_2=3 \text{ clients/heure})$. On suppose que $X$ et $Y$ sont indépendantes.
-Soit $S = X+Y$ le nombre total de clients arrivant au magasin en une heure.
+\begin{exercicebox}[Exercice 8 : Loi Exponentielle (Durée de vie)]
+La durée de vie (en heures) d'un composant électronique suit une loi exponentielle avec $\lambda = 0.01$. $X \sim \text{Exp}(0.01)$.
 \begin{enumerate}
-    \item Quelle est la loi de $S$ ? Donnez son nom et son paramètre.
-    \item Quelle est la probabilité qu'exactement 6 clients au total arrivent en une heure, $P(S=6)$ ?
+    \item Quelle est l'espérance de la durée de vie $E[X]$ ?
+    \item Quelle est la probabilité que le composant dure plus de 100 heures ? (Rappel : $P(X > t) = e^{-\lambda t}$).
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 19 : Corrélation Nulle mais Dépendance]
-Soit $X$ une variable aléatoire $X \in \{-1, 0, 1\}$, avec $P(X=-1)=1/3$, $P(X=0)=1/3$, $P(X=1)=1/3$.
-Soit $Y = X^2$.
+\begin{exercicebox}[Exercice 9 : Loi Exponentielle (Propriété de non-mémoire)]
+On reprend le composant de l'exercice 8 ($X \sim \text{Exp}(0.01)$).
+\begin{enumerate}
+    \item Calculez la probabilité que le composant dure plus de 50 heures, $P(X > 50)$.
+    \item Calculez la probabilité qu'il dure plus de 150 heures, \textit{sachant qu'il a déjà duré 100 heures} : $P(X > 150 | X > 100)$.
+    \item Comparez vos résultats de (1) et (2) et commentez.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : Loi Exponentielle (CDF)]
+Le temps d'attente $T$ (en minutes) à un guichet suit $T \sim \text{Exp}(\lambda=0.5)$.
+\begin{enumerate}
+    \item Quelle est la CDF $F(t)$ de $T$ ?
+    \item Quelle est la probabilité d'attendre entre 1 et 3 minutes, $P(1 \le T \le 3)$ ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 11 : Trouver $\lambda$]
+La durée de vie moyenne d'une ampoule suit une loi exponentielle avec une espérance de 800 heures.
+\begin{enumerate}
+    \item Trouvez le paramètre $\lambda$.
+    \item Quelle est la probabilité qu'une ampoule meure avant 500 heures ?
+\end{enumerate}
+\end{exercicebox}
+
+% --- Lois Conjointes (Continu) ---
+
+\begin{exercicebox}[Exercice 12 : Validation d'une PDF Conjointe]
+On considère la fonction $f(x, y) = c(x+y)$ pour $0 \le x \le 1$ et $0 \le y \le 1$, et $f(x,y)=0$ sinon.
+\begin{enumerate}
+    \item Mettez en place la double intégrale pour $\int_0^1 \int_0^1 c(x+y) \, dx \, dy$.
+    \item Calculez l'intégrale et trouvez la valeur de $c$ qui en fait une PDF valide.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 13 : Calcul de Densités Marginales]
+En utilisant la PDF $f(x,y)$ et la constante $c$ de l'exercice 12 :
+\begin{enumerate}
+    \item Calculez la densité marginale $f_X(x) = \int_{-\infty}^{\infty} f(x, y) \, dy$. (Définie pour $x \in [0, 1]$).
+    \item Calculez la densité marginale $f_Y(y) = \int_{-\infty}^{\infty} f(x, y) \, dx$. (Définie pour $y \in [0, 1]$).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 14 : Indépendance (Continu)]
+En utilisant les résultats des exercices 12 et 13 :
+\begin{enumerate}
+    \item Calculez le produit $f_X(x) f_Y(y)$.
+    \item Comparez $f(x,y)$ et $f_X(x) f_Y(y)$. $X$ et $Y$ sont-elles indépendantes ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 15 : Calcul de Probabilité Conjointe]
+On utilise toujours $f(x,y) = x+y$ pour $x, y \in [0, 1]$ (on a trouvé $c=1$).
+Calculez $P(X \le 0.5 \text{ et } Y \le 0.5)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 16 : PDF Conjointe Uniforme]
+Soit $(X, Y)$ un couple uniformément distribué sur le carré $[0, 2] \times [0, 2]$.
+\begin{enumerate}
+    \item Quelle est la surface du carré ?
+    \item Quelle est la valeur de la PDF $f(x, y)$ à l'intérieur de ce carré ?
+    \item Calculez $P(0 \le X \le 1 \text{ et } 1 \le Y \le 2)$. (Indice : c'est le volume d'un pavé).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 17 : Indépendance (Uniforme)]
+Pour la PDF de l'exercice 16 ($f(x,y) = 1/4$ sur le carré $[0,2]\times[0,2]$) :
+\begin{enumerate}
+    \item Calculez les marginales $f_X(x)$ et $f_Y(y)$.
+    \item $X$ et $Y$ sont-elles indépendantes ?
+\end{enumerate}
+\end{exercicebox}
+
+% --- Espérance, Covariance (Continu) ---
+
+\begin{exercicebox}[Exercice 18 : Espérances Marginales]
+En utilisant les lois marginales $f_X(x)$ et $f_Y(y)$ de l'exercice 13 :
 \begin{enumerate}
     \item Calculez $E[X]$.
-    \item Calculez $E[XY]$. (Indice : $E[XY] = E[X^3]$).
-    \item Calculez $\text{Cov}(X,Y)$.
-    \item Les variables $X$ et $Y$ sont-elles indépendantes ?
+    \item Calculez $E[Y]$.
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 20 : Bornes de la Corrélation]
-Soit $X$ une variable aléatoire et $Y = -3X + 5$.
-Sans faire de calcul, que vaut $\text{Corr}(X,Y)$ ? Justifiez.
+\begin{exercicebox}[Exercice 19 : LOTUS Conjoint et Covariance]
+En utilisant la PDF $f(x,y) = x+y$ sur le carré $[0,1]\times[0,1]$ :
+\begin{enumerate}
+    \item Calculez $E[XY] = \int_0^1 \int_0^1 (xy)(x+y) \, dx \, dy$.
+    \item En utilisant $E[X]$ et $E[Y]$ de l'exercice 18, calculez $\text{Cov}(X, Y)$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 20 : Covariance et Indépendance]
+Soient $X$ et $Y$ les variables de l'exercice 16 (uniformes sur $[0, 2] \times [0, 2]$).
+\begin{enumerate}
+    \item $X$ et $Y$ sont-elles indépendantes (d'après Ex. 17) ?
+    \item Que vaut $\text{Cov}(X, Y)$ ? (Sans calcul).
+\end{enumerate}
 \end{exercicebox}
 
 \subsection{Corrections des Exercices}
 
-% --- Corrections : Lois Jointes et Marginales (Discret) ---
+% --- Corrections : PDF, CDF, et Espérance de Base ---
 
-\begin{correctionbox}[Correction Exercice 1 : Loi Jointe et Marginales]
-1.  On somme toutes les probabilités du tableau :
-    $0.1 + 0.2 + 0.1 + 0.3 + 0.1 + 0.2 = 1.0$.
-    Puisque la somme est 1 et toutes les probabilités sont non négatives, c'est une loi valide.
-
-2.  Loi marginale de $X$ (somme des lignes) :
-    $P(X=0) = P(X=0, Y=0) + P(X=0, Y=1) + P(X=0, Y=2) = 0.1 + 0.2 + 0.1 = 0.4$.
-    $P(X=1) = P(X=1, Y=0) + P(X=1, Y=1) + P(X=1, Y=2) = 0.3 + 0.1 + 0.2 = 0.6$.
-
-3.  Loi marginale de $Y$ (somme des colonnes) :
-    $P(Y=0) = P(X=0, Y=0) + P(X=1, Y=0) = 0.1 + 0.3 = 0.4$.
-    $P(Y=1) = P(X=0, Y=1) + P(X=1, Y=1) = 0.2 + 0.1 = 0.3$.
-    $P(Y=2) = P(X=0, Y=2) + P(X=1, Y=2) = 0.1 + 0.2 = 0.3$.
+\begin{correctionbox}[Correction Exercice 1 : Validation d'une PDF]
+$f(x) = c x^2$ pour $x \in [0, 1]$.
+1.  On doit avoir $\int_{-\infty}^{\infty} f(x) \, dx = 1$.
+    $$ \int_0^1 c x^2 \, dx = c \left[ \frac{x^3}{3} \right]_0^1 = c \left( \frac{1^3}{3} - 0 \right) = \frac{c}{3} $$
+    Pour que l'intégrale vaille 1, il faut $c/3 = 1$, donc $\mathbf{c=3}$.
+2.  On utilise $f(x) = 3x^2$.
+    $$ P(X \le 0.5) = \int_0^{0.5} 3x^2 \, dx = \left[ x^3 \right]_0^{0.5} = (0.5)^3 - 0 = 0.125 $$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 2 : Calcul de Probabilité Jointe]
-1.  $P(X=0, Y \le 1) = P(X=0, Y=0) + P(X=0, Y=1) = 0.1 + 0.2 = 0.3$.
-2.  $P(X=Y) = P(X=0, Y=0) + P(X=1, Y=1) = 0.1 + 0.1 = 0.2$.
-3.  $P(X > Y) = P(X=1, Y=0) = 0.3$. (C'est la seule case où $x > y$).
+\begin{correctionbox}[Correction Exercice 2 : PDF à partir d'une CDF]
+1.  La PDF $f(y)$ est la dérivée de la CDF $F(y)$.
+    - Si $y < 0$, $f(y) = \frac{d}{dy}(0) = 0$.
+    - Si $0 \le y \le 1$, $f(y) = \frac{d}{dy}(y^3) = 3y^2$.
+    - Si $y > 1$, $f(y) = \frac{d}{dy}(1) = 0$.
+    Donc, $\mathbf{f(y) = 3y^2}$ pour $y \in [0, 1]$ et 0 sinon.
+2.  On utilise la propriété $P(a \le Y \le b) = F(b) - F(a)$.
+    $$ P(0.1 \le Y \le 0.5) = F(0.5) - F(0.1) = (0.5)^3 - (0.1)^3 $$
+    $$ = 0.125 - 0.001 = 0.124 $$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 3 : Indépendance (Loi Jointe)]
-On utilise les lois marginales de l'exercice 1 : $P(X=0)=0.4$ et $P(Y=0)=0.4$.
-1.  $P(X=0) \times P(Y=0) = 0.4 \times 0.4 = 0.16$.
-2.  Dans le tableau joint, $P(X=0, Y=0) = 0.1$.
-3.  Puisque $P(X=0, Y=0) \neq P(X=0) \times P(Y=0)$ (car $0.1 \neq 0.16$), les variables $X$ et $Y$ \textbf{ne sont pas indépendantes}. (Un seul contre-exemple suffit).
+\begin{correctionbox}[Correction Exercice 3 : Calcul d'Espérance et Variance]
+On utilise $f(x) = 3x^2$ pour $x \in [0, 1]$.
+1.  $E[X] = \int_{-\infty}^{\infty} x f(x) \, dx = \int_0^1 x (3x^2) \, dx = \int_0^1 3x^3 \, dx$
+    $E[X] = \left[ \frac{3x^4}{4} \right]_0^1 = \mathbf{3/4}$.
+2.  $E[X^2] = \int_{-\infty}^{\infty} x^2 f(x) \, dx = \int_0^1 x^2 (3x^2) \, dx = \int_0^1 3x^4 \, dx$
+    $E[X^2] = \left[ \frac{3x^5}{5} \right]_0^1 = \mathbf{3/5}$.
+3.  $\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{3}{5} - \left(\frac{3}{4}\right)^2 = \frac{3}{5} - \frac{9}{16}$
+    $\text{Var}(X) = \frac{3 \times 16 - 9 \times 5}{80} = \frac{48 - 45}{80} = \mathbf{3/80}$.
 \end{correctionbox}
 
-% --- Corrections : Espérance, Covariance et Corrélation ---
-
-\begin{correctionbox}[Correction Exercice 4 : Espérances Marginales]
-1.  $E[X] = \sum_x x P(X=x) = (0)(P(X=0)) + (1)(P(X=1))$
-    $E[X] = (0)(0.4) + (1)(0.6) = 0.6$.
-2.  $E[Y] = \sum_y y P(Y=y) = (0)(P(Y=0)) + (1)(P(Y=1)) + (2)(P(Y=2))$
-    $E[Y] = (0)(0.4) + (1)(0.3) + (2)(0.3) = 0 + 0.3 + 0.6 = 0.9$.
+\begin{correctionbox}[Correction Exercice 4 : PDF Triangulaire]
+$f(x) = 1 - |x|$ pour $x \in [-1, 1]$.
+1.  La PDF est un triangle de base 2 (de -1 à 1) et de hauteur $f(0)=1$.
+    Aire = $\frac{1}{2} \times \text{base} \times \text{hauteur} = \frac{1}{2} \times 2 \times 1 = 1$. C'est bien une PDF valide.
+2.  La fonction $f(x)$ est symétrique autour de $x=0$. L'espérance est donc le centre de symétrie.
+    $E[X] = \mathbf{0}$.
+    (Calcul : $E[X] = \int_{-1}^1 x(1-|x|)dx = 0$ car l'intégrande est une fonction impaire sur un intervalle symétrique).
+3.  $P(X > 0.5) = \int_{0.5}^1 f(x) \, dx$. Pour $x>0$, $f(x) = 1-x$.
+    $P(X > 0.5) = \int_{0.5}^1 (1-x) \, dx = \left[ x - \frac{x^2}{2} \right]_{0.5}^1$
+    $= \left(1 - \frac{1}{2}\right) - \left(0.5 - \frac{(0.5)^2}{2}\right) = 0.5 - (0.5 - 0.125) = \mathbf{0.125}$ (ou $1/8$).
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 5 : Espérance d'une Fonction (LOTUS)]
-On somme $(xy)P(X=x, Y=y)$ sur les 6 cases. Les termes où $x=0$ ou $y=0$ sont nuls.
-$E[XY] = (0 \cdot 0)(0.1) + (0 \cdot 1)(0.2) + (0 \cdot 2)(0.1) + (1 \cdot 0)(0.3) + (1 \cdot 1)(0.1) + (1 \cdot 2)(0.2)$
-$E[XY] = 0 + 0 + 0 + 0 + (1)(0.1) + (2)(0.2) = 0.1 + 0.4 = 0.5$.
+% --- Corrections : Loi Uniforme ---
+
+\begin{correctionbox}[Correction Exercice 5 : Loi Uniforme (Bus)]
+$X \sim \text{Unif}(a=0, b=15)$.
+1.  $f(x) = \frac{1}{b-a} = \mathbf{\frac{1}{15}}$ pour $x \in [0, 15]$, et 0 sinon.
+2.  $P(X < 5) = \int_0^5 \frac{1}{15} \, dx = \frac{1}{15} [x]_0^5 = \frac{5-0}{15} = \mathbf{1/3}$.
+    (C'est la longueur de l'intervalle [0, 5] divisée par la longueur totale [0, 15]).
+3.  $E[X] = \frac{a+b}{2} = \frac{0+15}{2} = \mathbf{7.5}$ minutes.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 6 : Covariance (Calcul)]
-On utilise la formule $\text{Cov}(X,Y) = E[XY] - E[X]E[Y]$.
-$$ \text{Cov}(X,Y) = 0.5 - (0.6)(0.9) = 0.5 - 0.54 = -0.04 $$
+\begin{correctionbox}[Correction Exercice 6 : Loi Uniforme (Variance)]
+Signal $X \sim \text{Unif}(a=5, b=10)$.
+1.  $E[X] = \frac{a+b}{2} = \frac{5+10}{2} = \mathbf{7.5}$ Volts.
+2.  $\text{Var}(X) = \frac{(b-a)^2}{12} = \frac{(10-5)^2}{12} = \frac{5^2}{12} = \mathbf{25/12}$ Volts$^2$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 7 : Variances Marginales]
-1.  Pour $X$:
-    $E[X^2] = (0^2)(0.4) + (1^2)(0.6) = 0.6$.
-    $\text{Var}(X) = E[X^2] - (E[X])^2 = 0.6 - (0.6)^2 = 0.6 - 0.36 = 0.24$.
-2.  Pour $Y$:
-    $E[Y^2] = (0^2)(0.4) + (1^2)(0.3) + (2^2)(0.3) = 0 + 0.3 + (4)(0.3) = 0.3 + 1.2 = 1.5$.
-    $\text{Var}(Y) = E[Y^2] - (E[Y])^2 = 1.5 - (0.9)^2 = 1.5 - 0.81 = 0.69$.
+\begin{correctionbox}[Correction Exercice 7 : Loi Uniforme (CDF)]
+$X \sim \text{Unif}(a=-1, b=3)$. $f(x) = \frac{1}{3 - (-1)} = 1/4$ sur $[-1, 3]$.
+1.  CDF $F(x) = \int_{-\infty}^x f(t) dt$.
+    - Si $x < -1$ : $F(x) = \int_{-\infty}^x 0 \, dt = \mathbf{0}$.
+    - Si $-1 \le x \le 3$ : $F(x) = \int_{-1}^x \frac{1}{4} \, dt = \frac{1}{4}[t]_{-1}^x = \mathbf{\frac{x - (-1)}{4} = \frac{x+1}{4}}$.
+    - Si $x > 3$ : $F(x) = P(X \le 3) = \mathbf{1}$.
+2.  $P(0 \le X \le 2) = F(2) - F(0) = \frac{2+1}{4} - \frac{0+1}{4} = \frac{3}{4} - \frac{1}{4} = \frac{2}{4} = \mathbf{0.5}$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 8 : Corrélation (Calcul)]
-On utilise la formule $\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}$.
-$$ \text{Corr}(X,Y) = \frac{-0.04}{\sqrt{0.24 \times 0.69}} = \frac{-0.04}{\sqrt{0.1656}} \approx \frac{-0.04}{0.4069} \approx -0.098 $$
-La corrélation est très faible et négative.
+% --- Corrections : Loi Exponentielle ---
+
+\begin{correctionbox}[Correction Exercice 8 : Loi Exponentielle (Durée de vie)]
+$X \sim \text{Exp}(\lambda = 0.01)$.
+1.  $E[X] = \frac{1}{\lambda} = \frac{1}{0.01} = \mathbf{100}$ heures.
+2.  $P(X > t) = e^{-\lambda t}$.
+    $P(X > 100) = e^{-0.01 \times 100} = e^{-1} \approx \mathbf{0.3679}$.
 \end{correctionbox}
 
-% --- Corrections : Propriétés de la Variance et de la Covariance ---
-
-\begin{correctionbox}[Correction Exercice 9 : Variance d'une Somme (Non Indépendant)]
-On utilise la formule générale :
-$$ \text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y) $$
-$$ \text{Var}(X+Y) = 10 + 5 + 2(2) = 15 + 4 = 19 $$
+\begin{correctionbox}[Correction Exercice 9 : Loi Exponentielle (Propriété de non-mémoire)]
+$X \sim \text{Exp}(\lambda = 0.01)$.
+1.  $P(X > 50) = e^{-0.01 \times 50} = e^{-0.5} \approx \mathbf{0.6065}$.
+2.  Par la propriété de non-mémoire, le fait d'avoir déjà duré 100 heures est "oublié".
+    $P(X > 150 | X > 100) = P(X > 100 + 50 | X > 100) = P(X > 50)$.
+    Résultat = $e^{-0.5} \approx \mathbf{0.6065}$.
+3.  Les probabilités sont identiques. Le fait que le composant ait survécu 100 heures ne donne aucune information sur sa probabilité de survivre 50 heures de plus.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 10 : Variance d'une Différence (Indépendant)]
-1.  Puisque $X$ et $Y$ sont indépendantes, leur covariance est nulle : $\text{Cov}(X,Y) = 0$.
-2.  On utilise la formule générale :
-    $$ \text{Var}(X-Y) = \text{Var}(X + (-1)Y) = \text{Var}(X) + \text{Var}(-1 \cdot Y) + 2\text{Cov}(X, -Y) $$
-    $$ = \text{Var}(X) + (-1)^2 \text{Var}(Y) - 2\text{Cov}(X, Y) $$
-    $$ \text{Var}(X-Y) = \text{Var}(X) + \text{Var}(Y) - 2(0) $$
-    $$ \text{Var}(X-Y) = 16 + 9 = 25 $$
+\begin{correctionbox}[Correction Exercice 10 : Loi Exponentielle (CDF)]
+$T \sim \text{Exp}(\lambda=0.5)$.
+1.  $F(t) = P(T \le t) = 1 - e^{-\lambda t} = \mathbf{1 - e^{-0.5 t}}$ (pour $t \ge 0$).
+2.  $P(1 \le T \le 3) = F(3) - F(1)$
+    $= (1 - e^{-0.5 \times 3}) - (1 - e^{-0.5 \times 1})$
+    $= 1 - e^{-1.5} - 1 + e^{-0.5} = e^{-0.5} - e^{-1.5}$
+    $\approx 0.6065 - 0.2231 = \mathbf{0.3834}$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 11 : Bilinéarité de la Covariance]
-La covariance est linéaire sur son premier argument :
-$$ \text{Cov}(X+Y, Z) = \text{Cov}(X, Z) + \text{Cov}(Y, Z) $$
+\begin{correctionbox}[Correction Exercice 11 : Trouver $\lambda$]
+1.  On sait que $E[X] = 1/\lambda$.
+    $800 = 1/\lambda \implies \lambda = 1/800 = \mathbf{0.00125}$.
+2.  On cherche $P(X < 500) = F(500)$.
+    $P(X < 500) = 1 - e^{-\lambda \times 500} = 1 - e^{-0.00125 \times 500} = 1 - e^{-0.625}$
+    $\approx 1 - 0.5353 = \mathbf{0.4647}$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 12 : Variance d'une Combinaison Linéaire]
-On utilise $\text{Var}(aX + bY + c) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab\text{Cov}(X,Y)$.
-Ici $a=3$, $b=-5$, $c=1$. $X$ et $Y$ sont indépendantes, donc $\text{Cov}(X,Y)=0$.
-$$ \text{Var}(3X - 5Y + 1) = (3)^2 \text{Var}(X) + (-5)^2 \text{Var}(Y) + 0 $$
-$$ = 9 \times (4) + 25 \times (2) = 36 + 50 = 86 $$
-(Note : la constante additive $c=1$ ne change pas la variance).
+% --- Corrections : Lois Conjointes (Continu) ---
+
+\begin{correctionbox}[Correction Exercice 12 : Validation d'une PDF Conjointe]
+1.  $\int_{0}^1 \int_{0}^1 c(x+y) \, dx \, dy = 1$.
+2.  Calcul de l'intégrale interne (par rapport à $x$) :
+    $\int_0^1 c(x+y) \, dx = c \left[ \frac{x^2}{2} + xy \right]_0^1 = c \left( (\frac{1}{2} + y) - (0) \right) = c(\frac{1}{2} + y)$.
+    Calcul de l'intégrale externe (par rapport à $y$) :
+    $\int_0^1 c(\frac{1}{2} + y) \, dy = c \left[ \frac{y}{2} + \frac{y^2}{2} \right]_0^1 = c \left( (\frac{1}{2} + \frac{1}{2}) - (0) \right) = c(1)$.
+    On doit avoir $c(1) = 1$, donc $\mathbf{c=1}$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 13 : Variance d'une Somme (Dés)]
-1.  Oui, les lancers de deux dés standards sont des événements physiquement indépendants.
-2.  Puisqu'ils sont indépendants, $\text{Cov}(D_1, D_2) = 0$.
-    $$ \text{Var}(S) = \text{Var}(D_1 + D_2) = \text{Var}(D_1) + \text{Var}(D_2) $$
-    $$ \text{Var}(S) = \frac{35}{12} + \frac{35}{12} = \frac{70}{12} = \frac{35}{6} $$
+\begin{correctionbox}[Correction Exercice 13 : Calcul de Densités Marginales]
+On utilise $f(x,y) = x+y$ pour $x,y \in [0,1]$.
+1.  Marginale $f_X(x)$ : On intègre par rapport à $y$.
+    $f_X(x) = \int_0^1 (x+y) \, dy = \left[ xy + \frac{y^2}{2} \right]_0^1 = (x + \frac{1}{2}) - (0) = \mathbf{x + 0.5}$ (pour $x \in [0,1]$).
+2.  Marginale $f_Y(y)$ : On intègre par rapport à $x$.
+    $f_Y(y) = \int_0^1 (x+y) \, dx = \left[ \frac{x^2}{2} + xy \right]_0^1 = (\frac{1}{2} + y) - (0) = \mathbf{y + 0.5}$ (pour $y \in [0,1]$).
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 14 : Covariance et Variance]
-Par définition, $\text{Cov}(A, B) = E[(A-\mu_A)(B-\mu_B)]$.
-Posons $A=X$ et $B=X$. Alors $\mu_A = \mu_X$ et $\mu_B = \mu_X$.
-$$ \text{Cov}(X, X) = E[(X-\mu_X)(X-\mu_X)] = E[(X-\mu_X)^2] $$
-C'est la définition de $\text{Var}(X)$.
+\begin{correctionbox}[Correction Exercice 14 : Indépendance (Continu)]
+1.  $f_X(x) f_Y(y) = (x + 0.5)(y + 0.5) = xy + 0.5x + 0.5y + 0.25$.
+2.  La PDF conjointe est $f(x,y) = x+y$.
+    Puisque $f(x,y) \neq f_X(x) f_Y(y)$, les variables $X$ et $Y$ \textbf{ne sont pas indépendantes}.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 15 : Covariance avec une Constante]
-On utilise la formule de calcul $\text{Cov}(X,c) = E[Xc] - E[X]E[c]$.
-Par linéarité, $E[Xc] = cE[X]$.
-L'espérance d'une constante est la constante elle-même : $E[c] = c$.
-$$ \text{Cov}(X, c) = cE[X] - E[X]c = 0 $$
+\begin{correctionbox}[Correction Exercice 15 : Calcul de Probabilité Conjointe]
+$f(x,y) = x+y$. On cherche $P(X \le 0.5, Y \le 0.5)$.
+$$ \int_0^{0.5} \int_0^{0.5} (x+y) \, dx \, dy $$
+Intégrale interne (sur $x$) : $\int_0^{0.5} (x+y) \, dx = \left[ \frac{x^2}{2} + xy \right]_0^{0.5} = \frac{(0.5)^2}{2} + 0.5y = \frac{0.25}{2} + 0.5y = 0.125 + 0.5y$.
+Intégrale externe (sur $y$) : $\int_0^{0.5} (0.125 + 0.5y) \, dy = \left[ 0.125y + \frac{0.5y^2}{2} \right]_0^{0.5}$
+$= [ 0.125y + 0.25y^2 ]_0^{0.5} = (0.125)(0.5) + (0.25)(0.5)^2 = 0.0625 + (0.25)(0.25)$
+$= 0.0625 + 0.0625 = \mathbf{0.125}$ (ou $1/8$).
 \end{correctionbox}
 
-% --- Corrections : Standardisation et Somme de Poissons ---
-
-\begin{correctionbox}[Correction Exercice 16 : Standardisation (Centrer-Réduire)]
-$Z = \frac{X - 10}{2} = \frac{1}{2}X - 5$.
-1.  Calcul de $E[Z]$ par linéarité :
-    $$ E[Z] = E\left[ \frac{1}{2}X - 5 \right] = \frac{1}{2}E[X] - 5 = \frac{1}{2}(10) - 5 = 5 - 5 = 0 $$
-2.  Calcul de $\text{Var}(Z)$ par les propriétés de la variance :
-    $$ \text{Var}(Z) = \text{Var}\left( \frac{1}{2}X - 5 \right) = \left(\frac{1}{2}\right)^2 \text{Var}(X) = \frac{1}{4} \text{Var}(X) $$
-    $$ \text{Var}(Z) = \frac{1}{4}(4) = 1 $$
-    Par définition, une variable standardisée a une moyenne de 0 et une variance de 1.
+\begin{correctionbox}[Correction Exercice 16 : PDF Conjointe Uniforme]
+$(X, Y)$ uniforme sur le carré $[0, 2] \times [0, 2]$.
+1.  Surface = $2 \times 2 = \mathbf{4}$.
+2.  La densité est $f(x,y) = 1 / \text{Surface} = \mathbf{1/4}$ pour $x,y \in [0, 2]$, et 0 sinon.
+3.  On cherche $P(0 \le X \le 1, 1 \le Y \le 2)$. C'est le volume sous $f(x,y)=1/4$ au-dessus du rectangle $[0,1]\times[1,2]$.
+    Volume = $\text{Hauteur} \times \text{Surface de la base}$
+    Surface de la base = $(1-0) \times (2-1) = 1$.
+    Volume = $(1/4) \times 1 = \mathbf{1/4}$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 17 : Corrélation et Standardisation]
-La corrélation $\text{Corr}(X,Y)$ EST, par définition, la covariance des versions standardisées $Z_X$ et $Z_Y$.
-$$ \text{Cov}(Z_X, Z_Y) = \text{Corr}(X,Y) = 0.5 $$
+\begin{correctionbox}[Correction Exercice 17 : Indépendance (Uniforme)]
+$f(x,y) = 1/4$ sur $[0, 2] \times [0, 2]$.
+1.  Marginale $f_X(x)$ (pour $x \in [0, 2]$) :
+    $f_X(x) = \int_0^2 (1/4) \, dy = (1/4) [y]_0^2 = (1/4)(2) = \mathbf{1/2}$.
+    Marginale $f_Y(y)$ (pour $y \in [0, 2]$) :
+    $f_Y(y) = \int_0^2 (1/4) \, dx = (1/4) [x]_0^2 = (1/4)(2) = \mathbf{1/2}$.
+    (Ce sont des lois $\text{Unif}(0, 2)$).
+2.  On vérifie $f(x,y) \stackrel{?}{=} f_X(x) f_Y(y)$.
+    $f_X(x) f_Y(y) = (1/2) \times (1/2) = 1/4$.
+    C'est égal à $f(x,y) = 1/4$.
+    Oui, $X$ et $Y$ \textbf{sont indépendantes}. (C'est toujours le cas pour une densité uniforme sur un rectangle aligné sur les axes).
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 18 : Somme de Lois de Poisson]
-1.  Puisque $X$ et $Y$ sont des v.a. de Poisson \textbf{indépendantes}, leur somme $S=X+Y$ suit aussi une \textbf{loi de Poisson}.
-    Le nouveau paramètre est la somme des paramètres : $\lambda_S = \lambda_1 + \lambda_2 = 5 + 3 = 8$.
-    Donc, $S \sim \text{Poisson}(\lambda=8)$.
-2.  On cherche $P(S=6)$ pour $S \sim \text{Poisson}(8)$.
-    $$ P(S=6) = \frac{e^{-8} 8^6}{6!} = \frac{e^{-8} \times 262144}{720} = 364.08 \times e^{-8} \approx 0.122 $$
+% --- Corrections : Espérance, Covariance (Continu) ---
+
+\begin{correctionbox}[Correction Exercice 18 : Espérances Marginales]
+On utilise $f_X(x) = x+0.5$ et $f_Y(y) = y+0.5$ (pour $x,y \in [0,1]$).
+1.  $E[X] = \int_0^1 x f_X(x) \, dx = \int_0^1 x(x+0.5) \, dx = \int_0^1 (x^2 + 0.5x) \, dx$
+    $= \left[ \frac{x^3}{3} + \frac{0.5x^2}{2} \right]_0^1 = \left[ \frac{x^3}{3} + \frac{x^2}{4} \right]_0^1 = \frac{1}{3} + \frac{1}{4} = \mathbf{7/12}$.
+2.  Par symétrie, $f_Y(y)$ a la même forme que $f_X(x)$, donc $E[Y] = \mathbf{7/12}$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 19 : Corrélation Nulle mais Dépendance]
-1.  $E[X] = (-1)(1/3) + (0)(1/3) + (1)(1/3) = -1/3 + 0 + 1/3 = 0$.
-2.  $E[XY] = E[X(X^2)] = E[X^3]$.
-    $E[X^3] = (-1)^3(1/3) + (0)^3(1/3) + (1)^3(1/3) = (-1)(1/3) + 0 + (1)(1/3) = 0$.
-3.  $\text{Cov}(X,Y) = E[XY] - E[X]E[Y] = 0 - (0)E[Y] = 0$.
-    Les variables sont \textbf{non corrélées}.
-4.  Les variables $X$ et $Y$ sont-elles indépendantes ? Non.
-    Test : $P(X=1, Y=1) \stackrel{?}{=} P(X=1)P(Y=1)$.
-    - $P(X=1, Y=1) = P(X=1, X^2=1) = P(X=1) = 1/3$.
-    - $P(X=1) = 1/3$.
-    - $P(Y=1) = P(X^2=1) = P(X=1) + P(X=-1) = 1/3 + 1/3 = 2/3$.
-    - $P(X=1)P(Y=1) = (1/3)(2/3) = 2/9$.
-    Puisque $1/3 \neq 2/9$, elles \textbf{ne sont pas indépendantes}.
-    C'est un exemple classique de dépendance non linéaire avec covariance nulle.
+\begin{correctionbox}[Correction Exercice 19 : LOTUS Conjoint et Covariance]
+1.  $E[XY] = \int_0^1 \int_0^1 (xy)(x+y) \, dx \, dy = \int_0^1 \int_0^1 (x^2y + xy^2) \, dx \, dy$
+    Intégrale interne (sur $x$) : $\int_0^1 (x^2y + xy^2) \, dx = \left[ \frac{x^3y}{3} + \frac{x^2y^2}{2} \right]_0^1 = \frac{y}{3} + \frac{y^2}{2}$.
+    Intégrale externe (sur $y$) : $\int_0^1 (\frac{y}{3} + \frac{y^2}{2}) \, dy = \left[ \frac{y^2}{6} + \frac{y^3}{6} \right]_0^1 = \frac{1}{6} + \frac{1}{6} = \frac{2}{6} = \mathbf{1/3}$.
+2.  $\text{Cov}(X, Y) = E[XY] - E[X]E[Y] = \frac{1}{3} - \left(\frac{7}{12}\right)\left(\frac{7}{12}\right)$
+    $= \frac{1}{3} - \frac{49}{144} = \frac{48}{144} - \frac{49}{144} = \mathbf{-1/144}$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 20 : Bornes de la Corrélation]
-$Y$ est une fonction linéaire parfaite de $X$ : $Y = aX + b$ avec $a=-3$ et $b=5$.
-La corrélation $\text{Corr}(X,Y)$ mesure la force de la relation \textit{linéaire}. Puisqu'elle est parfaite, la corrélation doit être $\pm 1$.
-Le coefficient $a = -3$ est négatif, donc la relation est décroissante.
-Par conséquent, $\text{Corr}(X,Y) = -1$.
+\begin{correctionbox}[Correction Exercice 20 : Covariance et Indépendance]
+1.  D'après l'exercice 17, $X$ et $Y$ \textbf{sont indépendantes}.
+2.  Puisque $X$ et $Y$ sont indépendantes, leur covariance est nulle.
+    $\text{Cov}(X, Y) = \mathbf{0}$.
 \end{correctionbox}
+
+\subsection{Exercices Pratiques (Python)}
+
+Ces exercices vous aideront à visualiser les concepts de PDF, CDF, espérance et variance pour les lois Uniforme et Exponentielle en utilisant des simulations avec \texttt{numpy} et \texttt{matplotlib}.
+
+\begin{codecell}
+pip install numpy matplotlib scipy
+\end{codecell}
+(\texttt{scipy} n'est pas strictement nécessaire ici, mais souvent utile pour les stats)
+
+\begin{exercicebox}[Exercice 1 : PDF vs Histogramme (Loi Uniforme)]
+Nous allons simuler une loi uniforme $X \sim \text{Unif}(a, b)$ et comparer l'histogramme des données simulées à la PDF théorique.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Définissez $a=2$, $b=8$. Calculez la hauteur de la PDF théorique ($1 / (b-a)$).
+    \item Simulez 100 000 échantillons d'une loi uniforme $\text{Unif}(a, b)$ avec \texttt{numpy.random.uniform(a, b, N)}.
+    \item Tracez l'histogramme de ces échantillons. Utilisez \texttt{bins=50} et \textbf{\texttt{density=True}}.
+    \item Sur le même graphique, tracez une ligne horizontale représentant la PDF théorique (de $a$ à $b$, à la hauteur calculée).
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+import matplotlib.pyplot as plt
+
+N_simulations = 100000
+a, b = 2, 8
+
+# 1. Calculer la hauteur de la PDF
+# ... votre code ...
+
+# 2. Simuler les echantillons
+# ... votre code ...
+
+# 3. Tracer l'histogramme normalise
+# ... votre code ...
+
+# 4. Tracer la PDF theorique
+# ... votre code ...
+# plt.legend()
+# plt.title("Loi Uniforme: Histogramme vs PDF")
+# plt.show()
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : CDF Empirique vs CDF Théorique (Loi Uniforme)]
+Comparons la fonction de répartition (CDF) empirique des données simulées à la CDF théorique $F(x) = (x-a)/(b-a)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Reprenez les échantillons simulés de l'exercice 1 ($a=2, b=8$).
+    \item Tracez la CDF empirique des échantillons. Utilisez \texttt{plt.hist(echantillons, bins=1000, density=True, cumulative=True, histtype='step')}.
+    \item Sur le même graphique, tracez la CDF théorique. (Indice : Créez un \texttt{np.linspace} de $a$ à $b$, puis calculez $y = (x-a)/(b-a)$). N'oubliez pas que la CDF vaut 0 avant $a$ et 1 après $b$.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+import matplotlib.pyplot as plt
+
+# (Regenerez les echantillons si necessaire)
+# N_simulations = 100000
+# a, b = 2, 8
+# echantillons = ...
+
+# 2. Tracer la CDF empirique
+# ... votre code ...
+
+# 3. Tracer la CDF theorique
+# x_theorique = np.linspace(a - 1, b + 1, 400) # Un peu avant et apres
+# y_cdf_theorique = ... # Calculer la CDF theorique
+# (Attention aux 3 parties : < a, entre a et b, > b)
+# ... votre code ...
+
+# plt.title("Loi Uniforme: CDF Empirique vs Theorique")
+# plt.xlabel("Valeur x")
+# plt.ylabel("Probabilite Cumulative P(X <= x)")
+# plt.legend()
+# plt.grid(True)
+# plt.show()
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Espérance et Variance (Loi Uniforme)]
+Vérifions les formules $E[X] = (a+b)/2$ et $\text{Var}(X) = (b-a)^2/12$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Reprenez les échantillons simulés de l'exercice 1 ($a=2, b=8$).
+    \item Calculez les valeurs théoriques pour $E[X]$ et $\text{Var}(X)$.
+    \item Calculez les valeurs empiriques en utilisant \texttt{.mean()} et \texttt{.var(ddof=0)} sur vos échantillons.
+    \item Comparez les résultats théoriques et empiriques.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+
+# (Regenerez les echantillons si necessaire)
+# N_simulations = 100000
+# a, b = 2, 8
+# echantillons = ...
+
+# 2. Calculs theoriques
+# ... votre code ...
+# print(f"Theorique: E(X)=..., Var(X)=...")
+
+# 3. Calculs empiriques
+# ... votre code ...
+# print(f"Empirique: E(X)=..., Var(X)=...")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : PDF et CDF (Loi Exponentielle)]
+Nous allons simuler une loi exponentielle $X \sim \text{Exp}(\lambda)$ et comparer les histogrammes empiriques de la PDF et de la CDF à leurs formes théoriques.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Définissez $\lambda = 0.5$.
+    \item Simulez 100 000 échantillons d'une loi $\text{Exp}(\lambda)$ avec \texttt{numpy.random.exponential(scale=1/lmbda, size=N)}.
+    \item Tracez l'histogramme PDF (\texttt{density=True}).
+    \item Sur le même graphique, tracez la PDF théorique $f(x) = \lambda e^{-\lambda x}$.
+    \item Tracez l'histogramme CDF (\texttt{density=True, cumulative=True}).
+    \item Sur ce second graphique, tracez la CDF théorique $F(x) = 1 - e^{-\lambda x}$.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+import matplotlib.pyplot as plt
+
+N_simulations = 100000
+lmbda = 0.5
+scale = 1 / lmbda
+
+# 2. Simuler les echantillons
+# ... votre code ...
+
+# 3. & 4. PDF (Graphique 1)
+# plt.figure(figsize=(10, 4))
+# plt.subplot(1, 2, 1)
+# ... votre code histogramme ...
+# x_theorique = np.linspace(0, np.max(echantillons), 200)
+# y_pdf_theorique = ... # Calculer la PDF theorique
+# ... votre code plot ...
+# plt.title("PDF Exponentielle")
+
+# 5. & 6. CDF (Graphique 2)
+# plt.subplot(1, 2, 2)
+# ... votre code histogramme cumulatif ...
+# y_cdf_theorique = ... # Calculer la CDF theorique
+# ... votre code plot ...
+# plt.title("CDF Exponentielle")
+# plt.show()
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Espérance et Variance (Loi Exponentielle)]
+Vérifions empiriquement les formules $E[X] = 1/\lambda$ et $\text{Var}(X) = 1/\lambda^2$ pour la loi exponentielle.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Reprenez les échantillons simulés de l'exercice 4 ($\lambda=0.5$).
+    \item Calculez les valeurs théoriques pour $E[X]$ et $\text{Var}(X)$.
+    \item Calculez les valeurs empiriques en utilisant \texttt{.mean()} et \texttt{.var(ddof=0)}.
+    \item Comparez les résultats théoriques et empiriques.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+
+# (Regenerez les echantillons si necessaire)
+# N_simulations = 100000
+# lmbda = 0.5
+# echantillons = ...
+
+# 2. Calculs theoriques
+# E_theorique = ...
+# Var_theorique = ...
+# print(f"Theorique: E(X)=..., Var(X)=...")
+
+# 3. Calculs empiriques
+# E_empirique = ...
+# Var_empirique = ...
+# print(f"Empirique: E(X)=..., Var(X)=...")
+\end{codecell}
+\end{exercicebox}

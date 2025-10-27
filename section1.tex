@@ -424,7 +424,7 @@ La probabilité de n'obtenir aucun 6 est $\left(\frac{5}{6}\right)^3 = \frac{125
 
 Cette série d'exercices vise à renforcer votre compréhension des concepts fondamentaux du dénombrement et de la probabilité naïve. La difficulté augmente progressivement.
 
-% --- Concepts de Base et Probabilité Naïve ---
+%  Concepts de Base et Probabilité Naïve 
 
 \begin{exercicebox}[Exercice 1 : Univers et Événements]
 On lance deux dés à 6 faces, un rouge et un bleu.
@@ -454,7 +454,7 @@ Une urne contient 5 boules rouges, 3 boules bleues et 2 boules vertes. On tire u
 \end{enumerate}
 \end{exercicebox}
 
-% --- Permutations ---
+%  Permutations 
 
 \begin{exercicebox}[Exercice 4 : Anagrammes (Permutation Simple)]
 Combien d'anagrammes distinctes peut-on former avec les lettres du mot "MATHS" ?
@@ -468,7 +468,7 @@ Dix athlètes participent à une course. Combien y a-t-il de classements possibl
 Combien d'anagrammes distinctes peut-on former avec les lettres du mot "PROBABILITE" ?
 \end{exercicebox}
 
-% --- Combinaisons ---
+%  Combinaisons 
 
 \begin{exercicebox}[Exercice 7 : Choix d'un Comité (Combinaison)]
 Une classe compte 15 étudiants. De combien de manières peut-on choisir un comité de 4 étudiants ?
@@ -486,7 +486,7 @@ Dans un jeu de 52 cartes, combien de "mains" de 5 cartes différentes peut-on fo
 On tire simultanément 3 cartes d'un jeu de 52 cartes. Quelle est la probabilité d'obtenir exactement 2 Rois ?
 \end{exercicebox}
 
-% --- Combinaisons avec Répétition (Étoiles et Bâtons) ---
+%  Combinaisons avec Répétition (Étoiles et Bâtons) 
 
 \begin{exercicebox}[Exercice 11 : Distribution de Bonbons (Étoiles et Bâtons)]
 De combien de manières peut-on distribuer 8 bonbons identiques à 3 enfants ? (Certains enfants peuvent ne rien recevoir).
@@ -500,7 +500,7 @@ Combien y a-t-il de solutions entières non négatives ($x_i \ge 0$) à l'équat
 De combien de manières peut-on distribuer 12 pommes identiques à 4 enfants, si chaque enfant doit recevoir au moins une pomme ?
 \end{exercicebox}
 
-% --- Principe d'Inclusion-Exclusion ---
+%  Principe d'Inclusion-Exclusion 
 
 \begin{exercicebox}[Exercice 14 : Divisibilité (Inclusion-Exclusion 2 Ensembles)]
 Parmi les entiers de 1 à 100, combien sont divisibles par 2 OU par 3 ?
@@ -514,7 +514,7 @@ Dans un groupe de 50 étudiants, 30 étudient l'anglais, 25 étudient l'espagnol
 Parmi les entiers de 1 à 100, combien sont divisibles par 2, 3 OU 5 ?
 \end{exercicebox}
 
-% --- Problèmes Combinés et Plus Difficiles ---
+%  Problèmes Combinés et Plus Difficiles 
 
 \begin{exercicebox}[Exercice 17 : Chemins sur un Grillage (Combinaison)]
 Sur un grillage, combien y a-t-il de chemins pour aller du point (0,0) au point (4,3) en se déplaçant uniquement vers la droite (D) ou vers le haut (H) ?
@@ -536,7 +536,7 @@ Quatre lettres sont adressées à quatre personnes différentes, avec les envelo
 
 \subsection{Corrections des Exercices}
 
-% --- Corrections : Concepts de Base et Probabilité Naïve ---
+%  Corrections : Concepts de Base et Probabilité Naïve 
 
 \begin{correctionbox}[Correction Exercice 1 : Univers et Événements]
 1) L'univers $S$ est l'ensemble de toutes les paires $(r, b)$ où $r$ est le résultat du dé rouge et $b$ celui du dé bleu. $S = \{ (1,1), (1,2), \dots, (1,6), (2,1), \dots, (6,6) \}$. La taille de l'univers est $|S| = 6 \times 6 = 36$.
@@ -568,7 +568,7 @@ a) Il y a 3 boules bleues. $P(\text{Bleue}) = 3/10$.
 b) L'événement "ne pas être verte" est le complémentaire de "être verte". Il y a 2 boules vertes, donc $P(\text{Verte}) = 2/10$. La probabilité cherchée est $P(\text{Non Verte}) = 1 - P(\text{Verte}) = 1 - 2/10 = 8/10 = 4/5$. (Alternativement, il y a $5+3=8$ boules non vertes, donc $P=8/10$).
 \end{correctionbox}
 
-% --- Corrections : Permutations ---
+%  Corrections : Permutations 
 
 \begin{correctionbox}[Correction Exercice 4 : Anagrammes (Permutation Simple)]
 Le mot "MATHS" a 5 lettres distinctes. Le nombre d'anagrammes est le nombre de permutations de ces 5 lettres, soit $5! = 5 \times 4 \times 3 \times 2 \times 1 = 120$.
@@ -586,7 +586,7 @@ Le nombre d'anagrammes distinctes est :
 $$ \frac{11!}{2! \times 2!} = \frac{39,916,800}{2 \times 2} = \frac{39,916,800}{4} = 9,979,200 $$
 \end{correctionbox}
 
-% --- Corrections : Combinaisons ---
+%  Corrections : Combinaisons 
 
 \begin{correctionbox}[Correction Exercice 7 : Choix d'un Comité (Combinaison)]
 L'ordre ne compte pas, c'est donc une combinaison de 4 étudiants parmi 15 :
@@ -600,7 +600,7 @@ $$ \binom{52}{5} = \frac{52!}{5!(52-5)!} = \frac{52!}{5!47!} = \frac{52 \times 5
 Il y a 2,598,960 mains de poker possibles.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 9 : Comité Mixte (Combinaison, Principe Multiplicatif)]
+\begin{correctionbox}[Correction Exercice 9 : Comité Mixte (Combinaison)]
 Il faut choisir 2 hommes parmi 6 ET 1 femme parmi 4. On multiplie les possibilités pour chaque choix :
 Nombre de façons = (choix des hommes) $\times$ (choix des femmes)
 $$ = \binom{6}{2} \times \binom{4}{1} = \frac{6 \times 5}{2 \times 1} \times \frac{4}{1} = 15 \times 4 = 60 $$
@@ -615,7 +615,7 @@ La probabilité est $P(A) = \frac{|A|}{|S|} = \frac{\binom{4}{2} \binom{48}{1}}{
 $$ P(A) = \frac{\frac{4 \times 3}{2 \times 1} \times 48}{\frac{52 \times 51 \times 50}{3 \times 2 \times 1}} = \frac{6 \times 48}{22100} = \frac{288}{22100} \approx 0.013 $$
 \end{correctionbox}
 
-% --- Corrections : Combinaisons avec Répétition (Étoiles et Bâtons) ---
+%  Corrections : Combinaisons avec Répétition (Étoiles et Bâtons) 
 
 \begin{correctionbox}[Correction Exercice 11 : Distribution de Bonbons (Étoiles et Bâtons)]
 C'est un problème de distribution de $k=8$ objets identiques (bonbons) dans $n=3$ boîtes distinctes (enfants). On utilise la formule $\binom{n+k-1}{k}$.
@@ -634,7 +634,7 @@ Le problème devient : distribuer $k'=8$ pommes à $n=4$ enfants.
 Nombre de manières = $\binom{n+k'-1}{k'} = \binom{4+8-1}{8} = \binom{11}{8} = \binom{11}{3} = \frac{11 \times 10 \times 9}{3 \times 2 \times 1} = 165$.
 \end{correctionbox}
 
-% --- Corrections : Principe d'Inclusion-Exclusion ---
+%  Corrections : Principe d'Inclusion-Exclusion 
 
 \begin{correctionbox}[Correction Exercice 14 : Divisibilité (Inclusion-Exclusion 2 Ensembles)]
 Soit $A$ l'ensemble des entiers $\le 100$ divisibles par 2, et $B$ l'ensemble des entiers $\le 100$ divisibles par 3. On cherche $|A \cup B|$.
@@ -664,7 +664,7 @@ $|A_2 \cup A_3 \cup A_5| = (|A_2|+|A_3|+|A_5|) - (|A_2 \cap A_3|+|A_2 \cap A_5|+
 $= (50+33+20) - (16+10+6) + 3 = 103 - 32 + 3 = 74$.
 \end{correctionbox}
 
-% --- Corrections : Problèmes Combinés et Plus Difficiles ---
+%  Corrections : Problèmes Combinés et Plus Difficiles 
 
 \begin{correctionbox}[Correction Exercice 17 : Chemins sur un Grillage (Combinaison)]
 Pour aller de (0,0) à (4,3), il faut faire un total de $4+3=7$ déplacements. Parmi ces 7 déplacements, il faut choisir les 4 moments où l'on va à droite (les 3 autres seront obligatoirement vers le haut), ou choisir les 3 moments où l'on va vers le haut.
@@ -695,3 +695,74 @@ $D_4 = 24 (1/2 - 1/6 + 1/24) = 24 (12/24 - 4/24 + 1/24) = 24 (9/24) = 9$.
 Il y a 9 dérangements possibles sur un total de $4! = 24$ permutations.
 La probabilité est $P(\text{aucun match}) = D_4 / 4! = 9/24 = 3/8 = 0.375$.
 \end{correctionbox}
+
+\subsection{Exercices Pratiques (Python)}
+
+Ces exercices vous aideront à appliquer les concepts de dénombrement et de probabilité naïve en utilisant les bibliothèques Python.
+
+Pour ces exercices, vous aurez besoin de quelques bibliothèques. \texttt{math} et \texttt{itertools} sont incluses dans Python. Pour le premier exercice, vous aurez besoin de \texttt{scikit-learn} :
+
+\begin{codecell}
+pip install scikit-learn pandas
+\end{codecell}
+
+
+
+\begin{exercicebox}[Exercice 1 : Définition Naïve (Dataset Iris)]
+Le dataset "Iris" contient 150 observations de fleurs, réparties équitablement en 3 espèces (50 de chaque). Nous allons l'utiliser pour appliquer la définition naïve de la probabilité.
+
+\textbf{Code utile (chargement des données) :}
+\begin{codecell}
+from sklearn.datasets import load_iris
+import pandas as pd
+
+# Charger le dataset
+iris = load_iris()
+iris_df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+iris_df['species'] = iris.target
+
+# Le mapping des especes est : 0 = setosa, 1 = versicolor, 2 = virginica
+# print(iris_df['species'].value_counts())
+\end{codecell}
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Définissez l'univers $S$. Quelle est sa taille, $|S|$? (Le nombre total de fleurs).
+    \item Définissez l'événement $A$ = "la fleur est de l'espèce 'setosa' (target == 0)". Quelle est la taille de $|A|$?
+    \item Calculez $P(A)$ en utilisant la définition naïve : $P(A) = |A| / |S|$.
+    \item Calculez $P(B)$ pour l'événement $B$ = "la fleur est de l'espèce 'versicolor' (target == 1)".
+\end{enumerate}
+\end{exercicebox}
+
+
+
+\begin{exercicebox}[Exercice 2 : Permutations (Arrangements)]
+En Python, le module \texttt{math} fournit \texttt{math.perm(n, k)} pour calculer $P(n, k)$, et le module \texttt{itertools} fournit \texttt{itertools.permutations} pour les \textit{générer}.
+
+\textbf{Votre tâche :}
+Un groupe de 5 coureurs (A, B, C, D, E) participe à une course.
+\begin{enumerate}
+    \item En utilisant \texttt{math.perm}, calculez combien de podiums (1er, 2e, 3e) différents sont possibles.
+    \item Utilisez \texttt{itertools.permutations} pour générer la liste de tous les podiums possibles.
+    \item Vérifiez que la longueur de la liste générée à l'étape 2 est égale au nombre calculé à l'étape 1.
+\end{enumerate}
+
+\begin{codecell}
+import math
+from itertools import permutations
+
+coureurs = ['A', 'B', 'C', 'D', 'E']
+n = len(coureurs)
+k = 3 # Podium
+
+# 1. Calculer avec math.perm
+# ... votre code ...
+
+# 2. Generer les listes
+podiums_list = list(permutations(coureurs, k))
+# print(f"Quelques podiums: {podiums_list[:5]}")
+
+# 3. Verifier
+# ... votre code ...
+\end{codecell}
+\end{exercicebox}

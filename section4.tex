@@ -555,3 +555,193 @@ $I_A = 1$ si $A$ se produit, $I_A = 0$ sinon.
     $P(I_A = 1) = p = 1/6$
     $P(I_A = 0) = 1-p = 5/6$
 \end{correctionbox}
+
+\subsection{Exercices Pratiques (Python)}
+
+Ces exercices vous aideront à calculer et à vérifier empiriquement les concepts d'espérance et de variance en utilisant des simulations.
+
+Pour ces exercices, vous aurez besoin de la bibliothèque \texttt{numpy}.
+
+\begin{codecell}
+pip install numpy
+\end{codecell}
+
+\begin{exercicebox}[Exercice 1 : $E(X)$ $E(X^2)$ et Variance (Dé)]
+Nous allons simuler $N$ lancers d'un dé à 6 faces pour vérifier empiriquement la définition de l'espérance, le théorème LOTUS, et la formule de calcul de la variance.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Simulez 100 000 lancers d'un dé équilibré (valeurs de 1 à 6) et stockez les résultats dans un tableau NumPy.
+    \item Calculez l'espérance empirique $E(X)$ en prenant la moyenne du tableau.
+    \item En utilisant LOTUS, calculez l'espérance empirique $E(X^2)$ (en créant un nouveau tableau des carrés, puis en prenant sa moyenne).
+    \item Calculez la variance empirique en utilisant la formule : $\text{Var}(X) = E(X^2) - [E(X)]^2$.
+    \item Comparez votre résultat à la variance calculée directement avec \texttt{numpy.var()}.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+
+N_simulations = 100000
+
+# 1. Simuler N lancers d'un de a 6 faces
+# lancers = ...
+
+# 2. Calculer E(X) (moyenne empirique)
+# E_X = ...
+# print(f"E(X) empirique: {E_X:.4f} (Theorique: 3.5)")
+
+# 3. Calculer E(X^2) (LOTUS)
+# lancers_carres = ...
+# E_X2 = ...
+# print(f"E(X^2) empirique: {E_X2:.4f} (Theorique: 91/6 = 15.1667)")
+
+# 4. Calculer Var(X) avec la formule
+# var_calc = ...
+# print(f"Variance (calculee): {var_calc:.4f}")
+
+# 5. Calculer Var(X) avec la fonction numpy
+# var_np = ...
+# print(f"Variance (numpy.var): {var_np:.4f}")
+# print(f"Difference: {np.abs(var_calc - var_np):.6f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Linearite de l'Esperance]
+Vérifions empiriquement que $E(X+Y) = E(X) + E(Y)$. Nous allons simuler deux variables aléatoires différentes : $X$ (un dé à 4 faces) et $Y$ (un dé à 6 faces).
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Simulez $N=100000$ lancers d'un dé à 4 faces ($X$).
+    \item Simulez $N=100000$ lancers d'un dé à 6 faces ($Y$).
+    \item Créez la variable aléatoire $Z = X + Y$.
+    \item Calculez les moyennes empiriques $E(X)$, $E(Y)$, et $E(Z)$.
+    \item Vérifiez que $E(Z)$ est très proche de $E(X) + E(Y)$.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+
+N_simulations = 100000
+
+# 1. Simuler X (de a 4 faces) et Y (de a 6 faces)
+# X = ...
+# Y = ...
+
+# 2. Creer Z = X + Y
+# Z = ...
+
+# 3. Calculer les moyennes empiriques
+# E_X = ...
+# E_Y = ...
+# E_Z = ...
+
+# 4. Verifier la linearite
+# print(f"E(X) = {E_X:.4f}")
+# print(f"E(Y) = {E_Y:.4f}")
+# print(f"E(X) + E(Y) = {E_X + E_Y:.4f}")
+# print(f"E(Z) = E(X+Y) = {E_Z:.4f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Esperance Binomiale (Simulation)]
+La théorie nous dit que pour $X \sim \text{Bin}(n, p)$, $E(X) = np$. Nous allons vérifier cela par simulation.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Définissez les paramètres $n=20$ et $p=0.4$.
+    \item Simulez 100 000 réalisations d'une variable aléatoire $X \sim \text{Bin}(n, p)$ en utilisant \texttt{numpy.random.binomial()}.
+    \item Calculez la moyenne empirique de vos simulations.
+    \item Comparez la moyenne empirique à l'espérance théorique $np$.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+
+n, p = 20, 0.4
+N_simulations = 100000
+
+# 1. Simuler N fois une loi Bin(n, p)
+# resultats_bin = ...
+
+# 2. Calculer la moyenne empirique
+# moyenne_empirique = ...
+
+# 3. Calculer la moyenne theorique
+# moyenne_theorique = ...
+
+# 4. Afficher
+# print(f"Moyenne empirique: {moyenne_empirique:.4f}")
+# print(f"Esperance theorique (np): {moyenne_theorique:.4f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Esperance Geometrique (Simulation)]
+Pour $X \sim \text{Geom}(p)$ (comptant les échecs), $E(X) = q/p$. Vérifions cela.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Définissez $p=0.2$ (et $q=1-p$).
+    \item Simulez 100 000 réalisations d'une variable $Y \sim \text{Geom}(p)$ en utilisant \texttt{numpy.random.geometric()}.
+    \item \textbf{Attention :} \texttt{numpy.random.geometric} compte le nombre d'essais ($k=1, 2, \dots$). Pour obtenir $X$ (le nombre d'échecs, $k=0, 1, \dots$), vous devez soustraire 1 de chaque résultat.
+    \item Calculez la moyenne empirique de $X$ (le nombre d'échecs).
+    \item Comparez cette moyenne à l'espérance théorique $q/p$.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+
+p = 0.2
+q = 1 - p
+N_simulations = 100000
+
+# 1. Simuler N fois une loi Geom(p) (nb d'essais)
+# resultats_geom_essais = ...
+
+# 3. Convertir en nombre d'echecs
+# resultats_geom_echecs = ...
+
+# 4. Calculer la moyenne empirique des echecs
+# moyenne_empirique = ...
+
+# 5. Calculer la moyenne theorique des echecs
+# moyenne_theorique = ...
+
+# 6. Afficher
+# print(f"Moyenne empirique (echecs): {moyenne_empirique:.4f}")
+# print(f"Esperance theorique (q/p): {moyenne_theorique:.4f}")
+\end{codecell}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Esperance et Variance de Bernoulli]
+La variable aléatoire de Bernoulli $X \sim \text{Bern}(p)$ est la brique de base. Théoriquement, $E(X) = p$ et $\text{Var}(X) = p(1-p)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Définissez $p=0.8$.
+    \item Simulez 100 000 essais de Bernoulli (résultats 0 ou 1) avec probabilité $p$. (Indice : \texttt{numpy.random.choice} ou \texttt{numpy.random.binomial} avec $n=1$).
+    \item Calculez l'espérance empirique (la moyenne) et la variance empirique (\texttt{numpy.var}).
+    \item Comparez-les aux valeurs théoriques $p$ et $p(1-p)$.
+\end{enumerate}
+
+\begin{codecell}
+import numpy as np
+
+p = 0.8
+N_simulations = 100000
+
+# 1. Simuler N essais de Bernoulli
+# essais = ...
+
+# 2. Calculer l'esperance et la variance empiriques
+# E_empirique = ...
+# Var_empirique = ...
+
+# 3. Calculer les valeurs theoriques
+# E_theorique = ...
+# Var_theorique = ...
+
+# 4. Afficher
+# print(f"Esperance: Empirique={E_empirique:.4f}, Theorique={E_theorique:.4f}")
+# print(f"Variance:  Empirique={Var_empirique:.4f}, Theorique={Var_theorique:.4f}")
+\end{codecell}
+\end{exercicebox}

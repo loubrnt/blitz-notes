@@ -291,7 +291,7 @@ L'exemple visuel de la carte au trésor illustre parfaitement cette double-condi
     |[red_hatch]|    & |[blue_hatch]|   & |[red_hatch]|    & |[red_hatch]|    & |[red_hatch]|    & | |            \\
   };
 
-  % --- DÉLIMITATION DES COLONNES AVEC ACCOLADES ---
+  %  DÉLIMITATION DES COLONNES AVEC ACCOLADES 
   \draw [decorate, decoration={brace, amplitude=5pt, raise=4mm}]
     (m-1-1.north west) -- (m-1-2.north east) 
     node [midway, yshift=8mm, font=\bfseries] {A1};
@@ -399,14 +399,14 @@ L'analyse de la meilleure stratégie peut être visualisée à l'aide de l'arbre
   level 1/.style={sibling distance=3cm},
   level 2/.style={sibling distance=2.5cm},
   edge from parent/.style={draw, -latex},
-  % --- Définition des styles pour les cadres ---
+  %  Définition des styles pour les cadres 
   porte_style/.style={rectangle, rounded corners, draw=black, fill=gray!20, thick, inner sep=4pt, text width=2.5cm, align=center},
   gain_style/.style={rectangle, rounded corners, draw=green!60!black, fill=green!20, thick, inner sep=4pt},
   perte_style/.style={rectangle, rounded corners, draw=red!60!black, fill=red!20, thick, inner sep=4pt}
 ]
 
 \node {S}
-    % --- Branche du haut ---
+    %  Branche du haut 
     child {
         node[porte_style] {Bonne porte}
         child {
@@ -422,7 +422,7 @@ L'analyse de la meilleure stratégie peut être visualisée à l'aide de l'arbre
         edge from parent
         node[above, sloped] {1/3}
     }
-    % --- Branche du bas ---
+    %  Branche du bas 
     child {
         node[porte_style] {Mauvaise porte}
         child {
@@ -451,7 +451,7 @@ Pour évaluer la meilleure stratégie, il suffit de sommer les probabilités de 
 
 \subsection{Exercices}
 
-% --- Concepts de Base et Règle du Produit ---
+%  Concepts de Base et Règle du Produit 
 
 \begin{exercicebox}[Exercice 1 : Dés et Probabilité Conditionnelle Simple]
 On lance deux dés équilibrés à 6 faces.
@@ -492,7 +492,7 @@ En utilisant le même scénario que l'exercice 4 (famille de deux enfants) :
 Sachant qu'il y a \textit{au moins un} garçon dans la famille, quelle est la probabilité que la famille ait deux garçons ?
 \end{exercicebox}
 
-% --- Indépendance ---
+%  Indépendance 
 
 \begin{exercicebox}[Exercice 6 : Indépendance (Dés)]
 On lance deux dés équilibrés.
@@ -514,7 +514,7 @@ Soient $A$ et $B$ deux événements avec $P(A)=0.5$ et $P(B)=0.3$.
 \end{enumerate}
 \end{exercicebox}
 
-% --- Formule des Probabilités Totales (LTP) ---
+%  Formule des Probabilités Totales (LTP) 
 
 \begin{exercicebox}[Exercice 9 : LTP (Deux Urnes)]
 L'urne U1 contient 2 boules noires et 3 boules blanches. L'urne U2 contient 4 boules noires et 1 boule blanche.
@@ -532,7 +532,7 @@ On a deux pièces. La pièce A est équilibrée ($P(\text{Pile})=0.5$). La pièc
 On choisit une pièce au hasard et on la lance. Quelle est la probabilité d'obtenir Pile ?
 \end{exercicebox}
 
-% --- Règle de Bayes ---
+%  Règle de Bayes 
 
 \begin{exercicebox}[Exercice 12 : Bayes (Test Médical)]
 Une maladie touche 1 personne sur 1000 ($P(M)=0.001$). Un test de dépistage donne un résultat positif chez 98\% des personnes malades ($P(T|M)=0.98$). Il donne aussi un résultat positif (un "faux positif") chez 3\% des personnes non malades ($P(T|\neg M)=0.03$).
@@ -554,7 +554,7 @@ Reprenons le scénario de l'exercice 10 (M1: 40\% prod, 5\% défaut; M2: 60% pro
 On trouve une pièce défectueuse. Quelle est la probabilité qu'elle ait été produite par la machine M1 ?
 \end{exercicebox}
 
-% --- Règle de la Chaîne et Problèmes Combinés ---
+%  Règle de la Chaîne et Problèmes Combinés 
 
 \begin{exercicebox}[Exercice 16 : Règle de la Chaîne (3 Cartes)]
 On tire 3 cartes successivement et sans remise d'un jeu de 52 cartes.
@@ -585,7 +585,7 @@ Quelle est la probabilité qu'Alice gagne ?
 
 \subsection{Corrections des Exercices}
 
-% --- Corrections : Concepts de Base et Règle du Produit ---
+%  Corrections : Concepts de Base et Règle du Produit 
 
 \begin{correctionbox}[Correction Exercice 1 : Dés et Probabilité Conditionnelle Simple]
 L'univers $S$ a $|S| = 6 \times 6 = 36$ issues.
@@ -644,7 +644,7 @@ $P(B|C) = \frac{P(B \cap C)}{P(C)} = \frac{1/4}{3/4} = 1/3$.
 *Intuition :* L'univers de $C$ est $\{GG, GF, FG\}$. Parmi ces 3 issues équiprobables, une seule est $GG$.
 \end{correctionbox}
 
-% --- Corrections : Indépendance ---
+%  Corrections : Indépendance 
 
 \begin{correctionbox}[Correction Exercice 6 : Indépendance (Dés)]
 $A$ = "premier dé = 3". $P(A) = 6/36 = 1/6$.
@@ -675,7 +675,7 @@ $P(A)=0.5, P(B)=0.3$.
     $P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.5 + 0.3 - 0.15 = 0.65$.
 \end{correctionbox}
 
-% --- Corrections : Formule des Probabilités Totales (LTP) ---
+%  Corrections : Formule des Probabilités Totales (LTP) 
 
 \begin{correctionbox}[Correction Exercice 9 : LTP (Deux Urnes)]
 Soit $U_1$ et $U_2$ les événements "choisir l'urne 1" et "choisir l'urne 2". $P(U_1)=0.5, P(U_2)=0.5$.
@@ -706,7 +706,7 @@ $P(H) = P(H|A)P(A) + P(H|B)P(B)$
 $P(H) = (0.5 \times 0.5) + (0.8 \times 0.5) = 0.25 + 0.40 = 0.65$.
 \end{correctionbox}
 
-% --- Corrections : Règle de Bayes ---
+%  Corrections : Règle de Bayes 
 
 \begin{correctionbox}[Correction Exercice 12 : Bayes (Test Médical)]
 Soit $M$ "Malade" et $T$ "Test Positif".
@@ -760,7 +760,7 @@ $P(M_1|D) = \frac{P(D|M_1)P(M_1)}{P(D)} = \frac{0.05 \times 0.4}{0.032} = \frac{
 Sachant que la pièce est défectueuse, il y a 62.5\% de chance qu'elle vienne de M1.
 \end{correctionbox}
 
-% --- Corrections : Règle de la Chaîne et Problèmes Combinés ---
+%  Corrections : Règle de la Chaîne et Problèmes Combinés 
 
 \begin{correctionbox}[Correction Exercice 16 : Règle de la Chaîne (3 Cartes)]
 Soit $P_i$ l'événement "tirer un Pique au $i$-ème tirage". Il y a 13 Piques sur 52 cartes.
@@ -844,3 +844,237 @@ C'est une série géométrique de premier terme $p$ et de raison $r = q^2 = (5/6
 La somme est $\frac{\text{premier terme}}{1 - \text{raison}} = \frac{p}{1 - q^2}$.
 $P(\text{A gagne}) = \frac{1/6}{1 - 25/36} = \frac{1/6}{11/36} = \frac{1}{6} \times \frac{36}{11} = 6/11$.
 \end{correctionbox}
+
+\subsection{Exercices Pratiques (Python)}
+
+Ces exercices vous aideront à appliquer les concepts de probabilité conditionnelle, d'indépendance et la règle de Bayes en utilisant Python, principalement avec le dataset "Titanic".
+
+Pour ces exercices, vous aurez besoin des bibliothèques \texttt{pandas}, \texttt{seaborn} et \texttt{numpy}.
+
+\begin{codecell}
+pip install pandas seaborn numpy
+\end{codecell}
+
+\textbf{Code utile (chargement des données pour les exercices 1 à 4) :}
+\begin{codecell}
+import pandas as pd
+import seaborn as sns
+import numpy as np
+
+# Charger le dataset Titanic
+df = sns.load_dataset('titanic')
+
+# Simplification pour les exercices:
+# Remplir les ages manquants par la moyenne
+df['age'] = df['age'].fillna(df['age'].mean())
+# Supprimer les lignes ou 'embarked' ou 'deck' est manquant
+df = df.dropna(subset=['embarked', 'deck'])
+
+# Vous pouvez decommentez la ligne suivante pour inspecter le DataFrame
+# df.info()
+\end{codecell}
+
+
+
+\begin{exercicebox}[Exercice 1 : Définition de la Probabilité Conditionnelle]
+En utilisant le DataFrame \texttt{df} du Titanic, nous allons calculer $P(A|B)$.
+Soit $A$ l'événement "le passager a survécu" (\texttt{survived == 1}).
+Soit $B$ l'événement "le passager était un homme" (\texttt{sex == 'male'}).
+
+\textbf{Votre tâche :}
+Calculez $P(A|B) = P(\text{survived} | \text{male})$ en suivant la définition :
+$$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
+\begin{enumerate}
+    \item Calculez $P(B) = P(\text{male})$. (Nombre d'hommes / Nombre total de passagers).
+    \item Calculez $P(A \cap B) = P(\text{survived} \cap \text{male})$. (Nombre d'hommes survivants / Nombre total).
+    \item Divisez les deux pour trouver $P(A|B)$.
+\end{enumerate}
+
+\begin{codecell}
+# Definit le nombre total de passagers (notre univers |S|)
+total_passagers = len(df)
+
+# 1. Calculer P(B) = P(male)
+# ... votre code ...
+p_male = 0 # A remplacer
+print(f"P(male) = {p_male:.4f}")
+
+# 2. Calculer P(A inter B) = P(survived ET male)
+# ... votre code ...
+p_male_survived = 0 # A remplacer
+print(f"P(male ET survived) = {p_male_survived:.4f}")
+
+# 3. Calculer P(A|B) = P(survived | male)
+# ... votre code ...
+p_survived_given_male = 0 # A remplacer
+print(f"P(survived | male) = {p_survived_given_male:.4f}")
+
+# Verification (methode directe, optionnelle)
+# p_survived_given_male_direct = ...
+# print(f"Verification directe: {p_survived_given_male_direct:.4f}")
+\end{codecell}
+\end{exercicebox}
+
+
+
+\begin{exercicebox}[Exercice 2 : Indépendance]
+Les événements $A$ et $B$ sont indépendants si $P(A \cap B) = P(A)P(B)$.
+Soit $A$ l'événement "le passager a survécu" (\texttt{survived == 1}).
+Soit $C$ l'événement "le passager était en 1ère classe" (\texttt{pclass == 1}).
+
+\textbf{Votre tâche :}
+Vérifiez si les événements $A$ et $C$ sont indépendants dans notre dataset.
+\begin{enumerate}
+    \item Calculez $P(A) = P(\text{survived})$.
+    \item Calculez $P(C) = P(\text{pclass} == 1)$.
+    \item Calculez $P(A) \times P(C)$.
+    \item Calculez $P(A \cap C) = P(\text{survived} \cap \text{pclass} == 1)$.
+    \item Comparez les résultats de 3 et 4. Sont-ils indépendants ?
+\end{enumerate}
+
+\begin{codecell}
+total_passagers = len(df)
+
+# 1. P(A) = P(survived)
+# ... votre code ...
+p_survived = 0 # A remplacer
+print(f"P(survived) = {p_survived:.4f}")
+
+# 2. P(C) = P(pclass == 1)
+# ... votre code ...
+p_pclass_1 = 0 # A remplacer
+print(f"P(pclass == 1) = {p_pclass_1:.4f}")
+
+# 3. P(A) * P(C)
+p_a_fois_p_c = p_survived * p_pclass_1
+print(f"P(A) * P(C) = {p_a_fois_p_c:.4f}")
+
+# 4. P(A inter C) = P(survived ET pclass == 1)
+# ... votre code ...
+p_a_inter_c = 0 # A remplacer
+print(f"P(A inter C) = {p_a_inter_c:.4f}")
+
+# 5. Comparaison
+# ... votre code ...
+\end{codecell}
+\end{exercicebox}
+
+
+
+\begin{exercicebox}[Exercice 3 : Formule des Probabilités Totales]
+Calculez la probabilité totale de survie $P(A) = P(\text{survived})$ en utilisant la formule des probabilités totales, partitionnée par la classe du passager (\texttt{pclass} 1, 2, et 3).
+La formule est :
+$$P(A) = \sum_{i=1}^{3} P(A | C_i) P(C_i)$$
+où $C_i$ est l'événement "le passager est en classe $i$".
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculez $P(C_1)$, $P(C_2)$, $P(C_3)$.
+    \item Calculez $P(A | C_1)$, $P(A | C_2)$, $P(A | C_3)$.
+    \item Appliquez la formule pour trouver $P(A)$.
+\end{enumerate}
+
+\begin{codecell}
+total_passagers = len(df)
+p_total_survived = 0.0
+
+# Boucle sur les classes 1, 2, 3
+for i in [1, 2, 3]:
+    # P(Ci)
+    # ... votre code ...
+    p_classe_i = 0 # A remplacer
+    
+    # P(A | Ci) = P(survived | pclass == i)
+    # ... votre code ...
+    p_surv_given_classe_i = 0.0 # A remplacer
+        
+    print(f"Classe {i}: P(C{i})={p_classe_i:.3f}, P(A|C{i})={p_surv_given_classe_i:.3f}")
+    
+    # Somme
+    p_total_survived += p_surv_given_classe_i * p_classe_i
+
+print(f"Probabilite totale de survie (calculee): {p_total_survived:.4f}")
+\end{codecell}
+\end{exercicebox}
+
+
+
+\begin{exercicebox}[Exercice 4 : Règle de Bayes]
+Utilisons la règle de Bayes pour "inverser" une probabilité. Nous voulons trouver $P(C_1 | A)$, c'est-à-dire : "sachant qu'un passager a survécu, quelle est la probabilité qu'il était en 1ère classe ?"
+La formule est :
+$$P(C_1 | A) = \frac{P(A | C_1) P(C_1)}{P(A)}$$
+
+\textbf{Votre tâche :}
+En utilisant les valeurs que vous avez calculées dans les exercices 2 et 3 :
+\begin{enumerate}
+    \item $P(A | C_1) = P(\text{survived} | \text{pclass} == 1)$
+    \item $P(C_1) = P(\text{pclass} == 1)$
+    \item $P(A) = P(\text{survived})$
+    \item Appliquez la formule de Bayes pour trouver $P(C_1 | A)$.
+\end{enumerate}
+
+\begin{codecell}
+# Recuperer les valeurs des exercices precedents
+p_a_given_c1 = 0 # A remplacer
+p_c1 = 0         # A remplacer
+p_a = 0          # A remplacer
+
+# 4. Appliquer Bayes
+p_c1_given_a = 0 # A remplacer
+
+print(f"P(pclass 1 | survived) = {p_c1_given_a:.4f}")
+
+# Verification (methode directe, optionnelle)
+# ... votre code ...
+\end{codecell}
+\end{exercicebox}
+
+
+
+\begin{exercicebox}[Exercice 5 : Simulation du Problème de Monty Hall]
+Pour prouver le résultat contre-intuitif de Monty Hall, nous allons le simuler.
+
+\textbf{Votre tâche :}
+Complétez le code ci-dessous pour simuler $N=10000$ parties.
+\begin{enumerate}
+    \item Simulez la stratégie "Garder" (stay) : comptez 1 victoire si \texttt{choix\_initial == voiture}.
+    \item Simulez la stratégie "Changer" (switch) : comptez 1 victoire si \texttt{choix\_initial != voiture}.
+    \item Calculez les taux de victoire pour les deux stratégies.
+\end{enumerate}
+(Note : La logique pour "Changer" est simplifiée. Si votre choix initial est faux (2/3 des cas), l'animateur ouvre l'autre mauvaise porte, et changer vous fait gagner. Si votre choix initial est bon (1/3 des cas), changer vous fait perdre.)
+
+\begin{codecell}
+import random
+
+def simuler_monty_hall(N_simulations):
+    victoires_garder = 0
+    victoires_changer = 0
+    
+    portes = [1, 2, 3]
+    
+    for _ in range(N_simulations):
+        # 1. Placer la voiture et faire le choix initial
+        voiture = random.choice(portes)
+        choix_initial = random.choice(portes)
+        
+        # 2. Simuler la strategie "Garder"
+        # ... votre code ...
+            
+        # 3. Simuler la strategie "Changer"
+        # ... votre code ...
+            
+    # 4. Calculer les taux
+    taux_victoire_garder = victoires_garder / N_simulations
+    taux_victoire_changer = victoires_changer / N_simulations
+    
+    return taux_victoire_garder, taux_victoire_changer
+
+# Lancer la simulation
+N = 100000
+garder, changer = simuler_monty_hall(N)
+
+print(f"Simulations: {N}")
+print(f"Taux de victoire (Garder): {garder:.4f}")
+print(f"Taux de victoire (Changer): {changer:.4f}")
+\end{codecell}
+\end{exercicebox}
