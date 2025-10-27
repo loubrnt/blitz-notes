@@ -89,23 +89,29 @@
 }
 \makeatother
 
-% --- DÉFINITION DES COULEURS STYLE VS CODE ---
+% ==================================================================
+% --- MODIFIÉ : DÉFINITION DES COULEURS STYLE VS CODE (LIGHT) ---
+% ==================================================================
 \definecolor{vscodeBlue}{HTML}{569CD6}
 \definecolor{vscodeOrange}{HTML}{CE9178}
 \definecolor{vscodeGreen}{HTML}{6A9955}
 \definecolor{vscodePurple}{HTML}{C586C0}
 \definecolor{vscodeGray}{HTML}{9B9B9B}
-\definecolor{codeBackground}{HTML}{1E1E1E}
+\definecolor{codeBackground}{HTML}{F8F8F8} % Fond gris très clair
+\definecolor{codeText}{HTML}{242424}       % Texte principal (presque noir)
+\definecolor{codeGray}{HTML}{A0A0A0}       % Numéros de ligne (gris moyen)
 
-% --- CONFIGURATION DU STYLE LISTINGS ---
+% ==================================================================
+% --- MODIFIÉ : CONFIGURATION DU STYLE LISTINGS (LIGHT) ---
+% ==================================================================
 \lstdefinestyle{vscode}{
     language=Python,
-    backgroundcolor=\color{codeBackground},
-    basicstyle=\ttfamily\small\color{white},
+    backgroundcolor=\color{codeBackground},     % Utilise le nouveau fond F8F8F8
+    basicstyle=\ttfamily\small\color{codeText}, % Texte principal noir
     keywordstyle=\color{vscodeBlue},
     stringstyle=\color{vscodeOrange},
     commentstyle=\color{vscodeGreen},
-    numberstyle=\tiny\color{vscodeGray},
+    numberstyle=\tiny\color{codeGray},         % Numéros de ligne en gris
     otherkeywords={self, True, False, None},
     keywordstyle=[2]\color{vscodePurple},
     showstringspaces=false,
@@ -116,13 +122,13 @@
 
 % --- STYLE DE L'OUTPUT ---
 \lstdefinestyle{outputstyle}{
-    basicstyle=\ttfamily\small\color{white},
+    basicstyle=\ttfamily\small\color{codeText}, % Texte principal noir
     breaklines=true,
     frame=none
 }
 
 % ==================================================================
-% --- MODIFIÉ : DÉFINITION DES CELLULES DE CODE ET OUTPUT ---
+% --- MODIFIÉ : DÉFINITION DES CELLULES DE CODE ET OUTPUT (LIGHT) ---
 % ==================================================================
 % Elles utilisent maintenant le même style "sidebar" que les autres boîtes.
 
@@ -130,11 +136,11 @@
   skin=enhanced, % Pour la bordure latérale
   arc=0mm,       % Coins carrés
   boxrule=0pt,   % Pas de cadre
-  colback=codeBackground, % Fond sombre (VS Code)
+  colback=codeBackground, % Fond clair (F8F8F8)
   borderline west={2pt}{0pt}{vscodeBlue}, % Barre latérale bleue
   fonttitle=\bfseries\color{vscodeBlue}, % Titre en bleu
   listing only,
-  listing options={style=vscode, basicstyle=\ttfamily\footnotesize\color{white}},
+  listing options={style=vscode, basicstyle=\ttfamily\footnotesize\color{codeText}}, % TEXTE NOIR
   left=3mm, right=3mm, top=2mm, bottom=2mm, % Padding (identique à sidebarstyle)
   boxsep=0mm, % (identique à sidebarstyle)
   breakable  % (identique à sidebarstyle)
@@ -143,11 +149,11 @@
   skin=enhanced, % Pour la bordure latérale
   arc=0mm,       % Coins carrés
   boxrule=0pt,   % Pas de cadre
-  colback=black!85, % Fond sombre (Output)
+  colback=black!5, % Fond gris très clair (Output)
   borderline west={2pt}{0pt}{corrColor}, % Barre latérale grise
   fonttitle=\bfseries\color{corrColor}, % Titre en gris
   listing only,
-  listing options={style=outputstyle, basicstyle=\ttfamily\footnotesize\color{white}},
+  listing options={style=outputstyle, basicstyle=\ttfamily\footnotesize\color{codeText}}, % TEXTE NOIR
   left=3mm, right=3mm, top=2mm, bottom=2mm, % Padding (identique à sidebarstyle)
   boxsep=0mm, % (identique à sidebarstyle)
   breakable  % (identique à sidebarstyle)

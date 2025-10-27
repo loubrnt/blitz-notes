@@ -804,7 +804,7 @@ Nous allons analyser la relation entre deux variables catégorielles : \texttt{s
 import pandas as pd
 
 # 1. Tableau de contingence (effectifs)
-joint_counts = pd.crosstab(penguins['species'], penguins['island'])
+joint_counts = pd.crosstab(penguins["species"], penguins["island"])
 print("--- 1. Tableau de contingence (Effectifs) ---")
 print(joint_counts)
 
@@ -850,8 +850,8 @@ Nous utiliserons la formule : $\text{Cov}(X,Y) = E[XY] - E[X]E[Y]$.
 import numpy as np
 
 # 1. Isoler les variables
-X = penguins['bill_length_mm']
-Y = penguins['flipper_length_mm']
+X = penguins["bill_length_mm"]
+Y = penguins["flipper_length_mm"]
 
 # 2. Calculer E[X] et E[Y]
 E_X = X.mean()
@@ -890,8 +890,8 @@ Nous utiliserons la formule : $\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_
 import numpy as np
 
 # X, Y proviennent de l'exercice precedent
-X = penguins['bill_length_mm']
-Y = penguins['flipper_length_mm']
+X = penguins["bill_length_mm"]
+Y = penguins["flipper_length_mm"]
 cov_calc = np.cov(X, Y)[0, 1] # Utilisons la valeur numpy pour la precision
 
 # 2. Calculer les ecarts-types (pandas .std() utilise ddof=1 par defaut)
@@ -929,7 +929,7 @@ Vérifions empiriquement que la standardisation $Z = \frac{X - \mu_X}{\sigma_X}$
 import numpy as np
 
 # 1. Isoler la variable
-X_mass = penguins['body_mass_g']
+X_mass = penguins["body_mass_g"]
 
 # 2. Calculer la moyenne et l'ecart-type (de la population, ddof=0)
 mu_X = X_mass.mean()

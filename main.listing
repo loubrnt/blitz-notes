@@ -1,17 +1,15 @@
-import math
-import random
+# 1. Telecharger les donnees pour S&P 500
+ticker_sp500 = 'GSPC'
+# data_sp500 = ...
 
-def poisson_knuth(lmbda: float) -> int:
-  """
-  Simule une variable aleatoire suivant une loi de Poisson()
-  en utilisant l algorithme de Knuth.
-  """
-  L = math.exp(-lmbda)
-  k = 0
-  p = 1.0
+# 2. Calculer les rendements log
+# log_returns_sp500 = ...
+log_returns_sp500 = log_returns_sp500.dropna()
 
-  while p > L:
-  k += 1
-  p *= random.random()
+# 3. Calculer skew et kurtosis pour S&P 500
+# skew_sp500 = ...
+# kurtosis_sp500 = ...
 
-  return k - 1
+# print(f"--- Comparaison des Moments (5 ans) ---")
+# print(f"TSLA Skew: {skew_scipy:.4f} | Kurtosis: {kurtosis_scipy:.4f}")
+# print(f"SP500 Skew: {skew_sp500:.4f} | Kurtosis: {kurtosis_sp500:.4f}")

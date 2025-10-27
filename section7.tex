@@ -810,7 +810,7 @@ Notre première étape est d'obtenir les données de l'indice S\&P 500 (ticker :
 import numpy as np
 import yfinance as yf
 
-ticker = '^GSPC'
+ticker = "GSPC"
 data = yf.download(ticker, period='5y')
 
 # 1. Calculer les rendements log (log(P_t / P_{t-1}))
