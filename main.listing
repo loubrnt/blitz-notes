@@ -1,15 +1,29 @@
-# 1. Telecharger les donnees pour S&P 500
-ticker_sp500 = 'GSPC'
-# data_sp500 = ...
+import matplotlib.pyplot as plt
+import numpy as np
 
-# 2. Calculer les rendements log
-# log_returns_sp500 = ...
-log_returns_sp500 = log_returns_sp500.dropna()
+# Assurez-vous que 'samples_sigma' de Ex1 est disponible
+# sigma_after_burn = samples_sigma[burn_in:] # Pour ACF
 
-# 3. Calculer skew et kurtosis pour S&P 500
-# skew_sp500 = ...
-# kurtosis_sp500 = ...
+# 2. Trace plot pour sigma (MH)
+# plt.figure(figsize=(12, 6))
+# plt.subplot(2, 1, 1) # Deux graphiques l'un sous l'autre
+# plt.plot(samples_sigma)
+# plt.title("Trace Plot - Sigma (Metropolis-Hastings)")
+# plt.ylabel("Sigma")
+# plt.grid(True)
+# plt.axvline(burn_in, color='red', linestyle='--', alpha=0.7)
 
-# print(f"--- Comparaison des Moments (5 ans) ---")
-# print(f"TSLA Skew: {skew_scipy:.4f} | Kurtosis: {kurtosis_scipy:.4f}")
-# print(f"SP500 Skew: {skew_sp500:.4f} | Kurtosis: {kurtosis_sp500:.4f}")
+# 3. ACF pour sigma (MH)
+# plt.subplot(2, 1, 2)
+# plt.acorr(sigma_after_burn - np.mean(sigma_after_burn), maxlags=100, usevlines=True, normed=True, lw=2)
+# plt.title("Autocorrelation Function (ACF) - Sigma")
+# plt.xlabel("Lag")
+# plt.ylabel("Autocorrelation")
+# plt.grid(True)
+# plt.tight_layout()
+# plt.show()
+
+# 4. (Optionnel) Repeter pour les parametres de Gibbs (Ex 2)
+# Assurez-vous que 'samples_beta' (par exemple) est disponible
+# beta_post = samples_beta[burn_in:]
+# ... (code similaire pour trace plot et ACF de beta_post) ...

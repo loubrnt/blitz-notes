@@ -1,211 +1,125 @@
 \newpage
-\section{Espérance et Variance }
 
-\subsection{Espérance d'une variable aléatoire discrète}
+\section{Variables Aléatoires Continues}
 
-Maintenant que nous avons défini les variables aléatoires discrètes et leur distribution (PMF), l'étape suivante est de résumer ces distributions. La mesure la plus importante est leur "centre", ou leur valeur moyenne.
+\subsection{Fonction de Densité de Probabilité (PDF)}
 
-\begin{definitionbox}[Espérance]
-L'espérance (ou valeur attendue) d'une variable aléatoire discrète $X$, qui prend les valeurs distinctes $x_1, x_2, \dots$, est définie par :
-$$ E(X) = \sum_j x_j P(X=x_j) $$
+Nous passons maintenant aux variables aléatoires qui peuvent prendre n'importe quelle valeur dans un intervalle, comme la taille d'une personne ou le temps d'attente exact. Pour ces variables, la notion de PMF n'a plus de sens, car la probabilité d'obtenir une valeur *exacte* est nulle. Nous introduisons donc le concept de densité.
+
+\begin{definitionbox}[Fonction de Densité de Probabilité (PDF)]
+Soit $X$ une variable aléatoire continue. Une fonction $f$ est une \textbf{fonction de densité de probabilité} (Probability Density Function, ou PDF) de $X$ si, pour tout $x$ :
+\begin{enumerate}
+    \item $f(x) \ge 0$, pour tout $-\infty < x < \infty$
+    \item $\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = 1$ (l'aire totale sous la courbe vaut 1)
+\end{enumerate}
 \end{definitionbox}
 
-Cette formule est une moyenne pondérée de toutes les valeurs possibles.
+Il est crucial de comprendre que $f(x)$ n'est *pas* une probabilité.
 
 \begin{intuitionbox}
-L'espérance représente la valeur moyenne que l'on obtiendrait si l'on répétait l'expérience un très grand nombre de fois. C'est le \textbf{centre de gravité} de la distribution de probabilité. Si les probabilités étaient des masses placées sur une tige aux positions $x_j$, l'espérance serait le point d'équilibre.
+Dans le cas discret, la PMF donnait une "masse" de probabilité à chaque point. Dans le cas continu, la probabilité en un point exact est nulle ($P(X=x)=0$). La PDF, $f(x)$, n'est \textbf{pas} une probabilité.
+
+Il faut voir $f(x)$ comme une \textbf{densité} : elle décrit la "concentration" de probabilité autour de $x$. Pour obtenir une probabilité (une "masse"), il faut intégrer cette densité sur un intervalle. La probabilité que $X$ tombe dans un intervalle $[a, b]$ est l'aire sous la courbe de la PDF entre $a$ et $b$ :
+$$ P(a \le X \le b) = \int_a^b f(x) \, \mathrm{d}x $$
 \end{intuitionbox}
 
-L'exemple le plus simple est le lancer d'un dé.
+Cette distinction est fondamentale.
 
-\begin{examplebox}[Lancer d'un dé]
-Soit $X$ le résultat d'un lancer de dé équilibré. Chaque face a une probabilité de $1/6$. L'espérance est :
-$$ E(X) = 1\left(\frac{1}{6}\right) + 2\left(\frac{1}{6}\right) + 3\left(\frac{1}{6}\right) + 4\left(\frac{1}{6}\right) + 5\left(\frac{1}{6}\right) + 6\left(\frac{1}{6}\right) = \frac{21}{6} = 3.5 $$
-Même si 3.5 n'est pas un résultat possible, c'est la valeur moyenne sur un grand nombre de lancers.
+\begin{remarquebox}[PDF vs Probabilité]
+Une erreur fréquente est de confondre la valeur $f(x)$ avec $P(X=x)$. Pour une variable continue, $P(X=x)$ est \textbf{toujours zéro}. La PDF $f(x)$ peut être supérieure à 1 (contrairement à une probabilité), tant que l'aire totale sous la courbe reste égale à 1. Pensez-y comme à une densité de population : elle peut être très élevée en un point, mais la "population" (probabilité) exacte en ce point infinitésimal est nulle.
+\end{remarquebox}
+
+Vérifions un exemple simple.
+
+\begin{examplebox}[Une PDF simple]
+Soit $X$ une v.a. avec la PDF $f(x) = 2x$ pour $x \in [0, 1]$, et $f(x)=0$ sinon.
+\begin{enumerate}
+    \item Est-ce une PDF valide ?
+    
+    (1) $f(x) \ge 0$ pour tout $x$ dans $[0, 1]$.
+    
+    (2) $\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = \int_0^1 2x \, \mathrm{d}x = [x^2]_0^1 = 1-0 = 1$.
+    
+    Oui, c'est une PDF valide.
+    \item Quelle est la probabilité $P(X \le 0.5)$ ?
+    $$ P(X \le 0.5) = \int_0^{0.5} 2x \, \mathrm{d}x = [x^2]_0^{0.5} = (0.5)^2 - 0 = 0.25 $$
+\end{enumerate}
 \end{examplebox}
 
-\subsection{Linéarité de l'espérance}
+\subsection{Fonction de Répartition (CDF)}
 
-Le calcul de l'espérance deviendrait très fastidieux si nous devions toujours utiliser la définition. Heureusement, l'espérance possède une propriété fondamentale qui simplifie énormément les calculs.
+Comme dans le cas discret, nous pouvons définir une fonction qui accumule la probabilité. Pour le cas continu, cette accumulation se fait via une intégrale.
 
-\begin{theorembox}[Linéarité de l'espérance]
-Pour toutes variables aléatoires $X$ et $Y$, et pour toute constante $c$, on a :
-\begin{align*}
-E(X+Y) &= E(X) + E(Y) \\
-E(cX) &= cE(X)
-\end{align*}
-Cette propriété est extrêmement puissante car elle ne requiert pas que $X$ et $Y$ soient indépendantes.
-\end{theorembox}
-
-La preuve de $E(cX) = cE(X)$ est directe à partir de la définition. La preuve pour la somme $E(X+Y)$ est plus complexe mais essentielle.
-
-\begin{proofbox}
-La première propriété est directe :
-$$ E(cX) = \sum_x (cx) P(X=x) = c \sum_x x P(X=x) = cE(X) $$
-Pour la seconde, nous devons utiliser la définition de l'espérance pour une fonction de deux variables (une extension de LOTUS). Soit $S = X+Y$. L'espérance $E(S)$ se calcule en sommant sur toutes les paires possibles $(x, y)$:
-\begin{align*}
-E(X+Y) &= \sum_x \sum_y (x+y) P(X=x, Y=y) \\
-&= \sum_x \sum_y x P(X=x, Y=y) + \sum_x \sum_y y P(X=x, Y=y) \\
-&= \sum_x x \left( \sum_y P(X=x, Y=y) \right) + \sum_y y \left( \sum_x P(X=x, Y=y) \right)
-\end{align*}
-Par la loi des probabilités totales (ou "marginalisation"), la somme interne $\sum_y P(X=x, Y=y)$ est simplement $P(X=x)$. De même, $\sum_x P(X=x, Y=y) = P(Y=y)$.
-$$ E(X+Y) = \sum_x x P(X=x) + \sum_y y P(Y=y) = E(X) + E(Y) $$
-Notez que l'indépendance n'a jamais été requise pour cette preuve.
-\end{proofbox}
-
-Cette propriété est incroyablement utile.
-
-\begin{intuitionbox}
-Cette propriété formalise une idée très simple : "la moyenne d'une somme est la somme des moyennes". Si vous jouez à deux jeux de hasard, votre gain moyen total est simplement la somme de ce que vous gagnez en moyenne à chaque jeu, que les jeux soient liés ou non.
-\end{intuitionbox}
-
-Cette propriété rend le calcul de l'espérance d'une somme trivial, comme le montre l'exemple des deux dés.
-
-\begin{examplebox}[Somme de deux dés]
-Soit $X_1$ le résultat du premier dé et $X_2$ celui du second. On sait que $E(X_1) = 3.5$ et $E(X_2) = 3.5$.
-Soit $S = X_1 + X_2$ la somme des deux dés. Grâce à la linéarité, on peut calculer l'espérance de la somme sans avoir à lister les 36 résultats possibles :
-$$ E(S) = E(X_1 + X_2) = E(X_1) + E(X_2) = 3.5 + 3.5 = 7 $$
-\end{examplebox}
-
-\subsection{Espérance de la loi binomiale}
-
-Nous pouvons maintenant utiliser cette puissante propriété de linéarité pour trouver l'espérance de nos distributions de référence, en évitant des sommes complexes.
-
-\begin{theorembox}[Espérance de la loi binomiale]
-Si $X \sim \text{Bin}(n, p)$, alors son espérance est $E(X) = np$.
-\end{theorembox}
-
-Ce résultat est profondément intuitif.
-
-\begin{intuitionbox}
-Ce résultat est très naturel. Si vous lancez une pièce 100 fois ($n=100$) avec une probabilité de 50\% d'obtenir Pile ($p=0.5$), vous vous attendez en moyenne à obtenir $100 \times 0.5 = 50$ Piles. La formule $np$ généralise cette idée.
-\end{intuitionbox}
-
-La preuve formelle est un exemple parfait de l'élégance de la linéarité, utilisant les variables indicatrices.
-
-\begin{proofbox}
-Le calcul direct de l'espérance avec la PMF binomiale est possible, mais long. En utilisant la linéarité de l'espérance, on obtient une preuve beaucoup plus courte et élégante.
-
-On peut voir une variable binomiale $X$ comme la somme de $n$ variables de Bernoulli indépendantes, $X = I_1 + I_2 + \dots + I_n$, où chaque $I_j$ représente le succès (1) ou l'échec (0) du $j$-ième essai.
-
-Chaque $I_j$ a pour espérance $E(I_j) = 1 \cdot p + 0 \cdot (1-p) = p$.
-
-Par linéarité de l'espérance, on a :
-$$ E(X) = E(I_1) + E(I_2) + \dots + E(I_n) = \underbrace{p + p + \dots + p}_{n \text{ fois}} = np $$
-\end{proofbox}
-
-\subsection{Espérance de la loi géométrique}
-
-Calculons maintenant l'espérance pour la loi qui modélise le temps d'attente.
-
-\begin{theorembox}[Espérance de la loi géométrique]
-L'espérance d'une variable aléatoire $X \sim \text{Geom}(p)$ (comptant le nombre d'échecs) est :
-$$ E(X) = \frac{1-p}{p} = \frac{q}{p} $$
-\end{theorembox}
-
-L'intuition est aussi très forte ici :
-
-\begin{intuitionbox}
-Si un événement a 1 chance sur 10 de se produire ($p=0.1$), il est logique de penser qu'il faudra en moyenne 9 échecs ($q/p = 0.9/0.1=9$) avant qu'il ne se produise. L'espérance du nombre total d'essais (échecs + 1 succès) serait alors $1/p$.
-\end{intuitionbox}
-
-Contrairement à la loi binomiale, la preuve la plus directe ne repose pas sur la linéarité mais sur une manipulation de séries.
-
-\begin{proofbox}[Démonstration de l'espérance géométrique via les séries entières]
-Soit $X \sim \text{Geom}(p)$, où $X$ compte le nombre d'échecs avant le premier succès. La PMF est $P(X=k) = q^k p$ pour $k=0, 1, 2, \dots$, avec $q=1-p$.
-
-Par définition, l'espérance est :
-$$ E(X) = \sum_{k=0}^{\infty} k \cdot P(X=k) = \sum_{k=0}^{\infty} k q^k p $$
-Le terme pour $k=0$ est nul, on peut donc commencer la somme à $k=1$ :
-$$ E(X) = p \sum_{k=1}^{\infty} k q^k $$
-L'astuce consiste à reconnaître que la somme ressemble à la dérivée d'une série géométrique. Rappelons la formule de la série géométrique pour $|q|<1$ :
-$$ \sum_{k=0}^{\infty} q^k = \frac{1}{1-q} $$
-En dérivant les deux côtés par rapport à $q$, on obtient :
-$$ \frac{d}{dq} \left( \sum_{k=0}^{\infty} q^k \right) = \frac{d}{dq} \left( \frac{1}{1-q} \right) $$
-$$ \sum_{k=1}^{\infty} k q^{k-1} = \frac{1}{(1-q)^2} $$
-Pour faire apparaître ce terme dans notre formule d'espérance, on factorise $q$ dans la somme :
-$$ E(X) = p \cdot q \sum_{k=1}^{\infty} k q^{k-1} $$
-On peut maintenant remplacer la somme par son expression analytique :
-$$ E(X) = p \cdot q \cdot \frac{1}{(1-q)^2} $$
-Puisque $p = 1-q$, on a :
-$$ E(X) = p \cdot q \cdot \frac{1}{p^2} = \frac{q}{p} $$
-Ce qui démontre que l'espérance du nombre d'échecs avant le premier succès est $\frac{q}{p}$.
-\end{proofbox}
-
-\subsection{Loi du statisticien inconscient (LOTUS)}
-
-Souvent, nous ne sommes pas intéressés par l'espérance de $X$ elle-même, mais par l'espérance d'une fonction de $X$, par exemple $E(X^2)$ ou $E(e^X)$.
-
-\begin{theorembox}[Théorème de Transfert (LOTUS)]
-Si $X$ est une variable aléatoire discrète et $g(x)$ est une fonction de $\mathbb{R}$ dans $\mathbb{R}$, alors l'espérance de la variable aléatoire $g(X)$ est donnée par :
-$$ E[g(X)] = \sum_x g(x) P(X=x) $$
-La somme porte sur toutes les valeurs possibles de $X$. Ce théorème est utile car il évite d'avoir à trouver la PMF de $g(X)$.
-\end{theorembox}
-
-La preuve dans le cas discret consiste simplement à regrouper les termes.
-
-\begin{proofbox}
-Soit $Y = g(X)$. Par définition, l'espérance de $Y$ est $E(Y) = \sum_y y P(Y=y)$.
-L'ensemble des valeurs $y$ que $Y$ peut prendre est $\{g(x) \mid x \in \text{support de } X\}$.
-Pour une valeur $y$ donnée, l'événement $\{Y=y\}$ est l'union de tous les événements $\{X=x\}$ tels que $g(x)=y$.
-$$ P(Y=y) = P(g(X)=y) = \sum_{x: g(x)=y} P(X=x) $$
-En substituant cela dans la définition de $E(Y)$ :
-$$ E(Y) = \sum_y y \left( \sum_{x: g(x)=y} P(X=x) \right) $$
-On peut réécrire $y$ comme $g(x)$ à l'intérieur de la seconde somme :
-$$ E(g(X)) = \sum_y \sum_{x: g(x)=y} g(x) P(X=x) $$
-Cette double somme parcourt toutes les valeurs de $y$, et pour chaque $y$, elle parcourt tous les $x$ correspondants. Cela revient à simplement sommer sur tous les $x$ possibles dès le départ :
-$$ E[g(X)] = \sum_x g(x) P(X=x) $$
-\end{proofbox}
-
-Ce théorème justifie son nom : c'est ce que l'on ferait "inconsciemment".
-
-\begin{intuitionbox}
-Pour trouver la valeur moyenne d'une fonction d'une variable aléatoire (par exemple, le carré du résultat d'un dé), vous n'avez pas besoin de déterminer d'abord la distribution de ce carré. Vous pouvez simplement prendre chaque valeur possible du résultat original, lui appliquer la fonction, et pondérer ce nouveau résultat par la probabilité du résultat original.
-\end{intuitionbox}
-
-Utilisons ce théorème pour calculer $E(X^2)$ pour notre dé.
-
-\begin{examplebox}[Calcul de $E(X^2)$ pour un dé]
-Soit $X$ le résultat d'un lancer de dé. Calculons l'espérance de $Y=X^2$. La fonction est $g(x)=x^2$.
-\begin{align*}
-E(X^2) &= \sum_{k=1}^6 k^2 P(X=k) \\
-&= 1^2\left(\frac{1}{6}\right) + 2^2\left(\frac{1}{6}\right) + 3^2\left(\frac{1}{6}\right) + 4^2\left(\frac{1}{6}\right) + 5^2\left(\frac{1}{6}\right) + 6^2\left(\frac{1}{6}\right) \\
-&= \frac{1+4+9+16+25+36}{6} = \frac{91}{6} \approx 15.17
-\end{align*}
-\end{examplebox}
-
-\subsection{Variance}
-
-L'espérance nous donne le centre d'une distribution, mais elle ne dit rien sur sa "largeur" ou sa "dispersion". C'est le rôle de la variance.
-
-\begin{definitionbox}[Variance et écart-type]
-La \textbf{variance} d'une variable aléatoire $X$ mesure la dispersion de sa distribution autour de son espérance. Elle est définie par :
-$$ \text{Var}(X) = E\left[ (X - E(X))^2 \right] $$
-La racine carrée de la variance est appelée l' \textbf{écart-type} :
-$$ \text{SD}(X) = \sqrt{\text{Var}(X)} $$
+\begin{definitionbox}[Fonction de Répartition Continue (CDF)]
+Soit $X$ une variable aléatoire continue. La \textbf{fonction de répartition} (Cumulative Distribution Function, ou CDF) de $X$ est la fonction $F$ définie par :
+$$ F(x) = P(X \le x) = \int_{-\infty}^x f(t) \, \mathrm{d}t $$
+Pour être une CDF valide, la fonction $F$ doit respecter les propriétés suivantes :
+\begin{enumerate}
+    \item $\lim_{x \to \infty} F(x) = 1$
+    \item $\lim_{x \to -\infty} F(x) = 0$
+    \item $F$ est continue et non décroissante.
+\end{enumerate}
 \end{definitionbox}
 
-L'idée est de mesurer l'écart quadratique moyen à l'espérance.
+La CDF est l'intégrale de la PDF, et inversement, la PDF est la dérivée de la CDF.
 
 \begin{intuitionbox}
-La variance est la "distance carrée moyenne à la moyenne". On prend l'écart de chaque valeur par rapport à la moyenne, on le met au carré (pour que les écarts positifs et négatifs ne s'annulent pas), puis on en calcule la moyenne. L'écart-type est souvent plus interprétable car il ramène cette mesure de dispersion dans les mêmes unités que la variable aléatoire elle-même.
+La CDF est "l'accumulateur" de probabilité. Elle part de 0 (à $-\infty$) et "accumule" l'aire sous la PDF à mesure qu'on avance sur l'axe des $x$, pour finalement atteindre 1 (à $+\infty$).
+
+Le lien fondamental est que la PDF est la dérivée de la CDF (par le théorème fondamental de l'analyse) :
+$$ f(x) = F'(x) $$
+Cela signifie que la valeur de la PDF $f(x)$ représente le \textbf{taux d'accumulation} de la probabilité au point $x$.
 \end{intuitionbox}
 
-La définition $E[(X-E(X))^2]$ est excellente pour l'interprétation, mais pénible pour le calcul. Une formule alternative est presque toujours utilisée.
+La CDF est souvent le moyen le plus simple de calculer des probabilités sur des intervalles.
 
-\begin{theorembox}[Formule de calcul de la variance]
-Pour toute variable aléatoire $X$, une formule plus pratique pour le calcul de la variance est :
-$$ \text{Var}(X) = E(X^2) - [E(X)]^2 $$
+\begin{remarquebox}[Calcul de Probabilités via la CDF]
+La CDF est très pratique pour calculer des probabilités sur des intervalles :
+$$ P(a < X \le b) = F(b) - F(a) $$
+Pour les variables continues, les inégalités strictes ou larges ne changent rien ($P(X=a)=0$).
+\end{remarquebox}
+
+Calculons la CDF de notre exemple précédent.
+
+\begin{examplebox}[CDF de l'exemple précédent]
+Pour $f(x) = 2x$ sur $[0, 1]$, la CDF $F(x)$ est :
+\begin{itemize}
+    \item Si $x < 0$ : $F(x) = \int_{-\infty}^x 0 \, \mathrm{d}t = 0$.
+    \item Si $0 \le x \le 1$ : $F(x) = \int_{-\infty}^0 f(t) \mathrm{d}t + \int_0^x 2t \, \mathrm{d}t = 0 + [t^2]_0^x = x^2$.
+    \item Si $x > 1$ : $F(x) = \int_{-\infty}^1 f(t) \mathrm{d}t + \int_1^x 0 \, \mathrm{d}t = \int_0^1 2t \, \mathrm{d}t = 1$.
+\end{itemize}
+Donc, $F(x) = \begin{cases} 0 & \text{si } x < 0 \\ x^2 & \text{si } 0 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases}$
+\end{examplebox}
+
+\subsection{Espérance et Variance (Cas Continu)}
+
+Les concepts d'espérance et de variance s'étendent naturellement au cas continu, en remplaçant les sommes par des intégrales.
+
+\begin{definitionbox}[Espérance et Variance (Cas Continu)]
+Pour une variable aléatoire $X$ de fonction de densité $f$ :
+
+L'\textbf{espérance} de $X$ est le centre de gravité de la densité :
+$$ E[X] = \int_{-\infty}^{\infty} x f(x) \, \mathrm{d}x $$
+La \textbf{variance} de $X$ est l'espérance du carré de l'écart à la moyenne :
+$$ \text{Var}(X) = E[(X - E[X])^2] = \int_{-\infty}^{\infty} (x - E[X])^2 f(x) \, \mathrm{d}x $$
+\end{definitionbox}
+
+Comme dans le cas discret, une formule alternative existe pour la variance.
+
+\begin{theorembox}[Formule de calcul de la Variance]
+Une formule plus simple pour le calcul de la variance est :
+$$ \text{Var}(X) = E[X^2] - (E[X])^2 $$
+où $E[X^2] = \int_{-\infty}^{\infty} x^2 f(x) \, \mathrm{d}x$. (Ceci est une application de LOTUS).
 \end{theorembox}
 
-La preuve est une simple expansion algébrique utilisant la linéarité de l'espérance.
+La preuve est identique à celle du cas discret, en utilisant la linéarité de l'espérance.
 
 \begin{proofbox}
 Soit $\mu = E(X)$. On part de la définition de la variance :
 \begin{align*}
 \text{Var}(X) &= E[ (X - \mu)^2 ] \\
 &= E[ X^2 - 2X\mu + \mu^2 ] \quad \text{(On développe le carré)} \\
-&= E(X^2) - E(2\mu X) + E(\mu^2) \quad \text{(Par linéarité de l'espérance)} \\
+&= E(X^2) - E(2\mu X) + E(\mu^2) \quad \text{(Par linéarité de l'espérance, qui s'applique aussi au cas continu)} \\
 &= E(X^2) - 2\mu E(X) + \mu^2 \quad \text{(Car $2\mu$ et $\mu^2$ sont des constantes)} \\
 &= E(X^2) - 2\mu(\mu) + \mu^2 \quad \text{(Car $E(X) = \mu$)} \\
 &= E(X^2) - 2\mu^2 + \mu^2 \\
@@ -213,535 +127,276 @@ Soit $\mu = E(X)$. On part de la définition de la variance :
 \end{align*}
 \end{proofbox}
 
-Nous pouvons maintenant calculer la variance de notre lancer de dé.
+Le calcul de $E[X^2]$ (et plus généralement de $E[g(X)]$) repose sur le théorème de transfert, adapté au cas continu.
 
-\begin{examplebox}[Variance d'un lancer de dé]
-Nous avons déjà calculé pour un dé que $E(X) = 3.5$ et $E(X^2) = 91/6$. On peut maintenant trouver la variance facilement :
-$$ \text{Var}(X) = E(X^2) - [E(X)]^2 = \frac{91}{6} - (3.5)^2 = \frac{91}{6} - 12.25 = 15.166... - 12.25 \approx 2.917 $$
-L'écart-type est $\text{SD}(X) = \sqrt{2.917} \approx 1.708$.
+\begin{theorembox}[Théorème de Transfert (LOTUS)]
+Si $X$ est une v.a. continue de densité $f(x)$, et $g$ une fonction, alors :
+$$ E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, \mathrm{d}x $$
+\end{theorembox}
+
+La preuve formelle est plus avancée, mais l'idée est analogue au cas discret : on pondère chaque valeur $g(x)$ par la densité de probabilité $f(x)$ au voisinage de $x$.
+
+\begin{proofbox}[Idée de la preuve]
+La preuve formelle repose sur la théorie de la mesure ou sur un argument de changement de variable pour l'intégrale, en passant par la fonction de répartition de $Y=g(X)$. Intuitivement, pour un petit intervalle $dx$ autour de $x$, la "masse" de probabilité est $f(x)dx$. Cette masse correspond à une valeur $g(x)$ pour la nouvelle variable. L'espérance est la somme (intégrale) de ces valeurs pondérées par leur masse : $\int g(x) f(x)dx$.
+\end{proofbox}
+
+La propriété la plus importante de l'espérance reste valide.
+
+\begin{remarquebox}[Linéarité de l'Espérance]
+Comme dans le cas discret, l'espérance reste linéaire pour les variables continues :
+$E[aX+bY] = aE[X]+bE[Y]$.
+\end{remarquebox}
+
+Calculons l'espérance et la variance pour notre exemple.
+
+\begin{examplebox}[Espérance et Variance de l'exemple précédent]
+Pour $f(x) = 2x$ sur $[0, 1]$ :
+
+$E[X] = \int_0^1 x \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^2 \, \mathrm{d}x = \left[ \frac{2x^3}{3} \right]_0^1 = \frac{2}{3}$.
+
+$E[X^2] = \int_0^1 x^2 \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^3 \, \mathrm{d}x = \left[ \frac{2x^4}{4} \right]_0^1 = \frac{1}{2}$.
+
+$\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{1}{2} - \left(\frac{2}{3}\right)^2 = \frac{1}{2} - \frac{4}{9} = \frac{9-8}{18} = \frac{1}{18}$.
 \end{examplebox}
 
-\subsection{Exercices}
+\subsection{Loi Uniforme}
 
-% --- Espérance de base et LOTUS ---
+La loi continue la plus simple est celle où la densité est constante sur un intervalle.
 
-\begin{exercicebox}[Exercice 1 : Calcul d'Espérance (PMF Simple)]
-Une variable aléatoire $X$ a la distribution de probabilité suivante :
-$P(X=-1) = 0.3$, $P(X=0) = 0.5$, $P(X=2) = 0.2$.
-Calculez l'espérance $E(X)$.
-\end{exercicebox}
+\begin{definitionbox}[Loi Uniforme]
+Une variable aléatoire $X$ est \textbf{uniformément distribuée} sur un intervalle $[a, b]$ si sa densité est une constante sur cet intervalle. Pour que l'aire totale soit 1, cette constante doit être $\frac{1}{b-a}$.
+$$ f(x) = \begin{cases} \frac{1}{b-a} & \text{pour } x \in [a, b] \\ 0 & \text{sinon} \end{cases} $$
+On note cela $X \sim \text{Unif}(a, b)$.
+\end{definitionbox}
 
-\begin{exercicebox}[Exercice 2 : LOTUS (Calcul de $E(X^2)$)]
-En utilisant la même variable aléatoire $X$ que dans l'exercice 1, calculez $E(X^2)$.
-\end{exercicebox}
+C'est le modèle du "hasard pur" sur un segment.
 
-\begin{exercicebox}[Exercice 3 : Variance (Calcul de base)]
-En utilisant les résultats des exercices 1 et 2, calculez la variance $\text{Var}(X)$.
-\end{exercicebox}
+\begin{intuitionbox}
+C'est la distribution du "hasard pur" dans un intervalle borné. La probabilité de tomber dans un sous-intervalle ne dépend que de la \textbf{longueur} de ce sous-intervalle, pas de sa position (tant qu'il est dans $[a, b]$). 
+\end{intuitionbox}
 
-\begin{exercicebox}[Exercice 4 : Espérance (Jeu Simple)]
-Un jeu consiste à payer 2 pour lancer un dé à 6 faces. Si le dé tombe sur 6, vous gagnez 10. Sinon, vous ne gagnez rien. Soit $G$ votre gain net (gain - mise).
+Les propriétés de cette loi sont faciles à dériver par intégration directe.
+
+\begin{theorembox}[Propriétés de la Loi Uniforme]
+Si $X \sim \text{Unif}(a, b)$ :
+\begin{itemize}
+    \item \textbf{CDF :} $F(x) = \frac{x-a}{b-a}$ pour $x \in [a, b]$.
+    \item \textbf{Espérance :} $E[X] = \frac{a+b}{2}$ (le point milieu de l'intervalle).
+    \item \textbf{Variance :} $\text{Var}(X) = \frac{(b-a)^2}{12}$.
+\end{itemize}
+\end{theorembox}
+
+\begin{proofbox}[Dérivation des propriétés]
+Soit $f(x) = \frac{1}{b-a}$ pour $x \in [a, b]$ et $0$ sinon.
+
+\textbf{CDF :} Pour $x \in [a, b]$,
+$$ F(x) = \int_{-\infty}^x f(t) \, dt = \int_a^x \frac{1}{b-a} \, dt = \frac{1}{b-a} [t]_a^x = \frac{x-a}{b-a} $$
+(Pour $x<a$, $F(x)=0$. Pour $x>b$, $F(x)=1$.)
+
+\textbf{Espérance :}
+$$ E[X] = \int_a^b x \frac{1}{b-a} \, dx = \frac{1}{b-a} \left[ \frac{x^2}{2} \right]_a^b = \frac{1}{b-a} \frac{b^2 - a^2}{2} = \frac{(b-a)(b+a)}{2(b-a)} = \frac{a+b}{2} $$
+
+\textbf{Variance :} D'abord, calculons $E[X^2]$.
+$$ E[X^2] = \int_a^b x^2 \frac{1}{b-a} \, dx = \frac{1}{b-a} \left[ \frac{x^3}{3} \right]_a^b = \frac{1}{b-a} \frac{b^3 - a^3}{3} $$
+En utilisant $b^3 - a^3 = (b-a)(b^2 + ab + a^2)$, on obtient $E[X^2] = \frac{b^2 + ab + a^2}{3}$.
+Maintenant, appliquons la formule $\text{Var}(X) = E[X^2] - (E[X])^2$ :
+\begin{align*}
+\text{Var}(X) &= \frac{b^2 + ab + a^2}{3} - \left(\frac{a+b}{2}\right)^2 \\
+&= \frac{b^2 + ab + a^2}{3} - \frac{a^2 + 2ab + b^2}{4} \\
+&= \frac{4(b^2 + ab + a^2) - 3(a^2 + 2ab + b^2)}{12} \\
+&= \frac{4b^2 + 4ab + 4a^2 - 3a^2 - 6ab - 3b^2}{12} \\
+&= \frac{b^2 - 2ab + a^2}{12} = \frac{(b-a)^2}{12}
+\end{align*}
+\end{proofbox}
+
+\subsection{Loi Exponentielle}
+
+Passons à une loi fondamentale pour modéliser les temps d'attente.
+
+\begin{definitionbox}[Loi Exponentielle]
+Une variable aléatoire $X$ suit une \textbf{loi exponentielle} de paramètre $\lambda > 0$ si sa fonction de densité a la forme :
+$$ f(x) = \begin{cases} \lambda e^{-\lambda x} & \text{pour } x \ge 0 \\ 0 & \text{sinon} \end{cases} $$
+On note $X \sim \text{Exp}(\lambda)$.
+\end{definitionbox}
+
+Cette loi est intimement liée au processus de Poisson.
+
+\begin{intuitionbox}[Lien entre les lois de Poisson et Exponentielle]
+La loi exponentielle modélise le temps d'attente \textit{avant} le prochain événement dans un processus de Poisson.
+
+Posons la question : « Si je commence à observer maintenant, combien de temps $T$ vais-je devoir attendre avant de voir le prochain événement ? »
 \begin{enumerate}
-    \item Quelle est la PMF de $G$ ?
-    \item Calculez $E(G)$. Le jeu est-il favorable au joueur ?
+    \item Dans un processus de Poisson de taux $\lambda$, le nombre d'événements $N(t)$ dans un intervalle de temps $t$ suit une loi de Poisson de paramètre $\lambda t$ :
+    $$ P(N(t)=k) = \frac{(\lambda t)^k e^{-\lambda t}}{k!} $$
+    \item La probabilité de ne voir \textbf{aucun} événement ($k=0$) pendant une durée $t$ est :
+    $$ P(N(t)=0) = \frac{(\lambda t)^0 e^{-\lambda t}}{0!} = e^{-\lambda t} $$
+    \item Mais ne voir aucun événement pendant un temps $t$, c'est exactement dire que le temps d'attente $T$ du premier événement est \textit{plus grand} que $t$.
+    $$ P(T > t) = P(N(t)=0) = e^{-\lambda t} $$
+    \item À partir de là, on déduit la fonction de répartition (CDF) de $T$ :
+    $$ F_T(t) = P(T \le t) = 1 - P(T > t) = 1 - e^{-\lambda t} \quad (\text{pour } t \ge 0) $$
+    \item En dérivant la CDF pour obtenir la densité (PDF) :
+    $$ f_T(t) = F_T'(t) = \frac{d}{dt}(1 - e^{-\lambda t}) = -(-\lambda e^{-\lambda t}) = \lambda e^{-\lambda t} $$
 \end{enumerate}
-\end{exercicebox}
+C'est exactement la densité de la loi exponentielle de paramètre $\lambda$.
+\end{intuitionbox}
 
-\begin{exercicebox}[Exercice 5 : Variance (Jeu Simple)]
-En utilisant la variable aléatoire $G$ de l'exercice 4 :
+Cette loi possède des propriétés remarquables.
+
+\begin{theorembox}[Propriétés de la Loi Exponentielle]
+Si $X \sim \text{Exp}(\lambda)$ :
+\begin{itemize}
+    \item \textbf{CDF :} $F(x) = 1 - e^{-\lambda x}$ pour $x \ge 0$.
+    \item \textbf{Espérance :} $E[X] = \frac{1}{\lambda}$.
+    \item \textbf{Variance :} $\text{Var}(X) = \frac{1}{\lambda^2}$.
+    \item \textbf{Propriété de non-mémoire :} Pour $s, t \ge 0$, $P(X > s+t \mid X > s) = P(X > t)$.
+\end{itemize}
+\end{theorembox}
+
+Les preuves de l'espérance et de la variance nécessitent une intégration par parties. La preuve de la non-mémoire est plus directe.
+
+\begin{proofbox}[Dérivation des propriétés]
+Soit $f(x) = \lambda e^{-\lambda x}$ pour $x \ge 0$.
+
+\textbf{CDF :} A été dérivée dans l'intuition ci-dessus.
+$$ F(x) = \int_0^x \lambda e^{-\lambda t} \, dt = [ -e^{-\lambda t} ]_0^x = -e^{-\lambda x} - (-e^0) = 1 - e^{-\lambda x} $$
+
+\textbf{Espérance :} On utilise l'intégration par parties ($\int u dv = uv - \int v du$) avec $u=x$ et $dv=\lambda e^{-\lambda x}dx$. Alors $du=dx$ et $v=-e^{-\lambda x}$.
+\begin{align*}
+E[X] &= \int_0^\infty x (\lambda e^{-\lambda x}) \, dx \\
+&= \left[ x (-e^{-\lambda x}) \right]_0^\infty - \int_0^\infty (-e^{-\lambda x}) \, dx \\
+&= (0 - 0) + \int_0^\infty e^{-\lambda x} \, dx \quad \text{(car } \lim_{x\to\infty} -xe^{-\lambda x} = 0 \text{)} \\
+&= \left[ -\frac{1}{\lambda} e^{-\lambda x} \right]_0^\infty = (0) - (-\frac{1}{\lambda} e^0) = \frac{1}{\lambda}
+\end{align*}
+
+\textbf{Variance :} D'abord $E[X^2]$. Intégration par parties avec $u=x^2$, $dv=\lambda e^{-\lambda x}dx$. $du=2xdx$, $v=-e^{-\lambda x}$.
+\begin{align*}
+E[X^2] &= \int_0^\infty x^2 (\lambda e^{-\lambda x}) \, dx \\
+&= \left[ x^2 (-e^{-\lambda x}) \right]_0^\infty - \int_0^\infty (-e^{-\lambda x}) (2x \, dx) \\
+&= 0 + \int_0^\infty 2x e^{-\lambda x} \, dx \\
+&= \frac{2}{\lambda} \int_0^\infty x (\lambda e^{-\lambda x}) \, dx \quad \text{(On fait apparaître } E[X] \text{)} \\
+&= \frac{2}{\lambda} E[X] = \frac{2}{\lambda} \left( \frac{1}{\lambda} \right) = \frac{2}{\lambda^2}
+\end{align*}
+Donc, $\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{2}{\lambda^2} - \left(\frac{1}{\lambda}\right)^2 = \frac{1}{\lambda^2}$.
+
+\textbf{Propriété de non-mémoire :}
+Rappelons que $P(X>t) = e^{-\lambda t}$.
+\begin{align*}
+P(X > s+t \mid X > s) &= \frac{P(X > s+t \text{ et } X > s)}{P(X > s)} \\
+&= \frac{P(X > s+t)}{P(X > s)} \quad \text{(car si } X>s+t \text{, alors } X>s \text{)} \\
+&= \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = \frac{e^{-\lambda s} e^{-\lambda t}}{e^{-\lambda s}} = e^{-\lambda t} \\
+&= P(X > t)
+\end{align*}
+\end{proofbox}
+
+Le paramètre $\lambda$ a une interprétation concrète.
+
+\begin{remarquebox}[Interprétation du paramètre $\lambda$]
+Le paramètre $\lambda$ représente le \textbf{taux} moyen d'occurrence des événements dans le processus de Poisson sous-jacent (par exemple, nombre moyen d'appels par minute). L'espérance $1/\lambda$ est alors le \textbf{temps moyen entre les événements}.
+\end{remarquebox}
+
+La propriété de non-mémoire est unique à la loi exponentielle (dans le cas continu).
+
+\begin{intuitionbox}[La Propriété de Non-Mémoire]
+C'est la propriété la plus contre-intuitive et la plus importante de la loi exponentielle. Elle signifie que le processus "oublie" le passé. Si vous attendez un bus qui arrive selon un processus de Poisson (et donc le temps d'attente suit une loi exponentielle), et que vous avez déjà attendu 5 minutes ($X>5$), la probabilité que vous deviez attendre encore au moins 2 minutes ($X>5+2$) est la même que si vous veniez juste d'arriver à l'arrêt et deviez attendre au moins 2 minutes ($X>2$). L'information "j'ai déjà attendu 5 minutes" est inutile pour prédire l'attente future.
+\end{intuitionbox}
+
+\subsection{Distributions Conjointes (Cas Continu)}
+
+Comme pour le cas discret, nous pouvons définir des lois conjointes pour plusieurs variables aléatoires continues.
+
+\begin{definitionbox}[Fonction de Densité Conjointe]
+Pour des variables aléatoires continues $X$ et $Y$, la \textbf{fonction de densité conjointe} $f(x, y)$ décrit la densité de probabilité sur le plan $(x, y)$. Elle doit respecter :
 \begin{enumerate}
-    \item Calculez $E(G^2)$.
-    \item Calculez $\text{Var}(G)$.
+    \item $f(x, y) \ge 0$, pour tous $x, y$.
+    \item $\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}x \, \mathrm{d}y = 1$.
 \end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 6 : Espérance de Bernoulli]
-Soit $X$ une variable aléatoire $X \sim \text{Bern}(p)$ (variable indicatrice). En utilisant la définition de l'espérance, montrez que $E(X) = p$.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 7 : Variance de Bernoulli]
-En utilisant le résultat de l'exercice 6 et le théorème de LOTUS, montrez que $\text{Var}(X) = p(1-p)$ pour $X \sim \text{Bern}(p)$. (Indice : $X^2 = X$ pour une variable de Bernoulli).
-\end{exercicebox}
-
-% --- Linéarité de l'Espérance ---
-
-\begin{exercicebox}[Exercice 8 : Linéarité (Simple)]
-Soient $X$ et $Y$ deux variables aléatoires. On sait que $E(X) = 10$ et $E(Y) = -5$.
-Calculez $E(3X - 2Y + 4)$.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 9 : Linéarité (Trois Dés)]
-On lance trois dés équilibrés à 6 faces. Soit $S$ la somme des trois résultats.
-En utilisant la linéarité de l'espérance, calculez $E(S)$.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 10 : Linéarité (Somme de Bernoulli)]
-Soit $X \sim \text{Bin}(n, p)$. On rappelle que $X$ peut s'écrire comme la somme de $n$ variables de Bernoulli indépendantes $X = I_1 + \dots + I_n$, où $E(I_j) = p$.
-Utilisez la linéarité de l'espérance pour prouver que $E(X) = np$.
-\end{exercicebox}
-
-% --- Espérances des Lois Classiques ---
-
-\begin{exercicebox}[Exercice 11 : Espérance Binomiale (Application)]
-Un QCM (questionnaire à choix multiples) comporte 40 questions. Chaque question a 4 options de réponse, dont une seule est correcte. Un étudiant répond à tout au hasard.
-Quel est le nombre attendu (l'espérance) de bonnes réponses ?
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 12 : Espérance Géométrique (Application)]
-On lance une paire de dés équilibrés. Un "succès" est d'obtenir un double-six.
-\begin{enumerate}
-    \item Quelle est la probabilité $p$ d'un succès ?
-    \item Soit $X$ le nombre d'échecs avant le premier double-six. Quelle est l'espérance $E(X)$ ?
-\end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 13 : Espérance Géométrique (Attente Totale)]
-En reprenant la situation de l'exercice 12 ($p=1/36$), soit $Y$ le \textit{nombre total de lancers} nécessaires pour obtenir le premier double-six ($Y = X + 1$).
-Calculez $E(Y)$.
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 14 : Espérance (Loi Hypergéométrique)]
-On tire 5 cartes d'un jeu de 52 cartes sans remise. Soit $X$ le nombre d'As tirés. On peut écrire $X = I_1 + I_2 + I_3 + I_4 + I_5$, où $I_j=1$ si la $j$-ème carte tirée est un As, et 0 sinon.
-\begin{enumerate}
-    \item Quelle est la probabilité $P(I_1 = 1)$ (que la 1ère carte soit un As) ?
-    \item Quelle est la probabilité $P(I_2 = 1)$ (que la 2ème carte soit un As) ? (Indice : Pensez par symétrie ou utilisez la LTP).
-    \item Calculez $E(X)$ en utilisant la linéarité.
-\end{enumerate}
-\end{exercicebox}
-
-% --- Variance et E[X^2] ---
-
-\begin{exercicebox}[Exercice 15 : Espérance et Variance (Dé à 4 faces)]
-Soit $X$ le résultat d'un lancer de dé équilibré à 4 faces ($X \in \{1, 2, 3, 4\}$).
-\begin{enumerate}
-    \item Calculez $E(X)$.
-    \item Calculez $E(X^2)$.
-    \item Calculez $\text{Var}(X)$.
-\end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 16 : Formule de la Variance (Inverse)]
-Une variable aléatoire $Y$ a une espérance $E(Y) = 5$ et une variance $\text{Var}(Y) = 4$.
-Quelle est la valeur de $E(Y^2)$ ?
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 17 : Formule de la Variance (Inverse 2)]
-Une variable aléatoire $W$ a $E(W^2) = 50$ et $\text{Var}(W) = 1$.
-Quelles sont les deux valeurs possibles pour $E(W)$ ?
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 18 : Variance Nulle]
-Une variable aléatoire $X$ a une variance $\text{Var}(X) = 0$. Que pouvez-vous conclure sur la distribution de $X$ ?
-(Indice : $\text{Var}(X) = E[(X-\mu)^2]$).
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 19 : LOTUS et Linéarité]
-Soit $X$ une variable aléatoire avec $E(X)=3$ et $E(X^2)=10$.
-Calculez $E[(X+1)^2]$.
-(Indice : Développez $(X+1)^2$ avant de prendre l'espérance).
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 20 : Synthèse (Jeu de Roulette)]
-À la roulette, vous misez 1 sur "Rouge". Il y a 18 cases rouges, 18 noires, et 1 verte (le 0). Total = 37 cases.
-Si "Rouge" sort, vous récupérez votre mise de 1 et gagnez 1 de plus (gain net $G=+1$).
-Si "Noir" or "Vert" sort, vous perdez votre mise (gain net $G=-1$).
-\begin{enumerate}
-    \item Calculez $E(G)$.
-    \item Calculez $E(G^2)$.
-    \item Calculez $\text{Var}(G)$.
-\end{enumerate}
-\end{exercicebox}
-
-\subsection{Corrections des Exercices}
-
-% --- Corrections : Concepts de Base (PMF, CDF) ---
-
-\begin{correctionbox}[Correction Exercice 1 : Identification de Variables Aléatoires]
-1.  \textbf{Discrète}. $X$ ne peut prendre que des valeurs entières $\{0, 1, \dots, 10\}$.
-2.  \textbf{Continue}. Le temps peut prendre n'importe quelle valeur dans un intervalle (par ex. $T \in [2.5, 5]$ heures).
-3.  \textbf{Discrète}. $X$ ne peut prendre que des valeurs entières $\{0, 1, 2, \dots\}$.
-4.  \textbf{Continue}. La température peut prendre n'importe quelle valeur dans un intervalle (par ex. $T \in [15.0, 25.0]^\circ\text{C}$).
-5.  \textbf{Discrète}. $X$ ne peut prendre que des valeurs entières $\{0, 1, 2, \dots\}$ (si on compte les échecs) ou $\{1, 2, 3, \dots\}$ (si on compte les lancers).
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 2 : Construction d'une PMF]
-On lance un dé à 4 faces (1, 2, 3, 4). $X$ est le résultat.
-1.  Valeurs possibles : $S_X = \{1, 2, 3, 4\}$.
-2.  PMF : Le dé est équilibré, donc chaque face a la même probabilité $1/4$.
-    $P(X=1) = 1/4$
-    $P(X=2) = 1/4$
-    $P(X=3) = 1/4$
-    $P(X=4) = 1/4$
-    Et $P(X=k) = 0$ pour tout autre $k$.
-3.  Vérification : $\sum P(X=k) = 1/4 + 1/4 + 1/4 + 1/4 = 4/4 = 1$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 3 : PMF d'une Somme]
-$Y = D_1 + D_2$, où $D_1, D_2 \in \{1, 2, 3, 4\}$. Il y a $4 \times 4 = 16$ issues équiprobables (prob. 1/16 chacune).
-1.  Valeurs possibles : Min = $1+1=2$. Max = $4+4=8$. $S_Y = \{2, 3, 4, 5, 6, 7, 8\}$.
-2.  PMF (en comptant les issues favorables sur 16) :
-    - $P(Y=2) = P(1,1) \implies 1/16$
-    - $P(Y=3) = P(1,2) + P(2,1) \implies 2/16$
-    - $P(Y=4) = P(1,3) + P(2,2) + P(3,1) \implies 3/16$
-    - $P(Y=5) = P(1,4) + P(2,3) + P(3,2) + P(4,1) \implies 4/16$
-    - $P(Y=6) = P(2,4) + P(3,3) + P(4,2) \implies 3/16$
-    - $P(Y=7) = P(3,4) + P(4,3) \implies 2/16$
-    - $P(Y=8) = P(4,4) \implies 1/16$
-    (Vérification : $1+2+3+4+3+2+1 = 16$. La somme est $16/16 = 1$).
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 4 : Construction d'une CDF]
-On utilise la PMF de l'exercice 3. $F_Y(y) = P(Y \le y)$.
-1.  CDF aux points de masse :
-    - $F_Y(2) = P(Y \le 2) = P(Y=2) = 1/16$
-    - $F_Y(3) = P(Y \le 3) = P(Y=2)+P(Y=3) = 1/16 + 2/16 = 3/16$
-    - $F_Y(4) = P(Y \le 4) = 3/16 + P(Y=4) = 3/16 + 3/16 = 6/16$
-    - $F_Y(5) = P(Y \le 5) = 6/16 + P(Y=5) = 6/16 + 4/16 = 10/16$
-    - $F_Y(6) = P(Y \le 6) = 10/16 + P(Y=6) = 10/16 + 3/16 = 13/16$
-    - $F_Y(7) = P(Y \le 7) = 13/16 + P(Y=7) = 13/16 + 2/16 = 15/16$
-    - $F_Y(8) = P(Y \le 8) = 15/16 + P(Y=8) = 15/16 + 1/16 = 16/16 = 1$
-2.  $F_Y(1.5) = P(Y \le 1.5) = 0$ (car la valeur minimale est 2).
-3.  $F_Y(5.2) = P(Y \le 5.2) = P(Y \le 5) = F_Y(5) = 10/16$.
-4.  $F_Y(10) = P(Y \le 10) = 1$ (car la valeur maximale est 8).
-\end{correctionbox}
-
-% --- Corrections : Loi de Bernoulli et Loi Binomiale ---
-
-\begin{correctionbox}[Correction Exercice 5 : Loi de Bernoulli]
-1.  $X$ suit une \textbf{loi de Bernoulli}. Le paramètre est $p=0.05$. On note $X \sim \text{Bern}(0.05)$.
-2.  La PMF est :
-    $P(X=1) = p = 0.05$ (succès = défectueux)
-    $P(X=0) = 1-p = 0.95$ (échec = non défectueux)
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 6 : Loi Binomiale (Calcul Direct)]
-1.  $X$ est le nombre de succès (Pile) en $n=5$ essais indépendants avec probabilité $p=0.7$.
-    $X$ suit une \textbf{loi Binomiale}. $X \sim \text{Bin}(n=5, p=0.7)$.
-2.  $P(X=k) = \binom{n}{k} p^k (1-p)^{n-k}$.
-    $P(X=3) = \binom{5}{3} (0.7)^3 (1-0.7)^{5-3} = 10 \times (0.343) \times (0.3)^2 = 10 \times 0.343 \times 0.09 = 0.3087$.
-3.  $P(X=5) = \binom{5}{5} (0.7)^5 (0.3)^0 = 1 \times (0.7)^5 \times 1 = 0.16807$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 7 : Loi Binomiale (Calcul Cumulé)]
-On a $X \sim \text{Bin}(5, 0.7)$.
-1.  $P(X=0) = \binom{5}{0} (0.7)^0 (0.3)^5 = 1 \times 1 \times (0.3)^5 = 0.00243$.
-2.  L'événement "au moins 1 Pile" ($X \ge 1$) est le complémentaire de "0 Pile" ($X=0$).
-    $P(X \ge 1) = 1 - P(X=0) = 1 - 0.00243 = 0.99757$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 8 : Problème Binomial (Contrôle Qualité)]
-Le tirage est \textit{avec remise}, donc les essais sont indépendants. C'est une loi binomiale.
-$n = 20$ (nombre d'essais).
-$p = 0.10$ (probabilité de succès = défectueux).
-On cherche $P(X=2)$.
-$P(X=2) = \binom{20}{2} (0.1)^2 (1-0.1)^{20-2}$
-$P(X=2) = \frac{20 \times 19}{2} (0.1)^2 (0.9)^{18} = 190 \times 0.01 \times (0.9)^{18}$
-$P(X=2) = 1.9 \times (0.9)^{18} \approx 1.9 \times 0.15009 \approx 0.2852$.
-\end{correctionbox}
-
-% --- Corrections : Loi Hypergéométrique ---
-
-\begin{correctionbox}[Correction Exercice 9 : Loi Hypergéométrique (Urne)]
-Le tirage est \textit{sans remise} d'une population finie.
-1.  $X$ suit une \textbf{loi Hypergéométrique}.
-    Paramètres : $w=7$ (blanches, succès), $b=5$ (noires, échecs), $m=4$ (nombre de tirages).
-    $X \sim \text{HG}(w=7, b=5, m=4)$.
-2.  On cherche $P(X=2)$.
-    $P(X=k) = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}}$
-    $P(X=2) = \frac{\binom{7}{2} \binom{5}{4-2}}{\binom{12}{4}} = \frac{\binom{7}{2} \binom{5}{2}}{\binom{12}{4}}$
-    $P(X=2) = \frac{(\frac{7 \times 6}{2}) \times (\frac{5 \times 4}{2})}{(\frac{12 \times 11 \times 10 \times 9}{4 \times 3 \times 2 \times 1})} = \frac{21 \times 10}{495} = \frac{210}{495} = \frac{14}{33} \approx 0.4242$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 10 : Problème Hypergéométrique (Comité)]
-Tirage sans remise. C'est une loi Hypergéométrique.
-$w=10$ (hommes), $b=8$ (femmes), $m=6$ (taille du comité). Total $N=18$.
-On cherche $P(X=3)$ (exactement 3 hommes, ce qui implique $m-k = 6-3=3$ femmes).
-$P(X=3) = \frac{\binom{10}{3} \binom{8}{3}}{\binom{18}{6}}$
-$P(X=3) = \frac{(\frac{10 \times 9 \times 8}{3 \times 2 \times 1}) \times (\frac{8 \times 7 \times 6}{3 \times 2 \times 1})}{(\frac{18 \times 17 \times 16 \times 15 \times 14 \times 13}{6 \times 5 \times 4 \times 3 \times 2 \times 1})} = \frac{120 \times 56}{18564} = \frac{6720}{18564} \approx 0.362$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 11 : Binomiale vs Hypergéométrique]
-Population totale $N=10000$. 10\% défectueux, donc $w=1000$ (défectueux), $b=9000$ (non défectueux).
-Tirage de $m=20$ \textit{sans remise}.
-1.  Loi exacte : \textbf{Loi Hypergéométrique}.
-    $X \sim \text{HG}(w=1000, b=9000, m=20)$.
-2.  Probabilité exacte $P(X=2)$ :
-    $P(X=2) = \frac{\binom{1000}{2} \binom{9000}{18}}{\binom{10000}{20}}$
-    $P(X=2) = \frac{(\frac{1000 \times 999}{2}) \times (\frac{9000 \times \dots \times 8983}{18!})}{(\frac{10000 \times \dots \times 9981}{20!})} \approx 0.2854$.
-    (Le calcul est très complexe, mais on peut montrer qu'il est très proche de la binomiale).
-3.  Le résultat de l'exercice 8 (Binomiale) était $\approx 0.2852$.
-    L'approximation binomiale est excellente. La raison est que la taille de l'échantillon ($m=20$) est très petite par rapport à la taille de la population ($N=10000$). Le fait de ne pas remettre les 20 articles change à peine les probabilités pour les tirages suivants.
-\end{correctionbox}
-
-% --- Corrections : Loi Géométrique ---
-
-\begin{correctionbox}[Correction Exercice 12 : Loi Géométrique (Calcul Direct)]
-1.  $X$ est le nombre d'échecs avant le premier succès. $X$ suit une \textbf{loi Géométrique}.
-    Le succès est "obtenir 6", donc $p = 1/6$. $X \sim \text{Geom}(p=1/6)$.
-2.  "Premier 6 au 3ème lancer" signifie 2 échecs (lancers 1 et 2) puis 1 succès (lancer 3).
-    C'est $P(X=2)$. $q = 1-p = 5/6$.
-    $P(X=2) = q^2 p^1 = (5/6)^2 (1/6) = 25/216 \approx 0.1157$.
-3.  "Premier 6 au 1er lancer" signifie 0 échec. C'est $P(X=0)$.
-    $P(X=0) = q^0 p^1 = 1 \times (1/6) = 1/6$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 13 : Loi Géométrique (Calcul Cumulé)]
-$p=0.2$ (succès), $q=0.8$ (échec). $X$ compte les échecs. $X \sim \text{Geom}(0.2)$.
-1.  "Exactement 4 tirs au total" signifie 3 échecs suivis d'un succès. On cherche $P(X=3)$.
-    $P(X=3) = q^3 p^1 = (0.8)^3 (0.2) = 0.512 \times 0.2 = 0.1024$.
-2.  "Plus de 2 tirs au total" signifie qu'il faut au moins 3 tirs. C'est l'événement "les 2 premiers tirs sont des échecs".
-    La probabilité est $P(\text{Echec 1} \cap \text{Echec 2}) = q \times q = q^2$.
-    $P(X \ge 2) = (0.8)^2 = 0.64$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 14 : Variante de la Loi Géométrique]
-$Y$ est le nombre total d'essais ($k=1, 2, 3, \dots$). $p$ est la prob. de succès.
-1.  Pour que $Y=k$, il faut $k-1$ échecs, suivis d'un succès.
-    $P(Y=k) = (1-p)^{k-1} p = q^{k-1} p$, pour $k=1, 2, \dots$
-2.  Avec $p=1/6$, on cherche $P(Y=3)$.
-    $P(Y=3) = (5/6)^{3-1} (1/6) = (5/6)^2 (1/6) = 25/216$.
-    C'est le même résultat que $P(X=2)$ de l'exercice 12. Les deux définitions décrivent la même situation (3 lancers au total).
-\end{correctionbox}
-
-% --- Corrections : Loi de Poisson ---
-
-\begin{correctionbox}[Correction Exercice 15 : Loi de Poisson (Calcul Direct)]
-$X \sim \text{Poisson}(\lambda=5)$. PMF : $P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!}$.
-1.  $P(X=0) = \frac{e^{-5} 5^0}{0!} = \frac{e^{-5} \times 1}{1} = e^{-5} \approx 0.0067$.
-2.  $P(X=5) = \frac{e^{-5} 5^5}{5!} = \frac{e^{-5} \times 3125}{120} = e^{-5} \times \frac{625}{24} \approx 26.04 \times e^{-5} \approx 0.1755$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 16 : Loi de Poisson (Calcul Cumulé)]
-$X \sim \text{Poisson}(\lambda=2)$. On cherche $P(X \le 2)$.
-$P(X \le 2) = P(X=0) + P(X=1) + P(X=2)$
-$P(X=0) = \frac{e^{-2} 2^0}{0!} = e^{-2}$
-$P(X=1) = \frac{e^{-2} 2^1}{1!} = 2e^{-2}$
-$P(X=2) = \frac{e^{-2} 2^2}{2!} = \frac{4e^{-2}}{2} = 2e^{-2}$
-$P(X \le 2) = e^{-2} + 2e^{-2} + 2e^{-2} = 5e^{-2} \approx 5 \times 0.1353 = 0.6767$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 17 : Loi de Poisson (Changement de $\lambda$)]
-1.  Pour une page, $X \sim \text{Poisson}(\lambda=0.5)$.
-    $P(X=0) = \frac{e^{-0.5} (0.5)^0}{0!} = e^{-0.5} \approx 0.6065$.
-2.  Si le taux est 0.5 faute/page, le taux pour 10 pages est $\lambda_Y = 0.5 \times 10 = 5$.
-    $Y \sim \text{Poisson}(\lambda_Y=5)$.
-3.  On cherche $P(Y=0)$.
-    $P(Y=0) = \frac{e^{-5} 5^0}{0!} = e^{-5} \approx 0.0067$.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 18 : Approximation Binomiale par Poisson]
-1.  C'est un tirage de $n=10000$ clients, où chaque client est un essai de Bernoulli avec $p=0.0003$. La loi exacte est $X \sim \text{Bin}(10000, 0.0003)$.
-2.  Le paramètre $\lambda$ pour l'approximation Poisson est $\lambda = np = 10000 \times 0.0003 = 3$.
-3.  On utilise $Y \sim \text{Poisson}(\lambda=3)$ pour approximer $X$.
-    $P(X=2) \approx P(Y=2) = \frac{e^{-3} 3^2}{2!} = \frac{9e^{-3}}{2} = 4.5 e^{-3} \approx 4.5 \times 0.04979 \approx 0.224$.
-\end{correctionbox}
-
-% --- Corrections : Synthèse et Variables Indicatrices ---
-
-\begin{correctionbox}[Correction Exercice 19 : Choisir la Bonne Loi]
-1.  Tirage sans remise d'une population finie : \textbf{Loi Hypergéométrique}.
-2.  Comptage d'événements sur un intervalle de temps fixe : \textbf{Loi de Poisson}.
-3.  Comptage d'essais jusqu'au premier succès : \textbf{Loi Géométrique}.
-4.  Comptage de succès sur un nombre fixe d'essais indépendants : \textbf{Loi Binomiale}.
-5.  Comptage d'événements rares sur un intervalle (temps/espace) : \textbf{Loi de Poisson}.
-\end{correctionbox}
-
-\begin{correctionbox}[Correction Exercice 20 : Variable Indicatrice]
-$A$ = "obtenir 6". $P(A) = 1/6$.
-$I_A = 1$ si $A$ se produit, $I_A = 0$ sinon.
-1.  C'est une expérience avec deux issues (succès/échec). $I_A$ suit une \textbf{Loi de Bernoulli}.
-    Le paramètre est $p = P(A) = 1/6$. $I_A \sim \text{Bern}(1/6)$.
-2.  La PMF de $I_A$ est :
-    $P(I_A = 1) = p = 1/6$
-    $P(I_A = 0) = 1-p = 5/6$
-\end{correctionbox}
-
-\subsection{Exercices Pratiques (Python)}
-
-Ces exercices vous aideront à calculer et à vérifier empiriquement les concepts d'espérance et de variance en utilisant des simulations.
-
-Pour ces exercices, vous aurez besoin de la bibliothèque \texttt{numpy}.
-
-\begin{codecell}
-pip install numpy
-\end{codecell}
-
-\begin{exercicebox}[Exercice 1 : $E(X)$ $E(X^2)$ et Variance (Dé)]
-Nous allons simuler $N$ lancers d'un dé à 6 faces pour vérifier empiriquement la définition de l'espérance, le théorème LOTUS, et la formule de calcul de la variance.
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Simulez 100 000 lancers d'un dé équilibré (valeurs de 1 à 6) et stockez les résultats dans un tableau NumPy.
-    \item Calculez l'espérance empirique $E(X)$ en prenant la moyenne du tableau.
-    \item En utilisant LOTUS, calculez l'espérance empirique $E(X^2)$ (en créant un nouveau tableau des carrés, puis en prenant sa moyenne).
-    \item Calculez la variance empirique en utilisant la formule : $\text{Var}(X) = E(X^2) - [E(X)]^2$.
-    \item Comparez votre résultat à la variance calculée directement avec \texttt{numpy.var()}.
-\end{enumerate}
-
-\begin{codecell}
-import numpy as np
-
-N_simulations = 100000
-
-# 1. Simuler N lancers d'un de a 6 faces
-# lancers = ...
-
-# 2. Calculer E(X) (moyenne empirique)
-# E_X = ...
-# print(f"E(X) empirique: {E_X:.4f} (Theorique: 3.5)")
-
-# 3. Calculer E(X^2) (LOTUS)
-# lancers_carres = ...
-# E_X2 = ...
-# print(f"E(X^2) empirique: {E_X2:.4f} (Theorique: 91/6 = 15.1667)")
-
-# 4. Calculer Var(X) avec la formule
-# var_calc = ...
-# print(f"Variance (calculee): {var_calc:.4f}")
-
-# 5. Calculer Var(X) avec la fonction numpy
-# var_np = ...
-# print(f"Variance (numpy.var): {var_np:.4f}")
-# print(f"Difference: {np.abs(var_calc - var_np):.6f}")
-\end{codecell}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 2 : Linearite de l'Esperance]
-Vérifions empiriquement que $E(X+Y) = E(X) + E(Y)$. Nous allons simuler deux variables aléatoires différentes : $X$ (un dé à 4 faces) et $Y$ (un dé à 6 faces).
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Simulez $N=100000$ lancers d'un dé à 4 faces ($X$).
-    \item Simulez $N=100000$ lancers d'un dé à 6 faces ($Y$).
-    \item Créez la variable aléatoire $Z = X + Y$.
-    \item Calculez les moyennes empiriques $E(X)$, $E(Y)$, et $E(Z)$.
-    \item Vérifiez que $E(Z)$ est très proche de $E(X) + E(Y)$.
-\end{enumerate}
-
-\begin{codecell}
-import numpy as np
-
-N_simulations = 100000
-
-# 1. Simuler X (de a 4 faces) et Y (de a 6 faces)
-# X = ...
-# Y = ...
-
-# 2. Creer Z = X + Y
-# Z = ...
-
-# 3. Calculer les moyennes empiriques
-# E_X = ...
-# E_Y = ...
-# E_Z = ...
-
-# 4. Verifier la linearite
-# print(f"E(X) = {E_X:.4f}")
-# print(f"E(Y) = {E_Y:.4f}")
-# print(f"E(X) + E(Y) = {E_X + E_Y:.4f}")
-# print(f"E(Z) = E(X+Y) = {E_Z:.4f}")
-\end{codecell}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 3 : Esperance Binomiale (Simulation)]
-La théorie nous dit que pour $X \sim \text{Bin}(n, p)$, $E(X) = np$. Nous allons vérifier cela par simulation.
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Définissez les paramètres $n=20$ et $p=0.4$.
-    \item Simulez 100 000 réalisations d'une variable aléatoire $X \sim \text{Bin}(n, p)$ en utilisant \texttt{numpy.random.binomial()}.
-    \item Calculez la moyenne empirique de vos simulations.
-    \item Comparez la moyenne empirique à l'espérance théorique $np$.
-\end{enumerate}
-
-\begin{codecell}
-import numpy as np
-
-n, p = 20, 0.4
-N_simulations = 100000
-
-# 1. Simuler N fois une loi Bin(n, p)
-# resultats_bin = ...
-
-# 2. Calculer la moyenne empirique
-# moyenne_empirique = ...
-
-# 3. Calculer la moyenne theorique
-# moyenne_theorique = ...
-
-# 4. Afficher
-# print(f"Moyenne empirique: {moyenne_empirique:.4f}")
-# print(f"Esperance theorique (np): {moyenne_theorique:.4f}")
-\end{codecell}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 4 : Esperance Geometrique (Simulation)]
-Pour $X \sim \text{Geom}(p)$ (comptant les échecs), $E(X) = q/p$. Vérifions cela.
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Définissez $p=0.2$ (et $q=1-p$).
-    \item Simulez 100 000 réalisations d'une variable $Y \sim \text{Geom}(p)$ en utilisant \texttt{numpy.random.geometric()}.
-    \item \textbf{Attention :} \texttt{numpy.random.geometric} compte le nombre d'essais ($k=1, 2, \dots$). Pour obtenir $X$ (le nombre d'échecs, $k=0, 1, \dots$), vous devez soustraire 1 de chaque résultat.
-    \item Calculez la moyenne empirique de $X$ (le nombre d'échecs).
-    \item Comparez cette moyenne à l'espérance théorique $q/p$.
-\end{enumerate}
-
-\begin{codecell}
-import numpy as np
-
-p = 0.2
-q = 1 - p
-N_simulations = 100000
-
-# 1. Simuler N fois une loi Geom(p) (nb d'essais)
-# resultats_geom_essais = ...
-
-# 3. Convertir en nombre d'echecs
-# resultats_geom_echecs = ...
-
-# 4. Calculer la moyenne empirique des echecs
-# moyenne_empirique = ...
-
-# 5. Calculer la moyenne theorique des echecs
-# moyenne_theorique = ...
-
-# 6. Afficher
-# print(f"Moyenne empirique (echecs): {moyenne_empirique:.4f}")
-# print(f"Esperance theorique (q/p): {moyenne_theorique:.4f}")
-\end{codecell}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 5 : Esperance et Variance de Bernoulli]
-La variable aléatoire de Bernoulli $X \sim \text{Bern}(p)$ est la brique de base. Théoriquement, $E(X) = p$ et $\text{Var}(X) = p(1-p)$.
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Définissez $p=0.8$.
-    \item Simulez 100 000 essais de Bernoulli (résultats 0 ou 1) avec probabilité $p$. (Indice : \texttt{numpy.random.choice} ou \texttt{numpy.random.binomial} avec $n=1$).
-    \item Calculez l'espérance empirique (la moyenne) et la variance empirique (\texttt{numpy.var}).
-    \item Comparez-les aux valeurs théoriques $p$ et $p(1-p)$.
-\end{enumerate}
-
-\begin{codecell}
-import numpy as np
-
-p = 0.8
-N_simulations = 100000
-
-# 1. Simuler N essais de Bernoulli
-# essais = ...
-
-# 2. Calculer l'esperance et la variance empiriques
-# E_empirique = ...
-# Var_empirique = ...
-
-# 3. Calculer les valeurs theoriques
-# E_theorique = ...
-# Var_theorique = ...
-
-# 4. Afficher
-# print(f"Esperance: Empirique={E_empirique:.4f}, Theorique={E_theorique:.4f}")
-# print(f"Variance:  Empirique={Var_empirique:.4f}, Theorique={Var_theorique:.4f}")
-\end{codecell}
-\end{exercicebox}
+\end{definitionbox}
+
+Ici, la probabilité est associée à un volume sous la surface de densité.
+
+\begin{intuitionbox}[Volume = Probabilité]
+La probabilité que le couple $(X, Y)$ tombe dans une région $A$ du plan $xy$ est le \textbf{volume} sous la surface $z=f(x,y)$ au-dessus de cette région $A$.
+$$ P((X, Y) \in A) = \iint_A f(x, y) \, \mathrm{d}A $$
+
+\end{intuitionbox}
+
+On retrouve les lois marginales en intégrant (en "écrasant" le volume).
+
+\begin{definitionbox}[Densités Marginales]
+On peut retrouver les densités individuelles (marginales) en "écrasant" le volume 3D sur un seul axe. Pour obtenir la PDF de $X$ seul, on intègre $f(x,y)$ sur toutes les valeurs possibles de $y$ :
+$$ f_X(x) = \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}y $$
+$$ f_Y(y) = \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}x $$
+\end{definitionbox}
+
+La CDF conjointe accumule ce volume.
+
+\begin{definitionbox}[CDF Conjointe]
+La \textbf{fonction de répartition conjointe} (CDF) est :
+$$ F(x, y) = P(X \le x, Y \le y) = \int_{-\infty}^y \int_{-\infty}^x f(s, t) \, \mathrm{d}s \, \mathrm{d}t $$
+Elle représente le volume "au sud-ouest" du point $(x, y)$.
+\end{definitionbox}
+
+\subsection{Espérance, Indépendance et Covariance (Cas Conjoint)}
+
+Les concepts clés s'étendent naturellement au cas conjoint continu.
+
+\begin{theorembox}[LOTUS pour les v.a. conjointes]
+Si $X$ et $Y$ ont une densité conjointe $f(x, y)$, et $g(x, y)$ est une fonction :
+$$ E[g(X, Y)] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(x, y) f(x, y) \, \mathrm{d}x \, \mathrm{d}y $$
+\end{theorembox}
+
+La preuve est analogue à celle de LOTUS 1D, mais en dimension supérieure.
+
+\begin{proofbox}[Idée de la preuve]
+Comme pour LOTUS 1D, la preuve rigoureuse utilise des arguments de théorie de la mesure. L'intuition est que pour un petit rectangle $dx dy$ autour de $(x,y)$, la "masse" de probabilité est $f(x,y)dx dy$. Cette masse correspond à la valeur $g(x,y)$. L'espérance est la somme (double intégrale) de ces valeurs $g(x,y)$ pondérées par leur masse $f(x,y)dx dy$.
+\end{proofbox}
+
+La condition d'indépendance s'exprime via la factorisation de la densité.
+
+\begin{definitionbox}[Indépendance et Densité]
+Les variables aléatoires continues $X$ et $Y$ sont \textbf{indépendantes} si et seulement si leur densité conjointe est le produit de leurs densités marginales :
+$$ f(x, y) = f_X(x) f_Y(y), \quad \text{pour tous } x, y $$
+\end{definitionbox}
+
+Cela signifie que le profil selon $x$ ne dépend pas de $y$.
+
+\begin{intuitionbox}
+Intuitivement, l'indépendance signifie que le "profil" de la densité en $x$ ne change pas quelle que soit la valeur de $y$ (et vice-versa). La surface de densité $z=f(x,y)$ peut être "séparée" en une fonction de $x$ multipliée par une fonction de $y$.
+\end{intuitionbox}
+
+La covariance se définit et se calcule de manière similaire.
+
+\begin{definitionbox}[Covariance (cas continu)]
+La \textbf{covariance} de $X$ et $Y$ mesure leur variation linéaire commune :
+$$ \text{Cov}(X, Y) = E[(X - \mu_X)(Y - \mu_Y)] $$
+$$ = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x - \mu_X)(y - \mu_Y) f(x, y) \, \mathrm{d}x \, \mathrm{d}y $$
+\end{definitionbox}
+
+La formule de calcul reste la même.
+
+\begin{theorembox}[Formule de calcul de la Covariance]
+Une formule plus simple pour le calcul de la covariance est :
+$$ \text{Cov}(X, Y) = E[XY] - E[X]E[Y] $$
+où $E[XY]$ est calculé via LOTUS : $E[XY] = \iint xy f(x, y) \, \mathrm{d}x \mathrm{d}y$.
+\end{theorembox}
+
+La preuve est identique à celle du cas discret.
+
+\begin{proofbox}
+La preuve est identique à celle vue pour les variables discrètes, car elle ne repose que sur la linéarité de l'espérance, qui est vraie aussi dans le cas continu.
+Soit $\mu_X = E[X]$ et $\mu_Y = E[Y]$.
+\begin{align*}
+\text{Cov}(X,Y) &= E[(X - \mu_X)(Y - \mu_Y)] \\
+&= E[XY - X\mu_Y - Y\mu_X + \mu_X\mu_Y] \\
+&= E[XY] - E[X\mu_Y] - E[Y\mu_X] + E[\mu_X\mu_Y] \\
+&= E[XY] - \mu_Y E[X] - \mu_X E[Y] + \mu_X\mu_Y \\
+&= E[XY] - \mu_Y \mu_X - \mu_X \mu_Y + \mu_X\mu_Y \\
+&= E[XY] - E[X]E[Y]
+\end{align*}
+\end{proofbox}
+
+La relation entre indépendance et covariance reste la même.
+
+\begin{remarquebox}[Indépendance et Covariance]
+Si $X$ et $Y$ sont indépendantes, alors $\text{Cov}(X, Y) = 0$. Cependant, la réciproque n'est \textbf{pas} toujours vraie pour les variables aléatoires en général (bien qu'elle le soit dans certains cas importants comme pour les variables gaussiennes). Une covariance nulle signifie seulement une absence de \textit{relation linéaire}, mais il peut exister d'autres formes de dépendance.
+\end{remarquebox}
