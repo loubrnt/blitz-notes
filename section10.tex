@@ -145,3 +145,159 @@ Alors, la suite de variables aléatoires $Z_1, Z_2, \dots, Z_n, \dots$ \textbf{c
 Cela signifie que si $\Phi$ est la fonction de répartition de la loi $N(0, 1)$, alors pour tout réel $z$ :
 $$ \lim_{n \to \infty} P(Z_n \le z) = \lim_{n \to \infty} P\left( \frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \le z \right) = \Phi(z) $$
 \end{theorembox}
+
+\subsection{Applications Pratiques du TCL}
+
+Le TCL n'est pas seulement une curiosité mathématique ; c'est le fondement de l'inférence statistique. Voici comment l'appliquer concrètement pour résoudre des problèmes.
+
+\begin{examplebox}[La taille des individus]
+\textbf{Contexte :} La taille des individus dans une population suit une courbe en cloche. Pourquoi ? Car elle est la \textbf{somme} de milliers de petites influences (gènes, nutrition, etc.). Le TCL s'applique.
+
+\textbf{Données :} Supposons que dans une population, la taille $X$ des individus ait une espérance $\mu = 175$ cm et un écart-type $\sigma = 8$ cm. (Note : la loi de $X$ n'est pas forcément normale, même si en pratique elle l'est).
+
+\textbf{Problème :} On prélève un échantillon aléatoire de $n=64$ individus. Quelle est la probabilité que la \textbf{moyenne de cet échantillon} ($\bar{X}_{64}$) soit supérieure à 177 cm ?
+
+\textbf{Solution :}
+\begin{enumerate}
+    \item \textbf{Identifier les paramètres :}
+    \begin{itemize}
+        \item Moyenne de la population : $\mu = 175$ cm
+        \item Écart-type de la population : $\sigma = 8$ cm
+        \item Taille de l'échantillon : $n = 64$
+    \end{itemize}
+    
+    \item \textbf{Appliquer le TCL :}
+    Puisque $n=64$ est grand (généralement $n \ge 30$ est suffisant), le TCL s'applique. La distribution d'échantillonnage de la moyenne $\bar{X}_n$ suit approximativement une loi normale.
+    $$ \bar{X}_n \approx N\left(\mu, \frac{\sigma^2}{n}\right) $$
+    
+    \item \textbf{Calculer les paramètres de la loi normale de $\bar{X}_n$ :}
+    \begin{itemize}
+        \item Espérance de $\bar{X}_n$ : $E[\bar{X}_n] = \mu = 175$ cm.
+        \item Écart-type de $\bar{X}_n$ (appelé "Erreur Standard") :
+        $$ \sigma_{\bar{X}_n} = \frac{\sigma}{\sqrt{n}} = \frac{8}{\sqrt{64}} = \frac{8}{8} = 1 \text{ cm} $$
+    \end{itemize}
+    Donc, $\bar{X}_{64} \approx N(175, 1^2)$.
+    
+    \item \textbf{Standardiser (Calculer le Z-score) :}
+    Nous cherchons $P(\bar{X}_{64} > 177)$. Nous transformons cette valeur en un score $Z$ pour utiliser la loi normale centrée réduite $N(0, 1)$.
+    $$ Z = \frac{\bar{X}_n - \mu}{\sigma_{\bar{X}_n}} = \frac{177 - 175}{1} = 2 $$
+    
+    \item \textbf{Trouver la probabilité :}
+    Chercher $P(\bar{X}_{64} > 177)$ revient à chercher $P(Z > 2)$.
+    En utilisant la table de la loi normale (ou une calculatrice) :
+    $$ P(Z > 2) = 1 - P(Z \le 2) = 1 - \Phi(2) $$
+    Sachant que $\Phi(2) \approx 0.9772$,
+    $$ P(Z > 2) = 1 - 0.9772 = 0.0228 $$
+\end{enumerate}
+\textbf{Conclusion :} Il y a environ 2.28\% de chances qu'un échantillon de 64 personnes ait une taille moyenne supérieure à 177 cm.
+\end{examplebox}
+
+\begin{examplebox}[Remplissage de bouteilles]
+\textbf{Contexte :} Une machine remplit des bouteilles de soda. Le volume versé $X_i$ fluctue légèrement. La loi de $X_i$ est inconnue.
+
+\textbf{Données :} La machine est réglée pour verser en moyenne $\mu = 500$ ml. L'écart-type du processus est connu et vaut $\sigma = 6$ ml. Pour un contrôle, on prélève un échantillon de $n=36$ bouteilles.
+
+\textbf{Problème :} On considère que la machine est déréglée si la moyenne de l'échantillon $\bar{X}_{36}$ est inférieure à 498 ml. Quelle est la probabilité d'une "fausse alarme" (c'est-à-dire, la machine fonctionne bien à $\mu=500$, mais l'échantillon a une moyenne $\bar{X}_{36} < 498$) ?
+
+\textbf{Solution :}
+\begin{enumerate}
+    \item \textbf{Identifier les paramètres :}
+    $\mu = 500$ ml, $\sigma = 6$ ml, $n = 36$.
+    
+    \item \textbf{Appliquer le TCL :}
+    $n=36 \ge 30$, donc le TCL s'applique.
+    $$ \bar{X}_{36} \approx N\left(\mu, \frac{\sigma^2}{n}\right) $$
+    
+    \item \textbf{Calculer les paramètres de $\bar{X}_{36}$ :}
+    \begin{itemize}
+        \item Espérance : $E[\bar{X}_{36}] = \mu = 500$ ml.
+        \item Erreur Standard : $\sigma_{\bar{X}} = \frac{\sigma}{\sqrt{n}} = \frac{6}{\sqrt{36}} = \frac{6}{6} = 1$ ml.
+    \end{itemize}
+    Donc, $\bar{X}_{36} \approx N(500, 1^2)$.
+    
+    \item \textbf{Standardiser (Calculer le Z-score) :}
+    Nous cherchons la probabilité $P(\bar{X}_{36} < 498)$.
+    $$ Z = \frac{\bar{X}_n - \mu}{\sigma_{\bar{X}_n}} = \frac{498 - 500}{1} = -2 $$
+    
+    \item \textbf{Trouver la probabilité :}
+    Chercher $P(\bar{X}_{36} < 498)$ revient à chercher $P(Z < -2)$.
+    $$ P(Z < -2) = \Phi(-2) $$
+    Par symétrie de la loi normale, $\Phi(-z) = 1 - \Phi(z)$.
+    $$ P(Z < -2) = 1 - \Phi(2) = 1 - 0.9772 = 0.0228 $$
+\end{enumerate}
+\textbf{Conclusion :} Il y a 2.28\% de chances d'avoir une fausse alarme, c'est-à-dire de croire à tort que la machine est déréglée alors qu'elle fonctionne normalement.
+\end{examplebox}
+
+\begin{examplebox}[Rendement d'un portefeuille (sur la Somme)]
+\textbf{Contexte :} Le rendement quotidien $X_i$ d'un actif est très volatile. On s'intéresse au rendement annuel \textbf{total}, qui est la \textbf{somme} des rendements quotidiens.
+
+\textbf{Données :} Supposons que le rendement quotidien $X_i$ ait une espérance $\mu = 0.04\%$ et un écart-type $\sigma = 1\%$. (La loi de $X_i$ est inconnue, mais $\mu$ et $\sigma$ existent). Il y a $n=252$ jours de trading dans l'année.
+
+\textbf{Problème :} Quelle est la probabilité que le rendement annuel total $S_{252} = X_1 + \dots + X_{252}$ soit négatif (inférieur à 0) ?
+
+\textbf{Solution :}
+\begin{enumerate}
+    \item \textbf{Identifier les paramètres (pour une seule v.a. $X_i$) :}
+    $\mu = 0.0004$, $\sigma = 0.01$, $n = 252$.
+    
+    \item \textbf{Appliquer le TCL (pour la somme $S_n$) :}
+    $n=252$ est grand. Le TCL s'applique à la somme $S_n$.
+    $$ S_n \approx N\left(n\mu, n\sigma^2\right) $$
+    
+    \item \textbf{Calculer les paramètres de la loi normale de $S_{252}$ :}
+    \begin{itemize}
+        \item Espérance de $S_{252}$ : $E[S_n] = n\mu = 252 \times 0.0004 = 0.1008$ (soit 10.08\%).
+        \item Variance de $S_{252}$ : $\text{Var}(S_n) = n\sigma^2 = 252 \times (0.01)^2 = 252 \times 0.0001 = 0.0252$.
+        \item Écart-type de $S_{252}$ : $\sigma_{S_n} = \sqrt{n\sigma^2} = \sqrt{0.0252} \approx 0.1587$ (soit 15.87\%).
+    \end{itemize}
+    Donc, $S_{252} \approx N(0.1008, 0.1587^2)$.
+    
+    \item \textbf{Standardiser (Calculer le Z-score) :}
+    Nous cherchons $P(S_{252} < 0)$.
+    $$ Z = \frac{S_n - E[S_n]}{\sigma_{S_n}} = \frac{0 - 0.1008}{0.1587} \approx -0.635 $$
+    
+    \item \textbf{Trouver la probabilité :}
+    Chercher $P(S_{252} < 0)$ revient à chercher $P(Z < -0.635)$.
+    $$ P(Z < -0.635) = \Phi(-0.635) = 1 - \Phi(0.635) $$
+    En interpolant dans la table, $\Phi(0.635) \approx 0.7373$.
+    $$ P(Z < -0.635) \approx 1 - 0.7373 = 0.2627 $$
+\end{enumerate}
+\textbf{Conclusion :} Malgré une espérance de rendement quotidien positive, il y a environ 26.3\% de chances que le rendement annuel total soit négatif.
+\end{examplebox}
+
+\begin{examplebox}[Estimation d'une proportion (Marge d'erreur)]
+\textbf{Contexte :} On veut estimer la proportion $p$ de votants qui approuvent un candidat. On modélise chaque personne $i$ par une variable de Bernoulli $X_i$ (1 si "oui", 0 si "non").
+L'espérance de la population est $\mu = E[X_i] = p$.
+La variance de la population est $\sigma^2 = \text{Var}(X_i) = p(1-p)$.
+Le résultat du sondage est la moyenne d'échantillon $\bar{X}_n = \hat{p}$ (la proportion observée).
+
+\textbf{Données :} On sonde $n=1000$ personnes. Le résultat est que 540 personnes disent "oui". Donc $\hat{p} = 540/1000 = 0.54$.
+
+\textbf{Problème :} Calculer l'intervalle de confiance à 95\% pour la vraie proportion $p$ (la fameuse "marge d'erreur").
+
+\textbf{Solution :}
+\begin{enumerate}
+    \item \textbf{Appliquer le TCL :}
+    $n=1000$ est grand. Le TCL nous dit que la proportion d'échantillon $\hat{p} = \bar{X}_n$ suit une loi normale :
+    $$ \hat{p} \approx N\left(p, \frac{p(1-p)}{n}\right) $$
+    
+    \item \textbf{Formule de l'Intervalle de Confiance :}
+    Un intervalle de confiance à 95\% est centré sur notre estimation $\hat{p}$ et s'étend de $\pm 1.96$ erreurs standard (car $P(-1.96 \le Z \le 1.96) = 0.95$).
+    $$ I.C._{95\%} = \left[ \hat{p} - 1.96 \cdot \sigma_{\hat{p}} \ ; \ \hat{p} + 1.96 \cdot \sigma_{\hat{p}} \right] $$
+    où $\sigma_{\hat{p}} = \sqrt{p(1-p)/n}$.
+    
+    \item \textbf{Estimer l'Erreur Standard :}
+    Problème : nous ne connaissons pas $p$ (c'est ce que nous cherchons !). Nous ne pouvons donc pas calculer $\sigma_{\hat{p}}$.
+    \textbf{Solution :} Nous l'estimons en utilisant notre meilleur estimateur pour $p$, qui est $\hat{p} = 0.54$.
+    $$ \text{Erreur Standard Estimée (SE)} = \sqrt{\frac{\hat{p}(1-\hat{p})}{n}} $$
+    $$ SE = \sqrt{\frac{0.54 \times (1 - 0.54)}{1000}} = \sqrt{\frac{0.54 \times 0.46}{1000}} = \sqrt{\frac{0.2484}{1000}} \approx \sqrt{0.0002484} \approx 0.01576 $$
+    
+    \item \textbf{Calculer la Marge d'Erreur :}
+    La marge d'erreur (ME) est la demi-largeur de l'intervalle.
+    $$ ME = 1.96 \times SE = 1.96 \times 0.01576 \approx 0.0309 $$
+    
+    \item \textbf{Construire l'Intervalle :}
+    $$ I.C._{95\%} = [ 0.54 - 0.0309 \ ; \ 0.54 + 0.0309 ] = [ 0.5091 \ ; \ 0.5709 ] $$
+\end{enumerate}
+\textbf{Conclusion :} Avec 54\% d'intentions de vote sur un échantillon de 1000 personnes, nous sommes confiants à 95\% que la vraie proportion $p$ dans la population se situe entre 50.9\% et 57.1\%. La marge d'erreur du sondage est de $\pm 3.1\%$.
+\end{examplebox}
