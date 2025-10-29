@@ -5,7 +5,7 @@
 
 Maintenant que nous avons défini les variables aléatoires discrètes et leur distribution (PMF), l'étape suivante est de résumer ces distributions. La mesure la plus importante est leur "centre", ou leur valeur moyenne.
 
-\begin{definitionbox}[Espérance]
+\begin{definitionbox}[Espérance (cas discret)]
 L'espérance (ou valeur attendue) d'une variable aléatoire discrète $X$, qui prend les valeurs distinctes $x_1, x_2, \dots$, est définie par :
 $$ E(X) = \sum_j x_j P(X=x_j) $$
 \end{definitionbox}
@@ -24,12 +24,36 @@ $$ E(X) = 1\left(\frac{1}{6}\right) + 2\left(\frac{1}{6}\right) + 3\left(\frac{1
 Même si 3.5 n'est pas un résultat possible, c'est la valeur moyenne sur un grand nombre de lancers.
 \end{examplebox}
 
+\subsection{Espérance d'une variable aléatoire continue}
+
+Lorsque la variable aléatoire $X$ est continue, sa distribution est décrite par une fonction de densité de probabilité (PDF), $f(x)$. L'espérance est définie de manière analogue, en remplaçant la somme par une intégrale.
+
+\begin{definitionbox}[Espérance (cas continu)]
+L'espérance (ou valeur attendue) d'une variable aléatoire continue $X$ avec une fonction de densité $f(x)$ est définie par :
+$$ E(X) = \int_{-\infty}^{\infty} x f(x) \, dx $$
+L'intégrale doit être absolument convergente, c'est-à-dire $\int_{-\infty}^{\infty} |x| f(x) \, dx < \infty$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+L'intuition du \textbf{centre de gravité} est toujours valable. Si la fonction de densité $f(x)$ représente la répartition de la masse sur une tige (l'axe des $x$), alors $E(X)$ est le point d'équilibre où la tige tiendrait en balance.
+\end{intuitionbox}
+
+\begin{examplebox}[Loi uniforme]
+Soit $X \sim \mathcal{U}(a, b)$. Sa densité est $f(x) = \frac{1}{b-a}$ pour $x \in [a, b]$, et 0 ailleurs.
+\begin{align*}
+E(X) &= \int_{-\infty}^{\infty} x f(x) \, dx = \int_{a}^{b} x \left( \frac{1}{b-a} \right) \, dx \\
+&= \frac{1}{b-a} \left[ \frac{x^2}{2} \right]_a^b = \frac{1}{b-a} \left( \frac{b^2 - a^2}{2} \right) \\
+&= \frac{1}{b-a} \frac{(b-a)(b+a)}{2} = \frac{a+b}{2}
+\end{align*}
+L'espérance est le point milieu de l'intervalle, ce qui est intuitivement correct.
+\end{examplebox}
+
 \subsection{Linéarité de l'espérance}
 
 Le calcul de l'espérance deviendrait très fastidieux si nous devions toujours utiliser la définition. Heureusement, l'espérance possède une propriété fondamentale qui simplifie énormément les calculs.
 
 \begin{theorembox}[Linéarité de l'espérance]
-Pour toutes variables aléatoires $X$ et $Y$, et pour toute constante $c$, on a :
+Pour toutes variables aléatoires $X$ et $Y$ (discrètes ou continues), et pour toute constante $c$, on a :
 \begin{align*}
 E(X+Y) &= E(X) + E(Y) \\
 E(cX) &= cE(X)
@@ -37,19 +61,34 @@ E(cX) &= cE(X)
 Cette propriété est extrêmement puissante car elle ne requiert pas que $X$ et $Y$ soient indépendantes.
 \end{theorembox}
 
-La preuve de $E(cX) = cE(X)$ est directe à partir de la définition. La preuve pour la somme $E(X+Y)$ est plus complexe mais essentielle.
+La preuve de $E(cX) = cE(X)$ est directe à partir de la définition (discrète ou continue). La preuve pour la somme $E(X+Y)$ est plus complexe mais essentielle.
 
 \begin{proofbox}
-La première propriété est directe :
-$$ E(cX) = \sum_x (cx) P(X=x) = c \sum_x x P(X=x) = cE(X) $$
-Pour la seconde, nous devons utiliser la définition de l'espérance pour une fonction de deux variables (une extension de LOTUS). Soit $S = X+Y$. L'espérance $E(S)$ se calcule en sommant sur toutes les paires possibles $(x, y)$:
+La première propriété est directe.
+\begin{itemize}
+    \item \textbf{Cas discret :} $ E(cX) = \sum_x (cx) P(X=x) = c \sum_x x P(X=x) = cE(X) $
+    \item \textbf{Cas continu :} $ E(cX) = \int (cx) f(x) dx = c \int x f(x) dx = cE(X) $
+\end{itemize}
+
+Pour la seconde, $E(X+Y) = E(X) + E(Y)$, la preuve est analogue dans les deux cas.
+
+\textbf{Cas discret :} Soit $S = X+Y$. L'espérance $E(S)$ se calcule en sommant sur toutes les paires possibles $(x, y)$ avec la PMF jointe $P(X=x, Y=y)$ :
 \begin{align*}
 E(X+Y) &= \sum_x \sum_y (x+y) P(X=x, Y=y) \\
 &= \sum_x \sum_y x P(X=x, Y=y) + \sum_x \sum_y y P(X=x, Y=y) \\
 &= \sum_x x \left( \sum_y P(X=x, Y=y) \right) + \sum_y y \left( \sum_x P(X=x, Y=y) \right)
 \end{align*}
-Par la loi des probabilités totales (ou "marginalisation"), la somme interne $\sum_y P(X=x, Y=y)$ est simplement $P(X=x)$. De même, $\sum_x P(X=x, Y=y) = P(Y=y)$.
+Par la loi des probabilités marginales, la somme interne $\sum_y P(X=x, Y=y)$ est $P(X=x)$, et de même $\sum_x P(X=x, Y=y) = P(Y=y)$.
 $$ E(X+Y) = \sum_x x P(X=x) + \sum_y y P(Y=y) = E(X) + E(Y) $$
+
+\textbf{Cas continu :} La preuve est identique en remplaçant les sommes par des intégrales et la PMF jointe par la PDF jointe $f(x, y)$:
+\begin{align*}
+E(X+Y) &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x+y) f(x, y) \, dx \, dy \\
+&= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x f(x, y) \, dx \, dy + \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} y f(x, y) \, dx \, dy \\
+&= \int_{-\infty}^{\infty} x \left( \int_{-\infty}^{\infty} f(x, y) \, dy \right) \, dx + \int_{-\infty}^{\infty} y \left( \int_{-\infty}^{\infty} f(x, y) \, dx \right) \, dy
+\end{align*}
+Les intégrales internes sont les densités marginales $f_X(x) = \int f(x, y) dy$ et $f_Y(y) = \int f(x, y) dx$.
+$$ E(X+Y) = \int_{-\infty}^{\infty} x f_X(x) \, dx + \int_{-\infty}^{\infty} y f_Y(y) \, dy = E(X) + E(Y) $$
 Notez que l'indépendance n'a jamais été requise pour cette preuve.
 \end{proofbox}
 
@@ -137,14 +176,19 @@ Ce qui démontre que l'espérance du nombre d'échecs avant le premier succès e
 Souvent, nous ne sommes pas intéressés par l'espérance de $X$ elle-même, mais par l'espérance d'une fonction de $X$, par exemple $E(X^2)$ ou $E(e^X)$.
 
 \begin{theorembox}[Théorème de Transfert (LOTUS)]
-Si $X$ est une variable aléatoire discrète et $g(x)$ est une fonction de $\mathbb{R}$ dans $\mathbb{R}$, alors l'espérance de la variable aléatoire $g(X)$ est donnée par :
-$$ E[g(X)] = \sum_x g(x) P(X=x) $$
-La somme porte sur toutes les valeurs possibles de $X$. Ce théorème est utile car il évite d'avoir à trouver la PMF de $g(X)$.
+Si $X$ est une variable aléatoire et $g(x)$ est une fonction de $\mathbb{R}$ dans $\mathbb{R}$, alors l'espérance de la variable aléatoire $g(X)$ est donnée par :
+\begin{itemize}
+    \item \textbf{Cas discret :} $ E[g(X)] = \sum_x g(x) P(X=x) $
+    \item \textbf{Cas continu :} $ E[g(X)] = \int_{-\infty}^{\infty} g(x) f_X(x) \, dx $
+\end{itemize}
+Ce théorème est utile car il évite d'avoir à trouver la distribution (PMF ou PDF) de $g(X)$.
 \end{theorembox}
 
 La preuve dans le cas discret consiste simplement à regrouper les termes.
 
 \begin{proofbox}
+Nous montrons la preuve pour le cas discret. La preuve pour le cas continu est plus technique (utilisant un changement de variable) et est omise.
+
 Soit $Y = g(X)$. Par définition, l'espérance de $Y$ est $E(Y) = \sum_y y P(Y=y)$.
 L'ensemble des valeurs $y$ que $Y$ peut prendre est $\{g(x) \mid x \in \text{support de } X\}$.
 Pour une valeur $y$ donnée, l'événement $\{Y=y\}$ est l'union de tous les événements $\{X=x\}$ tels que $g(x)=y$.
@@ -160,12 +204,12 @@ $$ E[g(X)] = \sum_x g(x) P(X=x) $$
 Ce théorème justifie son nom : c'est ce que l'on ferait "inconsciemment".
 
 \begin{intuitionbox}
-Pour trouver la valeur moyenne d'une fonction d'une variable aléatoire (par exemple, le carré du résultat d'un dé), vous n'avez pas besoin de déterminer d'abord la distribution de ce carré. Vous pouvez simplement prendre chaque valeur possible du résultat original, lui appliquer la fonction, et pondérer ce nouveau résultat par la probabilité du résultat original.
+Pour trouver la valeur moyenne d'une fonction d'une variable aléatoire (par exemple, le carré du résultat d'un dé), vous n'avez pas besoin de déterminer d'abord la distribution de ce carré. Vous pouvez simplement prendre chaque valeur possible du résultat original, lui appliquer la fonction, et pondérer ce nouveau résultat par la probabilité (ou densité) du résultat original.
 \end{intuitionbox}
 
 Utilisons ce théorème pour calculer $E(X^2)$ pour notre dé.
 
-\begin{examplebox}[Calcul de $E(X^2)$ pour un dé]
+\begin{examplebox}[Calcul de $E(X^2)$ pour un dé (discret)]
 Soit $X$ le résultat d'un lancer de dé. Calculons l'espérance de $Y=X^2$. La fonction est $g(x)=x^2$.
 \begin{align*}
 E(X^2) &= \sum_{k=1}^6 k^2 P(X=k) \\
@@ -174,13 +218,26 @@ E(X^2) &= \sum_{k=1}^6 k^2 P(X=k) \\
 \end{align*}
 \end{examplebox}
 
+\begin{examplebox}[Calcul de $E(X^2)$ pour une loi uniforme (continu)]
+Soit $X \sim \mathcal{U}(0, 1)$. Sa densité est $f(x)=1$ sur $[0, 1]$. Calculons l'espérance de $Y=X^2$. La fonction est $g(x)=x^2$.
+\begin{align*}
+E(X^2) &= \int_{-\infty}^{\infty} g(x) f(x) \, dx = \int_{0}^{1} x^2 \cdot 1 \, dx \\
+&= \left[ \frac{x^3}{3} \right]_0^1 = \frac{1}{3}
+\end{align*}
+\end{examplebox}
+
 \subsection{Variance}
 
 L'espérance nous donne le centre d'une distribution, mais elle ne dit rien sur sa "largeur" ou sa "dispersion". C'est le rôle de la variance.
 
 \begin{definitionbox}[Variance et écart-type]
-La \textbf{variance} d'une variable aléatoire $X$ mesure la dispersion de sa distribution autour de son espérance. Elle est définie par :
-$$ \text{Var}(X) = E\left[ (X - E(X))^2 \right] $$
+La \textbf{variance} d'une variable aléatoire $X$ mesure la dispersion de sa distribution autour de son espérance $\mu = E(X)$. Elle est définie par :
+$$ \text{Var}(X) = E\left[ (X - \mu)^2 \right] $$
+Concrètement, cela se traduit par (en utilisant LOTUS avec $g(x)=(x-\mu)^2$) :
+\begin{itemize}
+    \item \textbf{Cas discret :} $ \text{Var}(X) = \sum_x (x - \mu)^2 P(X=x) $
+    \item \textbf{Cas continu :} $ \text{Var}(X) = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) \, dx $
+\end{itemize}
 La racine carrée de la variance est appelée l' \textbf{écart-type} :
 $$ \text{SD}(X) = \sqrt{\text{Var}(X)} $$
 \end{definitionbox}
@@ -191,14 +248,14 @@ L'idée est de mesurer l'écart quadratique moyen à l'espérance.
 La variance est la "distance carrée moyenne à la moyenne". On prend l'écart de chaque valeur par rapport à la moyenne, on le met au carré (pour que les écarts positifs et négatifs ne s'annulent pas), puis on en calcule la moyenne. L'écart-type est souvent plus interprétable car il ramène cette mesure de dispersion dans les mêmes unités que la variable aléatoire elle-même.
 \end{intuitionbox}
 
-La définition $E[(X-E(X))^2]$ est excellente pour l'interprétation, mais pénible pour le calcul. Une formule alternative est presque toujours utilisée.
+La définition $E[(X-\mu)^2]$ est excellente pour l'interprétation, mais pénible pour le calcul. Une formule alternative est presque toujours utilisée.
 
 \begin{theorembox}[Formule de calcul de la variance]
-Pour toute variable aléatoire $X$, une formule plus pratique pour le calcul de la variance est :
+Pour toute variable aléatoire $X$ (discrète ou continue), une formule plus pratique pour le calcul de la variance est :
 $$ \text{Var}(X) = E(X^2) - [E(X)]^2 $$
 \end{theorembox}
 
-La preuve est une simple expansion algébrique utilisant la linéarité de l'espérance.
+La preuve est une simple expansion algébrique utilisant la linéarité de l'espérance (qui s'applique aux cas discrets et continus).
 
 \begin{proofbox}
 Soit $\mu = E(X)$. On part de la définition de la variance :
@@ -217,6 +274,29 @@ Nous pouvons maintenant calculer la variance de notre lancer de dé.
 
 \begin{examplebox}[Variance d'un lancer de dé]
 Nous avons déjà calculé pour un dé que $E(X) = 3.5$ et $E(X^2) = 91/6$. On peut maintenant trouver la variance facilement :
-$$ \text{Var}(X) = E(X^2) - [E(X)]^2 = \frac{91}{6} - (3.5)^2 = \frac{91}{6} - 12.25 = 15.166... - 12.25 \approx 2.917 $$
-L'écart-type est $\text{SD}(X) = \sqrt{2.917} \approx 1.708$.
+\begin{align*}
+\text{Var}(X) &= E(X^2) - [E(X)]^2 = \frac{91}{6} - (3.5)^2 \\
+&= \frac{91}{6} - \left(\frac{7}{2}\right)^2 = \frac{91}{6} - \frac{49}{4} \\
+&= \frac{182}{12} - \frac{147}{12} = \frac{35}{12} \approx 2.917
+\end{align*}
+L'écart-type est $\text{SD}(X) = \sqrt{35/12} \approx 1.708$.
+\end{examplebox}
+
+\begin{examplebox}[Variance de la loi uniforme]
+Calculons la variance de $X \sim \mathcal{U}(a, b)$.
+Nous avons trouvé $E(X) = \frac{a+b}{2}$.
+Nous devons d'abord calculer $E(X^2)$ en utilisant LOTUS :
+\begin{align*}
+E(X^2) &= \int_a^b x^2 f(x) \, dx = \int_a^b x^2 \left( \frac{1}{b-a} \right) \, dx \\
+&= \frac{1}{b-a} \left[ \frac{x^3}{3} \right]_a^b = \frac{1}{b-a} \left( \frac{b^3 - a^3}{3} \right) \\
+&= \frac{1}{b-a} \frac{(b-a)(a^2+ab+b^2)}{3} = \frac{a^2+ab+b^2}{3}
+\end{align*}
+On utilise maintenant la formule de calcul $\text{Var}(X) = E(X^2) - [E(X)]^2$ :
+\begin{align*}
+\text{Var}(X) &= \frac{a^2+ab+b^2}{3} - \left( \frac{a+b}{2} \right)^2 \\
+&= \frac{a^2+ab+b^2}{3} - \frac{a^2+2ab+b^2}{4} \\
+&= \frac{4(a^2+ab+b^2) - 3(a^2+2ab+b^2)}{12} \\
+&= \frac{4a^2+4ab+4b^2 - 3a^2-6ab-3b^2}{12} \\
+&= \frac{a^2-2ab+b^2}{12} = \frac{(b-a)^2}{12}
+\end{align*}
 \end{examplebox}
