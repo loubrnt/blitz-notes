@@ -1,499 +1,505 @@
 \newpage
+\section{La Loi Log-Normale}
 
-\section{Moments d'une distribution}
+\subsection{Introduction et Définition}
 
-\subsection{Définitions fondamentales des moments}
+Après la loi normale, qui modélise des phénomènes résultant de \textit{l'addition} de nombreux petits effets, nous abordons une loi qui modélise le \textit{produit} de nombreux petits facteurs.
 
-Après avoir défini l'espérance ($\mu$) et la variance ($\sigma^2$), qui sont les moments d'ordre 1 et 2, nous pouvons généraliser cette idée pour capturer des informations plus subtiles sur la forme d'une distribution.
+\begin{definitionbox}[Loi Log-Normale]
+Une variable aléatoire continue $Y$ suit une \textbf{loi log-normale} de paramètres $\mu$ et $\sigma^2$, notée $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, si son logarithme népérien $X = \ln(Y)$ suit une loi normale $\mathcal{N}(\mu, \sigma^2)$.
 
-\begin{definitionbox}[Types de Moments]
-Soit $X$ une variable aléatoire ayant une espérance $\mu$ et une variance $\sigma^2$. Pour tout entier positif $m$, on définit les moments suivants :
-\begin{itemize}
-    \item \textbf{$m$-ième moment (non centré)} : $E[X^m]$.
-    \item \textbf{$m$-ième moment centré} : $E[(X - \mu)^m]$.
-    \item \textbf{$m$-ième moment standardisé} : $E\left[\left(\frac{X - \mu}{\sigma}\right)^m\right]$.
-\end{itemize}
-Les moments centrés et standardisés permettent d'étudier les propriétés de la distribution indépendamment de sa position ($\mu$) et de son échelle ($\sigma$).
+Puisque $\ln(Y)$ doit être un nombre réel, le support de $Y$ (l'ensemble des valeurs qu'elle peut prendre) est l'intervalle $(0, \infty)$.
 \end{definitionbox}
 
-\subsection{Asymétrie (Skewness)}
-
-Le premier moment nous donne la tendance centrale. Le deuxième moment (la variance) nous donne la dispersion. Le troisième moment, lui, va nous renseigner sur la \textit{symétrie} de la distribution.
-
-\begin{definitionbox}[Asymétrie (Skewness)]
-L'\textbf{asymétrie} (ou \textit{skewness}) d'une variable aléatoire $X$ de moyenne $\mu$ et d'écart-type $\sigma$ est définie comme le \textbf{troisième moment standardisé} :
-$$ \text{Skew}(X) = E\left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right]. $$
-\end{definitionbox}
-
-\begin{intuitionbox}[Comprendre la Formule du Skewness]
-Pour une variable aléatoire $X$ de moyenne $\mu$ et d'écart-type $\sigma$, le \textbf{skewness} est défini comme :
-\[
-\text{Skew}(X) = \frac{E[(X - \mu)^3]}{\sigma^3}
-\]
-
-\medskip
-
-\textbf{Logique du numérateur : le moment centré d'ordre 3}
+\begin{remarquebox}[Interprétation Cruciale des Paramètres]
+C'est le point le plus important (et le plus confus) de la loi log-normale :
 \begin{itemize}
-    \item Le terme $(X - \mu)^3$ est le \textbf{cube de l'écart à la moyenne}
-    \item Contrairement à $(X - \mu)^2$ (toujours positif), le cube \textbf{conserve le signe} de l'écart
-    \item Il pondère différemment les observations à gauche et à droite de la moyenne
+    \item $\mu$ \textbf{n'est PAS} l'espérance de $Y$.
+    \item $\sigma^2$ \textbf{n'est PAS} la variance de $Y$.
 \end{itemize}
-
-\medskip
-
-% --- MODIFIÉ : Tableau supprimé et fusionné dans la liste ---
-\textbf{Interprétation intuitive}
-\begin{itemize}
-    \item \textbf{Skewness = 0 (Symétrique)} : La distribution est symétrique. Les écarts positifs et négatifs s'annulent. Typiquement : Moyenne = Médiane = Mode.
-    \item \textbf{Skewness > 0 (Queue à droite)} : La distribution présente une queue longue à droite. Les grandes valeurs positives sont amplifiées par le cube. Les valeurs extrêmes tirent la moyenne vers la droite.
-    \item \textbf{Skewness < 0 (Queue à gauche)} : La distribution présente une queue longue à gauche. Les écarts négatifs dominent. Les valeurs extrêmes tirent la moyenne vers la gauche.
-\end{itemize}
-% --- FIN MODIFICATION ---
-
-\medskip
-
-\textbf{Pourquoi $\sigma^3$ au dénominateur ?}
-\begin{itemize}
-    \item Le moment d'ordre 3 est homogène à des unités au cube
-    \item On divise par $\sigma^3$ pour obtenir un coefficient \textbf{sans dimension}
-    \item Permet la comparaison entre distributions de différentes échelles
-\end{itemize}
-\end{intuitionbox}
-
-\begin{remarquebox}[Pourquoi Standardiser ?]
-En standardisant d'abord ($\frac{X-\mu}{\sigma}$), la définition de $\text{Skew}(X)$ ne dépend ni de la position ($\mu$) ni de l'échelle ($\sigma$) de la distribution, ce qui est raisonnable puisque ces informations sont déjà fournies par la moyenne et l'écart-type. De plus, cette standardisation garantit que l'asymétrie est invariante par changement d'unité de mesure (par exemple, passer des pouces aux mètres n'affecte pas la valeur de l'asymétrie).
+Au lieu de cela, $\mu = E[\ln(Y)]$ et $\sigma^2 = \text{Var}(\ln(Y))$ sont l'espérance et la variance de la variable normale \textit{sous-jacente} (le log de $Y$).
 \end{remarquebox}
 
-\subsection{Propriétés de symétrie}
+\subsection{Intuition : Des Sommes aux Produits}
 
-Le skewness est une mesure numérique de l'asymétrie. Mais nous pouvons aussi définir la symétrie de manière formelle.
+La loi log-normale peut sembler complexe, mais elle émerge naturellement de processus multiplicatifs, tout comme la loi normale émerge de processus additifs.
 
-\begin{definitionbox}[Symétrie d'une Variable Aléatoire]
-On dit qu'une variable aléatoire $X$ a une distribution \textbf{symétrique} autour de $\mu$ si la variable $X - \mu$ a la même distribution que $\mu - X$. On dit aussi que $X$ est symétrique ou que sa distribution est symétrique. Ces trois formulations ont le même sens.
-\end{definitionbox}
+\begin{intuitionbox}[Du Multiplicatif à l'Additif (et retour)]
+\textbf{1. Le Contraste (Additif $\to$ Normal)} :
+La loi normale (via le Théorème Central Limite) décrit le résultat d'une \textbf{somme} de nombreux petits chocs aléatoires indépendants (comme les $\pm 1$ d'un jeu de pile ou face répété). Le résultat est symétrique autour d'une moyenne.
+$$ S_n = X_1 + X_2 + \ldots + X_n \quad \xrightarrow{\text{TCL}} \quad \mathcal{N} $$
 
-\begin{theorembox}[Symétrie en Termes de Fonction de Densité]
-Soit $X$ une variable aléatoire continue de fonction de densité de probabilité (PDF) $f$. Alors, $X$ est symétrique autour de $\mu$ si et seulement si :
-$$ f(x) = f(2\mu - x) \quad \text{pour tout } x. $$
+\textbf{2. Le Problème (Multiplicatif)} :
+De nombreux phénomènes réels ne s'additionnent pas, ils se \textit{multiplient}.
+\begin{itemize}
+    \item \textbf{Finance :} Un capital $C$ évolue par des rendements en pourcentage. $C_T = C_0 \times (1+r_1) \times (1+r_2) \times \ldots \times (1+r_T)$.
+    \item \textbf{Biologie :} La taille d'une population de bactéries est $P_t = P_0 \times F_1 \times F_2 \times \ldots \times F_t$, où $F_i$ est le facteur de croissance à l'étape $i$.
+\end{itemize}
+Nous voulons décrire la distribution d'un \textbf{produit} de facteurs aléatoires :
+$$ Y = F_1 \times F_2 \times \ldots \times F_n $$
+
+\textbf{3. L'Astuce (Le Logarithme)} :
+Les produits sont difficiles à manipuler. L'astuce mathématique fondamentale est de prendre le logarithme, qui \textbf{transforme les produits en sommes} :
+$$ \ln(Y) = \ln(F_1) + \ln(F_2) + \ldots + \ln(F_n) $$
+
+\textbf{4. L'Apparition de la Loi Normale} :
+Nous avons transformé notre problème ! La variable $\ln(Y)$ est maintenant une \textit{somme} de petits chocs aléatoires (les $\ln(F_i)$). D'après le Théorème Central Limite, si $n$ est grand, la distribution de cette \textit{somme} $\ln(Y)$ va converger vers une loi normale.
+$$ \ln(Y) = X \sim \mathcal{N}(\mu, \sigma^2) $$
+C'est l'origine du nom "log-normal" : le \textit{log} de la variable est \textit{normal}.
+
+\textbf{5. Le Retour (L'Exponentielle)} :
+Pour trouver la distribution de $Y$ (notre variable d'intérêt), il nous faut inverser l'opération du logarithme. Nous prenons l'exponentielle :
+$$ Y = e^X \quad \text{où } X \sim \mathcal{N}(\mu, \sigma^2) $$
+Cette transformation $x \mapsto e^x$ change radicalement la forme de la distribution.
+\begin{itemize}
+    \item La cloche symétrique de $X$ (qui peut être négative) est transformée.
+    \item Puisque $e^x > 0$ pour tout $x$, la variable $Y$ est \textbf{strictement positive}.
+    \item La partie gauche de la cloche (valeurs $x \to -\infty$) est \textbf{compressée} près de $0$ ($e^x \to 0$).
+    \item La partie droite de la cloche (valeurs $x \to +\infty$) est \textbf{étirée} exponentiellement ($e^x \to \infty$).
+\end{itemize}
+Le résultat est une distribution \textbf{asymétrique à droite} (biaisée positivement), avec une longue queue vers les valeurs élevées.
+
+\textbf{Conclusion :} La loi log-normale est la loi des \textbf{produits} de nombreux petits facteurs aléatoires. Elle modélise des grandeurs qui ne peuvent être négatives et qui ont une probabilité non négligeable d'atteindre des valeurs très grandes.
+\end{intuitionbox}
+
+\subsection{Fonction de Densité (PDF)}
+
+On peut déduire la forme de la PDF log-normale en utilisant la méthode du changement de variable sur $Y = e^X$.
+
+\begin{theorembox}[Fonction de Densité Log-Normale]
+Si $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, sa fonction de densité de probabilité est donnée par :
+$$ f_Y(y) = \frac{1}{y \sigma \sqrt{2\pi}} e^{ -\frac{(\ln(y) - \mu)^2}{2\sigma^2} } $$
+pour tout $y > 0$.
 \end{theorembox}
 
-\begin{proofbox}[Preuve du Théorème de Symétrie]
-Soit $F$ la fonction de répartition (CDF) de $X$. Si la symétrie tient, alors :
-$$ F(x) = P(X \le x) = P(X - \mu \le x - \mu) = P(\mu - X \le x - \mu) = P(X \ge 2\mu - x) = 1 - F(2\mu - x). $$
-
-En prenant la dérivée des deux côtés par rapport à $x$, on obtient :
-$$ f(x) = \frac{d}{dx}F(x) = \frac{d}{dx}[1 - F(2\mu - x)] = f(2\mu - x). $$
-
-Cela démontre que la condition $f(x) = f(2\mu - x)$ est nécessaire et suffisante pour la symétrie.
+\begin{proofbox}[Dérivation par Changement de Variable]
+Nous cherchons la densité $f_Y(y)$ de $Y = g(X) = e^X$, sachant que $X = g^{-1}(Y) = \ln(Y)$ a pour densité $f_X(x) = \phi\left(\frac{x-\mu}{\sigma}\right) \frac{1}{\sigma}$.
+La formule de changement de variable est $f_Y(y) = f_X(g^{-1}(y)) \left| \frac{d(g^{-1}(y))}{dy} \right|$.
+Ici, $x = g^{-1}(y) = \ln(y)$.
+La dérivée est $\frac{dx}{dy} = \frac{1}{y}$. Puisque $y > 0$, on a $|\frac{1}{y}| = \frac{1}{y}$.
+Substituons $x = \ln(y)$ dans la densité de $X$ et multiplions par la dérivée :
+$$ f_Y(y) = f_X(\ln(y)) \cdot \frac{1}{y} $$
+$$ f_Y(y) = \left[ \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{1}{2} \left( \frac{\ln(y)-\mu}{\sigma} \right)^2 } \right] \cdot \frac{1}{y} $$
+En réarrangeant, on obtient :
+$$ f_Y(y) = \frac{1}{y \sigma \sqrt{2\pi}} e^{ -\frac{(\ln(y) - \mu)^2}{2\sigma^2} } $$
 \end{proofbox}
 
-\subsection{Aplatissement (Kurtosis)}
-
-Après l'asymétrie (ordre 3), le moment d'ordre 4 nous informe sur "l'épaisseur" des queues de la distribution, c'est-à-dire la probabilité d'obtenir des valeurs très éloignées de la moyenne.
-
-\begin{definitionbox}[Kurtosis (Aplatissement)]
-Pour une variable aléatoire $X$ de moyenne $\mu$ et d'écart-type $\sigma$, le \textbf{kurtosis} est défini comme le \textbf{quatrième moment standardisé} :
-$$ \text{Kurtosis}(X) = E\left[ \left( \frac{X - \mu}{\sigma} \right)^4 \right]. $$
-
-Dans la pratique, on utilise plus souvent le \textbf{kurtosis excessif} (ou excès de kurtosis), défini comme :
-$$ \text{Excess Kurtosis}(X) = E\left[ \left( \frac{X - \mu}{\sigma} \right)^4 \right] - 3. $$
-La soustraction de 3 fait en sorte que le kurtosis d'une loi normale soit égal à 0.
-\end{definitionbox}
-
-\begin{intuitionbox}[Comprendre la Kurtosis]
-Pour une variable aléatoire $X$, le \textbf{kurtosis} est défini comme :
-\[
-\text{Kurt}(X) = \frac{E[(X - \mu)^4]}{\sigma^4}
-\]
-et l'\textbf{excess kurtosis} (kurtosis excédentaire) comme : $\text{Excess Kurtosis} = \text{Kurt}(X) - 3$.
-
-\medskip
-
-\textbf{Pourquoi le moment d'ordre 4 ?}
+\begin{intuitionbox}[Forme de la PDF]
+La PDF log-normale confirme notre intuition :
 \begin{itemize}
-    \item Comme la variance, on utilise une puissance paire (pas d'effet de signe)
-    \item La puissance 4 \textbf{amplifie énormément les écarts extrêmes}
-    \item Mesure le \textbf{poids des queues} et la \textbf{concentration autour de la moyenne}
+    \item Elle n'est définie que pour $y > 0$.
+    \item Elle est fortement \textbf{asymétrique à droite}. Elle commence à $f_Y(0)=0$, monte rapidement vers un pic (le mode), puis redescend lentement, formant une longue "queue" vers les grandes valeurs.
+    \item Le paramètre $\sigma$ (l'écart-type de $\ln Y$) contrôle \textbf{l'asymétrie} de $Y$. Un $\sigma$ plus grand rend la distribution plus étalée et plus asymétrique.
 \end{itemize}
 
-\medskip
-
-% --- MODIFIÉ : Tableau supprimé et fusionné dans la liste ---
-\textbf{Interprétation intuitive (basée sur l'Excess Kurtosis)}
-\begin{itemize}
-    \item \textbf{Leptokurtique (Excess Kurtosis > 0)} : Kurtosis total > 3. Distribution pointue avec des queues épaisses. Les événements extrêmes sont plus probables que pour une loi normale.
-    \item \textbf{Mésocurtique (Excess Kurtosis = 0)} : Kurtosis total = 3. C'est la référence (loi normale).
-    \item \textbf{Platykurtique (Excess Kurtosis < 0)} : Kurtosis total < 3. Distribution aplatie avec des queues légères et un centre large. Les événements extrêmes sont moins probables.
-\end{itemize}
-% --- FIN MODIFICATION ---
-
-\medskip
-
-\textbf{Application en finance}
-\begin{itemize}
-    \item Les rendements financiers ont souvent un excès de kurtosis positif
-    \item Indique une probabilité plus élevée d'événements extrêmes que la loi normale
-    \item Justifie le "vol smile" dans les options
-\end{itemize}
-
-\medskip
-
-\textbf{Pourquoi $\sigma^4$ au dénominateur ?}
-\begin{itemize}
-    \item Le moment d'ordre 4 est homogène à des unités$^4$
-    \item On divise par $\sigma^4$ pour un coefficient \textbf{sans dimension}
-\end{itemize}
+\tcblower
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        title={PDF de la Loi Log-Normale},
+        xlabel={$y$},
+        ylabel={$f_Y(y)$},
+        axis lines=middle,
+        no markers,
+        samples=100,
+        domain=0.01:5, % Domaine > 0
+        height=8cm,
+        width=\linewidth-1cm,
+        tick label style={font=\tiny},
+        legend style={at={(0.5,-0.15)}, anchor=north, font=\small},
+        legend columns=2
+    ]
+    % Log-N(0, 0.25) => mu=0, sigma=0.5
+    \addplot [blue, ultra thick] {1/(x*0.5*sqrt(2*pi))*exp(-(ln(x)-0)^2/(2*0.5^2))};
+    \addlegendentry{$\mu=0, \sigma=0.5$};
+    % Log-N(0, 1) => mu=0, sigma=1
+    \addplot [red, ultra thick] {1/(x*1*sqrt(2*pi))*exp(-(ln(x)-0)^2/(2*1^2))};
+    \addlegendentry{$\mu=0, \sigma=1.0$ (plus étalée/asym.)};
+    % Log-N(0.5, 0.25) => mu=0.5, sigma=0.5
+    \addplot [green!70!black, ultra thick] {1/(x*0.5*sqrt(2*pi))*exp(-(ln(x)-0.5)^2/(2*0.5^2))};
+    \addlegendentry{$\mu=0.5, \sigma=0.5$ (décalée)};
+    \end{axis}
+\end{tikzpicture}
+\par\small\textit{Influence de $\mu$ (échelle) et $\sigma$ (forme/asymétrie) sur la PDF log-normale.}
 \end{intuitionbox}
 
-\subsection{Exemples de distributions}
+\subsection{Comment obtenir l’espérance d’une variable log-normale}
 
-Pour bien fixer les idées, comparons le skewness et le kurtosis de plusieurs distributions classiques. Notez que dans les graphiques suivants, le "Kurtosis" affiché est l'\textit{excess kurtosis} (centré à 0).
+L’espérance d’une variable log-normale ne se calcule pas directement à partir de sa densité sans précaution, car la forme de cette densité rend l’intégrale peu intuitive. Heureusement, la définition même de la loi log-normale — via une transformation exponentielle d’une variable normale — fournit une voie élégante et puissante.
 
-\begin{examplebox}[La Distribution Normale (Mésokurtique)]
+\begin{intuitionbox}[Stratégie de calcul : exploiter la variable sous-jacente]
+Puisque \( Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2) \) signifie que \( Y = e^X \) avec \( X \sim \mathcal{N}(\mu, \sigma^2) \), on peut écrire :
+\[
+\mathbb{E}[Y] = \mathbb{E}[e^X].
+\]
+Il s’agit donc de calculer l’espérance de l’exponentielle d’une variable normale. Ce type d’espérance est exactement ce que la **fonction génératrice des moments** (MGF, pour \textit{Moment Generating Function}) permet de calculer.
 
-\begin{center}
-\begin{tikzpicture}
-  \begin{axis}[
-    width=0.8\textwidth,
-    height=0.5\textwidth,
-    xlabel={$x$},
-    title={Densité Normale ($\mu=0$, $\sigma=1$)},
-    grid=both,
-    grid style={line width=.1pt, draw=gray!30},
-    major grid style={line width=.2pt,draw=gray!50},
-    domain=-4:4,
-    samples=100,
-    enlargelimits=false,
-    axis lines=middle,
-    xmin=-4, xmax=4,
-    ymin=0, ymax=0.55
-  ]
- 
-  % Courbe de densité
-  \addplot [thick, color=blue, fill=blue!20, fill opacity=0.5] 
-    {1/(sqrt(2*pi))*exp(-x^2/2)} \closedcycle;
- 
-  % Ligne de la moyenne
-  \addplot [red, dashed, thick] coordinates {(0,0) (0,0.4)};
-  \node[red, fill=white, font=\scriptsize, rounded corners, inner sep=2pt, opacity=0.8] at (axis cs:0.5,0.35) {Moyenne};
- 
-  % Boîte de texte avec moments seulement
-  \node [draw=black, fill=white, rounded corners, font=\scriptsize, align=left, anchor=north east, opacity=0.8] 
-    at (axis description cs:0.95,0.95) { % MODIFIÉ
-    \textbf{Moments :}\\
-    • Moyenne = 0.00\\
-    • Variance = 1.00\\
-    • Skewness = 0.00\\
-    • Kurtosis = 0.00
-    };
-    
-  \end{axis}
-\end{tikzpicture}
-\end{center}
+Rappelons que pour une variable aléatoire \( X \), la MGF est définie par :
+\[
+M_X(t) = \mathbb{E}[e^{tX}],
+\]
+lorsqu’elle existe. Ainsi, \( \mathbb{E}[e^X] = M_X(1) \).
+\end{intuitionbox}
 
-La distribution normale est l'archétype de la courbe en cloche. Imaginez une cible : la majorité des flèches touchent le centre, et plus on s'éloigne du centre, moins il y a de chances d'être touché. C'est une distribution parfaitement symétrique, ce qui se traduit par un \textbf{skewness nul (0.00)}. Son pic est ni trop pointu, ni trop plat : c'est notre point de référence, on dit qu'elle est \textbf{mésokurtique}, d'où son kurtosis de \textbf{0.00}. C'est la base de nombreuses analyses statistiques car elle modélise naturellement beaucoup de phénomènes.
+\begin{proofbox}[Calcul détaillé de E\[Y\] par intégration directe]
+Nous allons maintenant démontrer rigoureusement que :
+\[
+\mathbb{E}[Y] = e^{\mu + \sigma^2/2},
+\]
+en partant de la définition de l’espérance et en effectuant le calcul d’intégrale.
 
-\end{examplebox}
+Puisque \( Y = e^X \) et \( X \sim \mathcal{N}(\mu, \sigma^2) \), on a :
+\[
+\mathbb{E}[Y] = \mathbb{E}[e^X] = \int_{-\infty}^{+\infty} e^x \cdot \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left( -\frac{(x - \mu)^2}{2\sigma^2} \right) dx.
+\]
 
-\begin{examplebox}[La Distribution Exponentielle (Asymétrique à Droite)]
+Regroupons les exponentielles :
+\[
+\mathbb{E}[Y] = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^{+\infty} \exp\!\left( x - \frac{(x - \mu)^2}{2\sigma^2} \right) dx.
+\]
 
-\begin{center}
-\begin{tikzpicture}
-  \begin{axis}[
-    width=0.8\textwidth,
-    height=0.5\textwidth,
-    xlabel={$x$},
-    title={Densité Exponentielle ($\lambda=1$)},
-    grid=both,
-    grid style={line width=.1pt, draw=gray!30},
-    major grid style={line width=.2pt,draw=gray!50},
-    domain=0:6,
-    samples=100,
-    enlargelimits=false,
-    axis lines=middle,
-    xmin=0, xmax=6,
-    ymin=0, ymax=1.1
-  ]
- 
-  % Courbe de densité exponentielle
-  \addplot [thick, color=blue, fill=blue!20, fill opacity=0.5] 
-    {exp(-x)} \closedcycle;
- 
-  % Ligne de la moyenne
-  \addplot [red, dashed, thick] coordinates {(1,0) (1,0.37)};
-  \node[red, fill=white, font=\scriptsize, rounded corners, inner sep=2pt, opacity=0.8] at (axis cs:1.5,0.3) {Moyenne};
- 
-  % Boîte de texte avec moments seulement
-  \node [draw=black, fill=white, rounded corners, font=\scriptsize, align=left, anchor=north east, opacity=0.8] 
-    at (axis description cs:0.95,0.95) { % MODIFIÉ
-    \textbf{Moments :}\\
-    • Moyenne = 1.00\\
-    • Variance = 1.00\\
-    • Skewness = 2.00\\
-    • Kurtosis = 6.00
-    };
-    
-  \end{axis}
-\end{tikzpicture}
-\end{center}
+Développons l’exposant :
+\[
+x - \frac{(x - \mu)^2}{2\sigma^2}
+= x - \frac{x^2 - 2\mu x + \mu^2}{2\sigma^2}
+= -\frac{x^2}{2\sigma^2} + \left( \frac{\mu}{\sigma^2} + 1 \right)x - \frac{\mu^2}{2\sigma^2}.
+\]
 
-Imaginez le temps d'attente avant un événement rare, comme un appel téléphonique. La plupart du temps, l'appel arrive vite, mais il peut parfois y avoir de longues attentes. C'est exactement ce que modélise la distribution exponentielle : un pic à gauche et une longue queue à droite. Cela se traduit par un \textbf{skewness positif élevé (2.00)}, indiquant une asymétrie marquée. Elle est aussi \textbf{leptokurtique} (\textbf{kurtosis = 6.00}) : son pic est pointu, et la longue queue droite signifie qu'il y a une probabilité non négligeable de valeurs extrêmes.
+Complétons le carré en \( x \). Posons :
+\[
+-\frac{1}{2\sigma^2} \left[ x^2 - 2(\mu + \sigma^2)x \right] - \frac{\mu^2}{2\sigma^2}.
+\]
 
-\end{examplebox}
+Le terme entre crochets devient :
+\[
+x^2 - 2(\mu + \sigma^2)x = \big(x - (\mu + \sigma^2)\big)^2 - (\mu + \sigma^2)^2.
+\]
 
-\begin{examplebox}[La Distribution Uniforme (Platykurtique)]
+Donc l’exposant total vaut :
+\[
+-\frac{1}{2\sigma^2} \big(x - (\mu + \sigma^2)\big)^2 + \frac{(\mu + \sigma^2)^2 - \mu^2}{2\sigma^2}.
+\]
 
-\begin{center}
-\begin{tikzpicture}
-  \begin{axis}[
-    width=0.8\textwidth,
-    height=0.5\textwidth,
-    xlabel={$x$},
-    title={Densité Uniforme ($a=0$, $b=2$)},
-    grid=both,
-    grid style={line width=.1pt, draw=gray!30},
-    major grid style={line width=.2pt,draw=gray!50},
-    domain=-0.5:2.5,
-    samples=100,
-    enlargelimits=false,
-    axis lines=middle,
-    ymin=0,
-    ymax=.75,
-    xmin=-1, xmax=4
-  ]
- 
-  % Courbe de densité uniforme
-  \addplot [thick, color=blue, fill=blue!20, fill opacity=0.5, const plot] 
-    coordinates {(-0.5,0) (0,0) (0,0.5) (2,0.5) (2,0) (2.5,0)};
- 
-  % Ligne de la moyenne
-  \addplot [red, dashed, thick] coordinates {(1,0) (1,0.5)};
-  \node[red, fill=white, font=\scriptsize, rounded corners, inner sep=2pt, opacity=0.8] at (axis cs:1.3,0.4) {Moyenne};
- 
-  % Boîte de texte avec moments seulement
-  \node [draw=black, fill=white, rounded corners, font=\scriptsize, align=left, anchor=north east, opacity=0.8] 
-    at (axis description cs:0.95,0.95) { % MODIFIÉ
-    \textbf{Moments :}\\
-    • Moyenne = 1.00\\
-    • Variance = 0.33\\
-    • Skewness = 0.00\\
-    • Kurtosis = -1.20
-    };
-    
-  \end{axis}
-\end{tikzpicture}
-\end{center}
+Calculons le terme constant :
+\[
+(\mu + \sigma^2)^2 - \mu^2 = 2\mu\sigma^2 + \sigma^4,
+\quad \text{donc} \quad
+\frac{2\mu\sigma^2 + \sigma^4}{2\sigma^2} = \mu + \frac{\sigma^2}{2}.
+\]
 
-La distribution uniforme, c'est le "tirage au sort parfait" : chaque valeur sur un intervalle a la même chance d'être tirée. Visuellement, c'est un rectangle, donc aucune valeur n'est privilégiée. Elle est symétrique (\textbf{skewness = 0.00}), mais contrairement à la normale, elle est "plate", sans pic central. Cela se traduit par un \textbf{kurtosis négatif (-1.20)}, ce qui signifie qu'elle est \textbf{platykurtique}. Elle est donc très différente des distributions avec un pic central comme la normale.
+Ainsi :
+\[
+\mathbb{E}[Y] = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left( \mu + \frac{\sigma^2}{2} \right) \int_{-\infty}^{+\infty} \exp\!\left( -\frac{(x - (\mu + \sigma^2))^2}{2\sigma^2} \right) dx.
+\]
 
-\end{examplebox}
+Mais l’intégrale est celle de la densité d’une loi normale \( \mathcal{N}(\mu + \sigma^2, \sigma^2) \), donc elle vaut \( \sigma\sqrt{2\pi} \).
 
-\begin{examplebox}[La Distribution Log-Normale (Fortement Leptokurtique)]
+Il reste donc :
+\[
+\mathbb{E}[Y] = \exp\!\left( \mu + \frac{\sigma^2}{2} \right).
+\]
 
-\begin{center}
-\begin{tikzpicture}
-  \begin{axis}[
-    width=0.8\textwidth,
-    height=0.5\textwidth,
-    xlabel={$x$},
-    title={Densité Log-Normale ($\sigma=0.7$)},
-    grid=both,
-    grid style={line width=.1pt, draw=gray!30},
-    major grid style={line width=.2pt,draw=gray!50},
-    domain=0:6,
-    samples=100,
-    enlargelimits=false,
-    axis lines=middle,
-    xmin=0, xmax=6,
-    ymin=0, ymax=1
-  ]
- 
-  % Courbe de densité log-normale
-  \addplot [thick, color=blue, fill=blue!20, fill opacity=0.5] 
-    {1/(x*0.7*sqrt(2*pi))*exp(-(ln(x))^2/(2*0.7^2))};
- 
-  % Ligne de la moyenne
-  \addplot [red, dashed, thick] coordinates {(1.28,0) (1.28,0.4)};
-  \node[red, fill=white, font=\scriptsize, rounded corners, inner sep=2pt, opacity=0.8] at (axis cs:1.8,0.5) {Moyenne};
- 
-  % Boîte de texte avec moments seulement
-  \node [draw=black, fill=white, rounded corners, font=\scriptsize, align=left, anchor=north east, opacity=0.8] 
-    at (axis description cs:0.95,0.95) { % MODIFIÉ
-    \textbf{Moments :}\\
-    • Moyenne = 1.28\\
-    • Variance = 1.03\\
-    • Skewness = 2.89\\
-    • Kurtosis = 20.78
-    };
-    
-  \end{axis}
-\end{tikzpicture}
-\end{center}
+\end{proofbox}
 
-La log-normale est une distribution très asymétrique. Imaginez la richesse d'une population : la majorité est modeste, mais il existe une petite proportion de très riches, ce qui "étire" la droite de la courbe. Cela donne un \textbf{skewness très élevé (2.89)}. Elle est extrêmement \textbf{leptokurtique} (\textbf{kurtosis = 20.78}) : un pic très aigu et une queue droite très lourde. Cela signifie qu'il y a un risque élevé de valeurs extrêmement grandes, ce qui la rend très utile pour modéliser des phénomènes avec de rares événements extrêmes.
+\begin{remarquebox}[Pourquoi cette formule est contre-intuitive ?]
+Il est tentant de penser que si \( \ln(Y) \) a pour moyenne \( \mu \), alors \( Y \) devrait avoir pour moyenne \( e^\mu \). Mais à cause de la **convexité** de la fonction exponentielle, l’espérance de \( e^X \) est toujours **strictement supérieure** à \( e^{\mathbb{E}[X]} \) dès que \( X \) a une variance non nulle.
 
-\end{examplebox}
-
-Nous avons défini les moments d'une \textit{distribution} (moments de population), tels que $\mu = E[X]$ ou $\sigma^2 = E[(X-\mu)^2]$. Ce sont des valeurs théoriques, la "vérité" sous-jacente.
-
-En pratique, nous ne connaissons presque jamais cette "vérité". Nous ne disposons que de données. Notre but est d'utiliser ces données pour \textit{estimer} les moments de la population.
-
-\subsection{Moments d'échantillon (Sample Moments)}
-
-\begin{definitionbox}[Moments d'Échantillon]
-Soit $X_1, X_2, \dots, X_n$ un échantillon de $n$ observations.
-\begin{itemize}
-    \item La \textbf{moyenne d'échantillon} (notre "meilleure estimation" de $\mu$) est :
-    $$ \bar{X} = \frac{1}{n} \sum_{i=1}^n X_i $$
-    \item La \textbf{variance d'échantillon (non biaisée)} (notre "meilleure estimation" de $\sigma^2$) est :
-    $$ s^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2 $$
-\end{itemize}
-De même, on peut calculer un \textit{skewness d'échantillon} et un \textit{kurtosis d'échantillon} en utilisant $\bar{X}$ et $s$, qui seront nos estimations du vrai skewness et du vrai kurtosis de la population.
-\end{definitionbox}
-
-\begin{examplebox}[Application : Contrôle Qualité ]
-Imaginez une usine qui produit des sacs de sucre de 1kg.
-\begin{itemize}
-    \item \textbf{Population :} L'infinité de tous les sacs de sucre que la machine produira.
-    \item \textbf{Moment de population (inconnu) :} Le poids moyen \textit{réel} $\mu$ que la machine verse, et la variance \textit{réelle} $\sigma^2$ (sa constance).
-    \item \textbf{Problème :} Nous ne pouvons pas peser tous les sacs !
-    \item \textbf{Solution :} Nous prélevons un \textbf{échantillon} de $n=10$ sacs.
-    
-    Nous les pesons : $\{ 1002g, 998g, 1001g, 995g, 1003g, 1000g, 997g, 1005g, 999g, 1000g \}$.
-    
-    \item \textbf{Calcul des moments d'échantillon :}
-    \begin{itemize}
-        \item $\bar{X} = (1002 + 998 + \dots + 1000) / 10 = 1000g$.
-        \item $s^2 = \frac{1}{10-1} \left( (1002-1000)^2 + (998-1000)^2 + \dots \right) = 7.33 g^2$.
-    \end{itemize}
-    \item \textbf{Conclusion :} Notre meilleure estimation est que la machine est bien réglée sur $\mu = 1000g$. L'écart-type de notre échantillon est $s = \sqrt{7.33} \approx 2.7g$. Nous pouvons utiliser cela pour affirmer, par exemple, que 95\% des sacs se situent probablement entre $1000 \pm 2s$ (si la distribution est normale).
-\end{itemize}
-\end{examplebox}
-
-\begin{remarquebox}[L'Intuition du "$n-1$"]
-Pourquoi diviser par $n-1$ pour la variance ? C'est la \textbf{correction de Bessel}.
-
-Imaginez un échantillon de 1 seule personne ($n=1$). Sa taille est 170cm.
-\begin{itemize}
-    \item Quelle est la moyenne de l'échantillon ? $\bar{X} = 170$ cm.
-    \item Quelle est la variance de l'échantillon ? $\sum (X_i - \bar{X})^2 = (170 - 170)^2 = 0$.
-    \item Si on divisait par $n=1$, on estimerait que la variance de la population est 0. C'est absurde ! Cela voudrait dire que tout le monde mesure 170cm.
-\end{itemize}
-En divisant par $n-1$ (donc $1-1=0$), la formule devient $0/0$ (indéfinie), ce qui nous dit à juste titre : "Je ne peux pas estimer la dispersion avec une seule personne."
-
-\textbf{Intuition plus générale :} Nous "perdons un degré de liberté". Pour calculer la variance, nous avons besoin de connaître la moyenne. Mais nous ne connaissons pas la vraie moyenne $\mu$. Nous devons donc utiliser $\bar{X}$, une \textit{estimation}. Le fait d'utiliser une estimation calculée \textit{à partir de ce même échantillon} introduit un léger biais (nos données sont, par définition, centrées sur $\bar{X}$). Diviser par $n-1$ au lieu de $n$ "gonfle" légèrement le résultat pour compenser ce biais.
+C’est une conséquence directe de l’**inégalité de Jensen** :
+\[
+\mathbb{E}[e^X] \geq e^{\mathbb{E}[X]},
+\]
+avec égalité uniquement si \( X \) est constante (variance nulle). Le terme supplémentaire \( \sigma^2/2 \) dans l’exposant quantifie exactement cet « effet de convexité ».
 \end{remarquebox}
 
-\subsection{Fonctions génératrices des moments (MGF)}
+\begin{examplebox}[Application numérique : comparaison des mesures centrales]
+Soit \( Y \sim \text{Log-}\mathcal{N}(1, 0.25) \) (donc \( \mu = 1 \), \( \sigma = 0.5 \)).
 
-\begin{definitionbox}[Fonction Génératrice des Moments (MGF)]
-La \textbf{fonction génératrice des moments} (MGF) d'une variable aléatoire $X$, notée $M_X(t)$, est définie comme :
-$$ M_X(t) = E[e^{tX}] $$
-\end{definitionbox}
-
-\begin{intuitionbox}[L'ADN, le Code-Barres, ou le Fichier .zip]
-Ce concept est abstrait, alors utilisons des analogies :
-
-\textbf{Analogie 1 : L'ADN ou l'Empreinte Digitale}
 \begin{itemize}
-    \item La MGF est l'**empreinte digitale unique** d'une distribution.
-    \item Elle "compresse" \textit{toutes} les informations sur votre distribution (moyenne, variance, skewness, kurtosis, etc.) en une seule, unique fonction.
-    \item Si deux distributions ont la même MGF, elles sont identiques. C'est la \textbf{propriété d'unicité}.
+    \item Médiane : \( e^{\mu} = e^1 \approx 2.718 \)
+    \item Mode : \( e^{\mu - \sigma^2} = e^{1 - 0.25} = e^{0.75} \approx 2.117 \)
+    \item Espérance : \( e^{\mu + \sigma^2/2} = e^{1 + 0.125} = e^{1.125} \approx 3.080 \)
 \end{itemize}
 
-\textbf{Analogie 2 : Le Code-Barres}
-\begin{itemize}
-    \item Pensez à une distribution (ex: Loi Normale) comme à un produit au supermarché.
-    \item La MGF, $M_X(t)$, est son **code-barres unique**.
-    \item Le processus de "génération de moments" (que nous verrons ci-dessous) est le \textbf{scanner}.
-    \item En scannant le code-barres ($M_X(t)$), vous pouvez obtenir n'importe quelle information :
-        \item Scan 1 ($M_X'(0)$) $\to$ vous donne le prix ($E[X]$).
-        \item Scan 2 ($M_X''(0)$) $\to$ vous donne le poids ($E[X^2]$).
-        \item Scan 3 ($M_X'''(0)$) $\to$ vous donne le pays d'origine ($E[X^3]$).
-\end{itemize}
-
-\textbf{Pourquoi $e^{tX}$ ?}
-La "magie" vient du développement en série de Taylor de $e^x$:
-$$ e^{tX} = 1 + (tX) + \frac{(tX)^2}{2!} + \frac{(tX)^3}{3!} + \dots $$
-Quand on prend l'espérance, $E[\cdot]$, les puissances de $X$ (c'est-à-dire $X, X^2, X^3\dots$) apparaissent. Ce sont les moments ! La MGF "stocke" tous ces moments en les organisant comme coefficients d'un polynôme infini en $t$.
-\end{intuitionbox}
-
-\subsection{Génération des moments via les MGF}
-
-\begin{theorembox}[Moments par Dérivation]
-Si la MGF $M_X(t)$ existe, alors le $m$-ième moment non centré $E[X^m]$ est la $m$-ième dérivée de $M_X(t)$, évaluée en $t=0$ :
-$$ E[X^m] = \frac{d^m}{dt^m} M_X(t) \bigg|_{t=0} = M_X^{(m)}(0) $$
-\end{theorembox}
-
-\begin{examplebox}[Application : La Loi de Poisson]
-Une loi de Poisson modélise le nombre d'événements (ex: appels à un centre d'appels) par heure. Soit $X \sim \text{Poisson}(\lambda)$, où $\lambda$ est le nombre moyen d'appels.
-
-La MGF (l'ADN) d'une loi de Poisson est (on l'admet) :
-$$ M_X(t) = e^{\lambda(e^t - 1)} $$
-
-Utilisons notre "scanner" (les dérivées) pour trouver les moments.
-
-\textbf{1. Trouver la Moyenne $E[X]$ :}
-On dérive une fois (règle de la chaîne) :
-$$ M_X'(t) = \frac{d}{dt} \left( e^{\lambda(e^t - 1)} \right) = \underbrace{e^{\lambda(e^t - 1)}}_{\text{répète}} \cdot \underbrace{(\lambda e^t)}_{\text{dérivée interne}} $$
-Maintenant, on évalue en $t=0$ :
-$$ E[X] = M_X'(0) = e^{\lambda(e^0 - 1)} \cdot (\lambda e^0) = e^{\lambda(1 - 1)} \cdot (\lambda \cdot 1) = e^0 \cdot \lambda = 1 \cdot \lambda = \lambda $$
-\textbf{Résultat :} La moyenne est $\lambda$, ce qui est la définition même du paramètre de la loi de Poisson. Parfait.
-
-\textbf{2. Trouver $E[X^2]$ (pour la variance) :}
-On dérive une seconde fois (règle du produit sur $M_X'(t) = (\lambda e^t) \cdot (e^{\lambda(e^t - 1)})$) :
-$$ M_X''(t) = \underbrace{(\lambda e^t)}_{\text{dérivée de u}} \cdot \underbrace{(e^{\lambda(e^t - 1)})}_{\text{v}} + \underbrace{(\lambda e^t)}_{\text{u}} \cdot \underbrace{(e^{\lambda(e^t - 1)} \cdot \lambda e^t)}_{\text{dérivée de v}} $$
-Maintenant, on évalue en $t=0$ (tous les $e^0$ deviennent 1) :
-$$ E[X^2] = M_X''(0) = (\lambda \cdot 1) \cdot (e^{\lambda(1-1)}) + (\lambda \cdot 1) \cdot (e^{\lambda(1-1)} \cdot \lambda \cdot 1) $$
-$$ E[X^2] = (\lambda) \cdot (e^0) + (\lambda) \cdot (e^0 \cdot \lambda) = \lambda \cdot 1 + \lambda \cdot (1 \cdot \lambda) = \lambda + \lambda^2 $$
-
-\textbf{3. Trouver la Variance $\text{Var}(X)$ :}
-$\text{Var}(X) = E[X^2] - (E[X])^2 = (\lambda + \lambda^2) - (\lambda)^2 = \lambda$
-\textbf{Résultat :} Nous avons prouvé par les MGF que pour une loi de Poisson, $\text{Moyenne} = \text{Variance} = \lambda$. C'est une propriété fondamentale de cette loi.
+On observe clairement :  
+\[
+\text{Mode} \approx 2.12 < \text{Médiane} \approx 2.72 < \text{Espérance} \approx 3.08,
+\]
+illustrant l’asymétrie à droite et l’impact de la variance sur la moyenne.
 \end{examplebox}
 
-\subsection{Sommes de variables aléatoires indépendantes via les MGF}
 
-C'est la super-puissance des MGF.
+\subsection{Propriétés : Moments et Mesures Centrales}
 
-\begin{theorembox}[MGF d'une Somme]
-Soient $X$ et $Y$ deux variables aléatoires \textbf{indépendantes}. Soit $S = X + Y$. Alors la MGF de $S$ est le produit des MGF individuelles :
-$$ M_S(t) = M_{X+Y}(t) = M_X(t) \cdot M_Y(t) $$
+L'asymétrie de la loi log-normale implique que ses mesures de tendance centrale (moyenne, médiane, mode) ne coïncident pas.
+
+\begin{theorembox}[Moments et Mesures Centrales]
+Si $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, alors :
+\begin{itemize}
+    \item \textbf{Espérance :} $E[Y] = e^{\mu + \sigma^2/2}$
+    \item \textbf{Variance :} $\text{Var}(Y) = (e^{\sigma^2} - 1) \cdot e^{2\mu + \sigma^2}$
+    \item \textbf{Médiane :} $\text{Med}(Y) = e^{\mu}$
+    \item \textbf{Mode :} $\text{Mode}(Y) = e^{\mu - \sigma^2}$
+\end{itemize}
 \end{theorembox}
 
-\begin{intuitionbox}[La Magie de l'Exponentielle]
-Pourquoi est-ce vrai ? $M_{X+Y}(t) = E[e^{t(X+Y)}] = E[e^{tX} \cdot e^{tY}]$.
-Parce que $X$ et $Y$ sont indépendantes, $E[f(X)g(Y)] = E[f(X)]E[g(Y)]$.
-Donc, $E[e^{tX} \cdot e^{tY}] = E[e^{tX}] \cdot E[e^{tY}] = M_X(t) \cdot M_Y(t)$.
+\begin{proofbox}[Dérivation de l'Espérance]
+Nous utilisons le fait que $Y = e^X$ où $X \sim \mathcal{N}(\mu, \sigma^2)$.
+$$ E[Y] = E[e^X] $$
+Ceci est, par définition, la fonction génératrice des moments $M_X(t) = E[e^{tX}]$ de la variable normale $X$, évaluée en $t=1$.
+Rappelons que la MGF d'une loi $\mathcal{N}(\mu, \sigma^2)$ est $M_X(t) = e^{\mu t + \frac{1}{2}\sigma^2 t^2}$.
+En posant $t=1$, on obtient :
+$$ E[Y] = M_X(1) = e^{\mu(1) + \frac{1}{2}\sigma^2 (1)^2} = e^{\mu + \sigma^2/2} $$
+Un calcul similaire pour $E[Y^2] = E[e^{2X}] = M_X(2)$ permet de trouver la variance.
+\end{proofbox}
 
-Les MGF transforment une opération analytiquement horrible (la "convolution" de densités) en une simple multiplication algébrique.
-\end{intuitionbox}
+\begin{remarquebox}[Mode < Médiane < Espérance]
+Pour $\sigma > 0$, on a toujours $\mu - \sigma^2 < \mu < \mu + \sigma^2/2$.
+En appliquant l'exponentielle (qui est croissante), on a :
+$$ e^{\mu - \sigma^2} < e^{\mu} < e^{\mu + \sigma^2/2} $$
+$$ \text{Mode} < \text{Médiane} < \text{Espérance} $$
+C'est la signature mathématique d'une distribution avec une asymétrie à droite (positive). La moyenne est "tirée" vers le haut par les valeurs extrêmes de la queue droite.
+\end{remarquebox}
 
-\begin{examplebox}[Application : Portefeuille d'Actifs ou Tailles Humaines]
-C'est l'un des théorèmes les plus importants des statistiques.
-\textbf{Problème :} Soit $X$ la taille d'un homme, $X \sim N(\mu_X, \sigma_X^2)$. Soit $Y$ la taille d'une femme, $Y \sim N(\mu_Y, \sigma_Y^2)$. Si on les choisit au hasard, quelle est la loi de la somme de leurs tailles $S = X+Y$ ?
+\subsection{Calcul de Probabilités}
 
-\begin{enumerate}
-    \item \textbf{ADN de $X$} : La MGF d'une loi Normale $N(\mu, \sigma^2)$ est $M(t) = \exp(\mu t + \frac{1}{2}\sigma^2 t^2)$.
-    \item \textbf{ADN de $X$ et $Y$} :
-    $M_X(t) = \exp(\mu_X t + \frac{1}{2}\sigma_X^2 t^2)$
-    $M_Y(t) = \exp(\mu_Y t + \frac{1}{2}\sigma_Y^2 t^2)$
-    
-    \item \textbf{ADN de $S = X+Y$} (on multiplie) :
-    $M_S(t) = M_X(t) \cdot M_Y(t) = \exp(\mu_X t + \frac{1}{2}\sigma_X^2 t^2) \cdot \exp(\mu_Y t + \frac{1}{2}\sigma_Y^2 t^2)$
-    
-    \item \textbf{Simplification} (en additionnant les exposants) :
-    $M_S(t) = \exp\left( (\mu_X t + \mu_Y t) + (\frac{1}{2}\sigma_X^2 t^2 + \frac{1}{2}\sigma_Y^2 t^2) \right)$
-    $M_S(t) = \exp\left( (\mu_X + \mu_Y)t + \frac{1}{2}(\sigma_X^2 + \sigma_Y^2)t^2 \right)$
-    
-    \item \textbf{Conclusion (par Unicité)} :
-    Regardez cet ADN ! C'est l'ADN d'une loi Normale !
-    Le nouveau $\mu$ est $(\mu_X + \mu_Y)$.
-    La nouvelle $\sigma^2$ est $(\sigma_X^2 + \sigma_Y^2)$.
-\end{enumerate}
+Le principal avantage de la définition $X = \ln(Y)$ est qu'elle rend les calculs de probabilité log-normale très simples : il suffit de tout ramener à la loi normale standard.
 
-\textbf{Résultat :} Nous avons prouvé que \textbf{la somme de deux Normales indépendantes est une nouvelle Normale}.
-Si $X \sim N(175cm, 7^2)$ et $Y \sim N(165cm, 6^2)$, alors $S \sim N(340cm, 7^2 + 6^2 = 85)$.
-Notez que les écarts-types \textit{ne s'additionnent pas} ($\sqrt{85} \approx 9.2 \ne 7+6$). Ce sont les variances qui s'additionnent.
+\begin{theorembox}[Calcul de la CDF Log-Normale]
+Si $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, sa fonction de répartition $F_Y(y) = P(Y \le y)$ est donnée par :
+$$ F_Y(y) = \Phi\left( \frac{\ln(y) - \mu}{\sigma} \right) \quad \text{pour } y > 0 $$
+où $\Phi(\cdot)$ est la fonction de répartition de la loi normale standard $\mathcal{N}(0, 1)$.
+\end{theorembox}
+
+\begin{proofbox}
+Puisque $\ln(\cdot)$ est une fonction strictement croissante, l'événement $Y \le y$ est équivalent à l'événement $\ln(Y) \le \ln(y)$.
+\begin{align*}
+F_Y(y) &= P(Y \le y) \\
+&= P(\ln(Y) \le \ln(y)) \\
+\intertext{Puisque $X = \ln(Y) \sim \mathcal{N}(\mu, \sigma^2)$, on standardise cette variable $X$ :}
+&= P\left( \frac{\ln(Y) - \mu}{\sigma} \le \frac{\ln(y) - \mu}{\sigma} \right) \\
+\intertext{Soit $Z = (\ln(Y) - \mu)/\sigma \sim \mathcal{N}(0, 1)$ :}
+&= P\left( Z \le \frac{\ln(y) - \mu}{\sigma} \right) \\
+&= \Phi\left( \frac{\ln(y) - \mu}{\sigma} \right)
+\end{align*}
+\end{proofbox}
+
+\begin{examplebox}[Calcul de Probabilité Log-Normale]
+Le revenu annuel $Y$ des ménages d'une région (en milliers d'euros) est supposé suivre une loi log-normale $\text{Log-}\mathcal{N}(\mu=3.8, \sigma=0.5)$.
+(Note : $\mu=3.8$ n'est pas la moyenne des revenus, mais la moyenne du \textit{log-revenu}).
+
+1. Quel est le revenu médian ?
+   $\text{Med}(Y) = e^{\mu} = e^{3.8} \approx 44.7$. (Soit 44 700 €)
+
+2. Quelle est la probabilité qu'un ménage ait un revenu supérieur à 60 000 € ?
+   On cherche $P(Y > 60)$. (Rappel : $Y$ est en milliers).
+   $P(Y > 60) = 1 - P(Y \le 60)$.
+
+   On applique la formule :
+   $$ P(Y \le 60) = \Phi\left( \frac{\ln(60) - \mu}{\sigma} \right) = \Phi\left( \frac{\ln(60) - 3.8}{0.5} \right) $$
+
+   Calculons l'argument :
+   $$ \frac{4.094 - 3.8}{0.5} = \frac{0.294}{0.5} = 0.588 $$
+
+   On cherche $\Phi(0.588)$. En utilisant une table ou un logiciel, $\Phi(0.588) \approx 0.7217$.
+   
+   $P(Y > 60) = 1 - 0.7217 = 0.2783$.
+   Environ 27.8% des ménages ont un revenu supérieur à 60 000 €.
+\end{examplebox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Évolution d’un Actif et Émergence de la Loi Log-Normale}
+
+\begin{examplebox}[Évolution d’un Actif et Émergence de la Loi Log-Normale]
+Considérons un investisseur qui place un capital initial de \( C_0 = 1000 \) € dans une action cotée en bourse. Le prix de cette action évolue chaque jour selon des rendements aléatoires. Nous allons suivre son évolution sur \( t = 4 \) jours consécutifs, puis généraliser pour comprendre l’origine des paramètres \( t\mu \) et \( t\sigma^2 \).
+
+\medskip
+\noindent \textbf{1. Données observées : rendements quotidiens}
+
+Les rendements (exprimés en décimal) sont les suivants :
+
+\vspace{5mm}
+\begin{center}
+\begin{tabular}{c|c|c|c}
+Jour & Rendement \( r_i \) & Facteur de croissance \( (1 + r_i) \) & Log-rendement \( x_i = \ln(1 + r_i) \) \\
+\hline
+1 & \( +0{,}05 \) & \( 1{,}05 \) & \( \ln(1{,}05) \approx 0{,}04879 \) \\
+2 & \( -0{,}02 \) & \( 0{,}98 \) & \( \ln(0{,}98) \approx -0{,}02020 \) \\
+3 & \( +0{,}03 \) & \( 1{,}03 \) & \( \ln(1{,}03) \approx 0{,}02956 \) \\
+4 & \( -0{,}01 \) & \( 0{,}99 \) & \( \ln(0{,}99) \approx -0{,}01005 \) \\
+\end{tabular}
+\end{center}
+\vspace{5mm}
+
+\medskip
+\noindent \textbf{2. Calcul du capital final : la nature multiplicative}
+
+Le capital après chaque jour se calcule par multiplication :
+\[
+\begin{aligned}
+C_1 &= 1000 \times 1{,}05 = 1050{,}00 \\
+C_2 &= 1050 \times 0{,}98 = 1029{,}00 \\
+C_3 &= 1029 \times 1{,}03 = 1059{,}87 \\
+C_4 &= 1059{,}87 \times 0{,}99 = 1049{,}27
+\end{aligned}
+\]
+
+On peut aussi écrire directement :
+\[
+C_4 = C_0 \times \prod_{i=1}^{4} (1 + r_i) = 1000 \times (1{,}05 \times 0{,}98 \times 1{,}03 \times 0{,}99) = 1000 \times 1{,}04927.
+\]
+
+Le \textbf{facteur de croissance total} est donc :
+\[
+Y = \frac{C_4}{C_0} = 1{,}04927.
+\]
+
+> \textit{Pourquoi multiplier ?} Parce que les rendements sont relatifs : une perte de 2\% le deuxième jour s’applique au capital du jour 1 (1050 €), pas au capital initial. L’addition des pourcentages (\( +5 -2 +3 -1 = +5\% \)) serait donc incorrecte.
+
+\medskip
+\noindent \textbf{3. Transformation logarithmique : du produit à la somme}
+
+On définit le log-rendement total :
+\[
+X = \ln(Y) = \sum_{i=1}^{4} \ln(1 + r_i) = \sum_{i=1}^{4} x_i.
+\]
+
+En utilisant les valeurs du tableau :
+\[
+X \approx 0{,}04879 - 0{,}02020 + 0{,}02956 - 0{,}01005 = 0{,}04810.
+\]
+
+Vérification : \( e^{0{,}04810} \approx 1{,}04927 = Y \). La transformation est exacte.
+
+ \textit{Pourquoi faire cela ?} Parce que la somme de variables aléatoires est bien comprise en probabilité (moyenne additive, variance additive sous indépendance), contrairement au produit.
+
+\medskip
+\noindent \textbf{4. Modélisation stochastique : hypothèses fondamentales}
+
+Dans la réalité, les rendements futurs sont inconnus. On suppose donc que chaque log-rendement journalier \( x_i \) est une variable aléatoire indépendante, identiquement distribuée, avec :
+\begin{itemize}
+    \item Espérance \( \mathbb{E}[x_i] = \mu \) : rendement moyen continu par jour,
+    \item Variance \( \text{Var}(x_i) = \sigma^2 \) : volatilité au carré par jour.
+\end{itemize}
+
+Ces hypothèses traduisent l’idée que le marché est « mémoire courte » (indépendance) et que les conditions de volatilité sont stables.
+
+\medskip
+\noindent \textbf{5. Propriétés de la somme sur \( t \) périodes}
+
+Soit \( t = 4 \) le nombre de jours. Le log-rendement total est :
+\[
+X = \sum_{i=1}^{t} x_i.
+\]
+
+Grâce à l’indépendance :
+\[
+\begin{aligned}
+\mathbb{E}[X] &= \sum_{i=1}^{t} \mathbb{E}[x_i] = t \mu, \\
+\text{Var}(X) &= \sum_{i=1}^{t} \text{Var}(x_i) = t \sigma^2.
+\end{aligned}
+\]
+
+ \textit{C’est ici que naissent les termes \( t\mu \) et \( t\sigma^2 \).}  
+ - La moyenne s’accumule linéairement : en 2 ans, le rendement attendu est le double de celui d’1 an.  
+ - La variance s’accumule aussi linéairement : l’incertitude croît avec le temps.  
+ - L’écart-type, lui, croît comme \( \sqrt{t} \), ce qui est une signature des processus aléatoires diffusifs (comme le mouvement brownien).
+
+\medskip
+\noindent \textbf{6. Le Théorème Central Limite (TCL) : vers la normalité}
+
+Même si la distribution des \( x_i \) n’est pas normale, le TCL garantit que, pour \( t \) suffisamment grand, la somme \( X \) est approximativement normale :
+\[
+X = \ln\left( \frac{S(t)}{S(0)} \right) \xrightarrow[t \text{ grand}]{} \mathcal{N}(t\mu, t\sigma^2).
+\]
+
+Dans la pratique financière (où \( t \) est souvent en centaines de jours), cette approximation est excellente. On l’adopte donc comme modèle, même pour des \( t \) modérés.
+
+\medskip
+\noindent \textbf{7. Retour au prix : définition de la loi log-normale}
+
+Puisque \( X \sim \mathcal{N}(t\mu, t\sigma^2) \), alors :
+\[
+Y = \frac{S(t)}{S(0)} = e^X \sim \text{Log-}\mathcal{N}(t\mu, t\sigma^2).
+\]
+
+Ainsi, le prix futur est :
+\[
+S(t) = S(0) \cdot e^{X}, \quad \text{où } X \sim \mathcal{N}(t\mu, t\sigma^2).
+\]
+
+ \textit{Conséquences clés :}
+ \begin{itemize}
+     \item \( S(t) > 0 \) presque sûrement cohérent avec la réalité (un actif ne peut pas avoir un prix négatif).
+     \item La distribution de \( S(t) \) est asymétrique à droite : possibilité de fortes hausses, mais baisse limitée à –100\%.
+     \item Les paramètres \( \mu \) et \( \sigma \) sont ceux de la variable \textit{sous-jacente} \( X = \ln(S(t)/S(0)) \), pas de \( S(t) \) elle-même.
+ \end{itemize}
+
+\medskip
+\noindent \textbf{8. Illustration numérique avec des paramètres estimés}
+
+Supposons qu’à partir de données historiques, on estime :
+- Rendement annuel moyen continu : \( \mu_{\text{annuel}} = 0{,}08 \),
+- Volatilité annuelle : \( \sigma_{\text{annuel}} = 0{,}20 \).
+
+Pour une période de \( t = 4 \) jours, on convertit en unité annuelle : \( t = 4/252 \approx 0{,}01587 \) année.
+
+Alors :
+\[
+\begin{aligned}
+\mathbb{E}[X] &= t \mu = 0{,}01587 \times 0{,}08 \approx 0{,}00127, \\
+\text{Var}(X) &= t \sigma^2 = 0{,}01587 \times (0{,}20)^2 \approx 0{,}000635, \\
+\text{Écart-type} &= \sqrt{0{,}000635} \approx 0{,}0252.
+\end{aligned}
+\]
+
+Notre observation réelle (\( X = 0{,}04810 \)) est plus élevée que la moyenne, mais reste à moins de 2 écarts-types (\( (0{,}04810 - 0{,}00127)/0{,}0252 \approx 1{,}86 \)), donc parfaitement plausible.
+
+\medskip
+\noindent \textbf{9. Probabilité que le prix double en 6 mois}
+
+On souhaite maintenant calculer la probabilité que le prix de l’actif double dans les 6 mois, c’est-à-dire :
+\[
+\mathbb{P}\big(S(0{,}5) \geq 2 S(0)\big) = \mathbb{P}\left( \frac{S(0{,}5)}{S(0)} \geq 2 \right).
+\]
+
+Comme \( \ln\big(S(t)/S(0)\big) \sim \mathcal{N}(t\mu, t\sigma^2) \), on a :
+\[
+\mathbb{P}\left( \ln\left(\frac{S(0{,}5)}{S(0)}\right) \geq \ln(2) \right)
+= \mathbb{P}\left( X \geq \ln(2) \right),
+\quad \text{où } X \sim \mathcal{N}(0{,}5\mu, 0{,}5\sigma^2).
+\]
+
+Avec \( \mu = 0{,}08 \) et \( \sigma = 0{,}20 \) (annuels), on obtient :
+\[
+\begin{aligned}
+\mathbb{E}[X] &= 0{,}5 \times 0{,}08 = 0{,}04, \\
+\text{Écart-type}(X) &= \sqrt{0{,}5} \times 0{,}20 \approx 0{,}1414, \\
+\ln(2) &\approx 0{,}6931.
+\end{aligned}
+\]
+
+On standardise :
+\[
+Z = \frac{\ln(2) - 0{,}04}{0{,}1414} \approx \frac{0{,}6531}{0{,}1414} \approx 4{,}62.
+\]
+
+La probabilité recherchée est donc :
+\[
+\mathbb{P}(Z \geq 4{,}62) = 1 - \Phi(4{,}62),
+\]
+où \( \Phi \) est la fonction de répartition de la loi normale centrée réduite.
+
+À l’aide des tables ou d’un logiciel, \( \Phi(4{,}62) \approx 0{,}999998 \), donc :
+\[
+\mathbb{P}\big(S(0{,}5) \geq 2 S(0)\big) \approx 1 - 0{,}999998 = 0{,}000002,
+\]
+soit environ /textbf{0,0002\%}.
+
+\textit{Interprétation :} Sous ces hypothèses de rendement et de volatilité, il est extrêmement improbable que l’actif double en 6 mois. Cela illustre la faible probabilité des événements extrêmes dans un modèle log-normal avec volatilité modérée.
+
+\medskip
+\noindent \textbf{10. Conclusion}
+
+Cet exemple montre, pas à pas, comment un processus financier réel — la composition multiplicative des rendements — conduit naturellement à modéliser le prix futur comme une variable log-normale. L’astuce du logarithme permet d’utiliser la puissance du Théorème Central Limite, et les paramètres \( t\mu \) et \( t\sigma^2 \) apparaissent inévitablement comme conséquence des propriétés additives de l’espérance et de la variance sous indépendance. C’est sur cette base solide que repose le modèle de Black-Scholes.
 \end{examplebox}
