@@ -1,0 +1,486 @@
+
+
+
+\subsection{Exercices}
+
+%  Concepts de Base et Règle du Produit 
+
+\begin{exercicebox}[Exercice 1 : Dés et Probabilité Conditionnelle Simple]
+On lance deux dés équilibrés à 6 faces.
+\begin{enumerate}
+    \item Quelle est la probabilité que la somme des dés soit 8 ?
+    \item Sachant que le premier dé a donné un 3, quelle est la probabilité que la somme soit 8 ?
+    \item Sachant que la somme est 8, quelle est la probabilité que le premier dé ait donné un 3 ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Tirage de Cartes (Sans Remise)]
+On tire deux cartes successivement et sans remise d'un jeu standard de 52 cartes.
+\begin{enumerate}
+    \item Quelle est la probabilité que la deuxième carte soit un Roi, sachant que la première était un Roi ?
+    \item Quelle est la probabilité de tirer deux Rois ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Urne (Règle du Produit)]
+Une urne contient 7 boules rouges et 3 boules bleues. On tire deux boules successivement et sans remise.
+\begin{enumerate}
+    \item Quelle est la probabilité que la première boule soit rouge ?
+    \item Quelle est la probabilité que la deuxième boule soit bleue, sachant que la première était rouge ?
+    \item Quelle est la probabilité de tirer une boule rouge puis une boule bleue ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Famille (Condition Simple)]
+Une famille a deux enfants. On suppose que la probabilité d'avoir un garçon (G) ou une fille (F) est la même (0.5) et que les naissances sont indépendantes.
+\begin{enumerate}
+    \item Quel est l'univers $S$ des possibilités ?
+    \item Sachant que l'aîné est un garçon, quelle est la probabilité que la famille ait deux garçons ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Famille (Condition "Au Moins")]
+En utilisant le même scénario que l'exercice 4 (famille de deux enfants) :
+Sachant qu'il y a \textit{au moins un} garçon dans la famille, quelle est la probabilité que la famille ait deux garçons ?
+\end{exercicebox}
+
+%  Indépendance 
+
+\begin{exercicebox}[Exercice 6 : Indépendance (Dés)]
+On lance deux dés équilibrés.
+Soit $A$ l'événement "le premier dé donne 3" et $B$ l'événement "la somme des deux dés est 7".
+Les événements $A$ et $B$ sont-ils indépendants ? Justifiez par le calcul.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 7 : Indépendance (Cartes)]
+On tire une carte d'un jeu de 52 cartes.
+Soit $A$ l'événement "la carte est un Roi" et $B$ l'événement "la carte est un Cœur".
+Les événements $A$ et $B$ sont-ils indépendants ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 8 : Indépendance vs Exclusion Mutuelle]
+Soient $A$ et $B$ deux événements avec $P(A)=0.5$ et $P(B)=0.3$.
+\begin{enumerate}
+    \item Si $A$ et $B$ sont mutuellement exclusifs (disjoints), sont-ils indépendants ?
+    \item Si $A$ et $B$ sont indépendants, quelle est $P(A \cup B)$ ?
+\end{enumerate}
+\end{exercicebox}
+
+%  Formule des Probabilités Totales (LTP) 
+
+\begin{exercicebox}[Exercice 9 : LTP (Deux Urnes)]
+L'urne U1 contient 2 boules noires et 3 boules blanches. L'urne U2 contient 4 boules noires et 1 boule blanche.
+On choisit une urne au hasard (chaque urne a 50\% de chance d'être choisie), puis on tire une boule de cette urne.
+Quelle est la probabilité de tirer une boule blanche ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : LTP (Usine)]
+Une usine utilise deux machines, M1 et M2, pour produire des pièces. M1 produit 40\% des pièces et M2 produit 60\%. 5\% des pièces de M1 sont défectueuses, et 2\% des pièces de M2 sont défectueuses.
+Si l'on choisit une pièce au hasard dans la production totale, quelle est la probabilité qu'elle soit défectueuse ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 11 : LTP (Pièce de Monnaie Inconnue)]
+On a deux pièces. La pièce A est équilibrée ($P(\text{Pile})=0.5$). La pièce B est truquée ($P(\text{Pile})=0.8$).
+On choisit une pièce au hasard et on la lance. Quelle est la probabilité d'obtenir Pile ?
+\end{exercicebox}
+
+%  Règle de Bayes 
+
+\begin{exercicebox}[Exercice 12 : Bayes (Test Médical)]
+Une maladie touche 1 personne sur 1000 ($P(M)=0.001$). Un test de dépistage donne un résultat positif chez 98\% des personnes malades ($P(T|M)=0.98$). Il donne aussi un résultat positif (un "faux positif") chez 3\% des personnes non malades ($P(T|\neg M)=0.03$).
+Une personne reçoit un test positif. Quelle est la probabilité qu'elle soit réellement malade ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 13 : Bayes (Inversion d'Urnes)]
+Reprenons le scénario de l'exercice 9 (U1 avec 2N/3B, U2 avec 4N/1B).
+On a tiré une boule et on constate qu'elle est blanche. Quelle est la probabilité qu'elle provienne de l'urne U1 ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 14 : Bayes (Spam)]
+Dans une boîte de réception, 60\% des emails sont des spams. 70\% des spams contiennent le mot "gratuit". Seuls 10\% des emails légitimes contiennent le mot "gratuit".
+Vous recevez un email qui contient le mot "gratuit". Quelle est la probabilité que ce soit un spam ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 15 : Bayes (Usine Inversée)]
+Reprenons le scénario de l'exercice 10 (M1: 40\% prod, 5\% défaut; M2: 60% prod, 2% défaut).
+On trouve une pièce défectueuse. Quelle est la probabilité qu'elle ait été produite par la machine M1 ?
+\end{exercicebox}
+
+%  Règle de la Chaîne et Problèmes Combinés 
+
+\begin{exercicebox}[Exercice 16 : Règle de la Chaîne (3 Cartes)]
+On tire 3 cartes successivement et sans remise d'un jeu de 52 cartes.
+Quelle est la probabilité de tirer 3 Piques ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 17 : Problème de Monty Hall (Calcul)]
+En utilisant la formalisation du problème de Monty Hall (vous choisissez la Porte 1, la voiture est en $V \in \{1, 2, 3\}$, l'animateur ouvre $H \in \{2, 3\}$) :
+Calculez $P(V=1 | H=3)$ (la probabilité que la voiture soit derrière votre porte, sachant que l'animateur a ouvert la 3). Supposez que $P(V=i)=1/3$ pour $i=1,2,3$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 18 : Bayes avec Mise à Jour (Pièce Truquée)]
+Reprenons l'exercice 11 (Pièce A équilibrée, Pièce B truquée $P(\text{Pile})=0.8$).
+On choisit une pièce au hasard. On la lance deux fois et on obtient Pile, puis Pile (PP).
+Quelle est la probabilité que l'on ait choisi la pièce truquée (Pièce B) ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 19 : Indépendance Conditionnelle (Dés)]
+On lance deux dés, $D_1$ et $D_2$. Soit $S = D_1 + D_2$ leur somme.
+Soit $A$ l'événement "$D_1 = 1$", $B$ l'événement "$D_2 = 1$".
+$A$ et $B$ sont indépendants. Sont-ils indépendants conditionnellement à l'événement $C = \{S = 2\}$ ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 20 : Jeu Séquentiel]
+Alice et Bob jouent à un jeu. Ils lancent un dé à tour de rôle, en commençant par Alice. Le premier qui obtient un 6 gagne.
+Quelle est la probabilité qu'Alice gagne ?
+\end{exercicebox}
+
+\subsection{Corrections des Exercices}
+
+%  Corrections : Concepts de Base et Règle du Produit 
+
+\begin{correctionbox}[Correction Exercice 1 : Dés et Probabilité Conditionnelle Simple]
+L'univers $S$ a $|S| = 6 \times 6 = 36$ issues.
+
+1.  Soit $A$ l'événement "la somme est 8". $A = \{(2,6), (3,5), (4,4), (5,3), (6,2)\}$.
+    $|A|=5$, donc $P(A) = 5/36$.
+
+2.  Soit $B$ l'événement "le premier dé donne 3". $B = \{(3,1), (3,2), (3,3), (3,4), (3,5), (3,6)\}$.
+    On cherche $P(A|B)$. Sachant $B$, l'univers est réduit à ces 6 issues. Parmi celles-ci, seule l'issue $(3,5)$ donne une somme de 8.
+    Donc, $P(A|B) = 1/6$.
+    *Par formule :* $A \cap B = \{(3,5)\}$, $P(A \cap B) = 1/36$. $P(B) = 6/36 = 1/6$.
+    $P(A|B) = \frac{P(A \cap B)}{P(B)} = \frac{1/36}{6/36} = 1/6$.
+
+3.  On cherche $P(B|A)$. Sachant $A$, l'univers est réduit aux 5 issues de $A$. Parmi celles-ci, seule l'issue $(3,5)$ a 3 sur le premier dé.
+    Donc, $P(B|A) = 1/5$.
+    *Par formule :* $P(B|A) = \frac{P(A \cap B)}{P(A)} = \frac{1/36}{5/36} = 1/5$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 2 : Tirage de Cartes (Sans Remise)]
+Soit $K_1$ l'événement "Roi au 1er tirage" et $K_2$ "Roi au 2e tirage".
+
+1.  On cherche $P(K_2|K_1)$. Si $K_1$ s'est produit, il reste 51 cartes dans le jeu, dont $4-1=3$ Rois.
+    $P(K_2|K_1) = 3/51 = 1/17$.
+
+2.  On cherche $P(K_1 \cap K_2)$. On utilise la règle du produit :
+    $P(K_1 \cap K_2) = P(K_1) \times P(K_2|K_1)$
+    $P(K_1) = 4/52 = 1/13$.
+    $P(K_1 \cap K_2) = (4/52) \times (3/51) = (1/13) \times (1/17) = 1/221$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 3 : Urne (Règle du Produit)]
+Urne avec 7 Rouges (R) et 3 Bleues (B). Total = 10.
+Soit $R_1$ "Rouge au 1er tirage" et $B_2$ "Bleue au 2e tirage".
+
+1.  $P(R_1) = 7/10$.
+2.  On cherche $P(B_2|R_1)$. Si $R_1$ s'est produit, il reste 9 boules (6R, 3B).
+    $P(B_2|R_1) = 3/9 = 1/3$.
+3.  On cherche $P(R_1 \cap B_2)$.
+    $P(R_1 \cap B_2) = P(R_1) \times P(B_2|R_1) = (7/10) \times (1/3) = 7/30$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 4 : Famille (Condition Simple)]
+1.  L'univers est $S = \{GG, GF, FG, FF\}$, où le premier enfant est l'aîné. $|S|=4$, chaque issue a une probabilité de 1/4.
+2.  Soit $A$ l'événement "l'aîné est un garçon" : $A = \{GG, GF\}$. $P(A) = 2/4 = 1/2$.
+    Soit $B$ l'événement "la famille a deux garçons" : $B = \{GG\}$. $P(B) = 1/4$.
+    On cherche $P(B|A)$. L'événement $A \cap B = \{GG\}$. $P(A \cap B) = 1/4$.
+    $P(B|A) = \frac{P(A \cap B)}{P(A)} = \frac{1/4}{1/2} = 1/2$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 5 : Famille (Condition "Au Moins")]
+Soit $B$ l'événement "la famille a deux garçons" : $B = \{GG\}$.
+Soit $C$ l'événement "il y a au moins un garçon" : $C = \{GG, GF, FG\}$. $P(C) = 3/4$.
+On cherche $P(B|C)$.
+L'événement $B \cap C = \{GG\}$. $P(B \cap C) = 1/4$.
+$P(B|C) = \frac{P(B \cap C)}{P(C)} = \frac{1/4}{3/4} = 1/3$.
+*Intuition :* L'univers de $C$ est $\{GG, GF, FG\}$. Parmi ces 3 issues équiprobables, une seule est $GG$.
+\end{correctionbox}
+
+%  Corrections : Indépendance 
+
+\begin{correctionbox}[Correction Exercice 6 : Indépendance (Dés)]
+$A$ = "premier dé = 3". $P(A) = 6/36 = 1/6$.
+$B$ = "somme = 7". $B = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}$. $P(B) = 6/36 = 1/6$.
+$A \cap B$ = "premier dé = 3 ET somme = 7" = $\%(3,4)\}$. $P(A \cap B) = 1/36$.
+On teste si $P(A \cap B) = P(A)P(B)$.
+$P(A)P(B) = (1/6) \times (1/6) = 1/36$.
+Puisque $P(A \cap B) = P(A)P(B)$, les événements $A$ et $B$ sont indépendants.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 7 : Indépendance (Cartes)]
+$A$ = "Roi". $P(A) = 4/52 = 1/13$.
+$B$ = "Cœur". $P(B) = 13/52 = 1/4$.
+$A \cap B$ = "Roi de Cœur". $P(A \cap B) = 1/52$.
+On teste si $P(A \cap B) = P(A)P(B)$.
+$P(A)P(B) = (1/13) \times (1/4) = 1/52$.
+Puisque $P(A \cap B) = P(A)P(B)$, les événements $A$ et $B$ sont indépendants.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 8 : Indépendance vs Exclusion Mutuelle]
+$P(A)=0.5, P(B)=0.3$.
+
+1.  Si $A$ et $B$ sont mutuellement exclusifs, $A \cap B = \emptyset$, donc $P(A \cap B) = 0$.
+    Pour qu'ils soient indépendants, il faudrait $P(A \cap B) = P(A)P(B) = 0.5 \times 0.3 = 0.15$.
+    Puisque $0 \neq 0.15$, ils ne sont pas indépendants. (Deux événements non impossibles ne peuvent pas être à la fois mutuellement exclusifs et indépendants).
+
+2.  Si $A$ et $B$ sont indépendants, $P(A \cap B) = P(A)P(B) = 0.15$.
+    $P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.5 + 0.3 - 0.15 = 0.65$.
+\end{correctionbox}
+
+%  Corrections : Formule des Probabilités Totales (LTP) 
+
+\begin{correctionbox}[Correction Exercice 9 : LTP (Deux Urnes)]
+Soit $U_1$ et $U_2$ les événements "choisir l'urne 1" et "choisir l'urne 2". $P(U_1)=0.5, P(U_2)=0.5$.
+Soit $W$ l'événement "tirer une boule blanche".
+On a $P(W|U_1) = 3 / (2+3) = 3/5 = 0.6$.
+On a $P(W|U_2) = 1 / (4+1) = 1/5 = 0.2$.
+Par la formule des probabilités totales :
+$P(W) = P(W|U_1)P(U_1) + P(W|U_2)P(U_2)$
+$P(W) = (0.6 \times 0.5) + (0.2 \times 0.5) = 0.3 + 0.1 = 0.4$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 10 : LTP (Usine)]
+Soit $M_1$ et $M_2$ les machines. $P(M_1)=0.4, P(M_2)=0.6$.
+Soit $D$ l'événement "la pièce est défectueuse".
+On a $P(D|M_1) = 0.05$ et $P(D|M_2) = 0.02$.
+Par la formule des probabilités totales :
+$P(D) = P(D|M_1)P(M_1) + P(D|M_2)P(M_2)$
+$P(D) = (0.05 \times 0.4) + (0.02 \times 0.6) = 0.020 + 0.012 = 0.032$.
+La probabilité est de 3.2\%.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 11 : LTP (Pièce de Monnaie Inconnue)]
+Soit $A$ "choisir pièce A" et $B$ "choisir pièce B". $P(A)=0.5, P(B)=0.5$.
+Soit $H$ l'événement "obtenir Pile".
+On a $P(H|A) = 0.5$ et $P(H|B) = 0.8$.
+Par la formule des probabilités totales :
+$P(H) = P(H|A)P(A) + P(H|B)P(B)$
+$P(H) = (0.5 \times 0.5) + (0.8 \times 0.5) = 0.25 + 0.40 = 0.65$.
+\end{correctionbox}
+
+%  Corrections : Règle de Bayes 
+
+\begin{correctionbox}[Correction Exercice 12 : Bayes (Test Médical)]
+Soit $M$ "Malade" et $T$ "Test Positif".
+$P(M) = 0.001$, donc $P(\neg M) = 0.999$.
+$P(T|M) = 0.98$.
+$P(T|\neg M) = 0.03$.
+On cherche $P(M|T)$. Par la règle de Bayes : $P(M|T) = \frac{P(T|M)P(M)}{P(T)}$.
+
+1.  Calculer $P(T)$ (dénominateur) avec la LTP :
+    $P(T) = P(T|M)P(M) + P(T|\neg M)P(\neg M)$
+    $P(T) = (0.98 \times 0.001) + (0.03 \times 0.999) = 0.00098 + 0.02997 = 0.03095$.
+
+2.  Appliquer la règle de Bayes :
+    $P(M|T) = \frac{0.00098}{0.03095} \approx 0.03166$.
+    Il n'y a que 3.17\% de chance que la personne soit malade, même avec un test positif.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 13 : Bayes (Inversion d'Urnes)]
+D'après l'exercice 9, on a :
+$P(W) = 0.4$ (prob. totale de tirer une blanche).
+$P(W|U_1) = 0.6$.
+$P(U_1) = 0.5$.
+On cherche $P(U_1|W)$. Par la règle de Bayes :
+$P(U_1|W) = \frac{P(W|U_1)P(U_1)}{P(W)} = \frac{0.6 \times 0.5}{0.4} = \frac{0.3}{0.4} = 0.75$.
+Sachant que la boule est blanche, il y a 75\% de chance qu'elle vienne de l'urne U1.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 14 : Bayes (Spam)]
+Soit $S$ "Spam" et $G$ "Contient 'gratuit'".
+$P(S) = 0.6$, donc $P(\neg S) = 0.4$.
+$P(G|S) = 0.7$.
+$P(G|\neg S) = 0.1$.
+On cherche $P(S|G)$. Par la règle de Bayes : $P(S|G) = \frac{P(G|S)P(S)}{P(G)}$.
+
+1.  Calculer $P(G)$ (dénominateur) avec la LTP :
+    $P(G) = P(G|S)P(S) + P(G|\neg S)P(\neg S)$
+    $P(G) = (0.7 \times 0.6) + (0.1 \times 0.4) = 0.42 + 0.04 = 0.46$.
+
+2.  Appliquer la règle de Bayes :
+    $P(S|G) = \frac{0.42}{0.46} \approx 0.913$.
+    Il y a 91.3\% de chance que l'email soit un spam.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 15 : Bayes (Usine Inversée)]
+D'après l'exercice 10, on a :
+$P(D) = 0.032$ (prob. totale d'être défectueux).
+$P(D|M_1) = 0.05$.
+$P(M_1) = 0.4$.
+On cherche $P(M_1|D)$. Par la règle de Bayes :
+$P(M_1|D) = \frac{P(D|M_1)P(M_1)}{P(D)} = \frac{0.05 \times 0.4}{0.032} = \frac{0.02}{0.032} = 0.625$.
+Sachant que la pièce est défectueuse, il y a 62.5\% de chance qu'elle vienne de M1.
+\end{correctionbox}
+
+%  Corrections : Règle de la Chaîne et Problèmes Combinés 
+
+\begin{correctionbox}[Correction Exercice 16 : Règle de la Chaîne (3 Cartes)]
+Soit $P_i$ l'événement "tirer un Pique au $i$-ème tirage". Il y a 13 Piques sur 52 cartes.
+On cherche $P(P_1 \cap P_2 \cap P_3)$. On utilise la règle de la chaîne :
+$P(P_1 \cap P_2 \cap P_3) = P(P_1) \times P(P_2|P_1) \times P(P_3|P_1 \cap P_2)$
+$P(P_1) = 13/52$.
+$P(P_2|P_1) = 12/51$ (il reste 12 Piques sur 51 cartes).
+$P(P_3|P_1 \cap P_2) = 11/50$ (il reste 11 Piques sur 50 cartes).
+$P = (13/52) \times (12/51) \times (11/50) = \frac{1}{4} \times \frac{4}{17} \times \frac{11}{50} = \frac{11}{17 \times 50} = 11/850 \approx 0.0129$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 17 : Problème de Monty Hall (Calcul)]
+On cherche $P(V=1 | H=3)$. On utilise la règle de Bayes :
+$P(V=1 | H=3) = \frac{P(H=3 | V=1) P(V=1)}{P(H=3)}$.
+
+*Numérateur :* $P(V=1) = 1/3$. $P(H=3 | V=1)$ est la probabilité que l'animateur ouvre la 3, sachant que vous avez choisi la 1 et que la voiture est en 1. Il peut ouvrir la 2 ou la 3 (deux chèvres). On suppose qu'il choisit au hasard : $P(H=3 | V=1) = 1/2$.
+Numérateur = $(1/2) \times (1/3) = 1/6$.
+
+*Dénominateur $P(H=3)$ par LTP (partition sur V) :*
+$P(H=3) = P(H=3|V=1)P(V=1) + P(H=3|V=2)P(V=2) + P(H=3|V=3)P(V=3)$
+- $P(H=3|V=1) = 1/2$ (calculé ci-dessus).
+- $P(H=3|V=2) = 1$ (l'animateur doit ouvrir la 3, car vous avez choisi 1 et la voiture est en 2).
+- $P(H=3|V=3) = 0$ (l'animateur ne peut pas ouvrir la porte 3 car elle contient la voiture).
+$P(H=3) = (1/2 \times 1/3) + (1 \times 1/3) + (0 \times 1/3) = 1/6 + 1/3 + 0 = 1/2$.
+
+*Résultat :* $P(V=1 | H=3) = \frac{1/6}{1/2} = 1/3$.
+(La probabilité que la voiture soit derrière votre porte reste 1/3. La probabilité qu'elle soit derrière l'autre porte fermée (la 2) est $P(V=2|H=3) = 1 - P(V=1|H=3) = 2/3$. Il faut donc changer.)
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 18 : Bayes avec Mise à Jour (Pièce Truquée)]
+Soit $A$ "pièce A (équil.)" et $B$ "pièce B (truquée, p=0.8)". $P(A)=P(B)=0.5$.
+Soit $E$ l'événement "obtenir Pile, Pile" (PP).
+On cherche $P(B|E) = \frac{P(E|B)P(B)}{P(E)}$.
+
+1.  Probabilités conditionnelles de l'évidence $E$ :
+    $P(E|A) = P(\text{PP} | A) = 0.5 \times 0.5 = 0.25$ (indépendance des lancers).
+    $P(E|B) = P(\text{PP} | B) = 0.8 \times 0.8 = 0.64$.
+
+2.  Calculer $P(E)$ (dénominateur) avec la LTP :
+    $P(E) = P(E|A)P(A) + P(E|B)P(B)$
+    $P(E) = (0.25 \times 0.5) + (0.64 \times 0.5) = 0.125 + 0.320 = 0.445$.
+
+3.  Appliquer la règle de Bayes :
+    $P(B|E) = \frac{P(E|B)P(B)}{P(E)} = \frac{0.64 \times 0.5}{0.445} = \frac{0.32}{0.445} \approx 0.719$.
+    Après avoir observé PP, la probabilité que ce soit la pièce truquée passe de 50\% à 71.9\%.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 19 : Indépendance Conditionnelle (Dés)]
+$A = \{D_1=1\}$, $B = \{D_2=1\}$, $C = \{S=2\}$.
+On teste si $P(A \cap B | C) = P(A|C) P(B|C)$.
+
+L'événement $C = \{S=2\}$ ne peut se produire que d'une seule façon : $C = \{(1,1)\}$.
+Donc, $C$ est l'événement $A \cap B$. $C \subseteq A$ et $C \subseteq B$.
+
+Calculons les termes :
+- $P(A|C) = P(A \cap C) / P(C)$. Puisque $C \subseteq A$, $A \cap C = C$.
+  $P(A|C) = P(C) / P(C) = 1$.
+- $P(B|C) = P(B \cap C) / P(C)$. Puisque $C \subseteq B$, $B \cap C = C$.
+  $P(B|C) = P(C) / P(C) = 1$.
+- $P(A \cap B | C) = P((A \cap B) \cap C) / P(C)$. Puisque $A \cap B = C$, $(A \cap B) \cap C = C$.
+  $P(A \cap B | C) = P(C) / P(C) = 1$.
+
+Test d'indépendance :
+$P(A \cap B | C) = 1$.
+$P(A|C) P(B|C) = 1 \times 1 = 1$.
+Puisque $1=1$, les événements $A$ et $B$ sont bien indépendants conditionnellement à $C$.
+*Intuition :* Sachant que la somme est 2, nous savons avec certitude que $D_1=1$ et $D_2=1$. Il n'y a plus d'aléa.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 20 : Jeu Séquentiel]
+Soit $p=1/6$ la probabilité de gagner (obtenir un 6) et $q=5/6$ la probabilité de rater.
+Alice gagne si elle réussit au tour 1, OU si (elle rate ET Bob rate) et elle réussit au tour 3, OU si (A rate, B rate, A rate, B rate) et elle réussit au tour 5, etc.
+
+$P(\text{A gagne}) = P(\text{A au tour 1}) + P(\text{A au tour 3}) + P(\text{A au tour 5}) + \dots$
+$P(\text{A gagne}) = p + (q \times q)p + (q \times q \times q \times q)p + \dots$
+$P(\text{A gagne}) = p + q^2 p + q^4 p + \dots$
+$P(\text{A gagne}) = p \times (1 + q^2 + q^4 + \dots)$
+$P(\text{A gagne}) = p \sum_{k=0}^{\infty} (q^2)^k$
+
+C'est une série géométrique de premier terme $p$ et de raison $r = q^2 = (5/6)^2 = 25/36$.
+La somme est $\frac{\text{premier terme}}{1 - \text{raison}} = \frac{p}{1 - q^2}$.
+$P(\text{A gagne}) = \frac{1/6}{1 - 25/36} = \frac{1/6}{11/36} = \frac{1}{6} \times \frac{36}{11} = 6/11$.
+\end{correctionbox}
+
+\subsection{Exercices Python}
+
+Ces exercices appliquent les concepts de probabilité conditionnelle, de la règle de Bayes et de la formule des probabilités totales au jeu de données "Titanic".
+
+\begin{codecell}
+import pandas as pd
+import seaborn as sns
+import math
+
+# Charger le dataset Titanic
+df = sns.load_dataset("titanic")
+
+# On retire les lignes ou l'age est inconnu pour simplifier les calculs
+# C'est notre Univers S.
+df = df.dropna(subset=["age"]) 
+
+\end{codecell}
+
+\begin{exercicebox}[Exercice 1 : Définition de $P(A|B)$]
+Calculez la probabilité qu'un passager ait survécu ($A$), \textbf{sachant que} ce passager était en première classe ($B$).
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Soit $A$ = "le passager a survécu" (\texttt{survived == 1}).
+    \item Soit $B$ = "le passager est en première classe" (\texttt{pclass == 1}).
+    \item Trouver $|B|$ (le nombre de passagers en 1ère classe).
+    \item Trouver $|A \cap B|$ (le nombre de survivants de 1ère classe).
+    \item Calculer $P(A|B) = \frac{|A \cap B|}{|B|}$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Règle du Produit (Tirage sans remise)]
+On tire au hasard 2 passagers de l'univers \texttt{df} sans remise. Calculez la probabilité que le premier passager soit un survivant ($A_1$) ET que le second passager soit aussi un survivant ($A_2$).
+
+Utilisez la Règle du Produit : $P(A_1 \cap A_2) = P(A_1)P(A_2|A_1)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Trouver $|S|$ (total passagers) et $|A_1|$ (total survivants).
+    \item Calculer $P(A_1) = |A_1| / |S|$.
+    \item Calculer $P(A_2|A_1)$. (Indice : après avoir tiré un survivant, combien de passagers restent ? Combien de survivants restent ?).
+    \item Calculer le produit $P(A_1) \times P(A_2|A_1)$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Formule des Probabilités Totales]
+Calculez la probabilité totale qu'un passager ait survécu ($B$) en utilisant la formule des probabilités totales. Utilisez la partition des trois classes de passagers ($A_1$=1ère, $A_2$=2e, $A_3$=3e classe).
+
+La formule est : $P(B) = \sum_{i=1}^{3} P(B|A_i)P(A_i)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Pour $i=1, 2, 3$, calculer $P(A_i)$, la probabilité d'appartenir à chaque classe (ex: $P(A_1) = |\text{pclass 1}| / |S|$).
+    \item Pour $i=1, 2, 3$, calculer $P(B|A_i)$, la probabilité de survie sachant la classe (cf. Exercice 1).
+    \item Appliquer la formule : $P(B) = P(B|A_1)P(A_1) + P(B|A_2)P(A_2) + P(B|A_3)P(A_3)$.
+    \item (Vérification) Comparez votre résultat au calcul direct $P(B) = |\text{survivants}| / |S|$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Règle de Bayes]
+En utilisant les résultats de l'exercice précédent, appliquez la Règle de Bayes.
+
+On observe qu'un passager a survécu ($B$). Quelle est la probabilité qu'il s'agisse d'un passager de première classe ($A_1$) ?
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item On cherche $P(A_1|B) = \frac{P(B|A_1)P(A_1)}{P(B)}$.
+    \item Récupérer $P(B|A_1)$ (la probabilité de survie en 1ère classe) de l'exercice 3.
+    \item Récupérer $P(A_1)$ (la probabilité d'être en 1ère classe) de l'exercice 3.
+    \item Récupérer $P(B)$ (la probabilité totale de survie) de l'exercice 3.
+    \item Effectuer le calcul.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Indépendance de deux événements]
+Les événements $A$ = "être une femme" (\texttt{sex == 'female'}) et $B$ = "avoir survécu" (\texttt{survived == 1}) sont-ils indépendants ?
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Prouver ou réfuter l'indépendance en vérifiant si $P(A \cap B) = P(A)P(B)$.
+    \item Calculer $P(A) = |\text{femmes}| / |S|$.
+    \item Calculer $P(B) = |\text{survivants}| / |S|$.
+    \item Calculer $P(A \cap B) = |\text{femmes survivantes}| / |S|$.
+    \item Comparer $P(A \cap B)$ au produit $P(A) \times P(B)$.
+    \item (Alternative) Comparer $P(B|A)$ à $P(B)$. L'information "être une femme" change-t-elle la probabilité de survie ?
+\end{enumerate}
+\end{exercicebox}

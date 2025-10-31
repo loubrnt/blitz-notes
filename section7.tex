@@ -1,409 +1,505 @@
 \newpage
-\section{La Loi Normale (ou Gaussienne)}
+\section{La Loi Log-Normale}
 
-\subsection{Introduction et Fonction de Densité (PDF)}
+\subsection{Introduction et Définition}
 
-Après les lois discrètes et les lois continues de base (Uniforme, Exponentielle), nous abordons la distribution la plus célèbre et la plus utilisée en probabilités et statistiques.
+Après la loi normale, qui modélise des phénomènes résultant de \textit{l'addition} de nombreux petits effets, nous abordons une loi qui modélise le \textit{produit} de nombreux petits facteurs.
 
-\begin{definitionbox}[Loi Normale]
-Une variable aléatoire continue $X$ suit une \textbf{loi normale} (ou loi de Gauss) de paramètres $\mu$ (l'espérance) et $\sigma^2$ (la variance), notée $X \sim \mathcal{N}(\mu, \sigma^2)$, si sa fonction de densité de probabilité (PDF) est donnée par :
-$$ f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{1}{2} \left( \frac{x-\mu}{\sigma} \right)^2 } $$
-pour tout $x \in (-\infty, \infty)$, où $\sigma > 0$.
+\begin{definitionbox}[Loi Log-Normale]
+Une variable aléatoire continue $Y$ suit une \textbf{loi log-normale} de paramètres $\mu$ et $\sigma^2$, notée $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, si son logarithme népérien $X = \ln(Y)$ suit une loi normale $\mathcal{N}(\mu, \sigma^2)$.
+
+Puisque $\ln(Y)$ doit être un nombre réel, le support de $Y$ (l'ensemble des valeurs qu'elle peut prendre) est l'intervalle $(0, \infty)$.
 \end{definitionbox}
 
-Cette formule, bien qu'imposante, décrit une forme très familière : la courbe en cloche.
-
-\begin{intuitionbox}[La Courbe en Cloche]
-La loi normale est sans doute la distribution la plus importante en probabilités et statistiques. Pourquoi ? Parce qu'elle modélise remarquablement bien de nombreux phénomènes naturels et processus aléatoires où les valeurs tendent à se regrouper autour d'une moyenne, avec des écarts symétriques devenant de plus en plus rares à mesure qu'on s'éloigne de cette moyenne. Pensez à la taille des individus dans une population, aux erreurs de mesure répétées, ou même aux notes d'un grand groupe d'étudiants à un examen bien conçu. 
-
-Sa densité a une forme caractéristique de \textbf{cloche symétrique} :
+\begin{remarquebox}[Interprétation Cruciale des Paramètres]
+C'est le point le plus important (et le plus confus) de la loi log-normale :
 \begin{itemize}
-    \item \textbf{Le Centre ($\mu$)} : Le paramètre $\mu$ représente l'\textbf{espérance} (la moyenne) de la distribution. C'est le centre de symétrie de la courbe, là où la cloche atteint son \textbf{sommet}. C'est la valeur la plus probable (le mode) et aussi la valeur qui coupe la distribution en deux moitiés égales (la médiane). Changer $\mu$ \textit{translate} la cloche horizontalement sans changer sa forme.
-    \item \textbf{La Dispersion ($\sigma$)} : Le paramètre $\sigma$ est l'\textbf{écart-type} ($\sigma^2$ est la variance). Il mesure la \textbf{dispersion} des valeurs autour de la moyenne $\mu$. Géométriquement, $\sigma$ contrôle la \textbf{largeur} de la cloche.
-        \begin{itemize}
-            \item Un \textit{petit} $\sigma$ signifie que les données sont très concentrées autour de la moyenne, donnant une cloche \textbf{étroite et pointue}.
-            \item Un \textit{grand} $\sigma$ signifie que les données sont plus étalées, donnant une cloche \textbf{large et aplatie}.
-        \end{itemize}
-    Les points d'inflexion de la courbe (là où la courbure change de sens) se situent exactement à $\mu \pm \sigma$.
+    \item $\mu$ \textbf{n'est PAS} l'espérance de $Y$.
+    \item $\sigma^2$ \textbf{n'est PAS} la variance de $Y$.
+\end{itemize}
+Au lieu de cela, $\mu = E[\ln(Y)]$ et $\sigma^2 = \text{Var}(\ln(Y))$ sont l'espérance et la variance de la variable normale \textit{sous-jacente} (le log de $Y$).
+\end{remarquebox}
+
+\subsection{Intuition : Des Sommes aux Produits}
+
+La loi log-normale peut sembler complexe, mais elle émerge naturellement de processus multiplicatifs, tout comme la loi normale émerge de processus additifs.
+
+\begin{intuitionbox}[Du Multiplicatif à l'Additif (et retour)]
+\textbf{1. Le Contraste (Additif $\to$ Normal)} :
+La loi normale (via le Théorème Central Limite) décrit le résultat d'une \textbf{somme} de nombreux petits chocs aléatoires indépendants (comme les $\pm 1$ d'un jeu de pile ou face répété). Le résultat est symétrique autour d'une moyenne.
+$$ S_n = X_1 + X_2 + \ldots + X_n \quad \xrightarrow{\text{TCL}} \quad \mathcal{N} $$
+
+\textbf{2. Le Problème (Multiplicatif)} :
+De nombreux phénomènes réels ne s'additionnent pas, ils se \textit{multiplient}.
+\begin{itemize}
+    \item \textbf{Finance :} Un capital $C$ évolue par des rendements en pourcentage. $C_T = C_0 \times (1+r_1) \times (1+r_2) \times \ldots \times (1+r_T)$.
+    \item \textbf{Biologie :} La taille d'une population de bactéries est $P_t = P_0 \times F_1 \times F_2 \times \ldots \times F_t$, où $F_i$ est le facteur de croissance à l'étape $i$.
+\end{itemize}
+Nous voulons décrire la distribution d'un \textbf{produit} de facteurs aléatoires :
+$$ Y = F_1 \times F_2 \times \ldots \times F_n $$
+
+\textbf{3. L'Astuce (Le Logarithme)} :
+Les produits sont difficiles à manipuler. L'astuce mathématique fondamentale est de prendre le logarithme, qui \textbf{transforme les produits en sommes} :
+$$ \ln(Y) = \ln(F_1) + \ln(F_2) + \ldots + \ln(F_n) $$
+
+\textbf{4. L'Apparition de la Loi Normale} :
+Nous avons transformé notre problème ! La variable $\ln(Y)$ est maintenant une \textit{somme} de petits chocs aléatoires (les $\ln(F_i)$). D'après le Théorème Central Limite, si $n$ est grand, la distribution de cette \textit{somme} $\ln(Y)$ va converger vers une loi normale.
+$$ \ln(Y) = X \sim \mathcal{N}(\mu, \sigma^2) $$
+C'est l'origine du nom "log-normal" : le \textit{log} de la variable est \textit{normal}.
+
+\textbf{5. Le Retour (L'Exponentielle)} :
+Pour trouver la distribution de $Y$ (notre variable d'intérêt), il nous faut inverser l'opération du logarithme. Nous prenons l'exponentielle :
+$$ Y = e^X \quad \text{où } X \sim \mathcal{N}(\mu, \sigma^2) $$
+Cette transformation $x \mapsto e^x$ change radicalement la forme de la distribution.
+\begin{itemize}
+    \item La cloche symétrique de $X$ (qui peut être négative) est transformée.
+    \item Puisque $e^x > 0$ pour tout $x$, la variable $Y$ est \textbf{strictement positive}.
+    \item La partie gauche de la cloche (valeurs $x \to -\infty$) est \textbf{compressée} près de $0$ ($e^x \to 0$).
+    \item La partie droite de la cloche (valeurs $x \to +\infty$) est \textbf{étirée} exponentiellement ($e^x \to \infty$).
+\end{itemize}
+Le résultat est une distribution \textbf{asymétrique à droite} (biaisée positivement), avec une longue queue vers les valeurs élevées.
+
+\textbf{Conclusion :} La loi log-normale est la loi des \textbf{produits} de nombreux petits facteurs aléatoires. Elle modélise des grandeurs qui ne peuvent être négatives et qui ont une probabilité non négligeable d'atteindre des valeurs très grandes.
+\end{intuitionbox}
+
+\subsection{Fonction de Densité (PDF)}
+
+On peut déduire la forme de la PDF log-normale en utilisant la méthode du changement de variable sur $Y = e^X$.
+
+\begin{theorembox}[Fonction de Densité Log-Normale]
+Si $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, sa fonction de densité de probabilité est donnée par :
+$$ f_Y(y) = \frac{1}{y \sigma \sqrt{2\pi}} e^{ -\frac{(\ln(y) - \mu)^2}{2\sigma^2} } $$
+pour tout $y > 0$.
+\end{theorembox}
+
+\begin{proofbox}[Dérivation par Changement de Variable]
+Nous cherchons la densité $f_Y(y)$ de $Y = g(X) = e^X$, sachant que $X = g^{-1}(Y) = \ln(Y)$ a pour densité $f_X(x) = \phi\left(\frac{x-\mu}{\sigma}\right) \frac{1}{\sigma}$.
+La formule de changement de variable est $f_Y(y) = f_X(g^{-1}(y)) \left| \frac{d(g^{-1}(y))}{dy} \right|$.
+Ici, $x = g^{-1}(y) = \ln(y)$.
+La dérivée est $\frac{dx}{dy} = \frac{1}{y}$. Puisque $y > 0$, on a $|\frac{1}{y}| = \frac{1}{y}$.
+Substituons $x = \ln(y)$ dans la densité de $X$ et multiplions par la dérivée :
+$$ f_Y(y) = f_X(\ln(y)) \cdot \frac{1}{y} $$
+$$ f_Y(y) = \left[ \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{1}{2} \left( \frac{\ln(y)-\mu}{\sigma} \right)^2 } \right] \cdot \frac{1}{y} $$
+En réarrangeant, on obtient :
+$$ f_Y(y) = \frac{1}{y \sigma \sqrt{2\pi}} e^{ -\frac{(\ln(y) - \mu)^2}{2\sigma^2} } $$
+\end{proofbox}
+
+\begin{intuitionbox}[Forme de la PDF]
+La PDF log-normale confirme notre intuition :
+\begin{itemize}
+    \item Elle n'est définie que pour $y > 0$.
+    \item Elle est fortement \textbf{asymétrique à droite}. Elle commence à $f_Y(0)=0$, monte rapidement vers un pic (le mode), puis redescend lentement, formant une longue "queue" vers les grandes valeurs.
+    \item Le paramètre $\sigma$ (l'écart-type de $\ln Y$) contrôle \textbf{l'asymétrie} de $Y$. Un $\sigma$ plus grand rend la distribution plus étalée et plus asymétrique.
 \end{itemize}
 
 \tcblower
 \centering
 \begin{tikzpicture}
     \begin{axis}[
-        title={La Courbe en Cloche (PDF de la Loi Normale)},
-        xlabel={$x$},
-        ylabel={$f(x)$},
+        title={PDF de la Loi Log-Normale},
+        xlabel={$y$},
+        ylabel={$f_Y(y)$},
         axis lines=middle,
         no markers,
         samples=100,
-        domain=-4:4,
+        domain=0.01:5, % Domaine > 0
         height=8cm,
         width=\linewidth-1cm,
         tick label style={font=\tiny},
         legend style={at={(0.5,-0.15)}, anchor=north, font=\small},
         legend columns=2
     ]
-    % N(0, 1)
-    \addplot [blue, ultra thick] {1/(sqrt(2*pi))*exp(-x^2/2)};
-    \addlegendentry{$\mu=0, \sigma=1$};
-    % N(0, 0.25) => sigma=0.5
-    \addplot [red, ultra thick] {1/(0.5*sqrt(2*pi))*exp(-x^2/(2*0.5^2))};
-    \addlegendentry{$\mu=0, \sigma=0.5$ (étroite)};
-    % N(1, 2.25) => sigma=1.5
-    \addplot [green!70!black, ultra thick] {1/(1.5*sqrt(2*pi))*exp(-(x-1)^2/(2*1.5^2))};
-    \addlegendentry{$\mu=1, \sigma=1.5$ (large, décalée)};
-
-    \draw [dashed] (axis cs:0,0) -- (axis cs:0, {1/(sqrt(2*pi))}) node[above, font=\tiny] {pic à $\mu=0$}; % Ligne pour mu=0
-    \draw [dashed] (axis cs:1,0) -- (axis cs:1, {1/(1.5*sqrt(2*pi))}) node[above right, font=\tiny] {pic à $\mu=1$}; % Ligne pour mu=1
+    % Log-N(0, 0.25) => mu=0, sigma=0.5
+    \addplot [blue, ultra thick] {1/(x*0.5*sqrt(2*pi))*exp(-(ln(x)-0)^2/(2*0.5^2))};
+    \addlegendentry{$\mu=0, \sigma=0.5$};
+    % Log-N(0, 1) => mu=0, sigma=1
+    \addplot [red, ultra thick] {1/(x*1*sqrt(2*pi))*exp(-(ln(x)-0)^2/(2*1^2))};
+    \addlegendentry{$\mu=0, \sigma=1.0$ (plus étalée/asym.)};
+    % Log-N(0.5, 0.25) => mu=0.5, sigma=0.5
+    \addplot [green!70!black, ultra thick] {1/(x*0.5*sqrt(2*pi))*exp(-(ln(x)-0.5)^2/(2*0.5^2))};
+    \addlegendentry{$\mu=0.5, \sigma=0.5$ (décalée)};
     \end{axis}
 \end{tikzpicture}
-\par\small\textit{Influence de $\mu$ (position) et $\sigma$ (largeur) sur la forme de la cloche.}
+\par\small\textit{Influence de $\mu$ (échelle) et $\sigma$ (forme/asymétrie) sur la PDF log-normale.}
 \end{intuitionbox}
 
-Mais d'où vient cette formule spécifique ? Il existe une dérivation fascinante à partir d'hypothèses fondamentales sur les erreurs aléatoires (argument d'Herschel-Maxwell).
+\subsection{Comment obtenir l’espérance d’une variable log-normale}
 
-\begin{proofbox}[Dérivation de la Densité Normale à partir des Principes Fondamentaux]
+L’espérance d’une variable log-normale ne se calcule pas directement à partir de sa densité sans précaution, car la forme de cette densité rend l’intégrale peu intuitive. Heureusement, la définition même de la loi log-normale — via une transformation exponentielle d’une variable normale — fournit une voie élégante et puissante.
 
-\textbf{Contexte Visuel :} Imaginons un nuage de points dispersés autour d'une cible à l'origine $(0,0)$, comme des impacts de fléchettes. Le graphique ci-dessous illustre cette dispersion. On s'intéresse à la probabilité de tomber dans une petite zone, comme $dA$, autour d'un point $(x, y)$.
+\begin{intuitionbox}[Stratégie de calcul : exploiter la variable sous-jacente]
+Puisque \( Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2) \) signifie que \( Y = e^X \) avec \( X \sim \mathcal{N}(\mu, \sigma^2) \), on peut écrire :
+\[
+\mathbb{E}[Y] = \mathbb{E}[e^X].
+\]
+Il s’agit donc de calculer l’espérance de l’exponentielle d’une variable normale. Ce type d’espérance est exactement ce que la **fonction génératrice des moments** (MGF, pour \textit{Moment Generating Function}) permet de calculer.
 
+Rappelons que pour une variable aléatoire \( X \), la MGF est définie par :
+\[
+M_X(t) = \mathbb{E}[e^{tX}],
+\]
+lorsqu’elle existe. Ainsi, \( \mathbb{E}[e^X] = M_X(1) \).
+\end{intuitionbox}
+
+\begin{proofbox}[Calcul détaillé de E\[Y\] par intégration directe]
+Nous allons maintenant démontrer rigoureusement que :
+\[
+\mathbb{E}[Y] = e^{\mu + \sigma^2/2},
+\]
+en partant de la définition de l’espérance et en effectuant le calcul d’intégrale.
+
+Puisque \( Y = e^X \) et \( X \sim \mathcal{N}(\mu, \sigma^2) \), on a :
+\[
+\mathbb{E}[Y] = \mathbb{E}[e^X] = \int_{-\infty}^{+\infty} e^x \cdot \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left( -\frac{(x - \mu)^2}{2\sigma^2} \right) dx.
+\]
+
+Regroupons les exponentielles :
+\[
+\mathbb{E}[Y] = \frac{1}{\sigma\sqrt{2\pi}} \int_{-\infty}^{+\infty} \exp\!\left( x - \frac{(x - \mu)^2}{2\sigma^2} \right) dx.
+\]
+
+Développons l’exposant :
+\[
+x - \frac{(x - \mu)^2}{2\sigma^2}
+= x - \frac{x^2 - 2\mu x + \mu^2}{2\sigma^2}
+= -\frac{x^2}{2\sigma^2} + \left( \frac{\mu}{\sigma^2} + 1 \right)x - \frac{\mu^2}{2\sigma^2}.
+\]
+
+Complétons le carré en \( x \). Posons :
+\[
+-\frac{1}{2\sigma^2} \left[ x^2 - 2(\mu + \sigma^2)x \right] - \frac{\mu^2}{2\sigma^2}.
+\]
+
+Le terme entre crochets devient :
+\[
+x^2 - 2(\mu + \sigma^2)x = \big(x - (\mu + \sigma^2)\big)^2 - (\mu + \sigma^2)^2.
+\]
+
+Donc l’exposant total vaut :
+\[
+-\frac{1}{2\sigma^2} \big(x - (\mu + \sigma^2)\big)^2 + \frac{(\mu + \sigma^2)^2 - \mu^2}{2\sigma^2}.
+\]
+
+Calculons le terme constant :
+\[
+(\mu + \sigma^2)^2 - \mu^2 = 2\mu\sigma^2 + \sigma^4,
+\quad \text{donc} \quad
+\frac{2\mu\sigma^2 + \sigma^4}{2\sigma^2} = \mu + \frac{\sigma^2}{2}.
+\]
+
+Ainsi :
+\[
+\mathbb{E}[Y] = \frac{1}{\sigma\sqrt{2\pi}} \exp\!\left( \mu + \frac{\sigma^2}{2} \right) \int_{-\infty}^{+\infty} \exp\!\left( -\frac{(x - (\mu + \sigma^2))^2}{2\sigma^2} \right) dx.
+\]
+
+Mais l’intégrale est celle de la densité d’une loi normale \( \mathcal{N}(\mu + \sigma^2, \sigma^2) \), donc elle vaut \( \sigma\sqrt{2\pi} \).
+
+Il reste donc :
+\[
+\mathbb{E}[Y] = \exp\!\left( \mu + \frac{\sigma^2}{2} \right).
+\]
+
+\end{proofbox}
+
+\begin{remarquebox}[Pourquoi cette formule est contre-intuitive ?]
+Il est tentant de penser que si \( \ln(Y) \) a pour moyenne \( \mu \), alors \( Y \) devrait avoir pour moyenne \( e^\mu \). Mais à cause de la **convexité** de la fonction exponentielle, l’espérance de \( e^X \) est toujours **strictement supérieure** à \( e^{\mathbb{E}[X]} \) dès que \( X \) a une variance non nulle.
+
+C’est une conséquence directe de l’**inégalité de Jensen** :
+\[
+\mathbb{E}[e^X] \geq e^{\mathbb{E}[X]},
+\]
+avec égalité uniquement si \( X \) est constante (variance nulle). Le terme supplémentaire \( \sigma^2/2 \) dans l’exposant quantifie exactement cet « effet de convexité ».
+\end{remarquebox}
+
+\begin{examplebox}[Application numérique : comparaison des mesures centrales]
+Soit \( Y \sim \text{Log-}\mathcal{N}(1, 0.25) \) (donc \( \mu = 1 \), \( \sigma = 0.5 \)).
+
+\begin{itemize}
+    \item Médiane : \( e^{\mu} = e^1 \approx 2.718 \)
+    \item Mode : \( e^{\mu - \sigma^2} = e^{1 - 0.25} = e^{0.75} \approx 2.117 \)
+    \item Espérance : \( e^{\mu + \sigma^2/2} = e^{1 + 0.125} = e^{1.125} \approx 3.080 \)
+\end{itemize}
+
+On observe clairement :  
+\[
+\text{Mode} \approx 2.12 < \text{Médiane} \approx 2.72 < \text{Espérance} \approx 3.08,
+\]
+illustrant l’asymétrie à droite et l’impact de la variance sur la moyenne.
+\end{examplebox}
+
+
+\subsection{Propriétés : Moments et Mesures Centrales}
+
+L'asymétrie de la loi log-normale implique que ses mesures de tendance centrale (moyenne, médiane, mode) ne coïncident pas.
+
+\begin{theorembox}[Moments et Mesures Centrales]
+Si $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, alors :
+\begin{itemize}
+    \item \textbf{Espérance :} $E[Y] = e^{\mu + \sigma^2/2}$
+    \item \textbf{Variance :} $\text{Var}(Y) = (e^{\sigma^2} - 1) \cdot e^{2\mu + \sigma^2}$
+    \item \textbf{Médiane :} $\text{Med}(Y) = e^{\mu}$
+    \item \textbf{Mode :} $\text{Mode}(Y) = e^{\mu - \sigma^2}$
+\end{itemize}
+\end{theorembox}
+
+\begin{proofbox}[Dérivation de l'Espérance]
+Nous utilisons le fait que $Y = e^X$ où $X \sim \mathcal{N}(\mu, \sigma^2)$.
+$$ E[Y] = E[e^X] $$
+Ceci est, par définition, la fonction génératrice des moments $M_X(t) = E[e^{tX}]$ de la variable normale $X$, évaluée en $t=1$.
+Rappelons que la MGF d'une loi $\mathcal{N}(\mu, \sigma^2)$ est $M_X(t) = e^{\mu t + \frac{1}{2}\sigma^2 t^2}$.
+En posant $t=1$, on obtient :
+$$ E[Y] = M_X(1) = e^{\mu(1) + \frac{1}{2}\sigma^2 (1)^2} = e^{\mu + \sigma^2/2} $$
+Un calcul similaire pour $E[Y^2] = E[e^{2X}] = M_X(2)$ permet de trouver la variance.
+\end{proofbox}
+
+\begin{remarquebox}[Mode < Médiane < Espérance]
+Pour $\sigma > 0$, on a toujours $\mu - \sigma^2 < \mu < \mu + \sigma^2/2$.
+En appliquant l'exponentielle (qui est croissante), on a :
+$$ e^{\mu - \sigma^2} < e^{\mu} < e^{\mu + \sigma^2/2} $$
+$$ \text{Mode} < \text{Médiane} < \text{Espérance} $$
+C'est la signature mathématique d'une distribution avec une asymétrie à droite (positive). La moyenne est "tirée" vers le haut par les valeurs extrêmes de la queue droite.
+\end{remarquebox}
+
+\subsection{Calcul de Probabilités}
+
+Le principal avantage de la définition $X = \ln(Y)$ est qu'elle rend les calculs de probabilité log-normale très simples : il suffit de tout ramener à la loi normale standard.
+
+\begin{theorembox}[Calcul de la CDF Log-Normale]
+Si $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, sa fonction de répartition $F_Y(y) = P(Y \le y)$ est donnée par :
+$$ F_Y(y) = \Phi\left( \frac{\ln(y) - \mu}{\sigma} \right) \quad \text{pour } y > 0 $$
+où $\Phi(\cdot)$ est la fonction de répartition de la loi normale standard $\mathcal{N}(0, 1)$.
+\end{theorembox}
+
+\begin{proofbox}
+Puisque $\ln(\cdot)$ est une fonction strictement croissante, l'événement $Y \le y$ est équivalent à l'événement $\ln(Y) \le \ln(y)$.
+\begin{align*}
+F_Y(y) &= P(Y \le y) \\
+&= P(\ln(Y) \le \ln(y)) \\
+\intertext{Puisque $X = \ln(Y) \sim \mathcal{N}(\mu, \sigma^2)$, on standardise cette variable $X$ :}
+&= P\left( \frac{\ln(Y) - \mu}{\sigma} \le \frac{\ln(y) - \mu}{\sigma} \right) \\
+\intertext{Soit $Z = (\ln(Y) - \mu)/\sigma \sim \mathcal{N}(0, 1)$ :}
+&= P\left( Z \le \frac{\ln(y) - \mu}{\sigma} \right) \\
+&= \Phi\left( \frac{\ln(y) - \mu}{\sigma} \right)
+\end{align*}
+\end{proofbox}
+
+\begin{examplebox}[Calcul de Probabilité Log-Normale]
+Le revenu annuel $Y$ des ménages d'une région (en milliers d'euros) est supposé suivre une loi log-normale $\text{Log-}\mathcal{N}(\mu=3.8, \sigma=0.5)$.
+(Note : $\mu=3.8$ n'est pas la moyenne des revenus, mais la moyenne du \textit{log-revenu}).
+
+1. Quel est le revenu médian ?
+   $\text{Med}(Y) = e^{\mu} = e^{3.8} \approx 44.7$. (Soit 44 700 €)
+
+2. Quelle est la probabilité qu'un ménage ait un revenu supérieur à 60 000 € ?
+   On cherche $P(Y > 60)$. (Rappel : $Y$ est en milliers).
+   $P(Y > 60) = 1 - P(Y \le 60)$.
+
+   On applique la formule :
+   $$ P(Y \le 60) = \Phi\left( \frac{\ln(60) - \mu}{\sigma} \right) = \Phi\left( \frac{\ln(60) - 3.8}{0.5} \right) $$
+
+   Calculons l'argument :
+   $$ \frac{4.094 - 3.8}{0.5} = \frac{0.294}{0.5} = 0.588 $$
+
+   On cherche $\Phi(0.588)$. En utilisant une table ou un logiciel, $\Phi(0.588) \approx 0.7217$.
+   
+   $P(Y > 60) = 1 - 0.7217 = 0.2783$.
+   Environ 27.8% des ménages ont un revenu supérieur à 60 000 €.
+\end{examplebox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Évolution d’un Actif et Émergence de la Loi Log-Normale}
+
+\begin{examplebox}[Évolution d’un Actif et Émergence de la Loi Log-Normale]
+Considérons un investisseur qui place un capital initial de \( C_0 = 1000 \) € dans une action cotée en bourse. Le prix de cette action évolue chaque jour selon des rendements aléatoires. Nous allons suivre son évolution sur \( t = 4 \) jours consécutifs, puis généraliser pour comprendre l’origine des paramètres \( t\mu \) et \( t\sigma^2 \).
+
+\medskip
+\noindent \textbf{1. Données observées : rendements quotidiens}
+
+Les rendements (exprimés en décimal) sont les suivants :
+
+\vspace{5mm}
 \begin{center}
-\begin{tikzpicture}
-\begin{axis}[
-    axis lines=middle, % Axes qui passent par l'origine (0,0)
-    xlabel=$x$,       % Étiquette axe X
-    ylabel=$y$,       % Étiquette axe Y
-    axis line style={magenta}, % Couleur des axes
-    xlabel style={anchor=west, magenta}, % Style de l'étiquette X
-    ylabel style={anchor=south, magenta}, % Style de l'étiquette Y
-    xmin=-3.5, xmax=3.5, % Limites du graphique
-    ymin=-3.5, ymax=3.5,
-    tick label style={font=\tiny} % Police plus petite pour les graduations
-]
-
-% Ajout des points du nuage. Ce sont des coordonnées approximatives.
-\addplot [only marks, mark=*, cyan, mark size=1.5pt]
-coordinates {
-    (0.2, 0.1) (-0.5, 0.2) (0.1, -0.3) (0.5, -0.8) (-0.3, -1.2) (0,0.1)
-    (1.5, 1.5) (0.8, 0.8) (2.0, -0.5) (2.8, -1.4) (2.5, -0.2)
-    (-1.8, -1.3) (-2.5, 0.5) (-1.5, 0.3) (-2.2, -0.8) (-0.8, 0.5)
-    (0.5, 1.2) (0.7, 2.8) (0.2, 3.2) (-0.5, 1.5) (-1.0, -2.0)
-    (1.8, -1.0) (1.0, -1.5) (0.3, -2.5) (-1.8, -2.8) (1.2, 0.5)
-    (-1.2, -1.5) (-0.8, 1.1)
-};
-
-% --- Annotations ---
-
-% Points et boîte pour 'dA'
-\addplot [only marks, mark=*, red, mark size=1.5pt] coordinates {(1.3, 2.0)};
-\draw [red, thick] (axis cs:1.1, 1.8) rectangle (axis cs:1.5, 2.2);
-\node [red, above] at (axis cs:1.3, 2.2) {$dA$};
-
-% Points et boîte pour 'dB'
-\addplot [only marks, mark=*, cyan, mark size=1.5pt] 
-coordinates {(-1.2, 2.0) (-1.3, 2.3) (-1.0, 2.2) (-1.1, 1.9)};
-\draw [blue, thick] (axis cs:-1.8, 1.2) rectangle (axis cs:-0.8, 2.8);
-\node [blue, above] at (axis cs:-1.3, 2.8) {$dB$};
-
-\end{axis}
-\end{tikzpicture}
+\begin{tabular}{c|c|c|c}
+Jour & Rendement \( r_i \) & Facteur de croissance \( (1 + r_i) \) & Log-rendement \( x_i = \ln(1 + r_i) \) \\
+\hline
+1 & \( +0{,}05 \) & \( 1{,}05 \) & \( \ln(1{,}05) \approx 0{,}04879 \) \\
+2 & \( -0{,}02 \) & \( 0{,}98 \) & \( \ln(0{,}98) \approx -0{,}02020 \) \\
+3 & \( +0{,}03 \) & \( 1{,}03 \) & \( \ln(1{,}03) \approx 0{,}02956 \) \\
+4 & \( -0{,}01 \) & \( 0{,}99 \) & \( \ln(0{,}99) \approx -0{,}01005 \) \\
+\end{tabular}
 \end{center}
+\vspace{5mm}
 
-\textbf{Objectif :} Expliquer comment arriver à la formule mathématique de la courbe en cloche (densité de probabilité normale) en partant de principes fondamentaux sur les erreurs aléatoires.
+\medskip
+\noindent \textbf{2. Calcul du capital final : la nature multiplicative}
 
-\textbf{1. Le Point de Départ : Densité et Aire $dA$}
-Dans une distribution continue, la probabilité de tomber \textit{exactement} sur un point $(x, y)$ est nulle. On ne peut donc pas parler de "probabilité d'un point". On parle de la probabilité de tomber \textit{dans une petite zone}, comme un rectangle $dA = dx \cdot dy$ autour du point $(x, y)$.
-Cette probabilité, notée $P(\text{dans } dA)$, est \textit{proportionnelle} à l'aire de la zone $dA$. La \textit{constante de proportionnalité} est la \textbf{fonction de densité de probabilité} $p(x, y)$ évaluée en ce point. En d'autres termes, la densité $p(x, y)$ \textit{représente} localement la concentration de probabilité. Ainsi, la probabilité de tomber dans la zone $dA$ est approximativement :
-$$ P(\text{dans } dA) \approx p(x, y) \cdot dA $$
+Le capital après chaque jour se calcule par multiplication :
+\[
+\begin{aligned}
+C_1 &= 1000 \times 1{,}05 = 1050{,}00 \\
+C_2 &= 1050 \times 0{,}98 = 1029{,}00 \\
+C_3 &= 1029 \times 1{,}03 = 1059{,}87 \\
+C_4 &= 1059{,}87 \times 0{,}99 = 1049{,}27
+\end{aligned}
+\]
 
-\textbf{2. Les Hypothèses Fondamentales}
-On pose deux hypothèses sur la nature de ces erreurs (représentées par la densité $p(x, y)$) :
-\begin{enumerate}
-    \item \textbf{Indépendance des axes :} L'erreur horizontale ($x$) est indépendante de l'erreur verticale ($y$). Cela implique que la densité jointe $p(x, y)$ peut s'écrire comme le produit de la densité marginale sur $x$, notée $f(x)$, et de la densité marginale sur $y$, notée $f(y)$. Donc, $p(x, y) = f(x) \cdot f(y)$.
-    \item \textbf{Symétrie de rotation (Isotropie) :} La densité ne dépend que de la distance $r = \sqrt{x^2 + y^2}$ au centre, pas de l'angle. Il existe donc une fonction $\phi(r)$ telle que la densité en $(x,y)$ est $p(x, y) = \phi(\sqrt{x^2 + y^2})$.
-\end{enumerate}
+On peut aussi écrire directement :
+\[
+C_4 = C_0 \times \prod_{i=1}^{4} (1 + r_i) = 1000 \times (1{,}05 \times 0{,}98 \times 1{,}03 \times 0{,}99) = 1000 \times 1{,}04927.
+\]
 
-\textbf{3. L'Équation Fonctionnelle}
-En égalant les deux expressions pour la même densité $p(x, y)$ (à une constante près), on obtient :
-$$ f(x) \cdot f(y) = \phi(\sqrt{x^2 + y^2}) $$
-Pour $y=0$, on a $f(x) \cdot f(0) = \phi(x)$. Posons $f(0) = \lambda$. Alors $\phi(x) = \lambda f(x)$.
-L'équation devient :
-$$ f(x) \cdot f(y) = \lambda f(\sqrt{x^2 + y^2}) $$
+Le \textbf{facteur de croissance total} est donc :
+\[
+Y = \frac{C_4}{C_0} = 1{,}04927.
+\]
 
-\textbf{4. Résolution de l'Équation Fonctionnelle}
-Posons $g(x) = f(x)/\lambda$, avec $g(0)=1$. L'équation se simplifie en :
-$$ g(x) g(y) = g(\sqrt{x^2 + y^2}) $$
-Posons $g(x) = h(x^2)$. L'équation devient $h(x^2)h(y^2) = h(x^2+y^2)$. Avec $a=x^2$ et $b=y^2$, on a :
-$$ h(a) h(b) = h(a+b) $$
-La solution continue de cette équation de Cauchy est $h(a) = e^{Aa}$ pour une constante $A$.
-Retour aux fonctions : $g(x) = h(x^2) = e^{Ax^2}$. $f(x) = \lambda g(x) = \lambda e^{Ax^2}$.
-Comme la densité doit diminuer loin du centre, $A$ doit être négative. Posons $A = -k$ avec $k>0$.
-$$ f(x) = \lambda e^{-k x^2} $$
+> \textit{Pourquoi multiplier ?} Parce que les rendements sont relatifs : une perte de 2\% le deuxième jour s’applique au capital du jour 1 (1050 €), pas au capital initial. L’addition des pourcentages (\( +5 -2 +3 -1 = +5\% \)) serait donc incorrecte.
 
-\textbf{5. Normalisation et Identification des Paramètres}
-\begin{enumerate}
-    \item \textbf{Condition $\int f(x) dx = 1$} : L'intégrale Gaussienne $\int_{-\infty}^{\infty} e^{-k x^2} \, \mathrm{d}x = \sqrt{\frac{\pi}{k}}$.
-    Donc, $\int_{-\infty}^{\infty} f(x) dx = \lambda \sqrt{\frac{\pi}{k}} = 1 \implies \lambda = \sqrt{\frac{k}{\pi}}$.
-    \item \textbf{Lien avec la Variance ($\sigma^2$)} : Pour une distribution centrée, $\sigma^2 = E[X^2] = \int x^2 f(x) dx$.
-    $$ \sigma^2 = \int_{-\infty}^{\infty} x^2 \left( \sqrt{\frac{k}{\pi}} e^{-k x^2} \right) \, \mathrm{d}x = \sqrt{\frac{k}{\pi}} \left( \frac{1}{2k} \sqrt{\frac{\pi}{k}} \right) = \frac{1}{2k} $$
-    Donc, $k = \frac{1}{2\sigma^2}$.
-    \item \textbf{Substitution Finale :} Remplaçons $k$ dans $\lambda$ et $f(x)$.
-    $$ \lambda = \sqrt{\frac{1/(2\sigma^2)}{\pi}} = \frac{1}{\sigma\sqrt{2\pi}} $$
-    $$ f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2\sigma^2} x^2} = \frac{1}{\sigma\sqrt{2\pi}} e^{ -\frac{x^2}{2\sigma^2} } $$
-    \item \textbf{Généralisation (Moyenne $\mu$)} : Pour centrer la distribution sur $\mu$, on remplace $x$ par $(x-\mu)$ dans l'exposant :
-    $$ f(x; \mu, \sigma) = \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{(x-\mu)^2}{2\sigma^2} } $$
-\end{enumerate}
-C'est la fonction de densité de la loi normale $\mathcal{N}(\mu, \sigma^2)$.
-\end{proofbox}
+\medskip
+\noindent \textbf{3. Transformation logarithmique : du produit à la somme}
 
-\subsection{La Loi Normale Centrée Réduite $\mathcal{N}(0, 1)$}
+On définit le log-rendement total :
+\[
+X = \ln(Y) = \sum_{i=1}^{4} \ln(1 + r_i) = \sum_{i=1}^{4} x_i.
+\]
 
-Avant d'explorer les propriétés de la loi normale générale, concentrons-nous sur son cas le plus simple et le plus fondamental.
+En utilisant les valeurs du tableau :
+\[
+X \approx 0{,}04879 - 0{,}02020 + 0{,}02956 - 0{,}01005 = 0{,}04810.
+\]
 
-\begin{definitionbox}[Loi Normale Standard (ou Centrée Réduite)]
-Un cas particulier extraordinairement utile est la loi normale avec une moyenne $\mu=0$ et une variance $\sigma^2=1$ (donc $\sigma=1$). On l'appelle la \textbf{loi normale standard} ou \textbf{centrée réduite}, et on la note souvent $Z$. Sa PDF est traditionnellement notée $\phi(z)$ :
-$$ \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2} $$
-Sa fonction de répartition (CDF), qui donne $P(Z \le z)$, est notée $\Phi(z)$ :
-$$ \Phi(z) = P(Z \le z) = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{-t^2/2} \, \mathrm{d}t $$
-\end{definitionbox}
+Vérification : \( e^{0{,}04810} \approx 1{,}04927 = Y \). La transformation est exacte.
 
-Pourquoi cette version standard est-elle si importante ? Elle sert de référence universelle.
+ \textit{Pourquoi faire cela ?} Parce que la somme de variables aléatoires est bien comprise en probabilité (moyenne additive, variance additive sous indépendance), contrairement au produit.
 
-\begin{intuitionbox}[La Référence Universelle et le Changement d'Unités]
-Pourquoi cette loi $\mathcal{N}(0, 1)$ est-elle si centrale ? Imaginez que vous ayez des mesures en degrés Celsius ($\mathcal{N}(\mu_C, \sigma_C^2)$) et d'autres en degrés Fahrenheit ($\mathcal{N}(\mu_F, \sigma_F^2)$). Comment les comparer ? La loi normale standard fournit un \textbf{système d'unités universel}.
+\medskip
+\noindent \textbf{4. Modélisation stochastique : hypothèses fondamentales}
 
-Toute variable normale $X \sim \mathcal{N}(\mu, \sigma^2)$ peut être transformée ("standardisée") en une variable $Z \sim \mathcal{N}(0, 1)$ par un simple changement d'échelle et de position : $Z = (X-\mu)/\sigma$. 
-
-Cela signifie qu'au lieu de devoir calculer des aires (probabilités) pour une infinité de courbes en cloche différentes (une pour chaque paire $\mu, \sigma$), on peut tout ramener à \textbf{une seule courbe de référence}, $\mathcal{N}(0, 1)$. Les aires sous cette courbe standard ($\Phi(z)$) ont été calculées une fois pour toutes et sont disponibles dans des tables ou des logiciels. On n'a plus qu'à convertir notre problème dans cette "langue" standard, trouver la probabilité, et interpréter le résultat.
-\end{intuitionbox}
-
-La notation est très standardisée pour cette loi.
-
-\begin{remarquebox}[Notation $\phi$ et $\Phi$]
-Les symboles $\phi$ (phi minuscule) pour la PDF et $\Phi$ (phi majuscule) pour la CDF de la loi normale standard sont quasi universels. Il est important de ne pas les confondre. $\phi(z)$ est la \textit{hauteur} de la courbe en $z$, tandis que $\Phi(z)$ est l'\textit{aire} sous la courbe à gauche de $z$.
-\end{remarquebox}
-
-Un détail technique important concerne le calcul de $\Phi(z)$.
-
-\begin{remarquebox}[Absence de Primitive Simple]
-L'intégrale $\int e^{-t^2/2} \, \mathrm{d}t$, nécessaire pour calculer $\Phi(z)$, n'a \textbf{pas d'expression analytique} en termes de fonctions élémentaires (polynômes, exponentielles, log, sin, cos...). C'est une fonction spéciale, connue sous le nom de \textbf{fonction d'erreur} (liée à $\Phi$ par une transformation simple). C'est la raison pour laquelle on dépend de tables ou de calculs numériques pour obtenir les valeurs de $\Phi(z)$. Heureusement, ces outils sont omniprésents aujourd'hui.
-\end{remarquebox}
-
-\subsection{Standardisation : Le Score Z}
-
-Formalisons cette transformation clé qui relie toute loi normale à la loi standard.
-
-\begin{theorembox}[Standardisation d'une Variable Normale]
-Si $X \sim \mathcal{N}(\mu, \sigma^2)$, alors la variable $Z$ définie par :
-$$ Z = \frac{X - \mu}{\sigma} $$
-suit la loi normale standard, $Z \sim \mathcal{N}(0, 1)$.
-\end{theorembox}
-
-La preuve formelle utilise un changement de variable dans la fonction de répartition.
-
-\begin{proofbox}
-Soit $F_X(x)$ la CDF de $X$ et $F_Z(z)$ la CDF de $Z$. Nous voulons montrer que $F_Z(z) = \Phi(z)$.
-\begin{align*}
-F_Z(z) &= P(Z \le z) \\
-&= P\left( \frac{X-\mu}{\sigma} \le z \right) \\
-&= P(X - \mu \le z\sigma) \\
-&= P(X \le \mu + z\sigma) \\
-&= F_X(\mu + z\sigma)
-\end{align*}
-Par définition de la CDF de $X$ :
-$$ F_X(x) = \int_{-\infty}^x \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{1}{2} \left( \frac{t-\mu}{\sigma} \right)^2 } \, dt $$
-Donc,
-$$ F_Z(z) = \int_{-\infty}^{\mu + z\sigma} \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{1}{2} \left( \frac{t-\mu}{\sigma} \right)^2 } \, dt $$
-Effectuons le changement de variable $u = (t-\mu)/\sigma$. Alors $t = \mu + u\sigma$ et $dt = \sigma du$.
-Les bornes d'intégration changent :
+Dans la réalité, les rendements futurs sont inconnus. On suppose donc que chaque log-rendement journalier \( x_i \) est une variable aléatoire indépendante, identiquement distribuée, avec :
 \begin{itemize}
-    \item Quand $t \to -\infty$, $u \to -\infty$.
-    \item Quand $t = \mu + z\sigma$, $u = ((\mu + z\sigma)-\mu)/\sigma = z$.
+    \item Espérance \( \mathbb{E}[x_i] = \mu \) : rendement moyen continu par jour,
+    \item Variance \( \text{Var}(x_i) = \sigma^2 \) : volatilité au carré par jour.
 \end{itemize}
-L'intégrale devient :
-$$ F_Z(z) = \int_{-\infty}^{z} \frac{1}{\sigma \sqrt{2\pi}} e^{ -\frac{1}{2} u^2 } (\sigma du) $$
-$$ F_Z(z) = \int_{-\infty}^{z} \frac{1}{\sqrt{2\pi}} e^{ -u^2/2 } \, du $$
-C'est exactement la définition de $\Phi(z)$, la CDF de la loi normale standard. Ainsi, $Z \sim \mathcal{N}(0, 1)$.
-\end{proofbox}
 
-Cette transformation a une interprétation très concrète.
+Ces hypothèses traduisent l’idée que le marché est « mémoire courte » (indépendance) et que les conditions de volatilité sont stables.
 
-\begin{intuitionbox}[Mesurer en "Unités d'Écart-Type"]
-Transformer $X$ en $Z$ s'appelle \textbf{standardiser} la variable. Le résultat, $z = \frac{x-\mu}{\sigma}$, est appelé le \textbf{Score Z} (ou cote Z). Ce score Z est une mesure \textit{sans unité} qui indique \textbf{à combien d'écarts-types} une valeur observée $x$ se situe par rapport à la moyenne $\mu$ de sa distribution.
-\begin{itemize}
-    \item $z = 0$ : $x$ est exactement à la moyenne ($\mathbf{x = \mu}$).
-    \item $z = +1$ : $x$ est un écart-type \textit{au-dessus} de la moyenne ($\mathbf{x = \mu + \sigma}$).
-    \item $z = -2$ : $x$ est deux écarts-types \textit{en dessous} de la moyenne ($\mathbf{x = \mu - 2\sigma}$).
-\end{itemize}
-Cette transformation est extrêmement utile pour :
-\begin{enumerate}
-    \item \textbf{Comparer des valeurs} issues de distributions normales différentes. Un score Z de +1.5 a toujours la même signification relative, que l'on parle de QI, de taille, ou de température.
-    \item \textbf{Calculer des probabilités} en utilisant la table unique de la loi $\mathcal{N}(0, 1)$.
-\end{enumerate}
-\end{intuitionbox}
+\medskip
+\noindent \textbf{5. Propriétés de la somme sur \( t \) périodes}
 
-Un exemple classique est la comparaison de notes.
+Soit \( t = 4 \) le nombre de jours. Le log-rendement total est :
+\[
+X = \sum_{i=1}^{t} x_i.
+\]
 
-\begin{examplebox}[Comparaison de Performances]
-Un étudiant A obtient 80 points à un examen où la moyenne est $\mu_A=70$ et l'écart-type $\sigma_A=5$. Un étudiant B obtient 85 points à un autre examen où $\mu_B=75$ et $\sigma_B=10$. Qui a le mieux réussi relativement à son groupe ?
+Grâce à l’indépendance :
+\[
+\begin{aligned}
+\mathbb{E}[X] &= \sum_{i=1}^{t} \mathbb{E}[x_i] = t \mu, \\
+\text{Var}(X) &= \sum_{i=1}^{t} \text{Var}(x_i) = t \sigma^2.
+\end{aligned}
+\]
 
-Calculons les Z-scores :
-$$ Z_A = \frac{80 - 70}{5} = \frac{10}{5} = +2.0 $$
-$$ Z_B = \frac{85 - 75}{10} = \frac{10}{10} = +1.0 $$
-L'étudiant A a un score Z plus élevé (+2.0 contre +1.0), ce qui signifie qu'il se situe plus d'écarts-types au-dessus de la moyenne de son groupe que l'étudiant B. L'étudiant A a donc relativement mieux réussi.
-\end{examplebox}
+ \textit{C’est ici que naissent les termes \( t\mu \) et \( t\sigma^2 \).}  
+ - La moyenne s’accumule linéairement : en 2 ans, le rendement attendu est le double de celui d’1 an.  
+ - La variance s’accumule aussi linéairement : l’incertitude croît avec le temps.  
+ - L’écart-type, lui, croît comme \( \sqrt{t} \), ce qui est une signature des processus aléatoires diffusifs (comme le mouvement brownien).
 
-\subsection{Propriétés Importantes de la Loi Normale}
+\medskip
+\noindent \textbf{6. Le Théorème Central Limite (TCL) : vers la normalité}
 
-La loi normale possède des propriétés de stabilité remarquables sous certaines transformations.
+Même si la distribution des \( x_i \) n’est pas normale, le TCL garantit que, pour \( t \) suffisamment grand, la somme \( X \) est approximativement normale :
+\[
+X = \ln\left( \frac{S(t)}{S(0)} \right) \xrightarrow[t \text{ grand}]{} \mathcal{N}(t\mu, t\sigma^2).
+\]
 
-\begin{theorembox}[Stabilité par Transformation Linéaire]
-Si $X \sim \mathcal{N}(\mu, \sigma^2)$ et $Y = aX + b$ (avec $a \neq 0$), alors $Y$ suit aussi une loi normale :
-$$ Y \sim \mathcal{N}(a\mu + b, \, (a\sigma)^2) $$
-L'espérance est transformée linéairement ($E[aX+b] = aE[X]+b$), et la variance est multipliée par $a^2$ ($\text{Var}(aX+b) = a^2\text{Var}(X)$).
-\end{theorembox}
+Dans la pratique financière (où \( t \) est souvent en centaines de jours), cette approximation est excellente. On l’adopte donc comme modèle, même pour des \( t \) modérés.
 
-\begin{proofbox}
-Nous utilisons le fait que si $X \sim \mathcal{N}(\mu, \sigma^2)$, alors $Z = (X-\mu)/\sigma \sim \mathcal{N}(0,1)$.
-Exprimons $X$ en fonction de $Z$ : $X = \mu + \sigma Z$.
-Substituons cela dans l'expression de $Y$:
-$$ Y = a(\mu + \sigma Z) + b = (a\mu + b) + (a\sigma)Z $$
-Posons $\mu_Y = a\mu + b$ et $\sigma_Y = |a|\sigma$. Alors $Y = \mu_Y + \sigma_Y Z$ (si $a>0$) ou $Y = \mu_Y - \sigma_Y Z$ (si $a<0$).
-Dans les deux cas, $Y$ est une transformation linéaire d'une variable normale standard $Z$.
-La CDF de $Y$ peut être exprimée en termes de la CDF $\Phi$ de $Z$.
-Si $a>0$ :
-$$ P(Y \le y) = P(\mu_Y + a\sigma Z \le y) = P(a\sigma Z \le y - \mu_Y) = P\left( Z \le \frac{y - \mu_Y}{a\sigma} \right) = \Phi\left(\frac{y - \mu_Y}{a\sigma}\right) $$
-C'est la CDF d'une loi $\mathcal{N}(\mu_Y, (a\sigma)^2)$.
-Le cas $a<0$ est similaire et mène au même résultat pour la distribution (la variance dépend de $a^2$).
-Ainsi, $Y \sim \mathcal{N}(a\mu + b, (a\sigma)^2)$.
-\end{proofbox}
+\medskip
+\noindent \textbf{7. Retour au prix : définition de la loi log-normale}
 
-Cette propriété est très utile pour les changements d'unités.
+Puisque \( X \sim \mathcal{N}(t\mu, t\sigma^2) \), alors :
+\[
+Y = \frac{S(t)}{S(0)} = e^X \sim \text{Log-}\mathcal{N}(t\mu, t\sigma^2).
+\]
 
-\begin{examplebox}[Changement d'Unités]
-Si la température en Celsius $T_C$ suit $\mathcal{N}(20, 5^2)$, quelle est la loi de la température en Fahrenheit $T_F = \frac{9}{5}T_C + 32$ ?
+Ainsi, le prix futur est :
+\[
+S(t) = S(0) \cdot e^{X}, \quad \text{où } X \sim \mathcal{N}(t\mu, t\sigma^2).
+\]
 
-$a = 9/5$, $b=32$.
+ \textit{Conséquences clés :}
+ \begin{itemize}
+     \item \( S(t) > 0 \) presque sûrement cohérent avec la réalité (un actif ne peut pas avoir un prix négatif).
+     \item La distribution de \( S(t) \) est asymétrique à droite : possibilité de fortes hausses, mais baisse limitée à –100\%.
+     \item Les paramètres \( \mu \) et \( \sigma \) sont ceux de la variable \textit{sous-jacente} \( X = \ln(S(t)/S(0)) \), pas de \( S(t) \) elle-même.
+ \end{itemize}
 
-Nouvelle moyenne : $E[T_F] = \frac{9}{5}(20) + 32 = 36 + 32 = 68$.
+\medskip
+\noindent \textbf{8. Illustration numérique avec des paramètres estimés}
 
-Nouvel écart-type : $\sigma_{T_F} = |a|\sigma_{T_C} = \frac{9}{5}(5) = 9$. Nouvelle variance : $\sigma_{T_F}^2 = 9^2 = 81$.
+Supposons qu’à partir de données historiques, on estime :
+- Rendement annuel moyen continu : \( \mu_{\text{annuel}} = 0{,}08 \),
+- Volatilité annuelle : \( \sigma_{\text{annuel}} = 0{,}20 \).
 
-Donc, $T_F \sim \mathcal{N}(68, 9^2)$.
-\end{examplebox}
+Pour une période de \( t = 4 \) jours, on convertit en unité annuelle : \( t = 4/252 \approx 0{,}01587 \) année.
 
-Une autre propriété cruciale concerne la somme de variables normales indépendantes.
+Alors :
+\[
+\begin{aligned}
+\mathbb{E}[X] &= t \mu = 0{,}01587 \times 0{,}08 \approx 0{,}00127, \\
+\text{Var}(X) &= t \sigma^2 = 0{,}01587 \times (0{,}20)^2 \approx 0{,}000635, \\
+\text{Écart-type} &= \sqrt{0{,}000635} \approx 0{,}0252.
+\end{aligned}
+\]
 
-\begin{theorembox}[Stabilité par Addition (Indépendance)]
-Si $X \sim \mathcal{N}(\mu_X, \sigma_X^2)$ et $Y \sim \mathcal{N}(\mu_Y, \sigma_Y^2)$ sont des variables aléatoires \textbf{indépendantes}, alors leur somme $S = X + Y$ suit aussi une loi normale :
-$$ S \sim \mathcal{N}(\mu_X + \mu_Y, \, \sigma_X^2 + \sigma_Y^2) $$
-Les moyennes s'ajoutent, et (grâce à l'indépendance) les variances s'ajoutent.
-\end{theorembox}
+Notre observation réelle (\( X = 0{,}04810 \)) est plus élevée que la moyenne, mais reste à moins de 2 écarts-types (\( (0{,}04810 - 0{,}00127)/0{,}0252 \approx 1{,}86 \)), donc parfaitement plausible.
 
-La preuve formelle de ce théorème est plus avancée et utilise généralement les fonctions caractéristiques ou les fonctions génératrices des moments.
+\medskip
+\noindent \textbf{9. Probabilité que le prix double en 6 mois}
 
-\begin{proofbox}[Idée de la preuve (via Fonctions Caractéristiques)]
-La fonction caractéristique $\varphi_X(t)$ d'une variable aléatoire $X$ est définie comme $\varphi_X(t) = E[e^{itX}]$.
-Pour une loi normale $X \sim \mathcal{N}(\mu, \sigma^2)$, sa fonction caractéristique est $\varphi_X(t) = e^{i\mu t - \frac{1}{2}\sigma^2 t^2}$.
-Si $X$ et $Y$ sont indépendantes, la fonction caractéristique de leur somme $S=X+Y$ est le produit de leurs fonctions caractéristiques : $\varphi_S(t) = \varphi_X(t) \varphi_Y(t)$.
-\begin{align*}
-\varphi_S(t) &= \left( e^{i\mu_X t - \frac{1}{2}\sigma_X^2 t^2} \right) \left( e^{i\mu_Y t - \frac{1}{2}\sigma_Y^2 t^2} \right) \\
-&= e^{i(\mu_X + \mu_Y)t - \frac{1}{2}(\sigma_X^2 + \sigma_Y^2)t^2}
-\end{align*}
-On reconnaît ici la fonction caractéristique d'une loi normale avec pour moyenne $\mu_X + \mu_Y$ et pour variance $\sigma_X^2 + \sigma_Y^2$. Comme la fonction caractéristique détermine de manière unique la distribution, on conclut que $S \sim \mathcal{N}(\mu_X + \mu_Y, \sigma_X^2 + \sigma_Y^2)$.
-\end{proofbox}
+On souhaite maintenant calculer la probabilité que le prix de l’actif double dans les 6 mois, c’est-à-dire :
+\[
+\mathbb{P}\big(S(0{,}5) \geq 2 S(0)\big) = \mathbb{P}\left( \frac{S(0{,}5)}{S(0)} \geq 2 \right).
+\]
 
-Il est essentiel de se souvenir de la condition d'indépendance pour l'addition des variances.
+Comme \( \ln\big(S(t)/S(0)\big) \sim \mathcal{N}(t\mu, t\sigma^2) \), on a :
+\[
+\mathbb{P}\left( \ln\left(\frac{S(0{,}5)}{S(0)}\right) \geq \ln(2) \right)
+= \mathbb{P}\left( X \geq \ln(2) \right),
+\quad \text{où } X \sim \mathcal{N}(0{,}5\mu, 0{,}5\sigma^2).
+\]
 
-\begin{remarquebox}[Attention à l'Indépendance]
-La propriété d'addition des variances ($\sigma_S^2 = \sigma_X^2 + \sigma_Y^2$) est cruciale et ne tient \textbf{que si $X$ et $Y$ sont indépendantes}. Si elles ne le sont pas, la variance de la somme inclut un terme de covariance : $\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X, Y)$. Cependant, la somme de variables normales (même dépendantes) reste normale (si elles sont conjointement normales).
-\end{remarquebox}
+Avec \( \mu = 0{,}08 \) et \( \sigma = 0{,}20 \) (annuels), on obtient :
+\[
+\begin{aligned}
+\mathbb{E}[X] &= 0{,}5 \times 0{,}08 = 0{,}04, \\
+\text{Écart-type}(X) &= \sqrt{0{,}5} \times 0{,}20 \approx 0{,}1414, \\
+\ln(2) &\approx 0{,}6931.
+\end{aligned}
+\]
 
-Appliquons ce théorème à un exemple concret.
+On standardise :
+\[
+Z = \frac{\ln(2) - 0{,}04}{0{,}1414} \approx \frac{0{,}6531}{0{,}1414} \approx 4{,}62.
+\]
 
-\begin{examplebox}[Poids Total]
-Le poids d'une pomme suit $\mathcal{N}(150g, 10^2)$. Le poids d'une orange suit $\mathcal{N}(200g, 15^2)$. On suppose les poids indépendants. Quel est la loi du poids total d'une pomme et d'une orange ?
+La probabilité recherchée est donc :
+\[
+\mathbb{P}(Z \geq 4{,}62) = 1 - \Phi(4{,}62),
+\]
+où \( \Phi \) est la fonction de répartition de la loi normale centrée réduite.
 
-Soit $P$ le poids de la pomme, $O$ celui de l'orange. $T = P+O$.
+À l’aide des tables ou d’un logiciel, \( \Phi(4{,}62) \approx 0{,}999998 \), donc :
+\[
+\mathbb{P}\big(S(0{,}5) \geq 2 S(0)\big) \approx 1 - 0{,}999998 = 0{,}000002,
+\]
+soit environ /textbf{0,0002\%}.
 
-$E[T] = E[P] + E[O] = 150 + 200 = 350g$.
+\textit{Interprétation :} Sous ces hypothèses de rendement et de volatilité, il est extrêmement improbable que l’actif double en 6 mois. Cela illustre la faible probabilité des événements extrêmes dans un modèle log-normal avec volatilité modérée.
 
-$\text{Var}(T) = \text{Var}(P) + \text{Var}(O) = 10^2 + 15^2 = 100 + 225 = 325$.
+\medskip
+\noindent \textbf{10. Conclusion}
 
-Donc, $T \sim \mathcal{N}(350, 325)$. L'écart-type du poids total est $\sqrt{325} \approx 18.03g$.
-\end{examplebox}
-
-\subsection{La Règle Empirique (68-95-99.7)}
-
-Une conséquence directe des aires sous la courbe normale standard est une règle approximative très utile.
-
-\begin{theorembox}[Règle Empirique]
-Pour toute variable $X \sim \mathcal{N}(\mu, \sigma^2)$ :
-\begin{itemize}
-    \item $P(\mu - \sigma \le X \le \mu + \sigma) \approx 0.6827$ (Environ \textbf{68\%} des valeurs dans $\mu \pm \sigma$).
-    \item $P(\mu - 2\sigma \le X \le \mu + 2\sigma) \approx 0.9545$ (Environ \textbf{95\%} des valeurs dans $\mu \pm 2\sigma$).
-    \item $P(\mu - 3\sigma \le X \le \mu + 3\sigma) \approx 0.9973$ (Environ \textbf{99.7\%} des valeurs dans $\mu \pm 3\sigma$).
-\end{itemize}
-\end{theorembox}
-
-\begin{proofbox}[Dérivation à partir de $\Phi(z)$]
-Ces valeurs sont obtenues en calculant les aires sous la PDF de la loi normale standard $\mathcal{N}(0, 1)$ entre les Z-scores correspondants.
-\begin{itemize}
-    \item $P(-1 \le Z \le 1) = \Phi(1) - \Phi(-1) = \Phi(1) - (1 - \Phi(1)) = 2\Phi(1) - 1$.
-    Avec $\Phi(1) \approx 0.8413$, on obtient $2(0.8413) - 1 \approx 0.6826$.
-    \item $P(-2 \le Z \le 2) = \Phi(2) - \Phi(-2) = 2\Phi(2) - 1$.
-    Avec $\Phi(2) \approx 0.9772$, on obtient $2(0.9772) - 1 \approx 0.9544$.
-    \item $P(-3 \le Z \le 3) = \Phi(3) - \Phi(-3) = 2\Phi(3) - 1$.
-    Avec $\Phi(3) \approx 0.99865$, on obtient $2(0.99865) - 1 \approx 0.9973$.
-\end{itemize}
-Ces valeurs sont souvent arrondies à 68%, 95%, et 99.7% pour faciliter la mémorisation.
-\end{proofbox}
-
-Cette règle fournit des repères très pratiques.
-
-\begin{intuitionbox}[Repères Essentiels sur la Cloche]
-Cette règle, dérivée directement des aires sous la courbe $\mathcal{N}(0, 1)$ entre $z=\pm 1$, $z=\pm 2$ et $z=\pm 3$, fournit des repères extrêmement utiles pour interpréter l'écart-type $\sigma$. Elle nous dit où se trouve la grande majorité des données.
-
-
-Une observation qui tombe en dehors de l'intervalle $\mu \pm 3\sigma$ est très inhabituelle (elle n'a que 0.3% de chances de se produire). C'est souvent considéré comme une \textit{valeur aberrante} (outlier) potentielle.
-\end{intuitionbox}
-
-\subsection{Calcul de Probabilités Normales}
-
-En pratique, pour calculer une probabilité $P(a \le X \le b)$ pour une loi $\mathcal{N}(\mu, \sigma^2)$, on utilise systématiquement la standardisation.
-
-\begin{examplebox}[Utilisation du Z-score]
-Supposons que le QI d'une population suit $\mathcal{N}(100, 15^2)$. Quelle est la probabilité $P(X > 130)$ ?
-
-1.  \textbf{Standardiser :} $z = \frac{130 - 100}{15} = 2$. On cherche $P(Z > 2)$.
-2.  \textbf{Utiliser la CDF Standard :} $P(Z > 2) = 1 - P(Z \le 2) = 1 - \Phi(2)$.
-3.  \textbf{Chercher dans la table / Calculer :} $\Phi(2) \approx 0.9772$.
-4.  \textbf{Résultat :} $P(X > 130) = 1 - 0.9772 = 0.0228$. Environ 2.3% de la population a un QI supérieur à 130.
-\end{examplebox}
-
-Pour les intervalles, on utilise la propriété $P(a \le Z \le b) = \Phi(b) - \Phi(a)$.
-
-\begin{examplebox}[Probabilité entre deux valeurs]
-Quelle est la probabilité $P(85 \le X \le 115)$ ? ($\mu=100, \sigma=15$)
-
-1.  \textbf{Standardiser :} $z_1 = \frac{85 - 100}{15} = -1$, $z_2 = \frac{115 - 100}{15} = 1$. On cherche $P(-1 \le Z \le 1)$.
-2.  \textbf{Utiliser la CDF Standard :} $P(-1 \le Z \le 1) = \Phi(1) - \Phi(-1)$.
-3.  \textbf{Utiliser la symétrie :} $\Phi(-z) = 1 - \Phi(z)$. Donc $\Phi(-1) = 1 - \Phi(1)$.
-    $P(-1 \le Z \le 1) = \Phi(1) - (1 - \Phi(1)) = 2\Phi(1) - 1$.
-4.  \textbf{Chercher dans la table / Calculer :} $\Phi(1) \approx 0.8413$.
-5.  \textbf{Résultat :} $P(85 \le X \le 115) \approx 2(0.8413) - 1 = 1.6826 - 1 = 0.6826$. (On retrouve la règle des 68% !)
-\end{examplebox}
-
-On peut aussi inverser le processus : trouver la valeur $x$ correspondant à une probabilité donnée.
-
-\begin{examplebox}[Trouver une valeur pour une probabilité donnée (Problème Inverse)]
-Quel est le QI minimum requis pour être dans le top 10\% de la population ? ($\mu=100, \sigma=15$).
-
-1.  \textbf{Trouver le Z-score correspondant :} On cherche $x$ tel que $P(X > x) = 0.10$. Cela équivaut à $P(Z > z) = 0.10$, où $z = (x-100)/15$.
-    Si $P(Z > z) = 0.10$, alors $P(Z \le z) = \Phi(z) = 1 - 0.10 = 0.90$.
-2.  \textbf{Chercher dans la table inverse / Calculer :} On cherche la valeur $z$ pour laquelle l'aire à gauche est 0.90 (le 90ème percentile). On trouve $z \approx 1.28$.
-3.  \textbf{Convertir en X :} On utilise la relation $z = (x-\mu)/\sigma$ pour trouver $x$:
-    $1.28 = \frac{x - 100}{15}$
-    $x = 100 + 1.28 \times 15 = 100 + 19.2 = 119.2$.
-    Il faut un QI d'environ 119.2 pour être dans le top 10\%.
+Cet exemple montre, pas à pas, comment un processus financier réel — la composition multiplicative des rendements — conduit naturellement à modéliser le prix futur comme une variable log-normale. L’astuce du logarithme permet d’utiliser la puissance du Théorème Central Limite, et les paramètres \( t\mu \) et \( t\sigma^2 \) apparaissent inévitablement comme conséquence des propriétés additives de l’espérance et de la variance sous indépendance. C’est sur cette base solide que repose le modèle de Black-Scholes.
 \end{examplebox}

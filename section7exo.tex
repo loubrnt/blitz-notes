@@ -1,0 +1,511 @@
+\subsection{Exercices}
+
+\textit{Pour tous les exercices de calcul, vous pouvez utiliser les valeurs suivantes pour la fonction de répartition de la loi normale standard $\Phi(z) = P(Z \le z)$ :}
+\begin{itemize}
+    \item $\Phi(0) = 0.5$
+    \item $\Phi(0.5) \approx 0.6915$
+    \item $\Phi(1) \approx 0.8413$
+    \item $\Phi(1.5) \approx 0.9332$
+    \item $\Phi(1.96) \approx 0.975$
+    \item $\Phi(2) \approx 0.9772$
+    \item $\Phi(2.5) \approx 0.9938$
+    \item $\Phi(3) \approx 0.9987$
+\end{itemize}
+\textit{Et rappelez-vous la propriété de symétrie : $\Phi(-z) = 1 - \Phi(z)$.}
+
+% --- Section 1 : Définitions et Concepts ---
+
+\begin{exercicebox}[Exercice 1 : Définition (Paramètres)]
+Soit $Y \sim \text{Log-}\mathcal{N}(3, 16)$.
+\begin{enumerate}
+    \item Soit $X = \ln(Y)$. Quelle est la loi de $X$ ?
+    \item Que valent $E[X]$ et $\text{Var}(X)$ ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Définition (Inverse)]
+Soit $X \sim \mathcal{N}(0, 1)$. Si $Y = e^X$, quelle est la notation de la loi de $Y$ ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Intuition (Somme vs Produit)]
+La taille d'une population de bactéries au temps $t$ est $P(t) = P(0) \times F_1 \times F_2 \times \dots \times F_t$, où les $F_i$ sont des facteurs de croissance aléatoires.
+Pourquoi est-il plus probable que $P(t)$ suive une loi log-normale plutôt qu'une loi normale ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Intuition (Transformation)]
+Si $X \sim \mathcal{N}(0, \sigma^2)$, on sait que la distribution de $X$ est symétrique autour de 0.
+Pourquoi la distribution de $Y = e^X$ n'est-elle pas symétrique ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : PDF (Propriétés)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$. Quelle est la probabilité $P(Y \le 0)$ ?
+\end{exercicebox}
+
+% --- Section 2 : Moments et Mesures Centrales ---
+
+\begin{exercicebox}[Exercice 6 : Espérance]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=4, \sigma^2=2)$.
+Calculez l'espérance $E[Y]$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 7 : Médiane]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=4, \sigma^2=2)$.
+Calculez la médiane $\text{Med}(Y)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 8 : Mode]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=4, \sigma^2=2)$.
+Calculez le mode $\text{Mode}(Y)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 9 : Relation d'Ordre]
+En utilisant les résultats des exercices 6, 7 et 8, vérifiez la relation d'ordre (inégalité) entre le mode, la médiane et l'espérance.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : Variance]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=1, \sigma^2=1)$.
+Calculez la variance $\text{Var}(Y)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 11 : Moments (Problème Inverse)]
+Soit $Y$ une variable log-normale. On sait que sa médiane est $e^5$ et que son espérance est $e^{5.5}$.
+\begin{enumerate}
+    \item Trouvez $\mu$.
+    \item Trouvez $\sigma^2$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 12 : Impact de $\sigma$ sur l'Espérance]
+Soient $A \sim \text{Log-}\mathcal{N}(0, 1)$ et $B \sim \text{Log-}\mathcal{N}(0, 2)$.
+Les deux ont la même médiane ($e^0=1$). Laquelle a l'espérance la plus élevée ? Pourquoi ?
+\end{exercicebox}
+
+% --- Section 3 : Calculs de Probabilités ---
+
+\begin{exercicebox}[Exercice 13 : Calcul de CDF (Simple)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=5, \sigma^2=1)$. (donc $\sigma=1$).
+Calculez $P(Y \le e^5)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 14 : Calcul de CDF]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=3, \sigma=2)$.
+Calculez $P(Y \le e^4)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 15 : Calcul de Probabilité (Queue Droite)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=0, \sigma=1)$.
+Calculez $P(Y > 1)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 16 : Calcul de Probabilité (Queue Gauche)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=1, \sigma=1)$.
+Calculez $P(Y \le e^{-1})$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 17 : Calcul de Probabilité (Intervalle)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=10, \sigma=3)$.
+Calculez $P(e \le Y \le e^{16})$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 18 : Application (Revenu)]
+Le revenu $Y$ (en milliers) suit $\text{Log-}\mathcal{N}(\mu=3, \sigma=1)$.
+Quelle est la probabilité qu'un individu ait un revenu $Y$ inférieur à $e^2$ (milliers) ?
+\end{exercicebox}
+
+% --- Section 4 : Problèmes Inverses ---
+
+\begin{exercicebox}[Exercice 19 : Problème Inverse (Médiane)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=5, \sigma=2)$. Trouvez la valeur $y$ telle que $P(Y \le y) = 0.5$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 20 : Problème Inverse (Percentile)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=0, \sigma=1)$. Trouvez le 84.13ème percentile de $Y$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 21 : Problème Inverse (Percentile)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=2, \sigma=3)$. Trouvez la valeur $y$ telle que $P(Y \le y) \approx 0.9772$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 22 : Problème Inverse (Quantile bas)]
+Soit $Y \sim \text{Log-}\mathcal{N}(\mu=10, \sigma=2)$. Trouvez la valeur $y$ telle que $P(Y > y) \approx 0.9938$.
+\end{exercicebox}
+
+% --- Section 5 : Applications (Modèle Financier) ---
+
+\begin{exercicebox}[Exercice 23 : Modèle Financier (Paramètres)]
+Le log-rendement journalier $x_i$ d'un actif a $\mu=E[x_i]=0.01$ et $\sigma^2=\text{Var}(x_i)=0.04$.
+Soit $X = \sum_{i=1}^{16} x_i$ le log-rendement total sur 16 jours. On suppose l'indépendance.
+Quelle est la loi de $X$ ? (Donnez son nom, $E[X]$ et $\text{Var}(X)$).
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 24 : Modèle Financier (Loi du Prix)]
+En utilisant l'exercice 23, soit $S(0)$ le prix initial et $S(16)$ le prix après 16 jours.
+Quelle est la loi du \textit{ratio} de prix $Y = S(16)/S(0)$ ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 25 : Modèle Financier (Calcul de Prob.)]
+Un actif a $S(0)=100$. Le log-rendement sur 1 an $X = \ln(S(1)/S(0))$ suit $\mathcal{N}(\mu=0.05, \sigma^2=0.09)$.
+Quelle est la probabilité que le prix de l'actif après 1 an soit inférieur à 100 ? (c-à-d, $P(S(1) < 100)$).
+\end{exercicebox}
+
+\subsection{Corrections des Exercices}
+
+\begin{correctionbox}[Correction Exercice 1 : Définition (Paramètres)]
+1.  Par définition, si $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$, alors $X = \ln(Y)$ suit une loi normale $\mathcal{N}(\mu, \sigma^2)$.
+    Ici, $X \sim \mathcal{N}(3, 16)$.
+2.  $E[X] = \mu = 3$.
+    $\text{Var}(X) = \sigma^2 = 16$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 2 : Définition (Inverse)]
+Si $X \sim \mathcal{N}(0, 1)$, alors $Y = e^X$ suit une loi log-normale avec $\mu=0$ et $\sigma^2=1$.
+La notation est $Y \sim \text{Log-}\mathcal{N}(0, 1)$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 3 : Intuition (Somme vs Produit)]
+La loi normale résulte de l'addition de nombreux petits effets (TCL).
+La loi log-normale résulte de la multiplication de nombreux petits facteurs.
+La croissance d'une population de bactéries est un processus multiplicatif ($P(t) = P(t-1) \times F_t$).
+En prenant le logarithme, $\ln(P(t)) = \ln(P(0)) + \sum \ln(F_i)$, on obtient une somme qui tend vers une loi normale. Donc $P(t)$ lui-même tend vers une loi log-normale.
+De plus, $P(t)$ doit être positif, ce que garantit la loi log-normale (support $(0, \infty)$).
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 4 : Intuition (Transformation)]
+La transformation $Y = e^X$ n'est pas linéaire. Elle est convexe.
+Elle "étire" la partie droite de la distribution normale ($x>0 \implies e^x$ croît exponentiellement) et "compresse" la partie gauche ($x<0 \implies e^x$ s'écrase vers 0).
+Une distribution symétrique (Normale) transformée par une fonction asymétrique (Exponentielle) donne une distribution asymétrique (Log-Normale).
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 5 : PDF (Propriétés)]
+Le support de la loi log-normale $Y$ est $(0, \infty)$. La variable ne peut jamais être négative ou nulle.
+Par conséquent, $P(Y \le 0) = 0$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 6 : Espérance]
+$Y \sim \text{Log-}\mathcal{N}(\mu=4, \sigma^2=2)$.
+$E[Y] = e^{\mu + \sigma^2/2} = e^{4 + 2/2} = e^{4 + 1} = e^5$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 7 : Médiane]
+$Y \sim \text{Log-}\mathcal{N}(\mu=4, \sigma^2=2)$.
+$\text{Med}(Y) = e^{\mu} = e^4$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 8 : Mode]
+$Y \sim \text{Log-}\mathcal{N}(\mu=4, \sigma^2=2)$.
+$\text{Mode}(Y) = e^{\mu - \sigma^2} = e^{4 - 2} = e^2$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 9 : Relation d'Ordre]
+Les valeurs sont :
+$\text{Mode} = e^2 \approx 7.39$
+$\text{Médiane} = e^4 \approx 54.60$
+$\text{Espérance} = e^5 \approx 148.41$
+On vérifie bien $\text{Mode} < \text{Médiane} < \text{Espérance}$, ce qui est la signature d'une asymétrie à droite.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 10 : Variance]
+$Y \sim \text{Log-}\mathcal{N}(\mu=1, \sigma^2=1)$.
+$\text{Var}(Y) = (e^{\sigma^2} - 1) \cdot e^{2\mu + \sigma^2}$
+$\text{Var}(Y) = (e^{1} - 1) \cdot e^{2(1) + 1} = (e - 1)e^3$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 11 : Moments (Problème Inverse)]
+1.  $\text{Med}(Y) = e^{\mu}$. On nous donne $\text{Med}(Y) = e^5$. Donc $\mu = 5$.
+2.  $E[Y] = e^{\mu + \sigma^2/2}$. On nous donne $E[Y] = e^{5.5}$.
+    Donc, $e^{5.5} = e^{\mu + \sigma^2/2} = e^{5 + \sigma^2/2}$.
+    En égalant les exposants : $5.5 = 5 + \sigma^2/2$.
+    $0.5 = \sigma^2/2 \implies \sigma^2 = 1$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 12 : Impact de $\sigma$ sur l'Espérance]
+$E[A] = e^{\mu_A + \sigma_A^2/2} = e^{0 + 1/2} = e^{0.5}$.
+$E[B] = e^{\mu_B + \sigma_B^2/2} = e^{0 + 2/2} = e^{1}$.
+$E[B] > E[A]$. L'espérance $E[Y] = e^{\mu + \sigma^2/2}$ croît avec $\sigma^2$. Cela est dû à l'inégalité de Jensen ($\mathbb{E}[e^X] \geq e^{\mathbb{E}[X]}$) : une plus grande variance (incertitude) sur $X=\ln(Y)$ augmente l'espérance de $Y=e^X$ à cause de la convexité de l'exponentielle.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 13 : Calcul de CDF (Simple)]
+On cherche $P(Y \le e^5)$ pour $Y \sim \text{Log-}\mathcal{N}(5, 1)$.
+$$P(Y \le e^5) = P(\ln(Y) \le \ln(e^5)) = P(X \le 5)$$
+Puisque $X = \ln(Y) \sim \mathcal{N}(\mu=5, \sigma^2=1)$, on cherche la probabilité que $X$ soit inférieure à sa propre moyenne. Par symétrie de la loi normale, c'est 0.5.
+Formellement : $Z = \frac{5 - 5}{1} = 0$. $P(Z \le 0) = \Phi(0) = 0.5$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 14 : Calcul de CDF]
+$Y \sim \text{Log-}\mathcal{N}(\mu=3, \sigma=2)$.
+$P(Y \le e^4) = P(\ln(Y) \le \ln(e^4)) = P(X \le 4)$, où $X \sim \mathcal{N}(3, 4)$.
+Standardisation : $Z = \frac{X - \mu}{\sigma} = \frac{4 - 3}{2} = \frac{1}{2} = 0.5$.
+$P(X \le 4) = P(Z \le 0.5) = \Phi(0.5) \approx 0.6915$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 15 : Calcul de Probabilité (Queue Droite)]
+$Y \sim \text{Log-}\mathcal{N}(0, 1)$.
+$P(Y > 1) = 1 - P(Y \le 1) = 1 - P(\ln(Y) \le \ln(1)) = 1 - P(X \le 0)$.
+$X \sim \mathcal{N}(0, 1)$. $P(X \le 0) = \Phi(0) = 0.5$.
+$P(Y > 1) = 1 - 0.5 = 0.5$. (Logique : $e^0=1$ est la médiane, donc 50% est au-dessus).
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 16 : Calcul de Probabilité (Queue Gauche)]
+$Y \sim \text{Log-}\mathcal{N}(1, 1)$.
+$P(Y \le e^{-1}) = P(\ln(Y) \le \ln(e^{-1})) = P(X \le -1)$, où $X \sim \mathcal{N}(1, 1)$.
+Standardisation : $Z = \frac{X - \mu}{\sigma} = \frac{-1 - 1}{1} = -2$.
+$P(X \le -1) = P(Z \le -2) = \Phi(-2) = 1 - \Phi(2) \approx 1 - 0.9772 = 0.0228$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 17 : Calcul de Probabilité (Intervalle)]
+$Y \sim \text{Log-}\mathcal{N}(10, 9)$. ($X \sim \mathcal{N}(10, 9)$, $\sigma=3$).
+$P(e \le Y \le e^{16}) = P(\ln(e) \le \ln(Y) \le \ln(e^{16})) = P(1 \le X \le 16)$.
+Standardisation :
+$z_1 = \frac{1 - 10}{3} = -3$.
+$z_2 = \frac{16 - 10}{3} = 2$.
+$P(1 \le X \le 16) = P(-3 \le Z \le 2) = \Phi(2) - \Phi(-3)$.
+$\Phi(-3) = 1 - \Phi(3) \approx 1 - 0.9987 = 0.0013$.
+$P = \Phi(2) - \Phi(-3) \approx 0.9772 - 0.0013 = 0.9759$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 18 : Application (Revenu)]
+$Y \sim \text{Log-}\mathcal{N}(3, 1)$. ($X \sim \mathcal{N}(3, 1)$, $\sigma=1$).
+$P(Y < e^2) = P(\ln(Y) < \ln(e^2)) = P(X < 2)$.
+Standardisation : $Z = \frac{2 - 3}{1} = -1$.
+$P(X < 2) = P(Z < -1) = \Phi(-1) = 1 - \Phi(1) \approx 1 - 0.8413 = 0.1587$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 19 : Problème Inverse (Médiane)]
+On cherche $y$ tel que $P(Y \le y) = 0.5$.
+C'est la définition de la médiane. $\text{Med}(Y) = e^{\mu} = e^5$.
+Donc $y = e^5$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 20 : Problème Inverse (Percentile)]
+$Y \sim \text{Log-}\mathcal{N}(0, 1)$. On cherche $y$ tel que $P(Y \le y) = 0.8413$.
+$P(\ln(Y) \le \ln(y)) = 0.8413$.
+$P(X \le \ln(y)) = 0.8413$, où $X \sim \mathcal{N}(0, 1)$.
+$P(Z \le \ln(y)) = 0.8413$.
+On cherche $z = \ln(y)$ tel que $\Phi(z) = 0.8413$. D'après la table, $z=1$.
+$\ln(y) = 1 \implies y = e^1 = e$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 21 : Problème Inverse (Percentile)]
+$Y \sim \text{Log-}\mathcal{N}(2, 9)$. ($X \sim \mathcal{N}(2, 9)$, $\sigma=3$).
+On cherche $y$ tel que $P(Y \le y) \approx 0.9772$.
+$P(\ln(Y) \le \ln(y)) = P(X \le \ln(y)) = 0.9772$.
+Standardisation : $P\left(Z \le \frac{\ln(y) - 2}{3}\right) = 0.9772$.
+On cherche $z$ tel que $\Phi(z) = 0.9772$. D'après la table, $z=2$.
+$\frac{\ln(y) - 2}{3} = 2 \implies \ln(y) - 2 = 6 \implies \ln(y) = 8 \implies y = e^8$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 22 : Problème Inverse (Quantile bas)]
+$Y \sim \text{Log-}\mathcal{N}(10, 4)$. ($X \sim \mathcal{N}(10, 4)$, $\sigma=2$).
+On cherche $y$ tel que $P(Y > y) \approx 0.9938$.
+$P(Y \le y) = 1 - 0.9938 = 0.0062$.
+$P(X \le \ln(y)) = 0.0062$.
+Standardisation : $P\left(Z \le \frac{\ln(y) - 10}{2}\right) = 0.0062$.
+On cherche $z$ tel que $\Phi(z) = 0.0062$.
+La table ne donne pas cette valeur, mais $\Phi(2.5) \approx 0.9938$.
+Par symétrie, $\Phi(-2.5) = 1 - \Phi(2.5) \approx 1 - 0.9938 = 0.0062$.
+Donc, $z = -2.5$.
+$\frac{\ln(y) - 10}{2} = -2.5 \implies \ln(y) - 10 = -5 \implies \ln(y) = 5 \implies y = e^5$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 23 : Modèle Financier (Paramètres)]
+$X$ est une somme de 16 v.a. i.i.d. $x_i \sim \mathcal{N}(0.01, 0.04)$.
+$X$ suit une loi normale.
+$E[X] = \sum E[x_i] = t \cdot \mu = 16 \times 0.01 = 0.16$.
+$\text{Var}(X) = \sum \text{Var}(x_i) = t \cdot \sigma^2 = 16 \times 0.04 = 0.64$.
+Donc, $X \sim \mathcal{N}(0.16, 0.64)$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 24 : Modèle Financier (Loi du Prix)]
+$Y = S(16)/S(0)$. $X = \ln(Y) = \ln(S(16)/S(0))$.
+D'après l'exercice 23, $X \sim \mathcal{N}(0.16, 0.64)$.
+Par définition, $Y = e^X$ suit une loi log-normale.
+$Y \sim \text{Log-}\mathcal{N}(\mu_X=0.16, \sigma_X^2=0.64)$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 25 : Modèle Financier (Calcul de Prob.)]
+$X = \ln(S(1)/S(0)) \sim \mathcal{N}(0.05, 0.09)$. (donc $\mu=0.05, \sigma=0.3$).
+On cherche $P(S(1) < 100)$.
+$P(S(1) < 100) = P(S(1)/S(0) < 100/100) = P(S(1)/S(0) < 1)$.
+On applique le log :
+$P(\ln(S(1)/S(0)) < \ln(1)) = P(X < 0)$.
+On standardise $X$ :
+$Z = \frac{X - \mu}{\sigma} = \frac{0 - 0.05}{0.3} = -0.05 / 0.3 \approx -0.167$.
+$P(X < 0) = P(Z < -0.167)$.
+C'est $\Phi(-0.167) = 1 - \Phi(0.167)$. Puisque $\Phi(0) = 0.5$, $\Phi(0.167)$ est légèrement supérieur à 0.5, donc $\Phi(-0.167)$ est légèrement inférieur à 0.5. La probabilité est légèrement inférieure à 50\%.
+\end{correctionbox}
+
+\subsection{Exercices Python}
+
+La loi log-normale est fondamentale en finance. Elle repose sur l'idée que si les \textbf{log-rendements} d'une action $X_i = \ln(P_i / P_{i-1})$ sont (approximativement) normaux, alors le prix futur $P_t$, qui est un \textbf{produit} de ces rendements ($P_t = P_0 \times e^{X_1} \times \dots \times e^{X_t}$), suivra une loi log-normale.
+
+Nous allons estimer les paramètres $\mu$ et $\sigma^2$ de la loi normale sous-jacente à partir des log-rendements journaliers de Microsoft (MSFT) et Google (GOOG), puis utiliser la théorie log-normale pour modéliser les prix.
+
+\begin{codecell}
+!pip install yfinance
+import yfinance as yf
+import pandas as pd
+import numpy as np
+from scipy.stats import norm # Moteur pour les calculs de CDF/PDF
+
+# Definir les tickers et la periode
+tickers = ["MSFT", "GOOG"]
+start_date = "2020-01-01"
+end_date = "2024-12-31"
+
+# Telecharger les prix de cloture ajustes
+data = yf.download(tickers, start=start_date, end=end_date)["Adj Close"]
+
+# Calculer les LOG-RENDEMENTS journaliers
+log_returns = np.log(data / data.shift(1)).dropna()
+
+# Renommer les colonnes
+log_returns.columns = ["MSFT_LogReturn", "GOOG_LogReturn"]
+
+# 'log_returns' est notre DataFrame.
+# X_msft = log_returns["MSFT_LogReturn"]
+# X_goog = log_returns["GOOG_LogReturn"]
+\end{codecell}
+
+\begin{exercicebox}[Exercice 1 : Estimer les Paramètres $\mu$ et $\sigma^2$]
+Soit $P_t$ le prix de MSFT. Le modèle suppose que $X = \ln(P_t/P_{t-1}) \sim \mathcal{N}(\mu, \sigma^2)$. Les paramètres $\mu$ et $\sigma^2$ sont les paramètres "log-normaux".
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Estimer $\mu$ (l'espérance du log-rendement journalier) pour MSFT.
+    \item Estimer $\sigma^2$ (la variance du log-rendement journalier) pour MSFT.
+    \item Estimer $\sigma$ (l'écart-type du log-rendement journalier) pour MSFT.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Test de Normalité (Règle 68-95-99.7)]
+La théorie log-normale repose sur la normalité des log-rendements $X$. Vérifions-le.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Utiliser $\mu$ et $\sigma$ (pour MSFT) de l'Exercice 1.
+    \item Calculer la proportion \textbf{empirique} des log-rendements de MSFT qui tombent dans l'intervalle $[\mu - \sigma, \mu + \sigma]$.
+    \item Comparer ce pourcentage à la valeur théorique (68.27\%). Le modèle semble-t-il bien s'ajuster ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Asymétrie (Prix vs Log-Rendements)]
+La théorie dit que les log-rendements $X$ sont symétriques (Normaux), mais que les prix $P_t$ sont asymétriques à droite (Log-Normaux).
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer la moyenne et la médiane de la série des \textbf{log-rendements} de MSFT.
+    \item Calculer la moyenne et la médiane de la série des \textbf{prix} de MSFT (la colonne \texttt{data['MSFT']}).
+    \item Comparer les deux paires. Les log-rendements sont-ils symétriques (moyenne $\approx$ médiane) ? Les prix sont-ils asymétriques (moyenne $>$ médiane) ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Espérance vs Médiane (Théorique)]
+Soit $Y = P_t/P_{t-1} = e^X$ la variable "ratio de prix journalier". $Y \sim \text{Log-}\mathcal{N}(\mu, \sigma^2)$.
+Théorie : $\text{Med}(Y) = e^{\mu}$ et $E[Y] = e^{\mu + \sigma^2/2}$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Utiliser $\mu$ et $\sigma^2$ (pour MSFT) de l'Exercice 1.
+    \item Calculer la médiane \textbf{théorique} $\text{Med}(Y)$.
+    \item Calculer l'espérance \textbf{théorique} $E[Y]$.
+    \item Vérifier que $E[Y] > \text{Med}(Y)$, confirmant l'asymétrie.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Espérance Théorique vs Empirique]
+Vérifions le calcul de $E[Y]$ de l'exercice 4 de manière empirique.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Créer la série $Y$ (ratio de prix journalier) : $Y = \exp(X_{\text{msft}})$.
+    \item Calculer l'espérance \textbf{empirique} de $Y$ (la moyenne de cette série $Y$).
+    \item Comparer cette valeur empirique à l'espérance \textbf{théorique} $e^{\mu + \sigma^2/2}$ calculée à l'exercice 4.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 6 : Variance Théorique vs Empirique]
+Théorie : $\text{Var}(Y) = (e^{\sigma^2} - 1) \cdot e^{2\mu + \sigma^2}$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Utiliser $\mu$ et $\sigma^2$ (pour MSFT) de l'Exercice 1.
+    \item Calculer la variance \textbf{théorique} $\text{Var}(Y)$ en utilisant la formule ci-dessus.
+    \item Calculer la variance \textbf{empirique} de la série $Y$ (créée à l'Ex 5).
+    \item Comparer les deux résultats.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 7 : Modélisation du Prix Futur (Paramètres)]
+Modélisons le prix de GOOG dans $t=20$ jours ouvrés (environ 1 mois).
+Le prix $P_{20}$ est log-normal si l'on suppose $P_{20} = P_0 \cdot e^{X_{20}}$, où $P_0$ est le prix actuel.
+Le log-rendement total $X_{20} = \ln(P_{20}/P_0)$ suit $X_{20} \sim \mathcal{N}(t\mu, t\sigma^2)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Estimer $\mu_G$ et $\sigma_G^2$ (journaliers) pour GOOG (similaire à l'Ex 1).
+    \item Définir $t=20$.
+    \item Calculer $\mu_{20} = t\mu_G$ (l'espérance du log-rendement sur 20 jours).
+    \item Calculer $\sigma_{20}^2 = t\sigma_G^2$ (la variance du log-rendement sur 20 jours).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 8 : Calcul de Probabilité (Prix Futur)]
+En utilisant les paramètres $\mu_{20}$ et $\sigma_{20} = \sqrt{\sigma_{20}^2}$ de l'exercice 7 pour GOOG :
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer la probabilité que GOOG ait un rendement positif sur 20 jours.
+    \item On cherche $P(P_{20} > P_0) \implies P(P_{20}/P_0 > 1) \implies P(\ln(P_{20}/P_0) > \ln(1))$.
+    \item Calculer $P(X_{20} > 0)$.
+    \item (Indice : Standardiser 0 avec $\mu_{20}$ et $\sigma_{20}$, puis utiliser $1 - \Phi(z)$).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 9 : Calcul de Probabilité (Perte > 5\%)]
+En utilisant les paramètres $\mu_{20}$ et $\sigma_{20}$ de l'exercice 7 pour GOOG :
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer la probabilité que GOOG perde plus de 5\% sur 20 jours.
+    \item On cherche $P(P_{20} < 0.95 \times P_0) \implies P(P_{20}/P_0 < 0.95)$.
+    \item Calculer $P(X_{20} < \ln(0.95))$.
+    \item (Indice : Standardiser $\ln(0.95)$ avec $\mu_{20}$ et $\sigma_{20}$, puis utiliser $\Phi(z)$).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : Problème Inverse (Intervalle de Confiance)]
+Trouvons l'intervalle de 95\% pour le prix de GOOG dans 20 jours.
+Nous cherchons les bornes $y_1, y_2$ telles que $P(y_1 \le P_{20} \le y_2) = 0.95$.
+On suppose un intervalle centré sur la loi normale sous-jacente (entre $z=-1.96$ et $z=+1.96$).
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Trouver $z_{inf} = -1.96$ et $z_{sup} = +1.96$.
+    \item "Dé-standardiser" ces Z-scores pour trouver les log-rendements $x_1$ et $x_2$ :
+        $x = \mu_t + z \sigma_t$ (en utilisant $\mu_{20}$ et $\sigma_{20}$ de l'Ex 7).
+    \item Convertir ces log-rendements en ratios de prix $y = e^x$.
+    \item (Conclusion) L'intervalle de 95\% pour le ratio de prix est $[y_1, y_2]$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 11 : Calcul de la Médiane vs Espérance (Prix Futur)]
+Pour le prix de GOOG dans 20 jours, $P_{20} = P_0 \cdot Y_{20}$, où $Y_{20} \sim \text{Log-}\mathcal{N}(\mu_{20}, \sigma_{20}^2)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer le ratio de prix \textbf{médian} attendu : $\text{Med}(Y_{20}) = e^{\mu_{20}}$.
+    \item Calculer le ratio de prix \textbf{moyen} (espérance) attendu : $E[Y_{20}] = e^{\mu_{20} + \sigma_{20}^2 / 2}$.
+    \item (Conclusion) Lequel est le plus élevé ? Pourquoi est-ce important pour un investisseur ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 12 : Mode (Prix Futur)]
+Théorie : Le mode (la valeur la plus probable) du ratio de prix $Y_{20}$ est $\text{Mode}(Y_{20}) = e^{\mu_{20} - \sigma_{20}^2}$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer le ratio de prix \textbf{modal} (le plus probable) pour GOOG dans 20 jours.
+    \item Comparer le Mode (Ex 12), la Médiane (Ex 11) et l'Espérance (Ex 11).
+    \item Vérifier que $\text{Mode} < \text{Médiane} < \text{Espérance}$, confirmant l'asymétrie à droite.
+\end{enumerate}
+\end{exercicebox}

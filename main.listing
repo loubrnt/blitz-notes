@@ -1,29 +1,28 @@
-import matplotlib.pyplot as plt
+!pip install yfinance
+import yfinance as yf
+import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
 
-# Assurez-vous que 'samples_sigma' de Ex1 est disponible
-# sigma_after_burn = samples_sigma[burn_in:] # Pour ACF
+# Definir le ticker et une longue periode pour notre "population"
+ticker = "GOOG"
+start_date = "2010-01-01"
+end_date = "2024-12-31"
 
-# 2. Trace plot pour sigma (MH)
-# plt.figure(figsize=(12, 6))
-# plt.subplot(2, 1, 1) # Deux graphiques l'un sous l'autre
-# plt.plot(samples_sigma)
-# plt.title("Trace Plot - Sigma (Metropolis-Hastings)")
-# plt.ylabel("Sigma")
-# plt.grid(True)
-# plt.axvline(burn_in, color='red', linestyle='--', alpha=0.7)
+# Telecharger les prix de cloture ajustes
+data = yf.download(ticker, start=start_date, end=end_date)["Adj Close"]
 
-# 3. ACF pour sigma (MH)
-# plt.subplot(2, 1, 2)
-# plt.acorr(sigma_after_burn - np.mean(sigma_after_burn), maxlags=100, usevlines=True, normed=True, lw=2)
-# plt.title("Autocorrelation Function (ACF) - Sigma")
-# plt.xlabel("Lag")
-# plt.ylabel("Autocorrelation")
-# plt.grid(True)
-# plt.tight_layout()
-# plt.show()
+# Calculer les rendements journaliers (notre population X)
+returns = data.pct_change().dropna()
 
-# 4. (Optionnel) Repeter pour les parametres de Gibbs (Ex 2)
-# Assurez-vous que 'samples_beta' (par exemple) est disponible
-# beta_post = samples_beta[burn_in:]
-# ... (code similaire pour trace plot et ACF de beta_post) ...
+# Calculer les "vrais" parametres de la population
+population_mean = returns.mean()
+population_var = returns.var()
+population_std = returns.std()
+
+print(f"--- Parametres de la Population (GOOG 2010-2024) ---")
+print(f"Mu (moyenne) = {population_mean:.6f}")
+print(f"Sigma^2 (variance) = {population_var:.6f}")
+print(f"Sigma (ecart-type) = {population_std:.6f}")
+print(f"N total (population) = {len(returns)}")

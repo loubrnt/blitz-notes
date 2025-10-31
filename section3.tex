@@ -370,3 +370,235 @@ C'est un simple interrupteur "on/off".
 \begin{intuitionbox}
 Une variable indicatrice est un interrupteur. Elle est sur "ON" (valeur 1) si un événement qui nous intéresse se produit, et sur "OFF" (valeur 0) sinon. C'est un outil extrêmement puissant car il transforme les questions sur les probabilités des événements en questions sur les espérances des variables aléatoires, ce qui simplifie souvent les calculs.
 \end{intuitionbox}
+
+\subsection{Espérance d'une variable aléatoire discrète}
+
+Maintenant que nous avons défini les variables aléatoires discrètes et leur distribution (PMF), l'étape suivante est de résumer ces distributions. La mesure la plus importante est leur "centre", ou leur valeur moyenne.
+
+\begin{definitionbox}[Espérance (cas discret)]
+L'espérance (ou valeur attendue) d'une variable aléatoire discrète $X$, qui prend les valeurs distinctes $x_1, x_2, \dots$, est définie par :
+$$E(X) = \sum_j x_j P(X=x_j)$$
+\end{definitionbox}
+
+Cette formule est une moyenne pondérée de toutes les valeurs possibles.
+
+\begin{intuitionbox}
+L'espérance représente la valeur moyenne que l'on obtiendrait si l'on répétait l'expérience un très grand nombre de fois. C'est le \textbf{centre de gravité} de la distribution de probabilité. Si les probabilités étaient des masses placées sur une tige aux positions $x_j$, l'espérance serait le point d'équilibre.
+\end{intuitionbox}
+
+L'exemple le plus simple est le lancer d'un dé.
+
+\begin{examplebox}[Lancer d'un dé]
+Soit $X$ le résultat d'un lancer de dé équilibré. Chaque face a une probabilité de $1/6$. L'espérance est :
+$$E(X) = 1\left(\frac{1}{6}\right) + 2\left(\frac{1}{6}\right) + 3\left(\frac{1}{6}\right) + 4\left(\frac{1}{6}\right) + 5\left(\frac{1}{6}\right) + 6\left(\frac{1}{6}\right) = \frac{21}{6} = 3.5$$
+Même si 3.5 n'est pas un résultat possible, c'est la valeur moyenne sur un grand nombre de lancers.
+\end{examplebox}
+
+\subsection{Linéarité de l'espérance}
+
+Le calcul de l'espérance deviendrait très fastidieux si nous devions toujours utiliser la définition. Heureusement, l'espérance possède une propriété fondamentale qui simplifie énormément les calculs.
+
+\begin{theorembox}[Linéarité de l'espérance]
+Pour toutes variables aléatoires $X$ et $Y$ (discrètes ou continues), et pour toute constante $c$, on a :
+\begin{align*}
+E(X+Y) &= E(X) + E(Y) \\
+E(cX) &= cE(X)
+\end{align*}
+Cette propriété est extrêmement puissante car elle ne requiert pas que $X$ et $Y$ soient indépendantes.
+\end{theorembox}
+
+\begin{proofbox}
+La première propriété est directe.
+\begin{itemize}
+    \item \textbf{Cas discret :} $E(cX) = \sum_x (cx) P(X=x) = c \sum_x x P(X=x) = cE(X)$
+\end{itemize}
+Pour la seconde, $E(X+Y) = E(X) + E(Y)$ :
+
+\textbf{Cas discret :} Soit $S = X+Y$. L'espérance $E(S)$ se calcule en sommant sur toutes les paires possibles $(x, y)$ avec la PMF jointe $P(X=x, Y=y)$ :
+\begin{align*}
+E(X+Y) &= \sum_x \sum_y (x+y) P(X=x, Y=y) \\
+&= \sum_x \sum_y x P(X=x, Y=y) + \sum_x \sum_y y P(X=x, Y=y) \\
+&= \sum_x x \left( \sum_y P(X=x, Y=y) \right) + \sum_y y \left( \sum_x P(X=x, Y=y) \right)
+\end{align*}
+Par la loi des probabilités marginales, la somme interne $\sum_y P(X=x, Y=y)$ est $P(X=x)$, et de même $\sum_x P(X=x, Y=y) = P(Y=y)$.
+$$E(X+Y) = \sum_x x P(X=x) + \sum_y y P(Y=y) = E(X) + E(Y)$$
+Notez que l'indépendance n'a jamais été requise pour cette preuve.
+\end{proofbox}
+
+\begin{intuitionbox}
+Cette propriété formalise une idée très simple : "la moyenne d'une somme est la somme des moyennes". Si vous jouez à deux jeux de hasard, votre gain moyen total est simplement la somme de ce que vous gagnez en moyenne à chaque jeu, que les jeux soient liés ou non.
+\end{intuitionbox}
+
+Cette propriété rend le calcul de l'espérance d'une somme trivial, comme le montre l'exemple des deux dés.
+
+\begin{examplebox}[Somme de deux dés]
+Soit $X_1$ le résultat du premier dé et $X_2$ celui du second. On sait que $E(X_1) = 3.5$ et $E(X_2) = 3.5$.
+Soit $S = X_1 + X_2$ la somme des deux dés. Grâce à la linéarité, on peut calculer l'espérance de la somme sans avoir à lister les 36 résultats possibles :
+$$E(S) = E(X_1 + X_2) = E(X_1) + E(X_2) = 3.5 + 3.5 = 7$$
+\end{examplebox}
+
+\subsection{Espérance de la loi binomiale}
+
+Nous pouvons maintenant utiliser cette puissante propriété de linéarité pour trouver l'espérance de nos distributions de référence, en évitant des sommes complexes.
+
+\begin{theorembox}[Espérance de la loi binomiale]
+Si $X \sim \text{Bin}(n, p)$, alors son espérance est $E(X) = np$.
+\end{theorembox}
+
+Ce résultat est profondément intuitif.
+
+\begin{intuitionbox}
+Ce résultat est très naturel. Si vous lancez une pièce 100 fois ($n=100$) avec une probabilité de 50\% d'obtenir Pile ($p=0.5$), vous vous attendez en moyenne à obtenir $100 \times 0.5 = 50$ Piles. La formule $np$ généralise cette idée.
+\end{intuitionbox}
+
+La preuve formelle est un exemple parfait de l'élégance de la linéarité, utilisant les variables indicatrices.
+
+\begin{proofbox}
+Le calcul direct de l'espérance avec la PMF binomiale est possible, mais long. En utilisant la linéarité de l'espérance, on obtient une preuve beaucoup plus courte et élégante.
+
+On peut voir une variable binomiale $X$ comme la somme de $n$ variables de Bernoulli indépendantes, $X = I_1 + I_2 + \dots + I_n$, où chaque $I_j$ représente le succès (1) ou l'échec (0) du $j$-ième essai.
+
+Chaque $I_j$ a pour espérance $E(I_j) = 1 \cdot p + 0 \cdot (1-p) = p$.
+
+Par linéarité de l'espérance, on a :
+$$E(X) = E(I_1) + E(I_2) + \dots + E(I_n) = \underbrace{p + p + \dots + p}_{n \text{ fois}} = np$$
+\end{proofbox}
+
+\subsection{Espérance de la loi géométrique}
+
+Calculons maintenant l'espérance pour la loi qui modélise le temps d'attente.
+
+\begin{theorembox}[Espérance de la loi géométrique]
+L'espérance d'une variable aléatoire $X \sim \text{Geom}(p)$ (comptant le nombre d'échecs) est :
+$$E(X) = \frac{1-p}{p} = \frac{q}{p}$$
+\end{theorembox}
+
+L'intuition est aussi très forte ici :
+
+\begin{intuitionbox}
+Si un événement a 1 chance sur 10 de se produire ($p=0.1$), il est logique de penser qu'il faudra en moyenne 9 échecs ($q/p = 0.9/0.1=9$) avant qu'il ne se produise. L'espérance du nombre total d'essais (échecs + 1 succès) serait alors $1/p$.
+\end{intuitionbox}
+
+Contrairement à la loi binomiale, la preuve la plus directe ne repose pas sur la linéarité mais sur une manipulation de séries.
+
+\begin{proofbox}[Démonstration de l'espérance géométrique via les séries entières]
+Soit $X \sim \text{Geom}(p)$, où $X$ compte le nombre d'échecs avant le premier succès. La PMF est $P(X=k) = q^k p$ pour $k=0, 1, 2, \dots$, avec $q=1-p$.
+
+Par définition, l'espérance est :
+$$E(X) = \sum_{k=0}^{\infty} k \cdot P(X=k) = \sum_{k=0}^{\infty} k q^k p$$
+Le terme pour $k=0$ est nul, on peut donc commencer la somme à $k=1$ :
+$$E(X) = p \sum_{k=1}^{\infty} k q^k$$
+L'astuce consiste à reconnaître que la somme ressemble à la dérivée d'une série géométrique. Rappelons la formule de la série géométrique pour $|q|<1$ :
+$$\sum_{k=0}^{\infty} q^k = \frac{1}{1-q}$$
+En dérivant les deux côtés par rapport à $q$, on obtient :
+$$\frac{d}{dq} \left( \sum_{k=0}^{\infty} q^k \right) = \frac{d}{dq} \left( \frac{1}{1-q} \right)$$
+$$\sum_{k=1}^{\infty} k q^{k-1} = \frac{1}{(1-q)^2}$$
+Pour faire apparaître ce terme dans notre formule d'espérance, on factorise $q$ dans la somme :
+$$E(X) = p \cdot q \sum_{k=1}^{\infty} k q^{k-1}$$
+On peut maintenant remplacer la somme par son expression analytique :
+$$E(X) = p \cdot q \cdot \frac{1}{(1-q)^2}$$
+Puisque $p = 1-q$, on a :
+$$E(X) = p \cdot q \cdot \frac{1}{p^2} = \frac{q}{p}$$
+Ce qui démontre que l'espérance du nombre d'échecs avant le premier succès est $\frac{q}{p}$.
+\end{proofbox}
+
+\subsection{Loi du statisticien inconscient (LOTUS)}
+
+Souvent, nous ne sommes pas intéressés par l'espérance de $X$ elle-même, mais par l'espérance d'une fonction de $X$, par exemple $E(X^2)$ ou $E(e^X)$.
+
+\begin{theorembox}[Théorème de Transfert (LOTUS)]
+Si $X$ est une variable aléatoire discrète et $g(x)$ est une fonction de $\mathbb{R}$ dans $\mathbb{R}$, alors l'espérance de la variable aléatoire $g(X)$ est donnée par :
+\begin{itemize}
+    \item \textbf{Cas discret :} $E[g(X)] = \sum_x g(x) P(X=x)$
+\end{itemize}
+Ce théorème est utile car il évite d'avoir à trouver la distribution (PMF) de $g(X)$.
+\end{theorembox}
+
+La preuve dans le cas discret consiste simplement à regrouper les termes.
+
+\begin{proofbox}
+Nous montrons la preuve pour le cas discret.
+
+Soit $Y = g(X)$. Par définition, l'espérance de $Y$ est $E(Y) = \sum_y y P(Y=y)$.
+L'ensemble des valeurs $y$ que $Y$ peut prendre est $\{g(x) \mid x \in \text{support de } X\}$.
+Pour une valeur $y$ donnée, l'événement $\{Y=y\}$ est l'union de tous les événements $\{X=x\}$ tels que $g(x)=y$.
+$$P(Y=y) = P(g(X)=y) = \sum_{x: g(x)=y} P(X=x)$$
+En substituant cela dans la définition de $E(Y)$ :
+$$E(Y) = \sum_y y \left( \sum_{x: g(x)=y} P(X=x) \right)$$
+On peut réécrire $y$ comme $g(x)$ à l'intérieur de la seconde somme :
+$$E(g(X)) = \sum_y \sum_{x: g(x)=y} g(x) P(X=x)$$
+Cette double somme parcourt toutes les valeurs de $y$, et pour chaque $y$, elle parcourt tous les $x$ correspondants. Cela revient à simplement sommer sur tous les $x$ possibles dès le départ :
+$$E[g(X)] = \sum_x g(x) P(X=x)$$
+\end{proofbox}
+
+Ce théorème justifie son nom : c'est ce que l'on ferait "inconsciemment".
+
+\begin{intuitionbox}
+Pour trouver la valeur moyenne d'une fonction d'une variable aléatoire (par exemple, le carré du résultat d'un dé), vous n'avez pas besoin de déterminer d'abord la distribution de ce carré. Vous pouvez simplement prendre chaque valeur possible du résultat original, lui appliquer la fonction, et pondérer ce nouveau résultat par la probabilité du résultat original.
+\end{intuitionbox}
+
+Utilisons ce théorème pour calculer $E(X^2)$ pour notre dé.
+
+\begin{examplebox}[Calcul de $E(X^2)$ pour un dé (discret)]
+Soit $X$ le résultat d'un lancer de dé. Calculons l'espérance de $Y=X^2$. La fonction est $g(x)=x^2$.
+\begin{align*}
+E(X^2) &= \sum_{k=1}^6 k^2 P(X=k) \\
+&= 1^2\left(\frac{1}{6}\right) + 2^2\left(\frac{1}{6}\right) + 3^2\left(\frac{1}{6}\right) + 4^2\left(\frac{1}{6}\right) + 5^2\left(\frac{1}{6}\right) + 6^2\left(\frac{1}{6}\right) \\
+&= \frac{1+4+9+16+25+36}{6} = \frac{91}{6} \approx 15.17
+\end{align*}
+\end{examplebox}
+
+\subsection{Variance}
+
+L'espérance nous donne le centre d'une distribution, mais elle ne dit rien sur sa "largeur" ou sa "dispersion". C'est le rôle de la variance.
+
+\begin{definitionbox}[Variance et écart-type]
+La \textbf{variance} d'une variable aléatoire $X$ mesure la dispersion de sa distribution autour de son espérance $\mu = E(X)$. Elle est définie par :
+$$\text{Var}(X) = E\left[ (X - \mu)^2 \right]$$
+Concrètement, cela se traduit par (en utilisant LOTUS avec $g(x)=(x-\mu)^2$) :
+\begin{itemize}
+    \item \textbf{Cas discret :} $\text{Var}(X) = \sum_x (x - \mu)^2 P(X=x)$
+\end{itemize}
+La racine carrée de la variance est appelée l' \textbf{écart-type} :
+$$\text{SD}(X) = \sqrt{\text{Var}(X)}$$
+\end{definitionbox}
+
+L'idée est de mesurer l'écart quadratique moyen à l'espérance.
+
+\begin{intuitionbox}
+La variance est la "distance carrée moyenne à la moyenne". On prend l'écart de chaque valeur par rapport à la moyenne, on le met au carré (pour que les écarts positifs et négatifs ne s'annulent pas), puis on en calcule la moyenne. L'écart-type est souvent plus interprétable car il ramène cette mesure de dispersion dans les mêmes unités que la variable aléatoire elle-même.
+\end{intuitionbox}
+
+La définition $E[(X-\mu)^2]$ est excellente pour l'interprétation, mais pénible pour le calcul. Une formule alternative est presque toujours utilisée.
+
+\begin{theorembox}[Formule de calcul de la variance]
+Pour toute variable aléatoire $X$ (discrète ou continue), une formule plus pratique pour le calcul de la variance est :
+$$\text{Var}(X) = E(X^2) - [E(X)]^2$$
+\end{theorembox}
+
+La preuve est une simple expansion algébrique utilisant la linéarité de l'espérance.
+
+\begin{proofbox}
+Soit $\mu = E(X)$. On part de la définition de la variance :
+\begin{align*}
+\text{Var}(X) &= E[ (X - \mu)^2 ] \\
+&= E[ X^2 - 2X\mu + \mu^2 ] \quad \text{(On développe le carré)} \\
+&= E(X^2) - E(2\mu X) + E(\mu^2) \quad \text{(Par linéarité de l'espérance)} \\
+&= E(X^2) - 2\mu E(X) + \mu^2 \quad \text{(Car $2\mu$ et $\mu^2$ sont des constantes)} \\
+&= E(X^2) - 2\mu(\mu) + \mu^2 \quad \text{(Car $E(X) = \mu$)} \\
+&= E(X^2) - 2\mu^2 + \mu^2 \\
+&= E(X^2) - \mu^2 = E(X^2) - [E(X)]^2
+\end{align*}
+\end{proofbox}
+
+Nous pouvons maintenant calculer la variance de notre lancer de dé.
+
+\begin{examplebox}[Variance d'un lancer de dé]
+Nous avons déjà calculé pour un dé que $E(X) = 3.5$ et $E(X^2) = 91/6$. On peut maintenant trouver la variance facilement :
+\begin{align*}
+\text{Var}(X) &= E(X^2) - [E(X)]^2 = \frac{91}{6} - (3.5)^2 \\
+&= \frac{91}{6} - \left(\frac{7}{2}\right)^2 = \frac{91}{6} - \frac{49}{4} \\
+&= \frac{182}{12} - \frac{147}{12} = \frac{35}{12} \approx 2.917
+\end{align*}
+L'écart-type est $\text{SD}(X) = \sqrt{35/12} \approx 1.708$.
+\end{examplebox}

@@ -68,6 +68,7 @@
 % --- SOULIGNER LES TITRES ET SOUS-TITRES ---
 \sectionfont{\underline}
 \subsectionfont{\underline}
+\subsubsectionfont{\underline}
 
 % --- PAGE DE GARDE AMÉLIORÉE ---
 \makeatletter
@@ -255,21 +256,32 @@
 \maketitle
 
 \newpage
+\phantomsection
+\addcontentsline{toc}{section}{Sommaire}
 \tableofcontents 
 \newpage
 
 \input{section1.tex}
+\input{section1exo.tex}
 \input{section2.tex}
+\input{section2exo.tex}
 \input{section3.tex}
+\input{section3exo.tex}
 \input{section4.tex}
+\input{section4exo.tex}
 \input{section5.tex}
+\input{section5exo.tex}
 \input{section6.tex}
+\input{section6exo.tex}
 \input{section7.tex}
+\input{section7exo.tex}
 \input{section8.tex}
+\input{section8exo.tex}
 \input{section9.tex}
+\input{section9exo.tex}
 \input{section10.tex}
+\input{section10exo.tex}
 \input{section11.tex}
-\input{section12.tex}
 
 % \input{appendice1.tex}
 
