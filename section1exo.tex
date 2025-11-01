@@ -362,19 +362,7 @@ Quelle est la probabilité que cet échantillon contienne exactement \textbf{4 s
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 6 : Probabilité Conditionnelle]
-Calculez la probabilité qu'un passager ait survécu, \textbf{sachant que} ce passager était un homme adulte (\texttt{adult\_male == True}).
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Soit $A$ = "a survécu" et $B$ = "est un homme adulte".
-    \item Trouver $|B|$, le nombre total d'hommes adultes.
-    \item Trouver $|A \cap B|$, le nombre d'hommes adultes qui ont survécu.
-    \item Calculer $P(A|B) = \frac{|A \cap B|}{|B|}$.
-\end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 7 : Probabilité Complémentaire]
+\begin{exercicebox}[Exercice 6 : Probabilité Complémentaire]
 On sélectionne au hasard un groupe de 5 passagers. Quelle est la probabilité que ce groupe contienne \textbf{au moins un} passager voyageant seul (\texttt{alone == True}) ?
 
 \textbf{Votre tâche :}
@@ -389,7 +377,7 @@ On sélectionne au hasard un groupe de 5 passagers. Quelle est la probabilité q
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 8 : Probabilité et Analyse de Données]
+\begin{exercicebox}[Exercice 7 : Probabilité et Analyse de Données]
 Calculez la probabilité qu'un passager, choisi au hasard, ait payé un tarif (\texttt{fare}) supérieur au \textbf{tarif moyen} de l'ensemble du navire (\texttt{df}).
 
 \textbf{Votre tâche :}
@@ -398,22 +386,5 @@ Calculez la probabilité qu'un passager, choisi au hasard, ait payé un tarif (\
     \item Trouver $|S|$, la taille totale de l'univers \texttt{df}.
     \item Trouver $|A|$, le nombre de passagers dont le \texttt{fare} est strictement supérieur à ce tarif moyen.
     \item Calculer $P(A) = |A| / |S|$.
-\end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 9 : Probabilité (Tirage multi-groupes)]
-On forme un comité spécial de 4 personnes en les tirant au hasard parmi tous les passagers.
-
-Quelle est la probabilité que ce comité soit composé d'exactement \textbf{2 femmes de première classe} et \textbf{2 hommes de troisième classe} ?
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Trouver $N = |S|$, le nombre total de passagers.
-    \item Trouver $n_1$, le nombre de femmes de 1ère classe.
-    \item Trouver $n_2$, le nombre d'hommes de 3ème classe.
-    \item Trouver $n_3$, le nombre de "autres" passagers (tous sauf $n_1$ et $n_2$).
-    \item Calculer le dénominateur : $\binom{N}{4}$ (façons de choisir 4 passagers).
-    \item Calculer le numérateur : $\binom{n_1}{2} \times \binom{n_2}{2} \times \binom{n_3}{0}$.
-    \item Calculer la probabilité finale (numérateur / dénominateur).
 \end{enumerate}
 \end{exercicebox}

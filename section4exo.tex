@@ -1,427 +1,274 @@
 \subsection{Exercices}
 
-% --- Lois Binomiale et Bernoulli ---
+% --- Section 1 : PDF & CDF (Calculs Intégraux de Base) ---
 
-\begin{exercicebox}[Exercice 1 : Loi Binomiale (Quiz)]
-Un étudiant répond au hasard à un QCM de 10 questions. Chaque question a 4 choix de réponse, dont un seul est correct. Soit $X$ le nombre de bonnes réponses.
-\begin{enumerate}
-    \item Quelle loi suit $X$ ? Précisez ses paramètres.
-    \item Quelle est la probabilité que l'étudiant ait exactement 5 bonnes réponses ?
-    \item Quelle est la probabilité que l'étudiant ait au moins une bonne réponse ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 1 : Validation d'une PDF]
+Soit la fonction $f(x) = cx^2$ pour $x \in [0, 1]$, et $f(x)=0$ sinon.
+Calculez la valeur de la constante $c$ pour que $f(x)$ soit une fonction de densité de probabilité (PDF) valide.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 2 : Loi Binomiale (Contrôle Qualité)]
-Une usine produit des ampoules. 5\% des ampoules sont défectueuses. On prélève un lot de 20 ampoules. Soit $X$ le nombre d'ampoules défectueuses dans le lot.
-\begin{enumerate}
-    \item Quelle loi suit $X$ ? (On suppose le prélèvement "avec remise" ou d'une production très grande).
-    \item Quelle est la probabilité qu'il n'y ait aucune ampoule défectueuse ?
-    \item Quelle est la probabilité qu'il y ait exactement deux ampoules défectueuses ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 2 : Calcul de Probabilité (PDF)]
+En utilisant la PDF $f(x) = 3x^2$ pour $x \in [0, 1]$ (de l'exercice 1), calculez $P(X > 1/2)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 3 : Espérance et Variance (Binomiale)]
-Un archer touche la cible avec une probabilité $p=0.8$ à chaque tir. Il tire $n=40$ flèches. Soit $X$ le nombre de tirs réussis.
-\begin{enumerate}
-    \item Calculer l'espérance $E(X)$.
-    \item Calculer la variance $\text{Var}(X)$ et l'écart-type $\text{SD}(X)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 3 : Calcul de la CDF]
+Pour la PDF $f(x) = 3x^2$ sur $[0, 1]$, déterminez l'expression de la fonction de répartition (CDF) $F(x)$ pour $x \in [0, 1]$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 4 : Loi de Bernoulli (Indicatrice)]
-Soit $A$ un événement avec $P(A) = p$. Soit $I_A$ la variable indicatrice de $A$.
-\begin{enumerate}
-    \item Écrire la PMF de $I_A$.
-    \item Calculer $E(I_A)$.
-    \item Calculer $\text{Var}(I_A)$ en utilisant $\text{Var}(X) = E(X^2) - [E(X)]^2$. (Indice : $I_A^2 = I_A$).
-\end{enumerate}
+\begin{exercicebox}[Exercice 4 : Calcul de la PDF à partir de la CDF]
+La CDF d'une variable aléatoire $X$ est donnée par :
+$$F(x) = \begin{cases} 0 & \text{si } x < 0 \\ x^4 & \text{si } 0 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases}$$
+Calculez la PDF $f(x)$ de $X$ pour $x \in [0, 1]$.
 \end{exercicebox}
 
-% --- Loi de Poisson ---
-
-\begin{exercicebox}[Exercice 5 : Loi de Poisson (Emails)]
-Un serveur de messagerie reçoit en moyenne 2 emails "spam" par minute. Soit $X$ le nombre de spams reçus en une minute.
-\begin{enumerate}
-    \item Quelle loi suit $X$ ?
-    \item Quelle est la probabilité de recevoir exactement 3 spams en une minute ?
-    \item Quelle est la probabilité de recevoir au plus 2 spams en une minute ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 5 : Calcul de Probabilité (CDF)]
+En utilisant la CDF $F(x) = x^4$ pour $x \in [0, 1]$ (de l'exercice 4), calculez $P(0.5 \le X \le 1)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 6 : Loi de Poisson (Échelle de temps)]
-Une substance radioactive émet en moyenne $\lambda=4$ particules par seconde. Soit $Y$ le nombre de particules émises en 3 secondes.
-\begin{enumerate}
-    \item Quelle est la loi de $Y$ ? (Indice : ajuster le paramètre $\lambda$).
-    \item Quelle est la probabilité que $Y=10$ ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 6 : PDF (Trouver la constante)]
+Soit la fonction $f(x) = c/x^3$ pour $x \in [1, 2]$, et $f(x)=0$ sinon.
+Calculez la valeur de la constante $c$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 7 : Approximation de Poisson (Binomiale)]
-Un livre de 500 pages contient 1000 fautes de frappe distribuées au hasard. Soit $X$ le nombre de fautes de frappe sur une page donnée.
-\begin{enumerate}
-    \item Quelle est la loi exacte de $X$ ? (On suppose qu'une faute ne peut pas être à cheval sur deux pages).
-    \item Par quelle loi peut-on approximer $X$ ? Précisez le paramètre.
-    \item En utilisant l'approximation, calculez la probabilité qu'une page choisie au hasard contienne au moins une faute.
-\end{enumerate}
+\begin{exercicebox}[Exercice 7 : Calcul de Probabilité (PDF non-polynomiale)]
+En utilisant la PDF $f(x) = (8/3) \cdot (1/x^3)$ sur $[1, 2]$ (de l'exercice 6), calculez $P(X \le 1.5)$.
 \end{exercicebox}
 
-% --- Lois Géométrique et Hypergéométrique ---
+% --- Section 2 : Espérance, Variance, LOTUS (Calculs Intégraux) ---
 
-\begin{exercicebox}[Exercice 8 : Loi Géométrique (Échecs avant succès)]
-On lance un dé équilibré jusqu'à obtenir un 6. Soit $X$ le nombre d'échecs (lancers qui ne sont pas 6) avant d'obtenir le premier 6.
-\begin{enumerate}
-    \item Quelle loi suit $X$ ? Précisez le paramètre $p$.
-    \item Quelle est la probabilité d'échouer exactement 3 fois ? (c-à-d, le 6 arrive au 4ème lancer).
-    \item Quelle est l'espérance du nombre d'échecs $E(X)$ ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 8 : Calcul d'Espérance]
+Soit $X$ une v.a. de PDF $f(x) = 3x^2$ sur $[0, 1]$. Calculez $E[X]$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 9 : Loi Géométrique (Propriété)]
-Soit $X \sim \text{Geom}(p)$ (comptant les échecs).
-Quelle est la probabilité $P(X \ge k)$ ? C'est-à-dire, la probabilité d'avoir au moins $k$ échecs.
+\begin{exercicebox}[Exercice 9 : Calcul de Moment (LOTUS)]
+Pour la même PDF $f(x) = 3x^2$ sur $[0, 1]$, calculez $E[X^2]$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 10 : Loi Hypergéométrique (Comité)]
-Un club est composé de 12 hommes et 8 femmes. On choisit un comité de 5 personnes au hasard. Soit $X$ le nombre de femmes dans le comité.
-\begin{enumerate}
-    \item Quelle loi suit $X$ ? Précisez les paramètres.
-    \item Quelle est la probabilité que le comité soit composé d'exactement 2 femmes ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 10 : Calcul de Variance]
+En utilisant les résultats des exercices 8 et 9, calculez $\text{Var}(X)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 11 : Loi Hypergéométrique (Pêche)]
-Un lac contient 100 poissons, dont 10 ont été marqués. Un pêcheur attrape 8 poissons (sans remise). Soit $X$ le nombre de poissons marqués parmi les 8 attrapés.
-\begin{enumerate}
-    \item Quelle est la loi de $X$ ?
-    \item Quelle est la probabilité qu'il n'attrape aucun poisson marqué ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 11 : Application de LOTUS]
+Soit $X$ une v.a. de PDF $f(x) = 2x$ sur $[0, 1]$. Calculez $E[\sqrt{X}]$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 12 : Binomiale vs Hypergéométrique]
-Expliquez la différence fondamentale entre la loi Binomiale et la loi Hypergéométrique. Dans quel cas la loi Binomiale est-elle une bonne approximation de la loi Hypergéométrique ?
+\begin{exercicebox}[Exercice 12 : Calcul d'Espérance]
+En utilisant la PDF $f(x) = 2/x^3$ sur $[1, \infty)$, calculez $E[X]$.
 \end{exercicebox}
 
-% --- PMF, CDF, Espérance Générale, LOTUS, Variance ---
-
-\begin{exercicebox}[Exercice 13 : PMF (Trouver la constante)]
-Soit $X$ une variable aléatoire discrète dont la PMF est donnée par $P(X=k) = c \cdot k^2$ pour $k \in \{1, 2, 3\}$. Pour toutes les autres valeurs, $P(X=x)=0$.
-\begin{enumerate}
-    \item Trouvez la valeur de la constante $c$.
-    \item Calculez $P(X \ge 2)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 13 : Calcul avec LOTUS]
+En utilisant la PDF $f(x) = 2/x^3$ sur $[1, \infty)$, calculez $E[1/X]$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 14 : Espérance (Jeu de Hasard)]
-Un joueur paie 5€ pour jouer à un jeu. Il lance deux dés. Il gagne $S$ euros, où $S$ est la somme des deux dés. Soit $G$ son gain net (gain - mise).
-\begin{enumerate}
-    \item Rappeler $E(S)$ (espérance de la somme de two dés).
-    \item Calculer $E(G)$. Le jeu est-il équitable ?
-\end{enumerate}
+% --- Section 3 : Loi Uniforme (Applications) ---
+
+\begin{exercicebox}[Exercice 14 : Scénario (Loi Uniforme - Bus)]
+Un bus arrive à un arrêt toutes les 15 minutes exactement. Vous arrivez à l'arrêt à un moment aléatoire. Votre temps d'attente $T$ suit une loi $T \sim \text{Unif}(0, 15)$. Calculez la probabilité que vous attendiez 3 minutes ou moins.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 15 : LOTUS (Jeu de Hasard 2)]
-On lance un dé équilibré. Soit $X$ le résultat. Vous gagnez $g(X) = (X-3)^2$ euros.
-\begin{enumerate}
-    \item Calculez l'espérance de votre gain, $E[g(X)]$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 15 : Probabilité (Loi Uniforme - Bus)]
+En utilisant le scénario de l'exercice 14 ($T \sim \text{Unif}(0, 15)$), calculez la probabilité que vous attendiez entre 5 et 10 minutes.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 16 : CDF (Fonction de Répartition)]
-Soit $X$ une variable aléatoire avec la PMF suivante :
-$P(X=0) = 0.2$, $P(X=1) = 0.5$, $P(X=2) = 0.3$.
-\begin{enumerate}
-    \item Écrivez la fonction de répartition $F_X(x) = P(X \le x)$.
-    \item Calculez $P(0 < X \le 2)$.
-    \item Calculez $P(X > 1)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 16 : Espérance et Variance (Loi Uniforme - Bus)]
+Pour le temps d'attente $T \sim \text{Unif}(0, 15)$, calculez le temps d'attente moyen $E[T]$ et la variance $\text{Var}(T)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 17 : Variance (Calcul)]
-Pour la variable $X$ de l'exercice 16 :
-\begin{enumerate}
-    \item Calculez $E(X)$.
-    \item Calculez $E(X^2)$ en utilisant LOTUS.
-    \item Calculez $\text{Var}(X)$ en utilisant la formule $E(X^2) - [E(X)]^2$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 17 : Problème Inverse (Loi Uniforme)]
+Un générateur de nombres aléatoires produit un nombre $X$ suivant $\text{Unif}(a, b)$. On sait que $E[X] = 5$ et $\text{Var}(X) = 3$.
+En utilisant les formules $E[X] = (a+b)/2$ et $\text{Var}(X) = (b-a)^2/12$, trouvez $a$ et $b$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 18 : Propriétés de la Variance]
-Soit $X$ une variable aléatoire avec $E(X)=10$ et $\text{Var}(X)=4$. Soit $Y = 5X - 2$.
-\begin{enumerate}
-    \item Calculez $E(Y)$.
-    \item Calculez $\text{Var}(Y)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 18 : LOTUS (Loi Uniforme)]
+Soit $X \sim \text{Unif}(0, 2)$. La PDF est $f(x)=1/2$ sur $[0, 2]$.
+Calculez $E[X^3]$.
 \end{exercicebox}
 
-% --- Linéarité et Indicateurs ---
+% --- Section 4 : Loi Exponentielle (Applications) ---
 
-\begin{exercicebox}[Exercice 19 : Linéarité de l'Espérance (Mélange)]
-On lance un dé (résultat $D$) et une pièce (résultat $P$, 1 pour Pile, 0 for Face).
-Soit $X = D + 3P$.
-Calculez $E(X)$ en utilisant la linéarité de l'espérance.
+\begin{exercicebox}[Exercice 19 : Scénario (Loi Exponentielle - Appels)]
+Les appels à un service client arrivent selon un processus de Poisson. Le temps $T$ (en minutes) entre deux appels suit une loi exponentielle avec $\lambda = 0.1$ appels/minute.
+Calculez le temps moyen $E[T]$ entre les appels.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 20 : Indicateurs (Problème des Chapeaux)]
-$n$ personnes jettent leur chapeau au centre d'une pièce. Les chapeaux sont mélangés, et chaque personne en reprend un au hasard. Soit $X$ le nombre de personnes qui reprennent leur propre chapeau.
-\begin{enumerate}
-    \item Définir $X$ comme une somme de $n$ variables indicatrices $I_i$. Que représente $I_i$ ?
-    \item Quelle est la probabilité $P(I_i=1)$ ? (C-à-d, la probabilité que la personne $i$ reprenne son chapeau).
-    \item Calculez $E(X)$ en utilisant la linéarité.
-\end{enumerate}
+\begin{exercicebox}[Exercice 20 : Probabilité (Loi Exponentielle - Appels)]
+En utilisant $T \sim \text{Exp}(0.1)$ de l'exercice 19, calculez la probabilité qu'il n'y ait pas d'appel pendant au moins 5 minutes, $P(T > 5)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 21 : Indicateurs (Collectionneurs)]
-On achète $n=5$ boîtes de céréales. Chaque boîte contient une figurine au hasard parmi $k=4$ types de figurines (types A, B, C, D). Soit $X$ le nombre de types de figurines *distincts* que nous avons obtenus.
-\begin{enumerate}
-    \item Soit $I_A$ l'indicatrice que nous avons obtenu au moins une figurine de type A.
-    \item Calculez $P(I_A=0)$. (Probabilité de n'avoir *aucune* figurine A dans les 5 boîtes).
-    \item Calculez $E(I_A)$.
-    \item Exprimez $X$ en fonction d'indicatrices $I_A, I_B, I_C, I_D$ et calculez $E(X)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 21 : Probabilité (Loi Exponentielle - Appels)]
+En utilisant $T \sim \text{Exp}(0.1)$, calculez la probabilité que le prochain appel arrive entre la 2ème et la 3ème minute, $P(2 \le T \le 3)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 22 : Variance (Propriétés)]
-Prouvez que $\text{Var}(aX + b) = a^2 \text{Var}(X)$ pour des constantes $a$ et $b$.
+\begin{exercicebox}[Exercice 22 : Scénario (Loi Exponentielle - Durée de vie)]
+La durée de vie (en années) d'un composant suit $T \sim \text{Exp}(\lambda)$. On sait que sa durée de vie moyenne $E[T]$ est de 8 ans.
+Calculez la probabilité que le composant tombe en panne avant 2 ans, $P(T \le 2)$.
 \end{exercicebox}
 
-% --- Exercices de Synthèse ---
-
-\begin{exercicebox}[Exercice 23 : Identifier la Loi]
-Pour chaque scénario, identifiez la loi discrète la plus appropriée (Bernoulli, Binomiale, Hypergéométrique, Géométrique, Poisson).
-\begin{enumerate}
-    \item On compte le nombre de "Face" lors de 20 lancers de pièce.
-    \item On compte le nombre d'accidents à une intersection un jour donné (sachant un taux moyen de 1.5/jour).
-    \item On compte le nombre de Rois dans une main de 5 cartes tirées d'un jeu de 52 cartes.
-    \item On compte le nombre de lancers de dé nécessaires avant d'obtenir le premier 3 (en comptant les échecs).
-    \item On vérifie si un seul composant électronique est défectueux ou non.
-\end{enumerate}
+\begin{exercicebox}[Exercice 23 : Non-Mémoire (Loi Exponentielle)]
+En utilisant le scénario de l'exercice 22 ($T \sim \text{Exp}(1/8)$), calculez la probabilité que le composant dure 10 ans de plus, sachant qu'il a déjà duré 5 ans : $P(T > 15 \mid T > 5)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 24 : Espérance (Loi Hypergéométrique)]
-Soit $X \sim \text{HG}(w, b, m)$ (tirage de $m$ boules parmi $w$ blanches et $b$ noires).
-En utilisant des variables indicatrices, montrez que $E(X) = m \left( \frac{w}{w+b} \right)$.
-(Indice : Soit $I_j$ l'indicatrice que la $j$-ème boule tirée est blanche, pour $j=1 \dots m$. $X = \sum I_j$. Calculez $E(I_j)$.)
+\begin{exercicebox}[Exercice 24 : Problème Inverse (Loi Exponentielle)]
+Soit $X \sim \text{Exp}(\lambda)$.
+Trouvez $\lambda$ tel que $P(X \le 100) = 0.9$. (C'est-à-dire que 90% des observations sont inférieures à 100).
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 25 : Variance (Poisson)]
-On admet que si $X \sim \text{Bin}(n, p)$, $\text{Var}(X) = np(1-p)$.
-En utilisant l'approximation Poisson $X_n \sim \text{Bin}(n, \lambda/n)$, que devient la variance lorsque $n \to \infty$ ?
+\begin{exercicebox}[Exercice 25 : Preuve de l'Espérance (Exponentielle)]
+Soit $X \sim \text{Exp}(\lambda)$. Sa PDF est $f(x) = \lambda e^{-\lambda x}$ pour $x \ge 0$.
+En utilisant l'intégration par parties sur $E[X] = \int_0^\infty x \lambda e^{-\lambda x} \, dx$, prouvez que $E[X] = 1/\lambda$.
 \end{exercicebox}
-
 
 
 \subsection{Corrections des Exercices}
 
-\begin{correctionbox}[Correction Exercice 1 : Loi Binomiale (Quiz)]
-1. $X$ suit une loi Binomiale, car c'est la somme de $n=10$ succès indépendants (bonnes réponses), chacun avec une probabilité $p = 1/4 = 0.25$. $X \sim \text{Bin}(10, 0.25)$.
-2. $P(X=5) = \binom{10}{5} (0.25)^5 (1-0.25)^{10-5} = 252 \times (0.25)^5 (0.75)^5 \approx 0.0584$.
-3. $P(X \ge 1) = 1 - P(X=0)$.
-$P(X=0) = \binom{10}{0} (0.25)^0 (0.75)^{10} = (0.75)^{10} \approx 0.0563$.
-$P(X \ge 1) = 1 - 0.0563 = 0.9437$.
+\begin{correctionbox}[Correction Exercice 1 : Validation d'une PDF]
+$$\int_0^1 cx^2 \, \mathrm{d}x = c \left[ \frac{x^3}{3} \right]_0^1 = c \left( \frac{1^3}{3} - 0 \right) = \frac{c}{3}$$
+$$\frac{c}{3} = 1 \implies c = 3$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 2 : Loi Binomiale (Contrôle Qualité)]
-1. $X \sim \text{Bin}(n=20, p=0.05)$.
-2. $P(X=0) = \binom{20}{0} (0.05)^0 (0.95)^{20} = (0.95)^{20} \approx 0.3585$.
-3. $P(X=2) = \binom{20}{2} (0.05)^2 (0.95)^{18} = 190 \times (0.0025) \times (0.95)^{18} \approx 0.1887$.
+\begin{correctionbox}[Correction Exercice 2 : Calcul de Probabilité (PDF)]
+$f(x) = 3x^2$ sur $[0, 1]$.
+$$P(X > 1/2) = \int_{1/2}^1 3x^2 \, \mathrm{d}x = \left[ x^3 \right]_{1/2}^1$$
+$$= (1)^3 - (1/2)^3 = 1 - 1/8 = 7/8 \text{ (ou } 0.875 \text{)}$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 3 : Espérance et Variance (Binomiale)]
-1. $X \sim \text{Bin}(40, 0.8)$. L'espérance est $E(X) = np = 40 \times 0.8 = 32$. (On s'attend à 32 tirs réussis).
-2. $\text{Var}(X) = np(1-p) = 40 \times 0.8 \times 0.2 = 6.4$.
-$\text{SD}(X) = \sqrt{\text{Var}(X)} = \sqrt{6.4} \approx 2.53$.
+\begin{correctionbox}[Correction Exercice 3 : Calcul de la CDF]
+Pour $x \in [0, 1]$ :
+$$F(x) = \int_0^x f(t) \, \mathrm{d}t = \int_0^x 3t^2 \, \mathrm{d}t = \left[ t^3 \right]_0^x = x^3$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 4 : Loi de Bernoulli (Indicatrice)]
-1. $I_A$ suit la loi de Bernoulli $\text{Bern}(p)$.
-$P(I_A=1) = p$ et $P(I_A=0) = 1-p$.
-2. $E(I_A) = 1 \cdot P(I_A=1) + 0 \cdot P(I_A=0) = 1 \cdot p + 0 = p$.
-3. On utilise LOTUS pour $E(I_A^2)$:
-$E(I_A^2) = (1^2) \cdot P(I_A=1) + (0^2) \cdot P(I_A=0) = 1 \cdot p + 0 = p$.
-(Note : $I_A^2 = I_A$ car $1^2=1$ et $0^2=0$, donc $E(I_A^2) = E(I_A) = p$).
-$\text{Var}(I_A) = E(I_A^2) - [E(I_A)]^2 = p - p^2 = p(1-p)$.
+\begin{correctionbox}[Correction Exercice 4 : Calcul de la PDF à partir de la CDF]
+$f(x) = F'(x) = \frac{d}{dx} (x^4) = 4x^3$.
+Donc, $f(x) = 4x^3$ pour $x \in [0, 1]$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 5 : Loi de Poisson (Emails)]
-1. $X$ suit une loi de Poisson de paramètre $\lambda=2$. $X \sim \text{Poisson}(2)$.
-2. $P(X=3) = \frac{e^{-2} 2^3}{3!} = \frac{e^{-2} \times 8}{6} \approx 0.1804$.
-3. $P(X \le 2) = P(X=0) + P(X=1) + P(X=2)$
-$P(X=0) = \frac{e^{-2} 2^0}{0!} = e^{-2}$
-$P(X=1) = \frac{e^{-2} 2^1}{1!} = 2e^{-2}$
-$P(X=2) = \frac{e^{-2} 2^2}{2!} = 2e^{-2}$
-$P(X \le 2) = e^{-2}(1 + 2 + 2) = 5e^{-2} \approx 0.6767$.
+\begin{correctionbox}[Correction Exercice 5 : Calcul de Probabilité (CDF)]
+$P(0.5 \le X \le 1) = F(1) - F(0.5) = (1)^4 - (0.5)^4 = 1 - 0.0625 = 0.9375$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 6 : Loi de Poisson (Échelle de temps)]
-1. Le taux est $\lambda=4$ par seconde. Sur 3 secondes, le taux moyen est $\lambda' = 4 \times 3 = 12$.
-$Y \sim \text{Poisson}(12)$.
-2. $P(Y=10) = \frac{e^{-12} 12^{10}}{10!} \approx 0.1048$.
+\begin{correctionbox}[Correction Exercice 6 : PDF (Trouver la constante)]
+$$\int_1^2 \frac{c}{x^3} \, \mathrm{d}x = c \int_1^2 x^{-3} \, \mathrm{d}x = c \left[ \frac{x^{-2}}{-2} \right]_1^2 = c \left[ -\frac{1}{2x^2} \right]_1^2$$
+$$= c \left( (-\frac{1}{2 \cdot 2^2}) - (-\frac{1}{2 \cdot 1^2}) \right) = c \left( -\frac{1}{8} + \frac{1}{2} \right) = c \left( \frac{3}{8} \right)$$
+$$c(3/8) = 1 \implies c = 8/3$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 7 : Approximation de Poisson (Binomiale)]
-1. C'est un tirage sans remise (une faute ne peut pas être comptée deux fois). C'est $\text{Hypergéométrique}$. (Ou $\text{Binomiale}$ si on considère que chaque mot a une prob $p$ d'être une faute, mais $n$ (nb de mots) est inconnu).
-On peut aussi voir cela comme $n=1000$ essais (fautes) de Bernoulli où le succès est "tomber sur la page X" (prob $p=1/500$). $X \sim \text{Bin}(1000, 1/500)$.
-2. La loi Binomiale $\text{Bin}(n=1000, p=1/500)$ a $n$ grand et $p$ petit.
-On approxime par Poisson avec $\lambda = np = 1000 \times (1/500) = 2$.
-$X \approx \text{Poisson}(2)$.
-3. $P(X \ge 1) = 1 - P(X=0) = 1 - \frac{e^{-2} 2^0}{0!} = 1 - e^{-2} \approx 1 - 0.1353 = 0.8647$.
+\begin{correctionbox}[Correction Exercice 7 : Calcul de Probabilité (PDF non-polynomiale)]
+$f(x) = (8/3)x^{-3}$ sur $[1, 2]$.
+$$P(X \le 1.5) = \int_1^{1.5} \frac{8}{3}x^{-3} \, \mathrm{d}x = \frac{8}{3} \left[ \frac{x^{-2}}{-2} \right]_1^{1.5} = \frac{8}{3} \left[ -\frac{1}{2x^2} \right]_1^{1.5}$$
+$$= \frac{8}{3} \left( (-\frac{1}{2 \cdot (1.5)^2}) - (-\frac{1}{2 \cdot 1^2}) \right) = \frac{8}{3} \left( -\frac{1}{4.5} + \frac{1}{2} \right)$$
+$$= \frac{8}{3} \left( -\frac{2}{9} + \frac{1}{2} \right) = \frac{8}{3} \left( \frac{-4+9}{18} \right) = \frac{8}{3} \left( \frac{5}{18} \right) = \frac{40}{54} = \frac{20}{27}$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 8 : Loi Géométrique (Échecs avant succès)]
-1. $X$ compte le nombre d'échecs avant le premier succès. Le succès est "obtenir 6", $p=1/6$.
-$X \sim \text{Geom}(p=1/6)$.
-2. On cherche $P(X=3)$. $P(X=k) = (1-p)^k p$.
-$P(X=3) = (5/6)^3 \times (1/6) = \frac{125}{216} \times \frac{1}{6} = \frac{125}{1296} \approx 0.0965$.
-3. $E(X) = \frac{q}{p} = \frac{1-p}{p} = \frac{5/6}{1/6} = 5$. (On s'attend à 5 échecs en moyenne).
+\begin{correctionbox}[Correction Exercice 8 : Calcul d'Espérance]
+$f(x) = 3x^2$ sur $[0, 1]$.
+$$E[X] = \int_0^1 x \cdot (3x^2) \, \mathrm{d}x = \int_0^1 3x^3 \, \mathrm{d}x = \left[ \frac{3x^4}{4} \right]_0^1 = 3/4$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 9 : Loi Géométrique (Propriété)]
-$P(X \ge k)$ est la probabilité d'avoir au moins $k$ échecs.
-Cela signifie que les $k$ premiers essais ont *tous* été des échecs.
-La probabilité d'un échec est $q=1-p$. La probabilité de $k$ échecs consécutifs est $q^k$.
-(Après ces $k$ échecs, peu importe ce qui se passe, la condition $X \ge k$ est remplie).
-Donc, $P(X \ge k) = (1-p)^k$.
+\begin{correctionbox}[Correction Exercice 9 : Calcul de Moment (LOTUS)]
+$f(x) = 3x^2$ sur $[0, 1]$.
+$$E[X^2] = \int_0^1 x^2 \cdot (3x^2) \, \mathrm{d}x = \int_0^1 3x^4 \, \mathrm{d}x = \left[ \frac{3x^5}{5} \right]_0^1 = 3/5$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 10 : Loi Hypergéométrique (Comité)]
-1. Tirage sans remise. Population totale $w+b = 20$. On s'intéresse aux femmes (disons "blanches", $w=8$). Les hommes sont "noires" ($b=12$). On tire $m=5$ personnes.
-$X \sim \text{HG}(w=8, b=12, m=5)$.
-2. $P(X=2) = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}} = \frac{\binom{8}{2} \binom{12}{3}}{\binom{20}{5}} = \frac{28 \times 220}{15504} = \frac{6160}{15504} \approx 0.3973$.
+\begin{correctionbox}[Correction Exercice 10 : Calcul de Variance]
+$\text{Var}(X) = E[X^2] - (E[X])^2 = (3/5) - (3/4)^2$
+$$= \frac{3}{5} - \frac{9}{16} = \frac{48 - 45}{80} = \frac{3}{80}$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 11 : Loi Hypergéométrique (Pêche)]
-1. $w=10$ (marqués), $b=90$ (non marqués). $w+b=100$. $m=8$ (tirage).
-$X \sim \text{HG}(w=10, b=90, m=8)$.
-2. $P(X=0) = \frac{\binom{10}{0} \binom{90}{8}}{\binom{100}{8}} = \frac{1 \times \frac{90!}{8!82!}}{\frac{100!}{8!92!}} = \frac{90! 92!}{82! 100!} = \frac{90 \cdot \dots \cdot 83}{100 \cdot \dots \cdot 93} \approx 0.4166$.
+\begin{correctionbox}[Correction Exercice 11 : Application de LOTUS]
+$f(x) = 2x$ sur $[0, 1]$. $g(x) = \sqrt{X} = x^{1/2}$.
+$$E[\sqrt{X}] = \int_0^1 x^{1/2} \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^{3/2} \, \mathrm{d}x$$
+$$= \left[ 2 \frac{x^{5/2}}{5/2} \right]_0^1 = \left[ \frac{4}{5} x^{5/2} \right]_0^1 = 4/5$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 12 : Binomiale vs Hypergéométrique]
-La différence est l'indépendance des tirages.
-\begin{itemize}
-    \item \textbf{Binomiale :} Modélise $n$ tirages \textit{avec remise} (ou indépendants). La probabilité de succès $p$ est constante.
-    \item \textbf{Hypergéométrique :} Modélise $m$ tirages \textit{sans remise} d'une population finie. La probabilité de succès change à chaque tirage.
-\end{itemize}
-La Binomiale approxime bien l'Hypergéométrique lorsque la taille de la population ($w+b$) est très grande par rapport à la taille de l'échantillon ($m$). Dans ce cas, $p \approx w/(w+b)$ est presque constant.
+\begin{correctionbox}[Correction Exercice 12 : Calcul d'Espérance]
+$f(x) = 2/x^3$ sur $[1, \infty)$.
+$$E[X] = \int_1^\infty x \cdot \frac{2}{x^3} \, \mathrm{d}x = \int_1^\infty \frac{2}{x^2} \, \mathrm{d}x = \left[ -\frac{2}{x} \right]_1^\infty$$
+$$= \left( \lim_{b \to \infty} -\frac{2}{b} \right) - \left( -\frac{2}{1} \right) = 0 - (-2) = 2$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 13 : PMF (Trouver la constante)]
-1. La somme des probabilités doit valoir 1 : $\sum P(X=k) = 1$.
-$P(X=1) + P(X=2) + P(X=3) = 1$
-$c \cdot 1^2 + c \cdot 2^2 + c \cdot 3^2 = 1$
-$c(1 + 4 + 9) = 1 \implies 14c = 1 \implies c = 1/14$.
-2. $P(X \ge 2) = P(X=2) + P(X=3) = c \cdot 2^2 + c \cdot 3^2 = 4c + 9c = 13c = 13/14$.
+\begin{correctionbox}[Correction Exercice 13 : Calcul avec LOTUS]
+$f(x) = 2/x^3$ sur $[1, \infty)$. $g(x) = 1/x$.
+$$E[1/X] = \int_1^\infty (1/x) \cdot \frac{2}{x^3} \, \mathrm{d}x = \int_1^\infty \frac{2}{x^4} \, \mathrm{d}x = \left[ \frac{2x^{-3}}{-3} \right]_1^\infty$$
+$$= \left[ -\frac{2}{3x^3} \right]_1^\infty = (0) - (-\frac{2}{3}) = 2/3$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 14 : Espérance (Jeu de Hasard)]
-1. $E(S) = E(D_1 + D_2) = E(D_1) + E(D_2) = 3.5 + 3.5 = 7$.
-2. $G = S - 5$ (Gain = Somme - Mise).
-Par linéarité : $E(G) = E(S - 5) = E(S) - E(5) = E(S) - 5$.
-$E(G) = 7 - 5 = 2$.
-L'espérance de gain net est de 2€. Le jeu est très en faveur du joueur (et non équitable).
+\begin{correctionbox}[Correction Exercice 14 : Scénario (Loi Uniforme - Bus)]
+$T \sim \text{Unif}(0, 15)$. $f(t) = 1/15$ sur $[0, 15]$.
+$$P(T \le 3) = \int_0^3 \frac{1}{15} \, \mathrm{d}t = \frac{1}{15} [t]_0^3 = \frac{3}{15} = 0.2$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 15 : LOTUS (Jeu de Hasard 2)]
-On cherche $E[g(X)] = E[(X-3)^2]$. On utilise LOTUS : $E[g(X)] = \sum g(x) P(X=x)$.
-$E[(X-3)^2] = \sum_{k=1}^6 (k-3)^2 P(X=k) = \sum_{k=1}^6 (k-3)^2 \cdot (1/6)$
-$= \frac{1}{6} \left[ (1-3)^2 + (2-3)^2 + (3-3)^2 + (4-3)^2 + (5-3)^2 + (6-3)^2 \right]$
-$= \frac{1}{6} \left[ (-2)^2 + (-1)^2 + 0^2 + 1^2 + 2^2 + 3^2 \right]$
-$= \frac{1}{6} [ 4 + 1 + 0 + 1 + 4 + 9 ] = \frac{19}{6} \approx 3.167€$.
+\begin{correctionbox}[Correction Exercice 15 : Probabilité (Loi Uniforme - Bus)]
+$T \sim \text{Unif}(0, 15)$.
+$$P(5 \le T \le 10) = \int_5^{10} \frac{1}{15} \, \mathrm{d}t = \frac{1}{15} [t]_5^{10} = \frac{10-5}{15} = \frac{5}{15} = 1/3$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 16 : CDF (Fonction de Répartition)]
-1. $F_X(x)$ accumule les probabilités :
-$F_X(x) = \begin{cases} 
-      0 & \text{si } x < 0 \\
-      0.2 & \text{si } 0 \le x < 1 \\
-      0.2 + 0.5 = 0.7 & \text{si } 1 \le x < 2 \\
-      0.7 + 0.3 = 1.0 & \text{si } x \ge 2 
-   \end{cases}$
-2. $P(0 < X \le 2) = P(X=1) + P(X=2) = 0.5 + 0.3 = 0.8$.
-(Alternativement : $F_X(2) - F_X(0) = 1.0 - 0.2 = 0.8$).
-3. $P(X > 1) = P(X=2) = 0.3$.
-(Alternativement : $1 - P(X \le 1) = 1 - F_X(1) = 1 - 0.7 = 0.3$).
+\begin{correctionbox}[Correction Exercice 16 : Espérance et Variance (Loi Uniforme - Bus)]
+$T \sim \text{Unif}(a=0, b=15)$.
+$E[T] = \frac{a+b}{2} = \frac{0+15}{2} = 7.5$ minutes.
+$\text{Var}(T) = \frac{(b-a)^2}{12} = \frac{(15-0)^2}{12} = \frac{225}{12} = \frac{75}{4} = 18.75 \text{ min}^2$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 17 : Variance (Calcul)]
-1. $E(X) = \sum x P(X=x) = (0)(0.2) + (1)(0.5) + (2)(0.3) = 0 + 0.5 + 0.6 = 1.1$.
-2. $E(X^2) = \sum x^2 P(X=x) = (0^2)(0.2) + (1^2)(0.5) + (2^2)(0.3) = 0 + 0.5 + (4)(0.3) = 0.5 + 1.2 = 1.7$.
-3. $\text{Var}(X) = E(X^2) - [E(X)]^2 = 1.7 - (1.1)^2 = 1.7 - 1.21 = 0.49$.
+\begin{correctionbox}[Correction Exercice 17 : Problème Inverse (Loi Uniforme)]
+$E[X] = \frac{a+b}{2} = 5 \implies a+b = 10$.
+$\text{Var}(X) = \frac{(b-a)^2}{12} = 3 \implies (b-a)^2 = 36 \implies b-a = 6$.
+Système : (1) $b+a=10$, (2) $b-a=6$.
+(1)+(2) : $2b = 16 \implies b = 8$.
+(1) : $a = 10 - b = 10 - 8 = 2$.
+$X \sim \text{Unif}(2, 8)$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 18 : Propriétés de la Variance]
-1. $E(Y) = E(5X - 2) = E(5X) - E(2) = 5E(X) - 2 = 5(10) - 2 = 48$.
-2. $\text{Var}(Y) = \text{Var}(5X - 2) = \text{Var}(5X) = 5^2 \text{Var}(X) = 25 \times 4 = 100$.
-(La constante $b=-2$ n'affecte pas la dispersion).
+\begin{correctionbox}[Correction Exercice 18 : LOTUS (Loi Uniforme)]
+$f(x) = 1/2$ sur $[0, 2]$. $g(x) = x^3$.
+$$E[X^3] = \int_0^2 x^3 \cdot \frac{1}{2} \, \mathrm{d}x = \frac{1}{2} \left[ \frac{x^4}{4} \right]_0^2$$
+$$= \frac{1}{2} \left( \frac{2^4}{4} - 0 \right) = \frac{1}{2} \left( \frac{16}{4} \right) = 2$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 19 : Linéarité de l'Espérance (Mélange)]
-On cherche $E(X) = E(D + 3P)$.
-Par linéarité : $E(X) = E(D) + E(3P) = E(D) + 3E(P)$.
-$E(D) = 3.5$ (espérance d'un dé).
-$P$ est une Bernoulli $\text{Bern}(0.5)$. $E(P) = p = 0.5$.
-$E(X) = 3.5 + 3(0.5) = 3.5 + 1.5 = 5.0$.
+\begin{correctionbox}[Correction Exercice 19 : Scénario (Loi Exponentielle - Appels)]
+$T \sim \text{Exp}(0.1)$.
+$E[T] = 1/\lambda = 1/0.1 = 10$ minutes.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 20 : Indicateurs (Problème des Chapeaux)]
-1. $I_i$ est la variable indicatrice de l'événement "la personne $i$ reprend son propre chapeau".
-$X = \sum_{i=1}^n I_i$.
-2. Il y a $n!$ permutations (arrangements) possibles des chapeaux. Il y a $(n-1)!$ permutations où la personne $i$ a son propre chapeau.
-$P(I_i=1) = \frac{(n-1)!}{n!} = \frac{1}{n}$.
-3. Par linéarité : $E(X) = E(\sum I_i) = \sum E(I_i)$.
-$E(I_i) = P(I_i=1) = 1/n$.
-$E(X) = \sum_{i=1}^n (1/n) = n \times (1/n) = 1$.
-En moyenne, quel que soit $n$, une seule personne reprend son chapeau !
+\begin{correctionbox}[Correction Exercice 20 : Probabilité (Loi Exponentielle - Appels)]
+$\lambda = 0.1$. On cherche $P(T > 5)$.
+$$P(T > 5) = e^{-\lambda t} = e^{-0.1 \times 5} = e^{-0.5} \approx 0.6065$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 21 : Indicateurs (Collectionneurs)]
-1. $I_A = 1$ si on a au moins une fig. A, $I_A = 0$ sinon.
-2. $P(I_A=0) = P(\text{n'avoir aucune fig. A})$. À chaque boîte, $P(\text{pas A}) = 3/4$.
-Pour 5 boîtes indépendantes : $P(I_A=0) = (3/4)^5$.
-3. $E(I_A) = P(I_A=1) = 1 - P(I_A=0) = 1 - (3/4)^5$.
-4. $X$ est le nombre de types distincts, $X = I_A + I_B + I_C + I_D$.
-Par linéarité : $E(X) = E(I_A) + E(I_B) + E(I_C) + E(I_D)$.
-Par symétrie, $E(I_A) = E(I_B) = E(I_C) = E(I_D) = 1 - (3/4)^5$.
-$E(X) = 4 \times \left( 1 - (3/4)^5 \right) \approx 4 \times (1 - 0.2373) = 4 \times 0.7627 = 3.0508$.
+\begin{correctionbox}[Correction Exercice 21 : Probabilité (Loi Exponentielle - Appels)]
+$\lambda = 0.1$. $P(2 \le T \le 3) = F(3) - F(2)$.
+$F(t) = 1 - e^{-\lambda t}$.
+$P = (1 - e^{-0.1 \times 3}) - (1 - e^{-0.1 \times 2}) = (1 - e^{-0.3}) - (1 - e^{-0.2})$
+$$= e^{-0.2} - e^{-0.3} \approx 0.8187 - 0.7408 = 0.0779$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 22 : Variance (Propriétés)]
-Soit $\mu = E(X)$. Alors $E(aX+b) = aE(X)+b = a\mu+b$.
-Par définition de la variance :
-$\text{Var}(aX+b) = E\left[ ( (aX+b) - E[aX+b] )^2 \right]$
-$= E\left[ ( (aX+b) - (a\mu+b) )^2 \right]$
-$= E\left[ ( aX - a\mu )^2 \right]$
-$= E\left[ ( a(X - \mu) )^2 \right]$
-$= E\left[ a^2 (X - \mu)^2 \right]$
-$= a^2 E\left[ (X - \mu)^2 \right]$ (car $a^2$ est une constante)
-$= a^2 \text{Var}(X)$.
+\begin{correctionbox}[Correction Exercice 22 : Scénario (Loi Exponentielle - Durée de vie)]
+$E[T] = 8 \implies \lambda = 1/8 = 0.125$.
+On cherche $P(T \le 2)$.
+$$P(T \le 2) = F(2) = 1 - e^{-\lambda t} = 1 - e^{-0.125 \times 2} = 1 - e^{-0.25}$$
+$$\approx 1 - 0.7788 = 0.2212$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 23 : Identifier la Loi]
-1. \textbf{Binomiale} (n=20 essais de Bernoulli indépendants).
-2. \textbf{Poisson} (comptage d'événements rares dans un intervalle fixe).
-3. \textbf{Hypergéométrique} (tirage sans remise d'une population finie).
-4. \textbf{Géométrique} (comptage d'échecs avant le premier succès).
-5. \textbf{Bernoulli} (un seul essai, deux issues).
+\begin{correctionbox}[Correction Exercice 23 : Non-Mémoire (Loi Exponentielle)]
+$\lambda = 1/8$. $P(T > 15 \mid T > 5) = P(T > 10+5 \mid T > 5)$.
+Par non-mémoire, c'est $P(T > 10)$.
+$$P(T > 10) = e^{-\lambda t} = e^{-(1/8) \times 10} = e^{-10/8} = e^{-1.25} \approx 0.2865$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 24 : Espérance (Loi Hypergéométrique)]
-Soit $I_j = 1$ si la $j$-ème boule tirée (pour $j=1 \dots m$) est blanche, $I_j=0$ sinon.
-Le nombre total de blanches est $X = \sum_{j=1}^m I_j$.
-Par linéarité, $E(X) = \sum_{j=1}^m E(I_j)$.
-$E(I_j) = P(I_j=1)$. Quelle est la probabilité que la $j$-ème boule tirée soit blanche ?
-Par symétrie (ou en considérant un tirage aléatoire), n'importe quelle boule a la même probabilité d'être à la $j$-ème position. Il y a $w$ blanches sur $w+b$ boules au total.
-$P(I_j=1) = \frac{w}{w+b}$ (c'est vrai pour $j=1$, $j=2$, ... $j=m$).
-$E(X) = \sum_{j=1}^m \frac{w}{w+b} = m \left( \frac{w}{w+b} \right)$.
+\begin{correctionbox}[Correction Exercice 24 : Problème Inverse (Loi Exponentielle)]
+On cherche $\lambda$ tel que $F(100) = 0.9$.
+$$F(100) = 1 - e^{-\lambda \times 100} = 0.9$$
+$$0.1 = e^{-100\lambda}$$
+$$\ln(0.1) = -100\lambda$$
+$$-\ln(10) = -100\lambda$$
+$$\lambda = \frac{\ln(10)}{100} \approx \frac{2.3026}{100} \approx 0.023$$
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 25 : Variance (Poisson)]
-$X_n \sim \text{Bin}(n, \lambda/n)$.
-$\text{Var}(X_n) = np(1-p) = n(\lambda/n)(1 - \lambda/n) = \lambda(1 - \lambda/n)$.
-Lorsque $n \to \infty$ :
-$\lim_{n \to \infty} \text{Var}(X_n) = \lim_{n \to \infty} \lambda(1 - \lambda/n)$
-Puisque $\lambda/n \to 0$, la limite est $\lambda(1 - 0) = \lambda$.
-On en déduit que pour $X \sim \text{Poisson}(\lambda)$, la variance est $\text{Var}(X) = \lambda$.
-(L'espérance et la variance sont égales pour la loi de Poisson).
+\begin{correctionbox}[Correction Exercice 25 : Preuve de l'Espérance (Exponentielle)]
+$E[X] = \int_0^\infty x \lambda e^{-\lambda x} \, dx$.
+IPP : $u=x \implies du=dx$ ; $dv=\lambda e^{-\lambda x}dx \implies v=-e^{-\lambda x}$.
+$$E[X] = [u v]_0^\infty - \int_0^\infty v \, du = \left[ -x e^{-\lambda x} \right]_0^\infty - \int_0^\infty (-e^{-\lambda x}) \, dx$$
+Le premier terme est $(0 - 0)$ (par croissance comparée).
+$$E[X] = \int_0^\infty e^{-\lambda x} \, dx = \left[ -\frac{1}{\lambda} e^{-\lambda x} \right]_0^\infty$$
+$$= \left( \lim_{b \to \infty} -\frac{1}{\lambda} e^{-\lambda b} \right) - \left( -\frac{1}{\lambda} e^0 \right) = 0 - (-1/\lambda) = 1/\lambda$$
 \end{correctionbox}
 
 \subsection{Exercices Python}
