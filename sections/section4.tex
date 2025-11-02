@@ -1,0 +1,554 @@
+\newpage
+
+\section{Variables Aléatoires Continues}
+
+\subsection{Fonction de Densité de Probabilité (PDF)}
+
+Nous passons maintenant aux variables aléatoires qui peuvent prendre n'importe quelle valeur dans un intervalle, comme la taille d'une personne ou le temps d'attente exact. Pour ces variables, la notion de PMF n'a plus de sens, car la probabilité d'obtenir une valeur *exacte* est nulle. Nous introduisons donc le concept de densité.
+
+\begin{definitionbox}[Fonction de Densité de Probabilité (PDF)]
+Soit $X$ une variable aléatoire continue. Une fonction $f$ est une \textbf{fonction de densité de probabilité} (Probability Density Function, ou PDF) de $X$ si, pour tout $x$ :
+\begin{enumerate}
+    \item $f(x) \ge 0$, pour tout $-\infty < x < \infty$
+    \item $\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = 1$ (l'aire totale sous la courbe vaut 1)
+\end{enumerate}
+\end{definitionbox}
+
+Il est crucial de comprendre que $f(x)$ n'est *pas* une probabilité.
+
+\begin{intuitionbox}
+Dans le cas discret, la PMF donnait une "masse" de probabilité à chaque point. Dans le cas continu, la probabilité en un point exact est nulle ($P(X=x)=0$). La PDF, $f(x)$, n'est \textbf{pas} une probabilité.
+
+Il faut voir $f(x)$ comme une \textbf{densité} : elle décrit la "concentration" de probabilité autour de $x$. Pour obtenir une probabilité (une "masse"), il faut intégrer cette densité sur un intervalle. La probabilité que $X$ tombe dans un intervalle $[a, b]$ est l'aire sous la courbe de la PDF entre $a$ et $b$ :
+$$ P(a \le X \le b) = \int_a^b f(x) \, \mathrm{d}x $$
+\end{intuitionbox}
+
+Cette distinction est fondamentale.
+
+\begin{remarquebox}[PDF vs Probabilité]
+Une erreur fréquente est de confondre la valeur $f(x)$ avec $P(X=x)$. Pour une variable continue, $P(X=x)$ est \textbf{toujours zéro}. La PDF $f(x)$ peut être supérieure à 1 (contrairement à une probabilité), tant que l'aire totale sous la courbe reste égale à 1. Pensez-y comme à une densité de population : elle peut être très élevée en un point, mais la "population" (probabilité) exacte en ce point infinitésimal est nulle.
+\end{remarquebox}
+
+Vérifions un exemple simple.
+
+\begin{examplebox}[Une PDF simple]
+Soit $X$ une v.a. avec la PDF $f(x) = 2x$ pour $x \in [0, 1]$, et $f(x)=0$ sinon.
+\begin{enumerate}
+    \item Est-ce une PDF valide ?
+    
+    (1) $f(x) \ge 0$ pour tout $x$ dans $[0, 1]$.
+    
+    (2) $\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = \int_0^1 2x \, \mathrm{d}x = [x^2]_0^1 = 1-0 = 1$.
+    
+    Oui, c'est une PDF valide.
+    \item Quelle est la probabilité $P(X \le 0.5)$ ?
+    $$ P(X \le 0.5) = \int_0^{0.5} 2x \, \mathrm{d}x = [x^2]_0^{0.5} = (0.5)^2 - 0 = 0.25 $$
+\end{enumerate}
+\end{examplebox}
+
+\subsection{Fonction de Répartition (CDF)}
+
+Comme dans le cas discret, nous pouvons définir une fonction qui accumule la probabilité. Pour le cas continu, cette accumulation se fait via une intégrale.
+
+\begin{definitionbox}[Fonction de Répartition Continue (CDF)]
+Soit $X$ une variable aléatoire continue. La \textbf{fonction de répartition} (Cumulative Distribution Function, ou CDF) de $X$ est la fonction $F$ définie par :
+$$ F(x) = P(X \le x) = \int_{-\infty}^x f(t) \, \mathrm{d}t $$
+Pour être une CDF valide, la fonction $F$ doit respecter les propriétés suivantes :
+\begin{enumerate}
+    \item $\lim_{x \to \infty} F(x) = 1$
+    \item $\lim_{x \to -\infty} F(x) = 0$
+    \item $F$ est continue et non décroissante.
+\end{enumerate}
+\end{definitionbox}
+
+La CDF est l'intégrale de la PDF, et inversement, la PDF est la dérivée de la CDF.
+
+\begin{intuitionbox}
+La CDF est "l'accumulateur" de probabilité. Elle part de 0 (à $-\infty$) et "accumule" l'aire sous la PDF à mesure qu'on avance sur l'axe des $x$, pour finalement atteindre 1 (à $+\infty$).
+
+Le lien fondamental est que la PDF est la dérivée de la CDF (par le théorème fondamental de l'analyse) :
+$$ f(x) = F'(x) $$
+Cela signifie que la valeur de la PDF $f(x)$ représente le \textbf{taux d'accumulation} de la probabilité au point $x$.
+\end{intuitionbox}
+
+La CDF est souvent le moyen le plus simple de calculer des probabilités sur des intervalles.
+
+\begin{remarquebox}[Calcul de Probabilités via la CDF]
+La CDF est très pratique pour calculer des probabilités sur des intervalles :
+$$ P(a < X \le b) = F(b) - F(a) $$
+Pour les variables continues, les inégalités strictes ou larges ne changent rien ($P(X=a)=0$).
+\end{remarquebox}
+
+Calculons la CDF de notre exemple précédent.
+
+\begin{examplebox}[CDF de l'exemple précédent]
+Pour $f(x) = 2x$ sur $[0, 1]$, la CDF $F(x)$ est :
+\begin{itemize}
+    \item Si $x < 0$ : $F(x) = \int_{-\infty}^x 0 \, \mathrm{d}t = 0$.
+    \item Si $0 \le x \le 1$ : $F(x) = \int_{-\infty}^0 f(t) \mathrm{d}t + \int_0^x 2t \, \mathrm{d}t = 0 + [t^2]_0^x = x^2$.
+    \item Si $x > 1$ : $F(x) = \int_{-\infty}^1 f(t) \mathrm{d}t + \int_1^x 0 \, \mathrm{d}t = \int_0^1 2t \, \mathrm{d}t = 1$.
+\end{itemize}
+Donc, $F(x) = \begin{cases} 0 & \text{si } x < 0 \\ x^2 & \text{si } 0 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases}$
+\end{examplebox}
+
+\subsection{Espérance et Variance (Cas Continu)}
+
+Les concepts d'espérance et de variance s'étendent naturellement au cas continu, en remplaçant les sommes par des intégrales.
+
+\begin{definitionbox}[Espérance et Variance (Cas Continu)]
+Pour une variable aléatoire $X$ de fonction de densité $f$ :
+
+L'\textbf{espérance} de $X$ est le centre de gravité de la densité :
+$$ E[X] = \int_{-\infty}^{\infty} x f(x) \, \mathrm{d}x $$
+La \textbf{variance} de $X$ est l'espérance du carré de l'écart à la moyenne :
+$$ \text{Var}(X) = E[(X - E[X])^2] = \int_{-\infty}^{\infty} (x - E[X])^2 f(x) \, \mathrm{d}x $$
+\end{definitionbox}
+
+Comme dans le cas discret, une formule alternative existe pour la variance.
+
+\begin{theorembox}[Formule de calcul de la Variance]
+Une formule plus simple pour le calcul de la variance est :
+$$ \text{Var}(X) = E[X^2] - (E[X])^2 $$
+où $E[X^2] = \int_{-\infty}^{\infty} x^2 f(x) \, \mathrm{d}x$. (Ceci est une application de LOTUS).
+\end{theorembox}
+
+La preuve est identique à celle du cas discret, en utilisant la linéarité de l'espérance.
+
+\begin{proofbox}
+Soit $\mu = E(X)$. On part de la définition de la variance :
+\begin{align*}
+\text{Var}(X) &= E[ (X - \mu)^2 ] \\
+&= E[ X^2 - 2X\mu + \mu^2 ] \quad \text{(On développe le carré)} \\
+&= E(X^2) - E(2\mu X) + E(\mu^2) \quad \text{(Par linéarité de l'espérance, qui s'applique aussi au cas continu)} \\
+&= E(X^2) - 2\mu E(X) + \mu^2 \quad \text{(Car $2\mu$ et $\mu^2$ sont des constantes)} \\
+&= E(X^2) - 2\mu(\mu) + \mu^2 \quad \text{(Car $E(X) = \mu$)} \\
+&= E(X^2) - 2\mu^2 + \mu^2 \\
+&= E(X^2) - \mu^2 = E(X^2) - [E(X)]^2
+\end{align*}
+\end{proofbox}
+
+Le calcul de $E[X^2]$ (et plus généralement de $E[g(X)]$) repose sur le théorème de transfert, adapté au cas continu.
+
+\begin{theorembox}[Théorème de Transfert (LOTUS)]
+Si $X$ est une v.a. continue de densité $f(x)$, et $g$ une fonction, alors :
+$$ E[g(X)] = \int_{-\infty}^{\infty} g(x) f(x) \, \mathrm{d}x $$
+\end{theorembox}
+
+La preuve formelle est plus avancée, mais l'idée est analogue au cas discret : on pondère chaque valeur $g(x)$ par la densité de probabilité $f(x)$ au voisinage de $x$.
+
+\begin{proofbox}[Idée de la preuve]
+La preuve formelle repose sur la théorie de la mesure ou sur un argument de changement de variable pour l'intégrale, en passant par la fonction de répartition de $Y=g(X)$. Intuitivement, pour un petit intervalle $dx$ autour de $x$, la "masse" de probabilité est $f(x)dx$. Cette masse correspond à une valeur $g(x)$ pour la nouvelle variable. L'espérance est la somme (intégrale) de ces valeurs pondérées par leur masse : $\int g(x) f(x)dx$.
+\end{proofbox}
+
+La propriété la plus importante de l'espérance reste valide.
+
+\begin{remarquebox}[Linéarité de l'Espérance]
+Comme dans le cas discret, l'espérance reste linéaire pour les variables continues :
+$E[aX+bY] = aE[X]+bE[Y]$.
+\end{remarquebox}
+
+Calculons l'espérance et la variance pour notre exemple.
+
+\begin{examplebox}[Espérance et Variance de l'exemple précédent]
+Pour $f(x) = 2x$ sur $[0, 1]$ :
+
+$E[X] = \int_0^1 x \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^2 \, \mathrm{d}x = \left[ \frac{2x^3}{3} \right]_0^1 = \frac{2}{3}$.
+
+$E[X^2] = \int_0^1 x^2 \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^3 \, \mathrm{d}x = \left[ \frac{2x^4}{4} \right]_0^1 = \frac{1}{2}$.
+
+$\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{1}{2} - \left(\frac{2}{3}\right)^2 = \frac{1}{2} - \frac{4}{9} = \frac{9-8}{18} = \frac{1}{18}$.
+\end{examplebox}
+
+\subsection{Loi Uniforme}
+
+La loi continue la plus simple est celle où la densité est constante sur un intervalle.
+
+\begin{definitionbox}[Loi Uniforme]
+Une variable aléatoire $X$ est \textbf{uniformément distribuée} sur un intervalle $[a, b]$ si sa densité est une constante sur cet intervalle. Pour que l'aire totale soit 1, cette constante doit être $\frac{1}{b-a}$.
+$$ f(x) = \begin{cases} \frac{1}{b-a} & \text{pour } x \in [a, b] \\ 0 & \text{sinon} \end{cases} $$
+On note cela $X \sim \text{Unif}(a, b)$.
+\end{definitionbox}
+
+C'est le modèle du "hasard pur" sur un segment.
+
+\begin{intuitionbox}
+C'est la distribution du "hasard pur" dans un intervalle borné. La probabilité de tomber dans un sous-intervalle ne dépend que de la \textbf{longueur} de ce sous-intervalle, pas de sa position (tant qu'il est dans $[a, b]$). 
+\end{intuitionbox}
+
+Les propriétés de cette loi sont faciles à dériver par intégration directe.
+
+\begin{theorembox}[Propriétés de la Loi Uniforme]
+Si $X \sim \text{Unif}(a, b)$ :
+\begin{itemize}
+    \item \textbf{CDF :} $F(x) = \frac{x-a}{b-a}$ pour $x \in [a, b]$.
+    \item \textbf{Espérance :} $E[X] = \frac{a+b}{2}$ (le point milieu de l'intervalle).
+    \item \textbf{Variance :} $\text{Var}(X) = \frac{(b-a)^2}{12}$.
+\end{itemize}
+\end{theorembox}
+
+\begin{proofbox}[Dérivation des propriétés]
+Soit $f(x) = \frac{1}{b-a}$ pour $x \in [a, b]$ et $0$ sinon.
+
+\textbf{CDF :} Pour $x \in [a, b]$,
+$$ F(x) = \int_{-\infty}^x f(t) \, dt = \int_a^x \frac{1}{b-a} \, dt = \frac{1}{b-a} [t]_a^x = \frac{x-a}{b-a} $$
+(Pour $x<a$, $F(x)=0$. Pour $x>b$, $F(x)=1$.)
+
+\textbf{Espérance :}
+$$ E[X] = \int_a^b x \frac{1}{b-a} \, dx = \frac{1}{b-a} \left[ \frac{x^2}{2} \right]_a^b = \frac{1}{b-a} \frac{b^2 - a^2}{2} = \frac{(b-a)(b+a)}{2(b-a)} = \frac{a+b}{2} $$
+
+\textbf{Variance :} D'abord, calculons $E[X^2]$.
+$$ E[X^2] = \int_a^b x^2 \frac{1}{b-a} \, dx = \frac{1}{b-a} \left[ \frac{x^3}{3} \right]_a^b = \frac{1}{b-a} \frac{b^3 - a^3}{3} $$
+En utilisant $b^3 - a^3 = (b-a)(b^2 + ab + a^2)$, on obtient $E[X^2] = \frac{b^2 + ab + a^2}{3}$.
+Maintenant, appliquons la formule $\text{Var}(X) = E[X^2] - (E[X])^2$ :
+\begin{align*}
+\text{Var}(X) &= \frac{b^2 + ab + a^2}{3} - \left(\frac{a+b}{2}\right)^2 \\
+&= \frac{b^2 + ab + a^2}{3} - \frac{a^2 + 2ab + b^2}{4} \\
+&= \frac{4(b^2 + ab + a^2) - 3(a^2 + 2ab + b^2)}{12} \\
+&= \frac{4b^2 + 4ab + 4a^2 - 3a^2 - 6ab - 3b^2}{12} \\
+&= \frac{b^2 - 2ab + a^2}{12} = \frac{(b-a)^2}{12}
+\end{align*}
+\end{proofbox}
+
+\subsection{Loi Exponentielle}
+
+Passons à une loi fondamentale pour modéliser les temps d'attente.
+
+\begin{definitionbox}[Loi Exponentielle]
+Une variable aléatoire $X$ suit une \textbf{loi exponentielle} de paramètre $\lambda > 0$ si sa fonction de densité a la forme :
+$$ f(x) = \begin{cases} \lambda e^{-\lambda x} & \text{pour } x \ge 0 \\ 0 & \text{sinon} \end{cases} $$
+On note $X \sim \text{Exp}(\lambda)$.
+\end{definitionbox}
+
+Cette loi est intimement liée au processus de Poisson.
+
+\begin{intuitionbox}[Lien entre les lois de Poisson et Exponentielle]
+La loi exponentielle modélise le temps d'attente \textit{avant} le prochain événement dans un processus de Poisson.
+
+Posons la question : « Si je commence à observer maintenant, combien de temps $T$ vais-je devoir attendre avant de voir le prochain événement ? »
+\begin{enumerate}
+    \item Dans un processus de Poisson de taux $\lambda$, le nombre d'événements $N(t)$ dans un intervalle de temps $t$ suit une loi de Poisson de paramètre $\lambda t$ :
+    $$ P(N(t)=k) = \frac{(\lambda t)^k e^{-\lambda t}}{k!} $$
+    \item La probabilité de ne voir \textbf{aucun} événement ($k=0$) pendant une durée $t$ est :
+    $$ P(N(t)=0) = \frac{(\lambda t)^0 e^{-\lambda t}}{0!} = e^{-\lambda t} $$
+    \item Mais ne voir aucun événement pendant un temps $t$, c'est exactement dire que le temps d'attente $T$ du premier événement est \textit{plus grand} que $t$.
+    $$ P(T > t) = P(N(t)=0) = e^{-\lambda t} $$
+    \item À partir de là, on déduit la fonction de répartition (CDF) de $T$ :
+    $$ F_T(t) = P(T \le t) = 1 - P(T > t) = 1 - e^{-\lambda t} \quad (\text{pour } t \ge 0) $$
+    \item En dérivant la CDF pour obtenir la densité (PDF) :
+    $$ f_T(t) = F_T'(t) = \frac{d}{dt}(1 - e^{-\lambda t}) = -(-\lambda e^{-\lambda t}) = \lambda e^{-\lambda t} $$
+\end{enumerate}
+C'est exactement la densité de la loi exponentielle de paramètre $\lambda$.
+\end{intuitionbox}
+
+Cette loi possède des propriétés remarquables.
+
+\begin{theorembox}[Propriétés de la Loi Exponentielle]
+Si $X \sim \text{Exp}(\lambda)$ :
+\begin{itemize}
+    \item \textbf{CDF :} $F(x) = 1 - e^{-\lambda x}$ pour $x \ge 0$.
+    \item \textbf{Espérance :} $E[X] = \frac{1}{\lambda}$.
+    \item \textbf{Variance :} $\text{Var}(X) = \frac{1}{\lambda^2}$.
+    \item \textbf{Propriété de non-mémoire :} Pour $s, t \ge 0$, $P(X > s+t \mid X > s) = P(X > t)$.
+\end{itemize}
+\end{theorembox}
+
+Les preuves de l'espérance et de la variance nécessitent une intégration par parties. La preuve de la non-mémoire est plus directe.
+
+\begin{proofbox}[Dérivation des propriétés]
+Soit $f(x) = \lambda e^{-\lambda x}$ pour $x \ge 0$.
+
+\textbf{CDF :} A été dérivée dans l'intuition ci-dessus.
+$$ F(x) = \int_0^x \lambda e^{-\lambda t} \, dt = [ -e^{-\lambda t} ]_0^x = -e^{-\lambda x} - (-e^0) = 1 - e^{-\lambda x} $$
+
+\textbf{Espérance :} On utilise l'intégration par parties ($\int u dv = uv - \int v du$) avec $u=x$ et $dv=\lambda e^{-\lambda x}dx$. Alors $du=dx$ et $v=-e^{-\lambda x}$.
+\begin{align*}
+E[X] &= \int_0^\infty x (\lambda e^{-\lambda x}) \, dx \\
+&= \left[ x (-e^{-\lambda x}) \right]_0^\infty - \int_0^\infty (-e^{-\lambda x}) \, dx \\
+&= (0 - 0) + \int_0^\infty e^{-\lambda x} \, dx \quad \text{(car } \lim_{x\to\infty} -xe^{-\lambda x} = 0 \text{)} \\
+&= \left[ -\frac{1}{\lambda} e^{-\lambda x} \right]_0^\infty = (0) - (-\frac{1}{\lambda} e^0) = \frac{1}{\lambda}
+\end{align*}
+
+\textbf{Variance :} D'abord $E[X^2]$. Intégration par parties avec $u=x^2$, $dv=\lambda e^{-\lambda x}dx$. $du=2xdx$, $v=-e^{-\lambda x}$.
+\begin{align*}
+E[X^2] &= \int_0^\infty x^2 (\lambda e^{-\lambda x}) \, dx \\
+&= \left[ x^2 (-e^{-\lambda x}) \right]_0^\infty - \int_0^\infty (-e^{-\lambda x}) (2x \, dx) \\
+&= 0 + \int_0^\infty 2x e^{-\lambda x} \, dx \\
+&= \frac{2}{\lambda} \int_0^\infty x (\lambda e^{-\lambda x}) \, dx \quad \text{(On fait apparaître } E[X] \text{)} \\
+&= \frac{2}{\lambda} E[X] = \frac{2}{\lambda} \left( \frac{1}{\lambda} \right) = \frac{2}{\lambda^2}
+\end{align*}
+Donc, $\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{2}{\lambda^2} - \left(\frac{1}{\lambda}\right)^2 = \frac{1}{\lambda^2}$.
+
+\textbf{Propriété de non-mémoire :}
+Rappelons que $P(X>t) = e^{-\lambda t}$.
+\begin{align*}
+P(X > s+t \mid X > s) &= \frac{P(X > s+t \text{ et } X > s)}{P(X > s)} \\
+&= \frac{P(X > s+t)}{P(X > s)} \quad \text{(car si } X>s+t \text{, alors } X>s \text{)} \\
+&= \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = \frac{e^{-\lambda s} e^{-\lambda t}}{e^{-\lambda s}} = e^{-\lambda t} \\
+&= P(X > t)
+\end{align*}
+\end{proofbox}
+
+Le paramètre $\lambda$ a une interprétation concrète.
+
+\begin{remarquebox}[Interprétation du paramètre $\lambda$]
+Le paramètre $\lambda$ représente le \textbf{taux} moyen d'occurrence des événements dans le processus de Poisson sous-jacent (par exemple, nombre moyen d'appels par minute). L'espérance $1/\lambda$ est alors le \textbf{temps moyen entre les événements}.
+\end{remarquebox}
+
+La propriété de non-mémoire est unique à la loi exponentielle (dans le cas continu).
+
+\begin{intuitionbox}[La Propriété de Non-Mémoire]
+C'est la propriété la plus contre-intuitive et la plus importante de la loi exponentielle. Elle signifie que le processus "oublie" le passé. Si vous attendez un bus qui arrive selon un processus de Poisson (et donc le temps d'attente suit une loi exponentielle), et que vous avez déjà attendu 5 minutes ($X>5$), la probabilité que vous deviez attendre encore au moins 2 minutes ($X>5+2$) est la même que si vous veniez juste d'arriver à l'arrêt et deviez attendre au moins 2 minutes ($X>2$). L'information "j'ai déjà attendu 5 minutes" est inutile pour prédire l'attente future.
+\end{intuitionbox}
+
+\subsection{Distributions Conjointes (Cas Continu)}
+
+Comme pour le cas discret, nous pouvons définir des lois conjointes pour plusieurs variables aléatoires continues.
+
+\begin{definitionbox}[Fonction de Densité Conjointe]
+Pour des variables aléatoires continues $X$ et $Y$, la \textbf{fonction de densité conjointe} $f(x, y)$ décrit la densité de probabilité sur le plan $(x, y)$. Elle doit respecter :
+\begin{enumerate}
+    \item $f(x, y) \ge 0$, pour tous $x, y$.
+    \item $\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}x \, \mathrm{d}y = 1$.
+\end{enumerate}
+\end{definitionbox}
+
+Ici, la probabilité est associée à un volume sous la surface de densité.
+
+\begin{intuitionbox}[Volume = Probabilité]
+La probabilité que le couple $(X, Y)$ tombe dans une région $A$ du plan $xy$ est le \textbf{volume} sous la surface $z=f(x,y)$ au-dessus de cette région $A$.
+$$ P((X, Y) \in A) = \iint_A f(x, y) \, \mathrm{d}A $$
+
+\end{intuitionbox}
+
+On retrouve les lois marginales en intégrant (en "écrasant" le volume).
+
+\begin{definitionbox}[Densités Marginales]
+On peut retrouver les densités individuelles (marginales) en "écrasant" le volume 3D sur un seul axe. Pour obtenir la PDF de $X$ seul, on intègre $f(x,y)$ sur toutes les valeurs possibles de $y$ :
+$$ f_X(x) = \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}y $$
+$$ f_Y(y) = \int_{-\infty}^{\infty} f(x, y) \, \mathrm{d}x $$
+\end{definitionbox}
+
+La CDF conjointe accumule ce volume.
+
+\begin{definitionbox}[CDF Conjointe]
+La \textbf{fonction de répartition conjointe} (CDF) est :
+$$ F(x, y) = P(X \le x, Y \le y) = \int_{-\infty}^y \int_{-\infty}^x f(s, t) \, \mathrm{d}s \, \mathrm{d}t $$
+Elle représente le volume "au sud-ouest" du point $(x, y)$.
+\end{definitionbox}
+
+\subsection{Espérance, Indépendance et Covariance (Cas Conjoint)}
+
+Les concepts clés s'étendent naturellement au cas conjoint continu.
+
+\begin{theorembox}[LOTUS pour les v.a. conjointes]
+Si $X$ et $Y$ ont une densité conjointe $f(x, y)$, et $g(x, y)$ est une fonction :
+$$ E[g(X, Y)] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(x, y) f(x, y) \, \mathrm{d}x \, \mathrm{d}y $$
+\end{theorembox}
+
+La preuve est analogue à celle de LOTUS 1D, mais en dimension supérieure.
+
+\begin{proofbox}[Idée de la preuve]
+Comme pour LOTUS 1D, la preuve rigoureuse utilise des arguments de théorie de la mesure. L'intuition est que pour un petit rectangle $dx dy$ autour de $(x,y)$, la "masse" de probabilité est $f(x,y)dx dy$. Cette masse correspond à la valeur $g(x,y)$. L'espérance est la somme (double intégrale) de ces valeurs $g(x,y)$ pondérées par leur masse $f(x,y)dx dy$.
+\end{proofbox}
+
+La condition d'indépendance s'exprime via la factorisation de la densité.
+
+\begin{definitionbox}[Indépendance et Densité]
+Les variables aléatoires continues $X$ et $Y$ sont \textbf{indépendantes} si et seulement si leur densité conjointe est le produit de leurs densités marginales :
+$$ f(x, y) = f_X(x) f_Y(y), \quad \text{pour tous } x, y $$
+\end{definitionbox}
+
+Cela signifie que le profil selon $x$ ne dépend pas de $y$.
+
+\begin{intuitionbox}
+Intuitivement, l'indépendance signifie que le "profil" de la densité en $x$ ne change pas quelle que soit la valeur de $y$ (et vice-versa). La surface de densité $z=f(x,y)$ peut être "séparée" en une fonction de $x$ multipliée par une fonction de $y$.
+\end{intuitionbox}
+
+La covariance se définit et se calcule de manière similaire.
+
+\begin{definitionbox}[Covariance (cas continu)]
+La \textbf{covariance} de $X$ et $Y$ mesure leur variation linéaire commune :
+$$ \text{Cov}(X, Y) = E[(X - \mu_X)(Y - \mu_Y)] $$
+$$ = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x - \mu_X)(y - \mu_Y) f(x, y) \, \mathrm{d}x \, \mathrm{d}y $$
+\end{definitionbox}
+
+La formule de calcul reste la même.
+
+\begin{theorembox}[Formule de calcul de la Covariance]
+Une formule plus simple pour le calcul de la covariance est :
+$$ \text{Cov}(X, Y) = E[XY] - E[X]E[Y] $$
+où $E[XY]$ est calculé via LOTUS : $E[XY] = \iint xy f(x, y) \, \mathrm{d}x \mathrm{d}y$.
+\end{theorembox}
+
+La preuve est identique à celle du cas discret.
+
+\begin{proofbox}
+La preuve est identique à celle vue pour les variables discrètes, car elle ne repose que sur la linéarité de l'espérance, qui est vraie aussi dans le cas continu.
+Soit $\mu_X = E[X]$ et $\mu_Y = E[Y]$.
+\begin{align*}
+\text{Cov}(X,Y) &= E[(X - \mu_X)(Y - \mu_Y)] \\
+&= E[XY - X\mu_Y - Y\mu_X + \mu_X\mu_Y] \\
+&= E[XY] - E[X\mu_Y] - E[Y\mu_X] + E[\mu_X\mu_Y] \\
+&= E[XY] - \mu_Y E[X] - \mu_X E[Y] + \mu_X\mu_Y \\
+&= E[XY] - \mu_Y \mu_X - \mu_X \mu_Y + \mu_X\mu_Y \\
+&= E[XY] - E[X]E[Y]
+\end{align*}
+\end{proofbox}
+
+La relation entre indépendance et covariance reste la même.
+
+\begin{remarquebox}[Indépendance et Covariance]
+Si $X$ et $Y$ sont indépendantes, alors $\text{Cov}(X, Y) = 0$. Cependant, la réciproque n'est \textbf{pas} toujours vraie pour les variables aléatoires en général (bien qu'elle le soit dans certains cas importants comme pour les variables gaussiennes). Une covariance nulle signifie seulement une absence de \textit{relation linéaire}, mais il peut exister d'autres formes de dépendance.
+\end{remarquebox}
+
+
+\subsection{Espérance d'une variable aléatoire continue}
+
+Lorsque la variable aléatoire $X$ est continue, sa distribution est décrite par une fonction de densité de probabilité (PDF), $f(x)$. L'espérance est définie de manière analogue, en remplaçant la somme par une intégrale.
+
+\begin{definitionbox}[Espérance (cas continu)]
+L'espérance (ou valeur attendue) d'une variable aléatoire continue $X$ avec une fonction de densité $f(x)$ est définie par :
+$$E(X) = \int_{-\infty}^{\infty} x f(x) \, dx$$
+L'intégrale doit être absolument convergente, c'est-à-dire $\int_{-\infty}^{\infty} |x| f(x) \, dx < \infty$.
+\end{definitionbox}
+
+\begin{intuitionbox}
+L'intuition du \textbf{centre de gravité} est toujours valable. Si la fonction de densité $f(x)$ représente la répartition de la masse sur une tige (l'axe des $x$), alors $E(X)$ est le point d'équilibre où la tige tiendrait en balance.
+\end{intuitionbox}
+
+\begin{examplebox}[Loi uniforme]
+Soit $X \sim \mathcal{U}(a, b)$. Sa densité est $f(x) = \frac{1}{b-a}$ pour $x \in [a, b]$, et 0 ailleurs.
+\begin{align*}
+E(X) &= \int_{-\infty}^{\infty} x f(x) \, dx = \int_{a}^{b} x \left( \frac{1}{b-a} \right) \, dx \\
+&= \frac{1}{b-a} \left[ \frac{x^2}{2} \right]_a^b = \frac{1}{b-a} \left( \frac{b^2 - a^2}{2} \right) \\
+&= \frac{1}{b-a} \frac{(b-a)(b+a)}{2} = \frac{a+b}{2}
+\end{align*}
+L'espérance est le point milieu de l'intervalle, ce qui est intuitivement correct.
+\end{examplebox}
+
+\subsection{Linéarité de l'espérance}
+
+Le calcul de l'espérance deviendrait très fastidieux si nous devions toujours utiliser la définition. Heureusement, l'espérance possède une propriété fondamentale qui simplifie énormément les calculs.
+
+\begin{theorembox}[Linéarité de l'espérance]
+Pour toutes variables aléatoires $X$ et $Y$ (discrètes ou continues), et pour toute constante $c$, on a :
+\begin{align*}
+E(X+Y) &= E(X) + E(Y) \\
+E(cX) &= cE(X)
+\end{align*}
+Cette propriété est extrêmement puissante car elle ne requiert pas que $X$ et $Y$ soient indépendantes.
+\end{theorembox}
+
+\begin{proofbox}
+La première propriété est directe.
+\begin{itemize}
+    \item \textbf{Cas continu :} $E(cX) = \int (cx) f(x) dx = c \int x f(x) dx = cE(X)$
+\end{itemize}
+Pour la seconde, $E(X+Y) = E(X) + E(Y)$ :
+
+\textbf{Cas continu :} La preuve est identique en remplaçant les sommes par des intégrales et la PMF jointe par la PDF jointe $f(x, y)$:
+\begin{align*}
+E(X+Y) &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x+y) f(x, y) \, dx \, dy \\
+&= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x f(x, y) \, dx \, dy + \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} y f(x, y) \, dx \, dy \\
+&= \int_{-\infty}^{\infty} x \left( \int_{-\infty}^{\infty} f(x, y) \, dy \right) \, dx + \int_{-\infty}^{\infty} y \left( \int_{-\infty}^{\infty} f(x, y) \, dx \right) \, dy
+\end{align*}
+Les intégrales internes sont les densités marginales $f_X(x) = \int f(x, y) dy$ et $f_Y(y) = \int f(x, y) dx$.
+$$E(X+Y) = \int_{-\infty}^{\infty} x f_X(x) \, dx + \int_{-\infty}^{\infty} y f_Y(y) \, dy = E(X) + E(Y)$$
+Notez que l'indépendance n'a jamais été requise pour cette preuve.
+\end{proofbox}
+
+\begin{intuitionbox}
+Cette propriété formalise une idée très simple : "la moyenne d'une somme est la somme des moyennes". Si vous jouez à deux jeux de hasard, votre gain moyen total est simplement la somme de ce que vous gagnez en moyenne à chaque jeu, que les jeux soient liés ou non.
+\end{intuitionbox}
+
+\subsection{Loi du statisticien inconscient (LOTUS)}
+
+Souvent, nous ne sommes pas intéressés par l'espérance de $X$ elle-même, mais par l'espérance d'une fonction de $X$, par exemple $E(X^2)$ ou $E(e^X)$.
+
+\begin{theorembox}[Théorème de Transfert (LOTUS)]
+Si $X$ est une variable aléatoire continue et $g(x)$ est une fonction de $\mathbb{R}$ dans $\mathbb{R}$, alors l'espérance de la variable aléatoire $g(X)$ est donnée par :
+\begin{itemize}
+    \item \textbf{Cas continu :} $E[g(X)] = \int_{-\infty}^{\infty} g(x) f_X(x) \, dx$
+\end{itemize}
+Ce théorème est utile car il évite d'avoir à trouver la distribution (PDF) de $g(X)$.
+\end{theorembox}
+
+\begin{proofbox}
+La preuve pour le cas continu est plus technique (utilisant un changement de variable) et est omise.
+\end{proofbox}
+
+Ce théorème justifie son nom : c'est ce que l'on ferait "inconsciemment".
+
+\begin{intuitionbox}
+Pour trouver la valeur moyenne d'une fonction d'une variable aléatoire, vous n'avez pas besoin de déterminer d'abord la distribution de cette fonction. Vous pouvez simplement prendre chaque valeur possible du résultat original, lui appliquer la fonction, et pondérer ce nouveau résultat par la densité du résultat original.
+\end{intuitionbox}
+
+\begin{examplebox}[Calcul de $E(X^2)$ pour une loi uniforme (continu)]
+Soit $X \sim \mathcal{U}(0, 1)$. Sa densité est $f(x)=1$ sur $[0, 1]$. Calculons l'espérance de $Y=X^2$. La fonction est $g(x)=x^2$.
+\begin{align*}
+E(X^2) &= \int_{-\infty}^{\infty} g(x) f(x) \, dx = \int_{0}^{1} x^2 \cdot 1 \, dx \\
+&= \left[ \frac{x^3}{3} \right]_0^1 = \frac{1}{3}
+\end{align*}
+\end{examplebox}
+
+\subsection{Variance}
+
+L'espérance nous donne le centre d'une distribution, mais elle ne dit rien sur sa "largeur" ou sa "dispersion". C'est le rôle de la variance.
+
+\begin{definitionbox}[Variance et écart-type]
+La \textbf{variance} d'une variable aléatoire $X$ mesure la dispersion de sa distribution autour de son espérance $\mu = E(X)$. Elle est définie par :
+$$\text{Var}(X) = E\left[ (X - \mu)^2 \right]$$
+Concrètement, cela se traduit par (en utilisant LOTUS avec $g(x)=(x-\mu)^2$) :
+\begin{itemize}
+    \item \textbf{Cas continu :} $\text{Var}(X) = \int_{-\infty}^{\infty} (x - \mu)^2 f(x) \, dx$
+\end{itemize}
+La racine carrée de la variance est appelée l' \textbf{écart-type} :
+$$\text{SD}(X) = \sqrt{\text{Var}(X)}$$
+\end{definitionbox}
+
+L'idée est de mesurer l'écart quadratique moyen à l'espérance.
+
+\begin{intuitionbox}
+La variance est la "distance carrée moyenne à la moyenne". On prend l'écart de chaque valeur par rapport à la moyenne, on le met au carré (pour que les écarts positifs et négatifs ne s'annulent pas), puis on en calcule la moyenne. L'écart-type est souvent plus interprétable car il ramène cette mesure de dispersion dans les mêmes unités que la variable aléatoire elle-même.
+\end{intuitionbox}
+
+La définition $E[(X-\mu)^2]$ est excellente pour l'interprétation, mais pénible pour le calcul. Une formule alternative est presque toujours utilisée.
+
+\begin{theorembox}[Formule de calcul de la variance]
+Pour toute variable aléatoire $X$ (discrète ou continue), une formule plus pratique pour le calcul de la variance est :
+$$\text{Var}(X) = E(X^2) - [E(X)]^2$$
+\end{theorembox}
+
+La preuve est une simple expansion algébrique utilisant la linéarité de l'espérance.
+
+\begin{proofbox}
+Soit $\mu = E(X)$. On part de la définition de la variance :
+\begin{align*}
+\text{Var}(X) &= E[ (X - \mu)^2 ] \\
+&= E[ X^2 - 2X\mu + \mu^2 ] \quad \text{(On développe le carré)} \\
+&= E(X^2) - E(2\mu X) + E(\mu^2) \quad \text{(Par linéarité de l'espérance)} \\
+&= E(X^2) - 2\mu E(X) + \mu^2 \quad \text{(Car $2\mu$ et $\mu^2$ sont des constantes)} \\
+&= E(X^2) - 2\mu(\mu) + \mu^2 \quad \text{(Car $E(X) = \mu$)} \\
+&= E(X^2) - 2\mu^2 + \mu^2 \\
+&= E(X^2) - \mu^2 = E(X^2) - [E(X)]^2
+\end{align*}
+\end{proofbox}
+
+\begin{examplebox}[Variance de la loi uniforme]
+Calculons la variance de $X \sim \mathcal{U}(a, b)$.
+Nous avons trouvé $E(X) = \frac{a+b}{2}$.
+Nous devons d'abord calculer $E(X^2)$ en utilisant LOTUS :
+\begin{align*}
+E(X^2) &= \int_a^b x^2 f(x) \, dx = \int_a^b x^2 \left( \frac{1}{b-a} \right) \, dx \\
+&= \frac{1}{b-a} \left[ \frac{x^3}{3} \right]_a^b = \frac{1}{b-a} \left( \frac{b^3 - a^3}{3} \right) \\
+&= \frac{1}{b-a} \frac{(b-a)(a^2+ab+b^2)}{3} = \frac{a^2+ab+b^2}{3}
+\end{align*}
+On utilise maintenant la formule de calcul $\text{Var}(X) = E(X^2) - [E(X)]^2$ :
+\begin{align*}
+\text{Var}(X) &= \frac{a^2+ab+b^2}{3} - \left( \frac{a+b}{2} \right)^2 \\
+&= \frac{a^2+ab+b^2}{3} - \frac{a^2+2ab+b^2}{4} \\
+&= \frac{4(a^2+ab+b^2) - 3(a^2+2ab+b^2)}{12} \\
+&= \frac{4a^2+4ab+4b^2 - 3a^2-6ab-3b^2}{12} \\
+&= \frac{a^2-2ab+b^2}{12} = \frac{(b-a)^2}{12}
+\end{align*}
+\end{examplebox}

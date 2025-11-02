@@ -1,0 +1,604 @@
+\newpage
+\section{Variables Aléatoires Discrètes}
+
+\subsection{Variable Aléatoire}
+
+Jusqu'à présent, nous avons parlé d'événements (comme "obtenir Pile" ou "tirer un Roi"). Pour analyser ces phénomènes avec des outils mathématiques plus puissants, nous devons traduire ces résultats concrets en nombres. C'est le rôle de la variable aléatoire.
+
+\begin{definitionbox}[Variable Aléatoire]
+Étant donné une expérience avec un univers $S$, une variable aléatoire est une fonction de l'univers $S$ vers les nombres réels $\mathbb{R}$.
+\end{definitionbox}
+
+Cette définition formelle masque une idée très simple :
+
+\begin{intuitionbox}
+Une variable aléatoire est une manière de traduire les résultats d'une expérience en nombres. Au lieu de travailler avec des concepts comme "Pile" ou "Face", on leur assigne des valeurs numériques (par exemple, 1 pour Pile, 0 pour Face). Cela nous permet d'utiliser toute la puissance des outils mathématiques (fonctions, calculs, etc.) pour analyser le hasard. C'est un pont entre le monde concret des événements et le monde abstrait des nombres.
+\end{intuitionbox}
+
+Prenons un exemple classique :
+
+\begin{examplebox}
+On lance deux dés. L'univers $S$ est l'ensemble des 36 paires de résultats, comme $(1,1), (1,2), \dots, (6,6)$. On peut définir une variable aléatoire $X$ comme étant la \textbf{somme des deux dés}.
+Pour le résultat $(2, 5)$, la valeur de la variable aléatoire est $X(2, 5) = 2 + 5 = 7$.
+\end{examplebox}
+
+\subsection{Variable Aléatoire Discrète}
+
+Les variables aléatoires peuvent être de différents types. Nous commençons par le type le plus simple à "compter".
+
+\begin{definitionbox}[Variable Aléatoire Discrète]
+Une variable aléatoire $X$ est dite discrète s'il existe une liste finie ou infinie dénombrable de valeurs $a_1, a_2, \dots$ telle que $P(X=a_j \text{ pour un certain } j) = 1$.
+\end{definitionbox}
+
+L'analogie la plus simple pour comprendre le terme "discret" est celle d'un escalier.
+
+\begin{intuitionbox}
+Une variable aléatoire est "discrète" si on peut lister (compter) toutes les valeurs qu'elle peut prendre, même si cette liste est infinie. Pensez aux "sauts" d'une valeur à l'autre, sans possibilité de prendre une valeur intermédiaire. C'est comme monter un escalier : on peut être sur la marche 1, 2 ou 3, mais jamais sur la marche 2.5. Le nombre de têtes en 10 lancers, le résultat d'un dé, le nombre d'emails que vous recevez en une heure sont des exemples. À l'opposé, une variable continue pourrait être la taille exacte d'une personne, qui peut prendre n'importe quelle valeur dans un intervalle.
+\end{intuitionbox}
+
+\subsection{Fonction de Masse (PMF)}
+
+Maintenant que nous avons une variable aléatoire qui produit des nombres discrets, nous avons besoin d'une fonction pour décrire la probabilité de chacun de ces nombres.
+
+\begin{definitionbox}[Probability Mass Function (PMF)]
+La fonction de masse (PMF) d'une variable aléatoire discrète $X$ est la fonction $P_X$ donnée par $P_X(x) = P(X=x)$.
+\end{definitionbox}
+
+C'est la "carte d'identité" probabiliste de la variable :
+
+\begin{intuitionbox}
+La PMF est la "carte d'identité" probabiliste d'une variable aléatoire discrète. Pour chaque valeur que la variable peut prendre, la PMF nous donne la probabilité exacte associée à cette valeur. C'est comme si chaque résultat possible avait une "étiquette de prix" qui indique sa chance de se produire. La somme de toutes ces probabilités doit bien sûr valoir 1.
+\end{intuitionbox}
+
+Un exemple très simple est le lancer de dé :
+
+\begin{examplebox}
+Soit $X$ le résultat d'un lancer de dé équilibré. La variable $X$ peut prendre les valeurs $\{1, 2, 3, 4, 5, 6\}$.
+La PMF de $X$ est la fonction qui assigne $1/6$ à chaque valeur :
+$P(X=1) = 1/6$, $P(X=2) = 1/6$, ..., $P(X=6) = 1/6$.
+Pour toute autre valeur $x$ (par exemple $x=2.5$ ou $x=7$), $P(X=x) = 0$.
+\end{examplebox}
+
+\subsection{Loi de Bernoulli}
+
+Commençons par la loi de probabilité discrète la plus simple.
+
+\begin{definitionbox}[Distribution de Bernoulli]
+Une variable aléatoire $X$ suit la distribution de Bernoulli avec paramètre $p$ si $P(X=1) = p$ et $P(X=0) = 1-p$, où $0 < p < 1$. On note cela $X \sim \text{Bern}(p)$.
+\end{definitionbox}
+
+C'est la brique fondamentale de nombreuses autres distributions.
+
+\begin{intuitionbox}
+La distribution de Bernoulli est le modèle le plus simple pour une expérience aléatoire avec seulement deux issues : "succès" (codé par 1) et "échec" (codé par 0). C'est la brique de base de nombreuses autres distributions. Pensez à un unique lancer de pièce (Pile/Face), un unique tir au but (Marqué/Manqué), ou la réponse à une question par oui/non. Le paramètre $p$ est simplement la probabilité du "succès".
+\end{intuitionbox}
+
+\subsection{Loi Binomiale}
+
+Que se passe-t-il si nous répétons une expérience de Bernoulli $n$ fois et que nous comptons le nombre total de succès ?
+
+\begin{theorembox}[PMF Binomiale]
+Si $X \sim \text{Bin}(n, p)$, alors la PMF de $X$ est :
+$$ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $$
+pour $k = 0, 1, \dots, n$.
+\end{theorembox}
+
+La preuve de cette formule est un argument combinatoire direct.
+
+\begin{proofbox}
+Nous voulons trouver la probabilité d'obtenir exactement $k$ succès au cours de $n$ essais indépendants.
+\begin{enumerate}
+    \item \textbf{Probabilité d'une séquence spécifique :} Considérons d'abord une séquence spécifique contenant $k$ succès (S) et $n-k$ échecs (E), par exemple $S, S, \dots, S, E, E, \dots, E$.
+    Puisque les essais sont indépendants, la probabilité de cette séquence est le produit des probabilités individuelles :
+    $$ \underbrace{p \times p \times \dots \times p}_{k \text{ fois}} \times \underbrace{(1-p) \times \dots \times (1-p)}_{n-k \text{ fois}} = p^k (1-p)^{n-k} $$
+    
+    \item \textbf{Nombre de séquences possibles :} La séquence ci-dessus n'est qu'une des nombreuses façons d'obtenir $k$ succès. Le nombre total de façons d'arranger $k$ succès parmi $n$ positions (essais) est donné par le coefficient binomial $\binom{n}{k}$.
+    
+    \item \textbf{Probabilité totale :} Chacune de ces $\binom{n}{k}$ séquences a la même probabilité $p^k (1-p)^{n-k}$. Puisque toutes ces séquences sont des événements disjoints, la probabilité totale d'obtenir $k$ succès (dans n'importe quel ordre) est la somme de leurs probabilités :
+    $$ P(X=k) = \binom{n}{k} p^k (1-p)^{n-k} $$
+\end{enumerate}
+\end{proofbox}
+
+Chaque partie de cette formule a une signification logique claire.
+
+\begin{intuitionbox}
+La distribution binomiale répond à la question : "Si je répète $n$ fois la même expérience de Bernoulli (qui a une probabilité de succès $p$), quelle est la probabilité d'obtenir exactement $k$ succès ?"
+La formule est construite logiquement en multipliant trois composantes. D'abord, $\mathbf{p^k}$ représente la probabilité d'obtenir $k$ succès. Ensuite, $\mathbf{(1-p)^{n-k}}$ est la probabilité que les $n-k$ échecs restants se produisent. Finalement, comme les $k$ succès peuvent apparaître n'importe où parmi les $n$ essais, on multiplie par $\mathbf{\binom{n}{k}}$, qui compte le nombre de manières distinctes de placer ces succès.
+\end{intuitionbox}
+
+Appliquons cela à un exemple classique :
+
+\begin{examplebox}
+On lance une pièce équilibrée 10 fois ($n=10$, $p=0.5$). Quelle est la probabilité d'obtenir exactement 6 Piles ($k=6$) ?
+$$ P(X=6) = \binom{10}{6} (0.5)^6 (1-0.5)^{10-6} = \frac{10!}{6!4!} (0.5)^{10} = 210 \times (0.5)^{10} \approx 0.205 $$
+Il y a environ 20.5\% de chance d'obtenir exactement 6 Piles.
+\end{examplebox}
+
+\subsection{Loi Hypergéométrique}
+
+La loi binomiale suppose que les essais sont indépendants, ce qui est vrai si l'on tire *avec remise*. Que se passe-t-il si l'on tire *sans remise* ?
+
+\begin{theorembox}[PMF Hypergéométrique]
+Si $X \sim \text{HG}(w, b, m)$, alors la PMF de $X$ est :
+$$ P(X=k) = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}} $$
+\end{theorembox}
+
+La preuve de cette formule est un argument de dénombrement pur, basé sur la définition naïve de la probabilité.
+
+\begin{proofbox}
+Nous utilisons la définition naïve $P(A) = |A| / |S|$.
+Nous tirons $m$ boules d'une urne contenant $w$ blanches et $b$ noires, soit $w+b$ boules au total.
+
+\begin{enumerate}
+    \item \textbf{Taille de l'univers ($|S|$)} : Le nombre total de façons de choisir $m$ boules parmi $w+b$ est $\binom{w+b}{m}$.
+    
+    \item \textbf{Taille de l'événement favorable ($|A|$)} : Nous voulons l'événement $A$ = "obtenir exactement $k$ boules blanches ET $m-k$ boules noires".
+    \begin{itemize}
+        \item Le nombre de façons de choisir $k$ blanches parmi $w$ est $\binom{w}{k}$.
+        \item Le nombre de façons de choisir $m-k$ noires parmi $b$ est $\binom{b}{m-k}$.
+    \end{itemize}
+    Par le principe de la multiplication (dénombrement), le nombre total de façons de réaliser $A$ est $|A| = \binom{w}{k} \binom{b}{m-k}$.
+    
+    \item \textbf{Probabilité :} En divisant le nombre d'issues favorables par le nombre total d'issues, on obtient :
+    $$ P(X=k) = \frac{|A|}{|S|} = \frac{\binom{w}{k} \binom{b}{m-k}}{\binom{w+b}{m}} $$
+\end{enumerate}
+\end{proofbox}
+
+Chaque terme de cette fraction a un sens très concret :
+
+\begin{intuitionbox}
+La distribution hypergéométrique est la "cousine" de la binomiale pour les tirages \textbf{sans remise}. Imaginez une urne avec des boules de deux couleurs (par exemple, $w$ blanches et $b$ noires). Vous tirez $m$ boules d'un coup. Quelle est la probabilité que vous ayez exactement $k$ boules blanches ?
+La formule est un simple ratio issu du dénombrement. Le \textbf{dénominateur}, $\binom{w+b}{m}$, compte le nombre total de façons de tirer $m$ boules parmi toutes celles disponibles. Le \textbf{numérateur} compte les issues favorables : c'est le produit du nombre de façons de choisir $k$ blanches parmi les $w$ ($\binom{w}{k}$) ET de choisir les $m-k$ boules restantes parmi les noires ($\binom{b}{m-k}$). La différence clé avec la loi binomiale est que les tirages ne sont pas indépendants.
+\end{intuitionbox}
+
+Un exemple typique est la formation de comités à partir d'un groupe.
+
+\begin{examplebox}
+Un comité de 5 personnes est choisi au hasard parmi un groupe de 8 hommes et 10 femmes. Quelle est la probabilité que le comité soit composé de 2 hommes et 3 femmes ?
+Ici, on tire 5 personnes ($m=5$) d'une population de 18 personnes. On s'intéresse au nombre d'hommes ($k=2$) parmi les 8 disponibles ($w=8$). Le reste du comité sera composé de femmes ($b=10$).
+$$ P(X=2) = \frac{\binom{8}{2} \binom{10}{3}}{\binom{18}{5}} = \frac{28 \times 120}{8568} \approx 0.392 $$
+Il y a environ 39.2\% de chance que le comité ait exactement cette composition.
+\end{examplebox}
+
+\subsection{Loi Géométrique}
+
+Revenons aux essais de Bernoulli (indépendants). Au lieu de fixer le nombre d'essais $n$, demandons-nous : combien d'essais faut-il avant d'obtenir notre premier succès ?
+
+\begin{theorembox}[PMF de la loi géométrique]
+Une variable aléatoire $X$ suit la loi géométrique de paramètre $p$, notée $X \sim \text{Geom}(p)$, si elle modélise le nombre d'échecs avant le premier succès dans une série d'épreuves de Bernoulli indépendantes. Sa fonction de masse (PMF) est :
+$$ P(X=k) = (1-p)^k p \quad \text{pour } k=0, 1, 2, \dots $$
+où $q = 1-p$ est la probabilité d'échec.
+\end{theorembox}
+
+La preuve de cette formule est une application directe de l'indépendance des essais.
+
+\begin{proofbox}
+Soit $S_i$ l'événement "succès au $i$-ème essai" et $E_i$ l'événement "échec au $i$-ème essai".
+L'événement $\{X=k\}$ signifie que nous avons observé exactement $k$ échecs, suivis d'un succès au $(k+1)$-ème essai.
+C'est la séquence d'événements : $E_1 \cap E_2 \cap \dots \cap E_k \cap S_{k+1}$.
+
+Puisque tous les essais sont indépendants, la probabilité de cette intersection est le produit des probabilités individuelles :
+\begin{align*}
+P(X=k) &= P(E_1) \times P(E_2) \times \dots \times P(E_k) \times P(S_{k+1}) \\
+&= \underbrace{(1-p) \times (1-p) \times \dots \times (1-p)}_{k \text{ fois}} \times p \\
+&= (1-p)^k p
+\end{align*}
+\end{proofbox}
+
+La formule est donc très littérale :
+
+\begin{intuitionbox}
+La formule $P(X=k) = q^k p$ décrit la probabilité d'une séquence très spécifique : $k$ échecs consécutifs (chacun avec une probabilité $q$, donc $q^k$ pour la série), suivis immédiatement d'un succès (avec une probabilité $p$). C'est la loi de "l'attente du premier succès".
+\end{intuitionbox}
+
+Un exemple classique est l'attente d'un résultat spécifique sur un dé.
+
+\begin{examplebox}[Premier 6 au lancer de dé]
+On lance un dé jusqu'à obtenir un 6. La probabilité de succès est $p=1/6$, et celle d'échec est $q=5/6$. Quelle est la probabilité que l'on ait besoin de 3 lancers (donc 2 échecs avant le premier succès) ?
+Ici, $k=2$. La probabilité est :
+$$ P(X=2) = (5/6)^2 \cdot (1/6) = \frac{25}{216} \approx 0.116 $$
+\end{examplebox}
+
+\subsection{Loi de Poisson}
+
+Introduisons maintenant une loi utilisée pour modéliser le nombre d'événements se produisant dans un intervalle de temps ou d'espace fixe.
+
+\begin{definitionbox}[Distribution de Poisson]
+Une variable aléatoire $X$ suit la loi de Poisson de paramètre $\lambda > 0$ si sa PMF est donnée par :
+$$ P(X=k) = \frac{e^{-\lambda} \lambda^k}{k!} \quad \text{pour } k=0, 1, 2, \dots $$
+Elle modélise typiquement le nombre d'événements se produisant dans un intervalle de temps ou d'espace fixe.
+\end{definitionbox}
+
+Cette loi est souvent appelée la loi des événements rares.
+
+\begin{intuitionbox}
+La loi de Poisson est la loi des événements rares. Imaginez que vous comptez le nombre d'appels arrivant à un standard téléphonique en une minute. Il y a de nombreux instants où un appel pourrait arriver, mais la probabilité à chaque instant est infime. La loi de Poisson modélise ce type de scénario, où l'on connaît seulement le taux moyen d'arrivée des événements ($\lambda$).
+\end{intuitionbox}
+
+Mais d'où vient cette formule avec $e$ et une factorielle ? Elle vient d'une approximation de la loi binomiale lorsque $n$ est très grand et $p$ très petit.
+
+\begin{theorembox}[La loi de Poisson comme limite de la loi binomiale]
+Soit $X_n \sim \text{Bin}(n, p_n)$, où $\lambda = np_n$ est une constante positive fixée. Alors, pour tout $k \in \{0, 1, 2, \dots\}$, nous avons :
+$$ \lim_{n \to \infty} P(X_n=k) = \frac{e^{-\lambda}\lambda^k}{k!} $$
+En pratique, la loi de Poisson est une excellente approximation de la loi binomiale quand $n$ est grand et $p$ est petit.
+\end{theorembox}
+
+% --- INTUITION AMÉLIORÉE ---
+\begin{intuitionbox}[Convergence Binomiale vers Poisson : L'Exemple des Naissances]
+Supposons que les bébés naissent dans une grande ville à un taux moyen de $\lambda=10$ naissances par jour. Comment modéliser le nombre $X$ de naissances un jour donné ?
+
+\textbf{1. Approche Binomiale (Découpage du Temps) :}
+On peut diviser la journée (24h) en $n$ très petits intervalles de temps (par exemple, $n = 24 \times 60 \times 60 = 86400$ secondes).
+\begin{itemize}
+    \item Si $n$ est très grand, la chance $p$ qu'une naissance se produise \textit{exactement} pendant une seconde donnée est minuscule. On peut calculer cette probabilité $p$ comme le taux moyen divisé par le nombre d'intervalles : $p = \lambda / n = 10 / 86400$.
+    \item On peut aussi supposer que la probabilité d'avoir *deux* naissances ou plus dans la même seconde est négligeable. Chaque seconde est donc comme un mini-essai de Bernoulli : soit 1 naissance (avec probabilité $p$), soit 0 naissance (avec probabilité $1-p$).
+    \item Le nombre total de naissances $X$ sur la journée est la somme de ces $n$ essais de Bernoulli quasi-indépendants. $X$ suit donc approximativement une loi binomiale : $X \approx \text{Bin}(n, p=\lambda/n)$.
+\end{itemize}
+La probabilité d'avoir exactement $k$ naissances serait $P(X=k) \approx \binom{n}{k} p^k (1-p)^{n-k}$.
+
+\textbf{2. Le Passage à la Limite (Modèle Continu) :}
+Que se passe-t-il si on rend les intervalles de temps infiniment petits ($n \to \infty$) ? C'est là que la magie opère :
+\begin{itemize}
+    \item Le terme $\binom{n}{k}$ (combien de façons de choisir $k$ secondes parmi $n$) se comporte comme $n^k/k!$ pour $n$ grand.
+    \item Le terme $p^k = (\lambda/n)^k$ devient $\lambda^k / n^k$.
+    \item Le terme $(1-p)^{n-k} = (1-\lambda/n)^{n-k}$. Comme $k$ est petit par rapport à $n$, ceci est très proche de $(1-\lambda/n)^n$, qui tend vers $e^{-\lambda}$.
+\end{itemize}
+En combinant ces approximations (expliquées plus en détail dans la preuve formelle), on trouve que la probabilité $P(X=k)$ tend vers $\frac{n^k}{k!} \frac{\lambda^k}{n^k} e^{-\lambda} = \frac{e^{-\lambda}\lambda^k}{k!}$.
+
+\textbf{Conclusion :}
+La loi de Poisson apparaît naturellement comme la limite d'un processus binomial où l'on a un très grand nombre d'opportunités ($n$) pour qu'un événement rare (probabilité $p$) se produise, tout en maintenant un taux moyen constant ($\lambda = np$).
+\end{intuitionbox}
+% --- FIN INTUITION AMÉLIORÉE ---
+
+La preuve formelle montre comment les termes de la formule binomiale se transforment en ceux de la formule de Poisson lorsque $n \to \infty$.
+
+% --- PROOFBOX (IDENTIQUE À LA PRÉCÉDENTE) ---
+\begin{proofbox}[Dérivation de la loi de Poisson à partir de la loi Binomiale (Détaillée)]
+On part de la fonction de masse (PMF) d'une variable aléatoire $X_n$ suivant une loi binomiale $\text{Bin}(n, p)$, où l'on pose $p = \lambda/n$. L'objectif est de trouver la limite de cette PMF lorsque $n$ tend vers l'infini, tout en gardant $\lambda = np$ constant (ce qui implique que $p$ doit tendre vers 0).
+
+La PMF binomiale est :
+$$ P(X_n=k) = \binom{n}{k} p^k (1-p)^{n-k} $$
+Substituons $p = \lambda/n$ :
+$$ P(X_n=k) = \binom{n}{k} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} $$
+Maintenant, développons le coefficient binomial $\binom{n}{k} = \frac{n!}{k!(n-k)!} = \frac{n(n-1)(n-2)\cdots(n-k+1)}{k!}$ :
+$$ P(X_n=k) = \frac{n(n-1)\cdots(n-k+1)}{k!} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} $$
+Réorganisons les termes pour isoler ceux qui dépendent de $n$ :
+$$ P(X_n=k) = \frac{\lambda^k}{k!} \times \frac{n(n-1)\cdots(n-k+1)}{n^k} \times \left(1-\frac{\lambda}{n}\right)^n \times \left(1-\frac{\lambda}{n}\right)^{-k} $$
+Nous allons maintenant examiner la limite de chaque partie lorsque $n \to \infty$, pour $k$ et $\lambda$ fixés.
+
+\begin{enumerate}
+    \item $\mathbf{\frac{\lambda^k}{k!}}$ : Ce terme est constant par rapport à $n$, donc sa limite est lui-même.
+    
+    \item $\mathbf{\frac{n(n-1)\cdots(n-k+1)}{n^k}}$ : Ce terme est un produit de $k$ facteurs divisé par $n^k$. On peut le réécrire comme :
+    $$ \frac{n}{n} \times \frac{n-1}{n} \times \frac{n-2}{n} \times \cdots \times \frac{n-k+1}{n} $$
+    $$ = 1 \times \left(1-\frac{1}{n}\right) \times \left(1-\frac{2}{n}\right) \times \cdots \times \left(1-\frac{k-1}{n}\right) $$
+    Lorsque $n \to \infty$, chacun des termes $\frac{1}{n}, \frac{2}{n}, \dots, \frac{k-1}{n}$ tend vers 0 (car $k$ est fixe). Donc, chaque parenthèse tend vers $(1-0)=1$. Puisqu'il y a un nombre \textit{fixe} $k$ de termes dans le produit, la limite du produit est le produit des limites :
+    $$ \lim_{n \to \infty} \frac{n(n-1)\cdots(n-k+1)}{n^k} = 1 \times 1 \times \cdots \times 1 = 1 $$
+    \textit{Intuition : Pour $n$ très grand par rapport à $k$, les $k$ termes $n, n-1, \dots, n-k+1$ sont tous "presque" égaux à $n$. Leur produit est donc "presque" $n^k$, et le ratio est "presque" 1.}
+
+    \item $\mathbf{\left(1-\frac{\lambda}{n}\right)^n}$ : C'est une limite fondamentale en analyse. On sait que pour tout réel $x$, $\lim_{n \to \infty} (1 + x/n)^n = e^x$. Ici, nous avons $x = -\lambda$. Donc :
+    $$ \lim_{n \to \infty} \left(1-\frac{\lambda}{n}\right)^n = e^{-\lambda} $$
+    \textit{Intuition : C'est la définition même de l'exponentielle comme limite d'intérêts composés continus (ici, avec un taux négatif).}
+
+    \item $\mathbf{\left(1-\frac{\lambda}{n}\right)^{-k}}$ : Lorsque $n \to \infty$, le terme $\lambda/n$ tend vers 0. L'expression à l'intérieur de la parenthèse tend donc vers $(1-0) = 1$. Puisque $k$ est un exposant fixe :
+    $$ \lim_{n \to \infty} \left(1-\frac{\lambda}{n}\right)^{-k} = 1^{-k} = 1 $$
+    \textit{Intuition : Pour $n$ très grand, $(1-\lambda/n)$ est très proche de 1. Élever ce nombre très proche de 1 à une puissance fixe $k$ le laisse très proche de 1.}
+\end{enumerate}
+Finalement, en multipliant les limites de chaque partie (puisque la limite d'un produit est le produit des limites) :
+$$ \lim_{n \to \infty} P(X_n=k) = \left(\frac{\lambda^k}{k!}\right) \times (1) \times (e^{-\lambda}) \times (1) = \frac{e^{-\lambda}\lambda^k}{k!} $$
+Ceci est exactement la fonction de masse de probabilité d'une loi de Poisson de paramètre $\lambda$.
+\end{proofbox}
+% --- FIN PROOFBOX ---
+
+
+Un ensemble de données historiques célèbres illustre parfaitement cette loi.
+
+\begin{examplebox}[Décès par ruade de cheval : Les données de Bortkiewicz]
+En 1898, le statisticien Ladislaus Bortkiewicz a publié des données célèbres sur le nombre de soldats de la cavalerie prussienne tués par des ruades de cheval. Ces données sont un exemple classique d'application de la loi de Poisson pour modéliser des événements rares.
+
+\noindent\textbf{Contexte et calcul du paramètre $\lambda$ :}
+Sur une période de 20 ans, en observant 10 corps d'armée, il a collecté des données sur 200 "corps-années". Durant cette période, il y a eu un total de 122 décès. Le taux moyen de décès par corps-année est donc :
+$$ \lambda = \frac{\text{Nombre total de décès}}{\text{Nombre total de corps-années}} = \frac{122}{200} = 0.61 $$
+Le nombre de décès par corps-année, $X$, est donc modélisé par une loi de Poisson : $X \sim \text{Poisson}(\lambda=0.61)$.
+
+\noindent\textbf{Comparaison des données observées et des prédictions du modèle :}
+On peut calculer la probabilité d'observer $k$ décès en une année-corps en utilisant la PMF de Poisson : $P(X=k) = \frac{e^{-0.61} (0.61)^k}{k!}$. En multipliant cette probabilité par le nombre total d'observations (200), on obtient le nombre de cas attendus (nombre de corps d'armes dans lequels il y a k deces).
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Nombre de décès (k)} & \textbf{Observé} & \textbf{Probabilité de Poisson} & \textbf{Attendu} \\
+\hline
+0 & 109 & $P(X=0) \approx 0.543$ & 108.7 \\
+1 & 65 & $P(X=1) \approx 0.331$ & 66.3 \\
+2 & 22 & $P(X=2) \approx 0.101$ & 20.2 \\
+3 & 3 & $P(X=3) \approx 0.021$ & 4.1 \\
+4 & 1 & $P(X=4) \approx 0.003$ & 0.6 \\
+5+ & 0 & $P(X \ge 5) \approx 0.000$ & 0.0 \\
+\hline
+\end{tabular}
+\end{center}
+
+L'adéquation remarquable entre les fréquences observées et les valeurs attendues par le modèle de Poisson a contribué à populariser cette distribution pour l'analyse d'événements rares.
+\end{examplebox}
+
+\subsection{Fonction de Répartition (CDF)}
+
+Nous avons la PMF, qui donne $P(X=x)$. Une autre fonction tout aussi importante est la fonction de répartition (CDF), qui "accumule" ces probabilités.
+
+\begin{definitionbox}[Cumulative Distribution Function (CDF)]
+La fonction de répartition (CDF) d'une variable aléatoire $X$ est la fonction $F_X$ donnée par $F_X(x) = P(X \le x)$.
+\end{definitionbox}
+
+Cette fonction répond à une question différente de celle de la PMF.
+
+\begin{intuitionbox}
+Alors que la PMF répond à la question "Quelle est la probabilité d'obtenir \textit{exactement} $x$ ?", la CDF répond à la question "Quelle est la probabilité d'obtenir \textit{au plus} $x$ ?". C'est une fonction cumulative : pour une valeur $x$ donnée, elle additionne les probabilités de tous les résultats inférieurs ou égaux à $x$.
+La CDF a toujours une forme d'escalier pour les variables discrètes. Elle commence à 0 (très loin à gauche) et monte par "sauts" à chaque valeur possible de la variable, pour finalement atteindre 1 (très loin à droite). La hauteur de chaque saut correspond à la valeur de la PMF à ce point.
+\end{intuitionbox}
+
+Traçons cette fonction "en escalier" pour notre exemple du dé.
+
+\begin{examplebox}
+Reprenons le lancer d'un dé équilibré ($X$). Calculons quelques valeurs de la CDF, notée $F(x)$.
+
+$F(0.5) = P(X \le 0.5) = 0$
+
+$F(1) = P(X \le 1) = P(X=1) = 1/6$
+
+$F(1.5) = P(X \le 1.5) = P(X=1) = 1/6$
+
+$F(2) = P(X \le 2) = P(X=1) + P(X=2) = 2/6$
+
+$F(5.9) = P(X \le 5.9) = P(X=1) + \dots + P(X=5) = 5/6$
+
+$F(6) = P(X \le 6) = 1$
+
+$F(100) = P(X \le 100) = 1$
+\end{examplebox}
+
+\subsection{Variable Aléatoire Indicatrice}
+
+Enfin, nous introduisons un outil simple mais qui s'avérera extraordinairement puissant pour les preuves, notamment celles concernant l'espérance.
+
+\begin{definitionbox}[Variable Aléatoire Indicatrice]
+La variable aléatoire indicatrice d'un événement $A$ est la variable aléatoire qui vaut 1 si $A$ se produit et 0 sinon. Nous la noterons $I_A$. Notez que $I_A \sim \text{Bern}(p)$ avec $p=P(A)$.
+\end{definitionbox}
+
+C'est un simple interrupteur "on/off".
+
+\begin{intuitionbox}
+Une variable indicatrice est un interrupteur. Elle est sur "ON" (valeur 1) si un événement qui nous intéresse se produit, et sur "OFF" (valeur 0) sinon. C'est un outil extrêmement puissant car il transforme les questions sur les probabilités des événements en questions sur les espérances des variables aléatoires, ce qui simplifie souvent les calculs.
+\end{intuitionbox}
+
+\subsection{Espérance d'une variable aléatoire discrète}
+
+Maintenant que nous avons défini les variables aléatoires discrètes et leur distribution (PMF), l'étape suivante est de résumer ces distributions. La mesure la plus importante est leur "centre", ou leur valeur moyenne.
+
+\begin{definitionbox}[Espérance (cas discret)]
+L'espérance (ou valeur attendue) d'une variable aléatoire discrète $X$, qui prend les valeurs distinctes $x_1, x_2, \dots$, est définie par :
+$$E(X) = \sum_j x_j P(X=x_j)$$
+\end{definitionbox}
+
+Cette formule est une moyenne pondérée de toutes les valeurs possibles.
+
+\begin{intuitionbox}
+L'espérance représente la valeur moyenne que l'on obtiendrait si l'on répétait l'expérience un très grand nombre de fois. C'est le \textbf{centre de gravité} de la distribution de probabilité. Si les probabilités étaient des masses placées sur une tige aux positions $x_j$, l'espérance serait le point d'équilibre.
+\end{intuitionbox}
+
+L'exemple le plus simple est le lancer d'un dé.
+
+\begin{examplebox}[Lancer d'un dé]
+Soit $X$ le résultat d'un lancer de dé équilibré. Chaque face a une probabilité de $1/6$. L'espérance est :
+$$E(X) = 1\left(\frac{1}{6}\right) + 2\left(\frac{1}{6}\right) + 3\left(\frac{1}{6}\right) + 4\left(\frac{1}{6}\right) + 5\left(\frac{1}{6}\right) + 6\left(\frac{1}{6}\right) = \frac{21}{6} = 3.5$$
+Même si 3.5 n'est pas un résultat possible, c'est la valeur moyenne sur un grand nombre de lancers.
+\end{examplebox}
+
+\subsection{Linéarité de l'espérance}
+
+Le calcul de l'espérance deviendrait très fastidieux si nous devions toujours utiliser la définition. Heureusement, l'espérance possède une propriété fondamentale qui simplifie énormément les calculs.
+
+\begin{theorembox}[Linéarité de l'espérance]
+Pour toutes variables aléatoires $X$ et $Y$ (discrètes ou continues), et pour toute constante $c$, on a :
+\begin{align*}
+E(X+Y) &= E(X) + E(Y) \\
+E(cX) &= cE(X)
+\end{align*}
+Cette propriété est extrêmement puissante car elle ne requiert pas que $X$ et $Y$ soient indépendantes.
+\end{theorembox}
+
+\begin{proofbox}
+La première propriété est directe.
+\begin{itemize}
+    \item \textbf{Cas discret :} $E(cX) = \sum_x (cx) P(X=x) = c \sum_x x P(X=x) = cE(X)$
+\end{itemize}
+Pour la seconde, $E(X+Y) = E(X) + E(Y)$ :
+
+\textbf{Cas discret :} Soit $S = X+Y$. L'espérance $E(S)$ se calcule en sommant sur toutes les paires possibles $(x, y)$ avec la PMF jointe $P(X=x, Y=y)$ :
+\begin{align*}
+E(X+Y) &= \sum_x \sum_y (x+y) P(X=x, Y=y) \\
+&= \sum_x \sum_y x P(X=x, Y=y) + \sum_x \sum_y y P(X=x, Y=y) \\
+&= \sum_x x \left( \sum_y P(X=x, Y=y) \right) + \sum_y y \left( \sum_x P(X=x, Y=y) \right)
+\end{align*}
+Par la loi des probabilités marginales, la somme interne $\sum_y P(X=x, Y=y)$ est $P(X=x)$, et de même $\sum_x P(X=x, Y=y) = P(Y=y)$.
+$$E(X+Y) = \sum_x x P(X=x) + \sum_y y P(Y=y) = E(X) + E(Y)$$
+Notez que l'indépendance n'a jamais été requise pour cette preuve.
+\end{proofbox}
+
+\begin{intuitionbox}
+Cette propriété formalise une idée très simple : "la moyenne d'une somme est la somme des moyennes". Si vous jouez à deux jeux de hasard, votre gain moyen total est simplement la somme de ce que vous gagnez en moyenne à chaque jeu, que les jeux soient liés ou non.
+\end{intuitionbox}
+
+Cette propriété rend le calcul de l'espérance d'une somme trivial, comme le montre l'exemple des deux dés.
+
+\begin{examplebox}[Somme de deux dés]
+Soit $X_1$ le résultat du premier dé et $X_2$ celui du second. On sait que $E(X_1) = 3.5$ et $E(X_2) = 3.5$.
+Soit $S = X_1 + X_2$ la somme des deux dés. Grâce à la linéarité, on peut calculer l'espérance de la somme sans avoir à lister les 36 résultats possibles :
+$$E(S) = E(X_1 + X_2) = E(X_1) + E(X_2) = 3.5 + 3.5 = 7$$
+\end{examplebox}
+
+\subsection{Espérance de la loi binomiale}
+
+Nous pouvons maintenant utiliser cette puissante propriété de linéarité pour trouver l'espérance de nos distributions de référence, en évitant des sommes complexes.
+
+\begin{theorembox}[Espérance de la loi binomiale]
+Si $X \sim \text{Bin}(n, p)$, alors son espérance est $E(X) = np$.
+\end{theorembox}
+
+Ce résultat est profondément intuitif.
+
+\begin{intuitionbox}
+Ce résultat est très naturel. Si vous lancez une pièce 100 fois ($n=100$) avec une probabilité de 50\% d'obtenir Pile ($p=0.5$), vous vous attendez en moyenne à obtenir $100 \times 0.5 = 50$ Piles. La formule $np$ généralise cette idée.
+\end{intuitionbox}
+
+La preuve formelle est un exemple parfait de l'élégance de la linéarité, utilisant les variables indicatrices.
+
+\begin{proofbox}
+Le calcul direct de l'espérance avec la PMF binomiale est possible, mais long. En utilisant la linéarité de l'espérance, on obtient une preuve beaucoup plus courte et élégante.
+
+On peut voir une variable binomiale $X$ comme la somme de $n$ variables de Bernoulli indépendantes, $X = I_1 + I_2 + \dots + I_n$, où chaque $I_j$ représente le succès (1) ou l'échec (0) du $j$-ième essai.
+
+Chaque $I_j$ a pour espérance $E(I_j) = 1 \cdot p + 0 \cdot (1-p) = p$.
+
+Par linéarité de l'espérance, on a :
+$$E(X) = E(I_1) + E(I_2) + \dots + E(I_n) = \underbrace{p + p + \dots + p}_{n \text{ fois}} = np$$
+\end{proofbox}
+
+\subsection{Espérance de la loi géométrique}
+
+Calculons maintenant l'espérance pour la loi qui modélise le temps d'attente.
+
+\begin{theorembox}[Espérance de la loi géométrique]
+L'espérance d'une variable aléatoire $X \sim \text{Geom}(p)$ (comptant le nombre d'échecs) est :
+$$E(X) = \frac{1-p}{p} = \frac{q}{p}$$
+\end{theorembox}
+
+L'intuition est aussi très forte ici :
+
+\begin{intuitionbox}
+Si un événement a 1 chance sur 10 de se produire ($p=0.1$), il est logique de penser qu'il faudra en moyenne 9 échecs ($q/p = 0.9/0.1=9$) avant qu'il ne se produise. L'espérance du nombre total d'essais (échecs + 1 succès) serait alors $1/p$.
+\end{intuitionbox}
+
+Contrairement à la loi binomiale, la preuve la plus directe ne repose pas sur la linéarité mais sur une manipulation de séries.
+
+\begin{proofbox}[Démonstration de l'espérance géométrique via les séries entières]
+Soit $X \sim \text{Geom}(p)$, où $X$ compte le nombre d'échecs avant le premier succès. La PMF est $P(X=k) = q^k p$ pour $k=0, 1, 2, \dots$, avec $q=1-p$.
+
+Par définition, l'espérance est :
+$$E(X) = \sum_{k=0}^{\infty} k \cdot P(X=k) = \sum_{k=0}^{\infty} k q^k p$$
+Le terme pour $k=0$ est nul, on peut donc commencer la somme à $k=1$ :
+$$E(X) = p \sum_{k=1}^{\infty} k q^k$$
+L'astuce consiste à reconnaître que la somme ressemble à la dérivée d'une série géométrique. Rappelons la formule de la série géométrique pour $|q|<1$ :
+$$\sum_{k=0}^{\infty} q^k = \frac{1}{1-q}$$
+En dérivant les deux côtés par rapport à $q$, on obtient :
+$$\frac{d}{dq} \left( \sum_{k=0}^{\infty} q^k \right) = \frac{d}{dq} \left( \frac{1}{1-q} \right)$$
+$$\sum_{k=1}^{\infty} k q^{k-1} = \frac{1}{(1-q)^2}$$
+Pour faire apparaître ce terme dans notre formule d'espérance, on factorise $q$ dans la somme :
+$$E(X) = p \cdot q \sum_{k=1}^{\infty} k q^{k-1}$$
+On peut maintenant remplacer la somme par son expression analytique :
+$$E(X) = p \cdot q \cdot \frac{1}{(1-q)^2}$$
+Puisque $p = 1-q$, on a :
+$$E(X) = p \cdot q \cdot \frac{1}{p^2} = \frac{q}{p}$$
+Ce qui démontre que l'espérance du nombre d'échecs avant le premier succès est $\frac{q}{p}$.
+\end{proofbox}
+
+\subsection{Loi du statisticien inconscient (LOTUS)}
+
+Souvent, nous ne sommes pas intéressés par l'espérance de $X$ elle-même, mais par l'espérance d'une fonction de $X$, par exemple $E(X^2)$ ou $E(e^X)$.
+
+\begin{theorembox}[Théorème de Transfert (LOTUS)]
+Si $X$ est une variable aléatoire discrète et $g(x)$ est une fonction de $\mathbb{R}$ dans $\mathbb{R}$, alors l'espérance de la variable aléatoire $g(X)$ est donnée par :
+\begin{itemize}
+    \item \textbf{Cas discret :} $E[g(X)] = \sum_x g(x) P(X=x)$
+\end{itemize}
+Ce théorème est utile car il évite d'avoir à trouver la distribution (PMF) de $g(X)$.
+\end{theorembox}
+
+La preuve dans le cas discret consiste simplement à regrouper les termes.
+
+\begin{proofbox}
+Nous montrons la preuve pour le cas discret.
+
+Soit $Y = g(X)$. Par définition, l'espérance de $Y$ est $E(Y) = \sum_y y P(Y=y)$.
+L'ensemble des valeurs $y$ que $Y$ peut prendre est $\{g(x) \mid x \in \text{support de } X\}$.
+Pour une valeur $y$ donnée, l'événement $\{Y=y\}$ est l'union de tous les événements $\{X=x\}$ tels que $g(x)=y$.
+$$P(Y=y) = P(g(X)=y) = \sum_{x: g(x)=y} P(X=x)$$
+En substituant cela dans la définition de $E(Y)$ :
+$$E(Y) = \sum_y y \left( \sum_{x: g(x)=y} P(X=x) \right)$$
+On peut réécrire $y$ comme $g(x)$ à l'intérieur de la seconde somme :
+$$E(g(X)) = \sum_y \sum_{x: g(x)=y} g(x) P(X=x)$$
+Cette double somme parcourt toutes les valeurs de $y$, et pour chaque $y$, elle parcourt tous les $x$ correspondants. Cela revient à simplement sommer sur tous les $x$ possibles dès le départ :
+$$E[g(X)] = \sum_x g(x) P(X=x)$$
+\end{proofbox}
+
+Ce théorème justifie son nom : c'est ce que l'on ferait "inconsciemment".
+
+\begin{intuitionbox}
+Pour trouver la valeur moyenne d'une fonction d'une variable aléatoire (par exemple, le carré du résultat d'un dé), vous n'avez pas besoin de déterminer d'abord la distribution de ce carré. Vous pouvez simplement prendre chaque valeur possible du résultat original, lui appliquer la fonction, et pondérer ce nouveau résultat par la probabilité du résultat original.
+\end{intuitionbox}
+
+Utilisons ce théorème pour calculer $E(X^2)$ pour notre dé.
+
+\begin{examplebox}[Calcul de $E(X^2)$ pour un dé (discret)]
+Soit $X$ le résultat d'un lancer de dé. Calculons l'espérance de $Y=X^2$. La fonction est $g(x)=x^2$.
+\begin{align*}
+E(X^2) &= \sum_{k=1}^6 k^2 P(X=k) \\
+&= 1^2\left(\frac{1}{6}\right) + 2^2\left(\frac{1}{6}\right) + 3^2\left(\frac{1}{6}\right) + 4^2\left(\frac{1}{6}\right) + 5^2\left(\frac{1}{6}\right) + 6^2\left(\frac{1}{6}\right) \\
+&= \frac{1+4+9+16+25+36}{6} = \frac{91}{6} \approx 15.17
+\end{align*}
+\end{examplebox}
+
+\subsection{Variance}
+
+L'espérance nous donne le centre d'une distribution, mais elle ne dit rien sur sa "largeur" ou sa "dispersion". C'est le rôle de la variance.
+
+\begin{definitionbox}[Variance et écart-type]
+La \textbf{variance} d'une variable aléatoire $X$ mesure la dispersion de sa distribution autour de son espérance $\mu = E(X)$. Elle est définie par :
+$$\text{Var}(X) = E\left[ (X - \mu)^2 \right]$$
+Concrètement, cela se traduit par (en utilisant LOTUS avec $g(x)=(x-\mu)^2$) :
+\begin{itemize}
+    \item \textbf{Cas discret :} $\text{Var}(X) = \sum_x (x - \mu)^2 P(X=x)$
+\end{itemize}
+La racine carrée de la variance est appelée l' \textbf{écart-type} :
+$$\text{SD}(X) = \sqrt{\text{Var}(X)}$$
+\end{definitionbox}
+
+L'idée est de mesurer l'écart quadratique moyen à l'espérance.
+
+\begin{intuitionbox}
+La variance est la "distance carrée moyenne à la moyenne". On prend l'écart de chaque valeur par rapport à la moyenne, on le met au carré (pour que les écarts positifs et négatifs ne s'annulent pas), puis on en calcule la moyenne. L'écart-type est souvent plus interprétable car il ramène cette mesure de dispersion dans les mêmes unités que la variable aléatoire elle-même.
+\end{intuitionbox}
+
+La définition $E[(X-\mu)^2]$ est excellente pour l'interprétation, mais pénible pour le calcul. Une formule alternative est presque toujours utilisée.
+
+\begin{theorembox}[Formule de calcul de la variance]
+Pour toute variable aléatoire $X$ (discrète ou continue), une formule plus pratique pour le calcul de la variance est :
+$$\text{Var}(X) = E(X^2) - [E(X)]^2$$
+\end{theorembox}
+
+La preuve est une simple expansion algébrique utilisant la linéarité de l'espérance.
+
+\begin{proofbox}
+Soit $\mu = E(X)$. On part de la définition de la variance :
+\begin{align*}
+\text{Var}(X) &= E[ (X - \mu)^2 ] \\
+&= E[ X^2 - 2X\mu + \mu^2 ] \quad \text{(On développe le carré)} \\
+&= E(X^2) - E(2\mu X) + E(\mu^2) \quad \text{(Par linéarité de l'espérance)} \\
+&= E(X^2) - 2\mu E(X) + \mu^2 \quad \text{(Car $2\mu$ et $\mu^2$ sont des constantes)} \\
+&= E(X^2) - 2\mu(\mu) + \mu^2 \quad \text{(Car $E(X) = \mu$)} \\
+&= E(X^2) - 2\mu^2 + \mu^2 \\
+&= E(X^2) - \mu^2 = E(X^2) - [E(X)]^2
+\end{align*}
+\end{proofbox}
+
+Nous pouvons maintenant calculer la variance de notre lancer de dé.
+
+\begin{examplebox}[Variance d'un lancer de dé]
+Nous avons déjà calculé pour un dé que $E(X) = 3.5$ et $E(X^2) = 91/6$. On peut maintenant trouver la variance facilement :
+\begin{align*}
+\text{Var}(X) &= E(X^2) - [E(X)]^2 = \frac{91}{6} - (3.5)^2 \\
+&= \frac{91}{6} - \left(\frac{7}{2}\right)^2 = \frac{91}{6} - \frac{49}{4} \\
+&= \frac{182}{12} - \frac{147}{12} = \frac{35}{12} \approx 2.917
+\end{align*}
+L'écart-type est $\text{SD}(X) = \sqrt{35/12} \approx 1.708$.
+\end{examplebox}

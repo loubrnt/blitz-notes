@@ -1,0 +1,437 @@
+\newpage
+\section{Distributions Multivariées et Concepts Associés}
+
+\subsection{Distributions Jointes et Marginales}
+
+Jusqu'à présent, nous avons étudié les variables aléatoires isolément. Nous allons maintenant examiner comment analyser les relations entre *plusieurs* variables aléatoires.
+
+\begin{definitionbox}[Distribution Jointe (Cas Discret)]
+Pour deux variables aléatoires discrètes $X$ et $Y$, la \textbf{distribution jointe} (ou loi jointe) spécifie la probabilité de chaque paire d'issues. La fonction de masse de probabilité jointe (joint PMF) est :
+$$P(X=x, Y=y)$$
+Si $X$ prend ses valeurs dans un ensemble $S$ et $Y$ dans un ensemble $T$, alors la somme de toutes les probabilités jointes est égale à 1 :
+$$\sum_{x \in S} \sum_{y \in T} P(X=x, Y=y) = 1$$
+\end{definitionbox}
+
+Cette loi jointe est la "carte" complète de toutes les issues possibles.
+
+\begin{intuitionbox}
+La distribution jointe est la "carte" complète de toutes les issues possibles. Elle répond à la question : "Quelle est la probabilité que $X$ prenne cette valeur ET que $Y$ prenne cette autre valeur en même temps ?". Si vous imaginez un tableau à double entrée pour $X$ et $Y$, la loi jointe est l'ensemble de toutes les probabilités à l'intérieur du tableau.
+\end{intuitionbox}
+
+Cette "carte" complète contient toutes les informations. Si nous ne nous intéressons qu'à une seule variable, nous pouvons la "réduire" en calculant sa distribution marginale.
+
+\begin{definitionbox}[Distribution Marginale]
+À partir de la distribution jointe, on peut obtenir la distribution \textbf{marginale} (ou loi marginale) de chaque variable. Pour obtenir la probabilité que $X$ prenne une valeur $x$, on somme sur toutes les valeurs possibles de $Y$ :
+$$P(X=x) = \sum_{y \in T} P(X=x, Y=y)$$
+\end{definitionbox}
+
+Visuellement, cela correspond à "écraser" le tableau de probabilités sur un seul de ses axes.
+
+\begin{intuitionbox}
+Les distributions marginales sont les "ombres" ou "projections" de la carte jointe sur un seul axe. Si la loi jointe est un tableau, les lois marginales sont les totaux de chaque ligne et de chaque colonne, que l'on écrirait "dans la marge" du tableau. Elles nous disent la probabilité d'une issue pour $X$ sans se soucier de ce qu'il advient de $Y$.
+\end{intuitionbox}
+
+L'exemple le plus simple est le lancer de deux dés.
+
+\begin{examplebox}[Lois jointe et marginale]
+On lance un dé rouge ($X$) et un dé bleu ($Y$). Il y a 36 issues, chacune avec une probabilité de 1/36.
+\textbf{Loi jointe} : $P(X=x, Y=y) = 1/36$ pour tout $x, y \in \{1, \dots, 6\}$.
+Par exemple, $P(X=2, Y=5) = 1/36$.
+
+\textbf{Loi marginale} de $X$ : Cherchons $P(X=2)$. C'est la probabilité d'obtenir 2 sur le dé rouge, quel que soit le résultat du bleu.
+$$P(X=2) = \sum_{y=1}^6 P(X=2, Y=y)$$
+$$P(X=2) = P(X=2,Y=1) + \dots + P(X=2,Y=6)$$
+$$P(X=2) = \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} + \frac{1}{36} = \frac{6}{36} = \frac{1}{6}$$
+Ceci est bien la loi d'un seul dé.
+\end{examplebox}
+
+\subsection{Espérance d'une fonction de deux variables}
+
+Maintenant que nous avons la loi jointe (la carte des probabilités), nous pouvons l'utiliser pour calculer l'espérance de n'importe quelle fonction qui dépend des deux variables, $g(X,Y)$.
+
+\begin{definitionbox}[Espérance d'une fonction $g(X,Y)$]
+L'espérance d'une fonction $g(X,Y)$ de deux variables aléatoires discrètes $X$ et $Y$ est une généralisation du théorème de transfert (LOTUS) :
+$$E[g(X,Y)] = \sum_{x \in S} \sum_{y \in T} g(x,y) P(X=x, Y=y)$$
+\end{definitionbox}
+
+C'est la moyenne de $g$, pondérée par les probabilités jointes.
+
+\begin{intuitionbox}
+C'est la valeur moyenne attendue de la fonction $g$. Pour la calculer, on prend chaque résultat possible de $g(x,y)$, on le pondère par la probabilité que cette combinaison $(x,y)$ se produise (donnée par la loi jointe), et on somme le tout.
+\end{intuitionbox}
+
+Le cas le plus important de $g(X,Y)$ est la somme $X+Y$.
+
+\begin{examplebox}{Espérance de $E[X+Y]$}
+Avec nos deux dés, calculons l'espérance de la somme $S = X + Y$.  
+La fonction est $g(X,Y) = X + Y$.
+
+\[
+E[X+Y] = \sum_{x=1}^6 \sum_{y=1}^6 (x+y)\, P(X=x, Y=y)
+\]
+\[
+E[X+Y] = \sum_{x=1}^6 \sum_{y=1}^6 (x+y)\, \frac{1}{36}
+\]
+
+Plutôt que de faire ce long calcul, on peut utiliser la linéarité de l'espérance (qui est un cas particulier de ce théorème) :
+
+\[
+E[X+Y] = E[X] + E[Y] = 3.5 + 3.5 = 7.
+\]
+\end{examplebox}
+
+\subsection{Covariance et Corrélation}
+
+La linéarité $E[X+Y] = E[X] + E[Y]$ est un outil puissant. Mais l'espérance ne nous dit rien sur la *relation* entre $X$ et $Y$. Pour cela, nous introduisons la covariance.
+
+\begin{definitionbox}[Covariance]
+La \textbf{covariance} entre deux variables aléatoires $X$ et $Y$, avec pour moyennes respectives $\mu_X$ et $\mu_Y$, mesure la façon dont elles varient ensemble.
+$$\text{Cov}(X,Y) = E[(X - \mu_X)(Y - \mu_Y)]$$
+\end{definitionbox}
+
+Elle mesure la direction de leur relation.
+
+\begin{intuitionbox}
+La covariance est positive si les variables ont tendance à "bouger" dans la même direction (quand $X$ est au-dessus de sa moyenne, $Y$ a tendance à l'être aussi). Elle est négative si elles bougent en sens opposé (quand $X$ est au-dessus de sa moyenne, $Y$ a tendance à être en dessous). Si elle est nulle, il n'y a pas de tendance linéaire entre elles.
+\end{intuitionbox}
+
+La définition $E[(X - \mu_X)(Y - \mu_Y)]$ est bonne pour l'intuition, mais difficile à calculer. Une formule alternative est presque toujours utilisée.
+
+\begin{theorembox}[Formule de calcul de la covariance]
+Une formule computationnelle plus simple pour la covariance est :
+$$\text{Cov}(X,Y) = E[XY] - E[X]E[Y]$$
+\end{theorembox}
+
+La preuve est une simple expansion algébrique.
+
+\begin{proofbox}
+Soit $\mu_X = E[X]$ et $\mu_Y = E[Y]$. On part de la définition :
+\begin{align*}
+\text{Cov}(X,Y) &= E[(X - \mu_X)(Y - \mu_Y)] \\
+&= E[XY - X\mu_Y - Y\mu_X + \mu_X\mu_Y] \quad \text{(On développe)} \\
+&= E[XY] - E[X\mu_Y] - E[Y\mu_X] + E[\mu_X\mu_Y] \quad \text{(Par linéarité)} \\
+&= E[XY] - \mu_Y E[X] - \mu_X E[Y] + \mu_X\mu_Y \quad \text{(Les moyennes sont des constantes)} \\
+&= E[XY] - \mu_Y \mu_X - \mu_X \mu_Y + \mu_X\mu_Y \\
+&= E[XY] - \mu_X \mu_Y \\
+&= E[XY] - E[X]E[Y]
+\end{align*}
+\end{proofbox}
+
+Voyons cette formule en action.
+
+\begin{examplebox}[Calcul de covariance]
+\textbf{Cas 1 : Dés indépendants}. $X$ et $Y$ sont les résultats de deux dés. $E[X]=3.5, E[Y]=3.5$.
+Calculons $E[XY]$. Puisqu'ils sont indépendants, $E[XY] = E[X]E[Y] = 3.5 \times 3.5 = 12.25$.
+$\text{Cov}(X,Y) = E[XY] - E[X]E[Y] = 12.25 - 12.25 = 0$.
+La covariance est nulle, ce qui est attendu pour des variables indépendantes.
+
+\textbf{Cas 2 : Variables dépendantes}. Soit $X$ un lancer de dé, et $Y = 2X$.
+$E[X] = 3.5$. $E[Y] = E[2X] = 2E[X] = 7$.
+$E[XY] = E[X \cdot 2X] = E[2X^2] = 2 E[X^2]$.
+On sait que $E[X^2] = \frac{1^2+...+6^2}{6} = 91/6$.
+$E[XY] = 2(91/6) = 91/3$.
+$\text{Cov}(X,Y) = E[XY] - E[X]E[Y] = \frac{91}{3} - (3.5)(7) = \frac{91}{3} - 24.5 = 30.33... - 24.5 \approx 5.833$.
+La covariance est positive, ce qui est logique : si $X$ est grand, $Y$ l'est aussi.
+\end{examplebox}
+
+La covariance est un bon indicateur de la direction de la relation, mais sa magnitude est difficile à interpréter. Pour cela, nous la normalisons.
+
+\begin{definitionbox}[Corrélation]
+La \textbf{corrélation} (ou coefficient de corrélation de Pearson, $r$) est une version normalisée de la covariance, qui se situe toujours entre -1 et 1.
+$$\text{Corr}(X,Y) = r = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}$$
+\end{definitionbox}
+
+La corrélation résout le problème des unités.
+
+\begin{intuitionbox}
+Le problème de la covariance est qu'elle dépend des unités de $X$ et $Y$ (par ex., $\text{kg} \cdot \text{cm}$). Si vous changez les unités (grammes et mètres), la valeur de la covariance change, même si la relation est identique. La corrélation résout ce problème : elle est sans unité. Un coefficient de +1 indique une relation linéaire positive parfaite, -1 une relation linéaire négative parfaite, et 0 une absence de relation linéaire.
+\end{intuitionbox}
+
+Cette normalisation se comprend mieux en voyant la corrélation comme une covariance de variables standardisées.
+
+\begin{intuitionbox}[Interprétation de la formule]
+On peut voir la corrélation de Pearson comme un processus en 3 étapes :
+\begin{enumerate}
+    \item \textbf{Centrer les variables :} On calcule l'écart de chaque valeur à sa moyenne ($x_i - \bar{x}$ et $y_i - \bar{y}$). Cela élimine "l'effet de base" (ex: une personne de 180cm vs 170cm ; la moyenne change mais les écarts relatifs restent les mêmes).
+    \item \textbf{Normaliser les variables :} On divise chaque écart par l'écart-type de sa variable ($z_{xi} = (x_i - \bar{x})/\sigma_X$ et $z_{yi} = (y_i - \bar{y})/\sigma_Y$). Ces nouvelles variables $Z_X$ et $Z_Y$ sont \textbf{standardisées} : elles ont une moyenne de 0, un écart-type de 1, et sont sans unité.
+    \item \textbf{Calculer la covariance des variables standardisées :} La corrélation n'est rien d'autre que la covariance de ces deux nouvelles variables standardisées : $r = \text{Cov}(Z_X, Z_Y)$.
+\end{enumerate}
+Parce que les deux variables sont maintenant sur la même échelle (écart-type de 1), leur covariance (la corrélation) ne peut pas dépasser 1 en valeur absolue.
+\end{intuitionbox}
+
+Reprenons notre exemple de dépendance parfaite :
+
+\begin{examplebox}[Calcul de corrélation]
+Reprenons l'exemple $Y=2X$, où $X$ est un lancer de dé.
+On a $\text{Cov}(X,Y) = 5.833... = 35/6$.
+$\text{Var}(X) = E[X^2] - E[X]^2 = 91/6 - (3.5)^2 = 35/12$.
+$\text{Var}(Y) = \text{Var(2X)} = 2^2 \text{Var}(X) = 4(35/12) = 35/3$.
+$\sigma_X \sigma_Y = \sqrt{35/12} \cdot \sqrt{35/3} = \sqrt{(35 \cdot 35) / (12 \cdot 3)} = \sqrt{35^2 / 36} = 35/6$.
+$$\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} = \frac{35/6}{35/6} = 1$$
+La corrélation est de 1, ce qui est parfait : $Y$ est une fonction linéaire parfaite de $X$.
+\end{examplebox}
+
+\subsection{Linéarité de la Covariance}
+
+Tout comme l'espérance, la covariance possède d'importantes propriétés de linéarité qui simplifient les calculs.
+
+\begin{definitionbox}[Linéarité de la Covariance]
+Pour des variables aléatoires $X, Y, Z$ et des constantes $a, b, c$ :
+\begin{align*}
+\text{Cov}(aX + bY + c, Z) &= a\text{Cov}(X, Z) + b\text{Cov}(Y, Z) \\
+\text{Cov}(X, aY + bZ + c) &= a\text{Cov}(X, Y) + b\text{Cov}(X, Z)
+\end{align*}
+La covariance est linéaire pour chaque argument (elle est \textbf{bilinéaire}). Les constantes additives disparaissent.
+\end{definitionbox}
+
+\subsection{Résultats sur la Corrélation}
+
+La propriété la plus importante de la corrélation, qui découle de sa normalisation, est qu'elle est bornée.
+
+\begin{theorembox}[Bornes du Coefficient de Corrélation de Pearson]
+Pour toutes variables aléatoires $X$ et $Y$, le coefficient de corrélation $\text{Corr}(X,Y)$ est borné :
+$$-1 \le \text{Corr}(X,Y) \le 1$$
+De plus, si $\text{Corr}(X,Y) = \pm 1$, alors il existe des constantes $a$ et $b$ telles que $Y = aX + b$, indiquant une relation linéaire parfaite.
+\end{theorembox}
+
+La preuve de ces bornes repose sur le fait que la variance est toujours positive.
+
+\begin{proofbox}[Démonstration des Bornes de la Corrélation]
+La preuve repose sur le fait que la variance d'une variable aléatoire est toujours positive ou nulle.
+
+\textbf{Étape 1 : Variables Standardisées}
+On définit les versions standardisées de $X$ et $Y$ :
+$$X^* = \frac{X - \mu_X}{\sigma_X} \quad ; \quad Y^* = \frac{Y - \mu_Y}{\sigma_Y}$$
+Par construction, $E[X^*]=E[Y^*]=0$ et $\text{Var}(X^*) = \text{Var}(Y^*) = 1$.
+
+\textbf{Étape 2 : Covariance des variables standardisées}
+Calculons la covariance de $X^*$ et $Y^*$, qui est, par définition, la corrélation de $X$ et $Y$.
+\begin{align*}
+\text{Cov}(X^*, Y^*) &= \text{Cov}\left( \frac{X - \mu_X}{\sigma_X}, \frac{Y - \mu_Y}{\sigma_Y} \right) \\
+&= \frac{1}{\sigma_X \sigma_Y} \text{Cov}(X - \mu_X, Y - \mu_Y) \\
+&= \frac{1}{\sigma_X \sigma_Y} \text{Cov}(X, Y) \\
+&= \text{Corr}(X,Y)
+\end{align*}
+
+\textbf{Étape 3 : Variance de la somme et de la différence}
+Considérons la variance de la somme et de la différence de ces variables standardisées.
+$$\text{Var}(X^* + Y^*) = \text{Var}(X^*) + \text{Var}(Y^*) + 2\text{Cov}(X^*, Y^*)$$
+$$\text{Var}(X^* + Y^*) = 1 + 1 + 2\text{Corr}(X,Y) = 2 + 2\text{Corr}(X,Y)$$
+De même :
+$$\text{Var}(X^* - Y^*) = \text{Var}(X^*) + \text{Var}(Y^*) - 2\text{Cov}(X^*, Y^*)$$
+$$\text{Var}(X^* - Y^*) = 1 + 1 - 2\text{Corr}(X,Y) = 2 - 2\text{Corr}(X,Y)$$
+
+\textbf{Étape 4 : La variance est toujours $\ge 0$}
+La variance d'une variable aléatoire ne peut pas être négative.
+$$\text{Var}(X^* + Y^*) \ge 0 \implies 2 + 2\text{Corr}(X,Y) \ge 0 \implies \text{Corr}(X,Y) \ge -1$$
+$$\text{Var}(X^* - Y^*) \ge 0 \implies 2 - 2\text{Corr}(X,Y) \ge 0 \implies \text{Corr}(X,Y) \le 1$$
+Ceci nous donne le résultat final :
+$$-1 \le \text{Corr}(X,Y) \le 1$$
+\end{proofbox}
+
+\subsection{Standardisation et Non-Corrélation}
+
+Le processus de 'standardisation' utilisé dans la preuve de la corrélation et dans l'intuition est un concept fondamental en soi.
+
+\begin{definitionbox}[Variable Centrée Réduite]
+Soit $X$ une variable aléatoire avec :
+\begin{itemize}
+    \item moyenne $\mu_X = E[X]$
+    \item écart-type $\sigma_X = \sqrt{\operatorname{Var}(X)} > 0$
+\end{itemize}
+On définit sa version \textbf{centrée réduite} (standardisée) $Z$ par :
+$$Z = \frac{X - \mu_X}{\sigma_X}$$
+Alors, $Z$ a les propriétés suivantes :
+\begin{enumerate}
+    \item \textbf{Centrée (moyenne nulle)} :
+    \begin{align*}
+    E[Z] &= E\left[\frac{X - \mu_X}{\sigma_X}\right] \\
+         &= \frac{1}{\sigma_X} E[X - \mu_X] \quad (\text{par linéarité, } \sigma_X \text{ est une constante}) \\
+         &= \frac{1}{\sigma_X} (E[X] - E[\mu_X]) \\
+         &= \frac{1}{\sigma_X} (E[X] - \mu_X) \quad (\text{car } \mu_X \text{ est une constante}) \\
+         &= \frac{\mu_X - \mu_X}{\sigma_X} = 0
+    \end{align*}
+    \item \textbf{Réduite (écart-type égal à 1)} :
+    \begin{align*}
+    \operatorname{Var}(Z) &= \operatorname{Var}\left(\frac{X - \mu_X}{\sigma_X}\right) \\
+         &= \left(\frac{1}{\sigma_X}\right)^2 \operatorname{Var}(X - \mu_X) \quad (\text{propriété } \operatorname{Var}(aY) = a^2 \operatorname{Var}(Y)) \\
+         &= \frac{1}{\sigma_X^2} \operatorname{Var}(X) \quad (\text{propriété } \operatorname{Var}(Y+b) = \operatorname{Var}(Y)) \\
+         &= \frac{1}{\sigma_X^2} \cdot \sigma_X^2 = 1
+    \end{align*}
+    L'écart-type est donc $\sigma_Z = \sqrt{\operatorname{Var}(Z)} = \sqrt{1} = 1$.
+\end{enumerate}
+\end{definitionbox}
+
+Cette transformation permet de comparer des variables sur des échelles différentes.
+
+\begin{intuitionbox}[Que signifie centrer-réduire ?]
+Standardiser une variable se fait en deux temps, comme le montre la formule $Z = \frac{X - \mu_X}{\sigma_X}$ :
+\begin{enumerate}
+    \item \textbf{Centrer ($X - \mu_X$)} : C'est la première étape. On soustrait la moyenne $\mu_X$. Cela revient à "déplacer" la distribution pour que son centre de gravité (sa moyenne) soit maintenant à 0. On ne regarde plus les valeurs brutes $X$, mais leurs \textbf{écarts} par rapport à la moyenne. (Propriété 1 : $E[Z]=0$)
+    \item \textbf{Réduire ($... / \sigma_X$)} : C'est la deuxième étape. On divise ces écarts par l'écart-type $\sigma_X$. Cela revient à changer d'unité de mesure. L'ancienne unité (kg, cm, points...) est remplacée par une nouvelle unité universelle : "le nombre d'écarts-types". (Propriété 2 : $\text{Var}(Z)=1$)
+\end{enumerate}
+Au final, une variable $Z$ avec une valeur de 1.5 signifie "cette observation est 1.5 écarts-types au-dessus de la moyenne de sa distribution d'origine", peu importe ce que $X$ mesurait.
+\end{intuitionbox}
+
+\begin{intuitionbox}[Analogie simple]
+Imaginons 2 élèves :
+\begin{itemize}
+    \item Alice a des notes entre 80 et 100 (moyenne 90, écart-type 5).
+    \item Bob a des notes entre 0 et 20 (moyenne 10, écart-type 4).
+\end{itemize}
+Comparer leurs notes brutes n'a pas de sens. Mais si on les standardise, on peut se demander : "quand Alice est 1 écart-type au-dessus de sa moyenne (une note de 95), Bob est-il aussi 1 écart-type au-dessus de sa propre moyenne (une note de 14) ?". La standardisation permet cette comparaison.
+\end{intuitionbox}
+
+\begin{examplebox}[Centrer-réduire un dé]
+Pour un lancer de dé $X$, on a $\mu_X = 3.5$ et $\sigma_X = \sqrt{35/12} \approx 1.708$.
+Si on obtient $X=6$ : $Z = (6 - 3.5) / 1.708 \approx 1.46$.
+Si on obtient $X=1$ : $Z = (1 - 3.5) / 1.708 \approx -1.46$.
+Obtenir 6 est à 1.46 écarts-types au-dessus de la moyenne.
+\end{examplebox}
+
+Maintenant, formalisons le concept d'une covariance nulle.
+
+\begin{definitionbox}[Variables Non Corréelées]
+On dit que deux variables aléatoires $X$ et $Y$ sont \textbf{non corrélées} si leur covariance est nulle :
+$$\text{Cov}(X,Y) = 0$$
+Cela est équivalent à dire que $E[XY] = E[X]E[Y]$.
+\end{definitionbox}
+
+Il est crucial de ne pas confondre "non corrélées" et "indépendantes".
+
+\begin{intuitionbox}
+"Non corrélées" signifie qu'il n'y a \textbf{pas de relation linéaire} entre les variables. C'est plus faible que l'indépendance. Si $X$ et $Y$ sont indépendantes, elles sont forcément non corrélées. Mais l'inverse n'est pas vrai : $X$ et $Y$ peuvent être non corrélées (Cov=0) mais quand même dépendantes (par exemple si $Y=X^2$ pour un $X$ centré).
+\end{intuitionbox}
+
+\subsection{Variance d'une Somme de Variables Aléatoires}
+
+Nous pouvons maintenant combiner nos connaissances de la variance et de la covariance pour répondre à une question cruciale : quelle est la variance d'une somme de variables, $X+Y$ ?
+
+\begin{theorembox}[Formules pour la variance d'une somme de deux variables]
+Pour deux variables aléatoires $X$ et $Y$ :
+\begin{align*}
+\text{Var}(X+Y) &= \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y) \\
+\end{align*}
+\end{theorembox}
+
+La preuve découle de la définition de la variance et de la linéarité de l'espérance.
+
+\begin{proofbox}
+Soit $\mu_X = E[X]$ et $\mu_Y = E[Y]$.
+\begin{align*}
+\text{Var}(X+Y) &= E\left[ ((X+Y) - E[X+Y])^2 \right] \\
+&= E\left[ ((X+Y) - (\mu_X + \mu_Y))^2 \right] \quad \text{(Par linéarité de E)} \\
+&= E\left[ ((X - \mu_X) + (Y - \mu_Y))^2 \right] \quad \text{(On regroupe les termes)} \\
+\text{Posons } A = (X - \mu_X) \text{ et } B = (Y - \mu_Y). \\
+&= E[ (A + B)^2 ] = E[ A^2 + 2AB + B^2 ] \\
+&= E[A^2] + 2E[AB] + E[B^2] \quad \text{(Par linéarité de E)} \\
+\text{Or, par définition :} \\
+E[A^2] &= E[(X-\mu_X)^2] = \text{Var}(X) \\
+E[B^2] &= E[(Y-\mu_Y)^2] = \text{Var}(Y) \\
+E[AB] &= E[(X-\mu_X)(Y-\mu_Y)] = \text{Cov}(X,Y) \\
+\text{Donc, } \text{Var}(X+Y) &= \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)
+\end{align*}
+\end{proofbox}
+
+Cette formule est fondamentale en finance et en ingénierie.
+
+\begin{intuitionbox}
+La "volatilité" (variance) d'une somme n'est pas juste la somme des volatilités. Il faut ajouter le terme d'interaction (covariance).
+Si $\text{Cov}(X,Y) > 0$ (elles bougent ensemble), la somme est \textbf{plus} volatile que la somme des parties.
+Si $\text{Cov}(X,Y) < 0$ (elles bougent en sens inverse), elles s'amortissent mutuellement. La somme est \textbf{moins} volatile. C'est le principe de la diversification en finance.
+\end{intuitionbox}
+
+Cela mène à un corollaire très important lorsque la covariance est nulle.
+
+\begin{theorembox}[Cas Particulier : Variables Non Corréelées]
+Si $X$ et $Y$ sont non corrélées (Cov=0), la formule se simplifie :
+$$\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y)$$
+\end{theorembox}
+
+\begin{proofbox}
+Cela découle directement du théorème précédent. Si $X$ et $Y$ sont non corrélées, alors $\text{Cov}(X,Y) = 0$.
+Le terme $2\text{Cov}(X,Y)$ dans la formule générale $\text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)$ devient nul, laissant :
+$$\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y)$$
+\end{proofbox}
+
+C'est le cas pour nos dés indépendants.
+
+\begin{examplebox}[Variance d'une somme de dés]
+Soit $S = X+Y$ la somme de deux dés indépendants.
+Puisqu'ils sont indépendants, ils sont non corrélés ($\text{Cov}(X,Y)=0$).
+On sait $\text{Var}(X) = 35/12$ et $\text{Var}(Y) = 35/12$.
+$$\text{Var}(S) = \text{Var}(X) + \text{Var}(Y) = \frac{35}{12} + \frac{35}{12} = \frac{70}{12} = \frac{35}{6} \approx 5.833$$
+C'est bien plus simple que de calculer $E[S^2]$ et $E[S]$.
+\end{examplebox}
+
+On peut généraliser cette formule à $N$ variables.
+
+\begin{theorembox}[Variance d'une somme de N variables]
+La formule générale pour la somme de $N$ variables aléatoires $X_1, \dots, X_n$ est :
+$$\text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j)$$
+\end{theorembox}
+
+\begin{proofbox}
+On utilise la propriété $\text{Var}(S) = \text{Cov}(S, S)$ et la bilinéarité de la covariance.
+Soit $S = \sum_{i=1}^n X_i$.
+\begin{align*}
+\text{Var}(S) &= \text{Cov}(S, S) = \text{Cov}\left(\sum_{i=1}^n X_i, \sum_{j=1}^n X_j\right) \\
+&= \sum_{i=1}^n \sum_{j=1}^n \text{Cov}(X_i, X_j) \quad \text{(Par bilinéarité)}
+\end{align*}
+On peut séparer cette double somme en deux parties : le cas où $i=j$ et le cas où $i \neq j$.
+$$ \text{Var}(S) = \sum_{i=1}^n \text{Cov}(X_i, X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j) $$
+Puisque $\text{Cov}(X_i, X_i) = E[(X_i - \mu_i)(X_i - \mu_i)] = E[(X_i - \mu_i)^2] = \text{Var}(X_i)$, on obtient :
+$$ \text{Var}(S) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j) $$
+\end{proofbox}
+
+Cette formule est au cœur de la théorie moderne du portefeuille.
+
+\begin{intuitionbox}
+La variance totale d'un système (comme un portefeuille d'actions) est la somme de toutes les variances individuelles ("risques propres") plus la somme de \textbf{toutes} les paires de covariances ("risques d'interaction"). Dans un grand portefeuille, le nombre de termes de covariance (environ $n^2$) est bien plus grand que le nombre de termes de variance ($n$), donc le risque total est dominé par la façon dont les actifs interagissent.
+\end{intuitionbox}
+
+\subsection{Théorème sur la somme de lois de Poisson}
+
+Terminons avec un théorème très utile qui combine les idées d'indépendance et de somme de variables aléatoires pour une distribution spécifique.
+
+\begin{theorembox}[La Somme de v.a. de Poisson Indépendantes est Poisson]
+Soit $X_1, \dots, X_k$ une séquence de variables aléatoires de Poisson indépendantes, avec des paramètres respectifs $\lambda_1, \dots, \lambda_k$.
+$$X_i \sim \text{Poisson}(\lambda_i) \quad \text{pour } i=1, \dots, k$$
+Alors leur somme $Y = X_1 + \dots + X_k$ suit également une loi de Poisson, dont le paramètre est la somme des paramètres :
+$$Y \sim \text{Poisson}(\lambda_1 + \dots + \lambda_k)$$
+\end{theorembox}
+
+La preuve pour $k=2$ (qui se généralise par récurrence) utilise l'indépendance et la formule du binôme de Newton.
+
+\begin{proofbox}[Preuve pour la somme de deux v.a.]
+Soit $X \sim \text{Poisson}(\lambda_1)$ et $Y \sim \text{Poisson}(\lambda_2)$, indépendantes.
+Soit $S = X+Y$. Nous cherchons $P(S=k)$.
+Pour que $S=k$, il faut que $X=j$ et $Y=k-j$, pour toutes les valeurs possibles de $j$ (de $0$ à $k$).
+$$ P(S=k) = \sum_{j=0}^k P(X=j, Y=k-j) $$
+Par indépendance, $P(X=j, Y=k-j) = P(X=j)P(Y=k-j)$.
+\begin{align*}
+P(S=k) &= \sum_{j=0}^k \left( \frac{e^{-\lambda_1}\lambda_1^j}{j!} \right) \left( \frac{e^{-\lambda_2}\lambda_2^{k-j}}{(k-j)!} \right) \\
+&= e^{-(\lambda_1 + \lambda_2)} \sum_{j=0}^k \frac{\lambda_1^j \lambda_2^{k-j}}{j!(k-j)!}
+\end{align*}
+On multiplie et on divise par $k!$ pour faire apparaître le coefficient binomial :
+\begin{align*}
+P(S=k) &= \frac{e^{-(\lambda_1 + \lambda_2)}}{k!} \sum_{j=0}^k \frac{k!}{j!(k-j)!} \lambda_1^j \lambda_2^{k-j} \\
+&= \frac{e^{-(\lambda_1 + \lambda_2)}}{k!} \sum_{j=0}^k \binom{k}{j} \lambda_1^j \lambda_2^{k-j}
+\end{align*}
+La somme est l'expansion du binôme de Newton pour $(\lambda_1 + \lambda_2)^k$.
+$$ P(S=k) = \frac{e^{-(\lambda_1 + \lambda_2)} (\lambda_1 + \lambda_2)^k}{k!} $$
+C'est la PMF d'une loi $\text{Poisson}(\lambda_1 + \lambda_2)$.
+\end{proofbox}
+
+Ce résultat est très intuitif :
+
+\begin{intuitionbox}
+Si des événements rares se produisent indépendamment à des taux constants, le nombre total d'événements se produisant est aussi un événement rare se produisant au taux total. Si les emails arrivent à $\lambda_1=5$/heure et les appels à $\lambda_2=10$/heure, les "communications totales" arrivent simplement à $\lambda = 5+10 = 15$/heure.
+\end{intuitionbox}
+
+\begin{examplebox}[Centre d'appels]
+Un centre d'appels reçoit des appels "Ventes" selon $X_1 \sim \text{Poisson}(10 \text{ appels/heure})$ et des appels "Support" selon $X_2 \sim \text{Poisson}(15 \text{ appels/heure})$. Les deux types d'appels sont indépendants.
+Le nombre total d'appels $Y = X_1 + X_2$ suit une loi $Y \sim \text{Poisson}(10+15=25 \text{ appels/heure})$.
+La probabilité de recevoir exactement 20 appels en une heure est :
+$$P(Y=20) = \frac{e^{-25} 25^{20}}{20!}$$
+\end{examplebox}

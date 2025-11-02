@@ -1,0 +1,360 @@
+\newpage
+
+\section{Le Mouvement Brownien}
+
+\subsection{Définition Formelle}
+
+Le mouvement Brownien (ou processus de Wiener) est un concept central en finance et en physique, modélisant des trajectoires aléatoires continues, comme celle d'une particule de pollen dans l'eau ou le prix d'un actif financier.
+
+\begin{theorembox}[Définition : Mouvement Brownien]
+Une collection de variables aléatoires $\{X(t), t \ge 0\}$ est un \textbf{mouvement Brownien} avec un paramètre de \textbf{dérive} (drift) $\mu$ et un paramètre de \textbf{variance} $\sigma^2$ si les propriétés suivantes sont vérifiées :
+
+\begin{itemize}
+    \item \textbf{(a)} Le processus commence à une valeur constante : $X(0) = c$. (Par convention, on suppose souvent $X(0) = 0$).
+    
+    \item \textbf{(b) Accroissements indépendants :} Pour toute suite de temps $0 \le s < t < u < v$, les accroissements $X(t) - X(s)$ et $X(v) - X(u)$ sont des variables aléatoires indépendantes. Plus généralement, l'accroissement futur $X(t) - X(s)$ (pour $t>s$) est indépendant du passé du processus (c'est-à-dire, de l'ensemble des $\{X(u) : u \le s\}$).
+    
+    \item \textbf{(c) Accroissements stationnaires et normaux :} L'accroissement $X(t) - X(s)$ (pour $t>s$) suit une \textbf{loi normale} dont la moyenne et la variance sont proportionnelles à la durée de l'intervalle $(t-s)$ :
+    $$ X(t) - X(s) \sim N\left(\mu(t-s), \sigma^2(t-s)\right) $$
+\end{itemize}
+\end{theorembox}
+
+\subsection{Propriétés : Continuité et Non-Différentiabilité}
+
+Les trajectoires du mouvement Brownien ont deux propriétés fondamentales qui semblent contradictoires, mais qui coexistent.
+
+\begin{intuitionbox}[La Trajectoire Brownienne]
+Avec une probabilité de 1, une trajectoire $X(t)$ d'un mouvement Brownien est :
+\begin{itemize}
+    \item \textbf{1. Continue :} Il n'y a pas de "sauts" instantanés. La fonction $t \mapsto X(t)$ peut être dessinée sans lever le crayon.
+    \item \textbf{2. Nulle part Différentiable :} En aucun point $t$, la trajectoire n'est "lisse". Elle est infiniment "rugueuse" ou "agitée", et il est impossible de définir une tangente (une dérivée) en quelque point que ce soit.
+\end{itemize}
+\end{intuitionbox}
+
+\subsubsection*{Idée de la preuve (selon les notes)}
+
+\textbf{1. Continuité :}
+Pour montrer la continuité, nous devons montrer que $\lim_{h \to 0} (X(t+h) - X(t)) = 0$.
+Par la définition (c), l'accroissement $X(t+h) - X(t)$ suit la loi $N(\mu h, \sigma^2 h)$.
+Lorsque $h \to 0$, la moyenne $\mu h \to 0$ et la variance $\sigma^2 h \to 0$.
+La distribution de l'accroissement converge vers une masse de Dirac en 0 (une variable aléatoire constante égale à 0). Cela suggère fortement que la trajectoire est continue.
+
+\textbf{2. Non-Différentiabilité :}
+Pour examiner la différentiabilité, nous étudions la limite du taux d'accroissement (la "pente") lorsque $h \to 0$ :
+$$ \frac{X(t+h) - X(t)}{h} $$
+Cette nouvelle variable aléatoire est aussi normale (car c'est une transformation linéaire d'une v.a. normale). Calculons sa moyenne et sa variance :
+
+\begin{itemize}
+    \item \textbf{Moyenne :} 
+    $$ E\left[ \frac{X(t+h) - X(t)}{h} \right] = \frac{1}{h} E[X(t+h) - X(t)] = \frac{1}{h} (\mu h) = \mu $$
+    
+    \item \textbf{Variance :} 
+    $$ \text{Var}\left( \frac{X(t+h) - X(t)}{h} \right) = \frac{1}{h^2} \text{Var}(X(t+h) - X(t)) = \frac{1}{h^2} (\sigma^2 h) = \frac{\sigma^2}{h} $$
+\end{itemize}
+
+Lorsque $h \to 0$, la moyenne de la pente reste $\mu$, mais sa variance $\frac{\sigma^2}{h}$ \textbf{converge vers l'infini}.
+Parce que la variance explose, le taux d'accroissement ne converge pas vers une valeur finie. La limite $\lim_{h \to 0} \frac{X(t+h) - X(t)}{h}$ n'existe pas, et la fonction n'est donc pas différentiable.
+
+\subsection{Construction : Le Mouvement Brownien comme Limite d'un Modèle Simple}
+
+Le mouvement Brownien peut être compris comme la limite d'une simple marche aléatoire à temps discret, lorsque les pas de temps deviennent infiniment petits.
+
+\subsubsection{Le modèle de la marche aléatoire discrète}
+
+Construisons un processus simple. Nous divisons le temps en petits intervalles de durée $\Delta t$. À chaque pas de temps, le processus $X$ fait un "saut" :
+\begin{itemize}
+    \item Il \textbf{augmente} de $\Delta x = \sigma\sqrt{\Delta t}$ avec une probabilité $p$.
+    \item Il \textbf{diminue} de $\Delta x = \sigma\sqrt{\Delta t}$ avec une probabilité $1-p$.
+\end{itemize}
+Les sauts successifs sont supposés indépendants. Le choix de $\sigma\sqrt{\Delta t}$ (et non $\sigma \Delta t$) est crucial pour obtenir une variance non nulle à la limite.
+
+Pour modéliser une dérive $\mu$, nous ajustons la probabilité $p$ pour qu'elle soit légèrement déséquilibrée :
+$$ p = \frac{1}{2} \left( 1 + \frac{\mu}{\sigma} \sqrt{\Delta t} \right) $$
+
+Soit $X_i$ une variable aléatoire décrivant le $i$-ème pas :
+$$ X_i = \begin{cases} +1 & \text{avec probabilité } p \text{ (hausse)} \\ -1 & \text{avec probabilité } 1-p \text{ (baisse)} \end{cases} $$
+Après un temps total $t$, nous avons effectué $n = t / \Delta t$ pas.
+La variation totale du processus, $X(t) - X(0)$, est la somme de tous ces petits sauts :
+$$ X(t) - X(0) = \sum_{i=1}^{n} (\text{saut}_i) = \sum_{i=1}^{n} (X_i \cdot \sigma\sqrt{\Delta t}) = \sigma\sqrt{\Delta t} \sum_{i=1}^{n} X_i $$
+
+\subsubsection{Convergence via le Théorème Central Limite}
+
+Nous analysons ce qu'il advient de $X(t) - X(0)$ lorsque $\Delta t \to 0$.
+\begin{itemize}
+    \item Lorsque $\Delta t \to 0$, le nombre de pas $n = t/\Delta t \to \infty$.
+    \item L'expression $X(t) - X(0)$ est (à un facteur près) une \textbf{somme de $n$ variables aléatoires i.i.d.} (les $X_i$).
+\end{itemize}
+C'est le scénario d'application du \textbf{Théorème Central Limite (TCL)}. Le TCL stipule que la distribution de cette somme, pour $n$ grand, tend vers une loi normale. Pour identifier les paramètres $\mu_t$ et $\sigma_t^2$ de cette loi normale, nous devons calculer l'espérance et la variance de $X(t) - X(0)$ et prendre leur limite.
+
+\begin{examplebox}[Calculs de l'Espérance et de la Variance]
+Commençons par l'espérance et la variance d'un seul pas $X_i$.
+
+\textbf{1. Espérance de $X_i$ :}
+$$ E[X_i] = (+1) \cdot p + (-1) \cdot (1-p) = 2p - 1 $$
+En substituant $p = \frac{1}{2} ( 1 + \frac{\mu}{\sigma} \sqrt{\Delta t} )$ :
+$$ E[X_i] = 2 \left[ \frac{1}{2} \left( 1 + \frac{\mu}{\sigma} \sqrt{\Delta t} \right) \right] - 1 = \left( 1 + \frac{\mu}{\sigma} \sqrt{\Delta t} \right) - 1 = \frac{\mu}{\sigma} \sqrt{\Delta t} $$
+
+\textbf{2. Variance de $X_i$ :}
+D'abord, calculons $E[X_i^2]$. Puisque $X_i$ vaut $+1$ ou $-1$, $X_i^2$ vaut toujours 1.
+$$ E[X_i^2] = (+1)^2 \cdot p + (-1)^2 \cdot (1-p) = p + (1-p) = 1 $$
+La variance est donc :
+$$ \text{Var}(X_i) = E[X_i^2] - (E[X_i])^2 = 1 - \left( \frac{\mu}{\sigma} \sqrt{\Delta t} \right)^2 = 1 - \frac{\mu^2}{\sigma^2} \Delta t $$
+(Note : dans l'image, $\text{Var}(X_i)$ est écrit $1 - (2p-1)^2$, ce qui est la même chose).
+
+\textbf{3. Espérance de $X(t) - X(0)$ :}
+Par linéarité de l'espérance ($n = t/\Delta t$) :
+$$ E[X(t) - X(0)] = E\left[ \sigma\sqrt{\Delta t} \sum_{i=1}^{n} X_i \right] = \sigma\sqrt{\Delta t} \cdot \sum_{i=1}^{n} E[X_i] $$
+$$ = \sigma\sqrt{\Delta t} \cdot n \cdot E[X_i] = \sigma\sqrt{\Delta t} \cdot \left( \frac{t}{\Delta t} \right) \cdot \left( \frac{\mu}{\sigma} \sqrt{\Delta t} \right) $$
+$$ = \frac{\sigma \cdot \sqrt{\Delta t} \cdot t \cdot \mu \cdot \sqrt{\Delta t}}{\Delta t \cdot \sigma} = \frac{(\sigma t \mu) (\Delta t)}{(\Delta t \sigma)} = \mu t $$
+L'espérance est \textit{exactement} $\mu t$, quel que soit $\Delta t$.
+
+\textbf{4. Variance de $X(t) - X(0)$ :}
+Par indépendance des $X_i$ ($\text{Var}(\sum X_i) = \sum \text{Var}(X_i)$) :
+$$ \text{Var}(X(t) - X(0)) = \text{Var}\left( \sigma\sqrt{\Delta t} \sum_{i=1}^{n} X_i \right) = (\sigma\sqrt{\Delta t})^2 \cdot \text{Var}\left( \sum_{i=1}^{n} X_i \right) $$
+$$ = (\sigma^2 \Delta t) \cdot \sum_{i=1}^{n} \text{Var}(X_i) = (\sigma^2 \Delta t) \cdot n \cdot \text{Var}(X_i) $$
+$$ = (\sigma^2 \Delta t) \cdot \left( \frac{t}{\Delta t} \right) \cdot \left( 1 - \frac{\mu^2}{\sigma^2} \Delta t \right) $$
+$$ = \sigma^2 t \left( 1 - \frac{\mu^2}{\sigma^2} \Delta t \right) $$
+\end{examplebox}
+
+\subsubsection{Le passage à la limite}
+
+Nous avons établi que $X(t) - X(0)$ est une somme de $n \to \infty$ v.a. i.i.d. Le TCL s'applique, et la distribution de $X(t) - X(0)$ converge vers une loi normale.
+Les paramètres de cette loi normale sont les limites de l'espérance et de la variance lorsque $\Delta t \to 0$ :
+
+\begin{itemize}
+    \item \textbf{Moyenne Limite :} 
+    $$ \lim_{\Delta t \to 0} E[X(t) - X(0)] = \lim_{\Delta t \to 0} (\mu t) = \mu t $$
+    
+    \item \textbf{Variance Limite :} 
+    $$ \lim_{\Delta t \to 0} \text{Var}(X(t) - X(0)) = \lim_{\Delta t \to 0} \left[ \sigma^2 t \left( 1 - \frac{\mu^2}{\sigma^2} \Delta t \right) \right] $$
+    $$ = \sigma^2 t (1 - 0) = \sigma^2 t $$
+\end{itemize}
+
+\begin{intuitionbox}[Conclusion]
+Lorsque $\Delta t \to 0$, notre modèle de marche aléatoire $X(t) - X(0)$ converge (en loi) vers une variable aléatoire qui suit une \textbf{loi normale $N(\mu t, \sigma^2 t)$}.
+
+C'est \textbf{exactement} la distribution de l'accroissement $X(t) - X(0)$ requise par la définition formelle du mouvement Brownien (propriété c).
+
+Cela démontre que le mouvement Brownien, un processus continu complexe, peut être construit comme la limite d'une simple marche aléatoire binaire, à condition que les pas soient mis à l'échelle en $\sqrt{\Delta t}$.
+\end{intuitionbox}
+
+\subsection{Le Mouvement Brownien Géométrique (MBG)}
+
+\subsubsection{Introduction : D'Additif à Multiplicatif}
+
+Le Mouvement Brownien (MB) simple, $X(t)$, que nous avons étudié précédemment, est un processus \textit{additif}. Ses accroissements s'ajoutent les uns aux autres.
+
+Cependant, pour modéliser le prix d'actifs financiers (comme une action), ce modèle présente deux défauts majeurs :
+\begin{enumerate}
+    \item \textbf{Prix négatifs :} Un MB peut (et va presque sûrement) prendre des valeurs négatives. Le prix d'une action ne peut pas descendre en dessous de zéro.
+    \item \textbf{Chocs absolus :} L'ampleur d'un choc aléatoire ($\sigma dW$) est constante. Un choc de $+1€$ a le même impact, que l'action vaille 2€ ou 1000€. En réalité, les investisseurs pensent en \textbf{pourcentages} (un choc de $+1\%$).
+\end{enumerate}
+
+Nous avons besoin d'un processus \textit{multiplicatif} ou "géométrique". L'astuce mathématique pour transformer l'addition en multiplication est la fonction \textbf{exponentielle}.
+
+\begin{intuitionbox}[L'Idée Fondamentale]
+Si les \textbf{rendements} (en pourcentage continu) sont additifs et suivent un Mouvement Brownien...
+...Alors le \textbf{prix} (qui est le résultat de ces rendements) doit être l'exponentielle de ce Mouvement Brownien.
+
+L'hypothèse centrale du MBG est que le \textbf{logarithme du prix} se comporte comme un simple Mouvement Brownien.
+$$ \ln(S(t)) = \text{Mouvement Brownien} $$
+Cela résout nos deux problèmes :
+\begin{enumerate}
+    \item Si $\ln(S(t)) = X(t)$, alors $S(t) = e^{X(t)}$. Puisque $e^x$ est toujours positif, le prix $S(t)$ ne peut jamais être négatif.
+    \item Si le \textit{log-rendement} $\ln(S(t)) - \ln(S(y))$ suit un MB, cela correspond à une modélisation en pourcentages.
+\end{enumerate}
+\end{intuitionbox}
+
+\subsubsection{Définition (basée sur les notes)}
+
+Cette intuition nous amène directement à la définition formelle.
+
+\begin{definitionbox}[Définition : Mouvement Brownien Géométrique]
+Soit $\{X(t), t \ge 0\}$ un \textbf{Mouvement Brownien} (arithmétique) avec :
+\begin{itemize}
+    \item Un paramètre de dérive (drift) $\mu$
+    \item Un paramètre de variance $\sigma^2$
+\end{itemize}
+(Rappel : cela signifie que $X(t)$ démarre à 0, a des accroissements indépendants et stationnaires, et $X(t) \sim N(\mu t, \sigma^2 t)$).
+
+Soit $C$ une constante positive. Le processus $\{S(t), t \ge 0\}$ défini par :
+$$S(t) = C e^{X(t)}$$
+est un \textbf{Mouvement Brownien Géométrique} (MBG).
+\end{definitionbox}
+
+\begin{remarquebox}[Point de Départ]
+Si nous supposons que le MB $X(t)$ commence à $X(0)=0$, alors :
+$$ S(0) = C e^{X(0)} = C e^0 = C $$
+La constante $C$ est simplement le prix de départ $S(0)$. Nous écrirons donc toujours :
+$$S(t) = S(0) e^{X(t)}$$
+\end{remarquebox}
+
+\subsubsection{Propriétés des Accroissements ("Log-Rendements")}
+
+La propriété la plus importante concerne les rendements. Prenons le logarithme de $S(t)$ :
+$$ \ln(S(t)) = \ln(S(0) e^{X(t)}) = \ln(S(0)) + \ln(e^{X(t)}) $$
+$$ \ln(S(t)) = \ln(S(0)) + X(t) $$
+Le logarithme du prix est bien un Mouvement Brownien (translaté par la constante $\ln(S(0))$).
+
+Considérons maintenant le \textbf{rendement continu} (ou "log-rendement") entre deux dates, $y$ et $t$ (avec $t > y$) :
+$$ \ln\left(\frac{S(t)}{S(y)}\right) = \ln(S(t)) - \ln(S(y)) $$
+En utilisant notre équation :
+$$ = \left[ \ln(S(0)) + X(t) \right] - \left[ \ln(S(0)) + X(y) \right] $$
+$$ \ln\left(\frac{S(t)}{S(y)}\right) = X(t) - X(y) $$
+
+\begin{theorembox}[Accroissements Géométriques, Indépendants et Stationnaires]
+Le \textbf{log-rendement} $\ln(S(t)/S(y))$ d'un MBG est égal à l'accroissement $X(t) - X(y)$ du Mouvement Brownien sous-jacent.
+
+Par conséquent (par définition du MB $X(t)$) :
+\begin{enumerate}
+    \item Le log-rendement $\ln(S(t)/S(y))$ est \textbf{indépendant} des valeurs passées du processus (avant $y$).
+    \item Le log-rendement $\ln(S(t)/S(y))$ suit une \textbf{loi normale} :
+    $$ \ln\left(\frac{S(t)}{S(y)}\right) \sim N\left(\mu(t-y), \sigma^2(t-y)\right) $$
+\end{enumerate}
+Dans cette formulation, $\mu$ est la dérive du log-rendement et $\sigma$ est la \textbf{volatilité}.
+\end{theorembox}
+
+\subsubsection{Calcul de l'Espérance $E[S(t)]$}
+
+C'est un point crucial où l'intuition est souvent mise à l'épreuve. Nous voulons connaître le prix \textit{moyen} (espéré) de $S(t)$ dans le futur.
+
+On pourrait penser que si $E[X(t)] = \mu t$, alors $E[S(t)]$ devrait être $S(0)e^{\mu t}$. C'est \textbf{faux}.
+L'erreur est de croire que $E[e^{X(t)}] = e^{E[X(t)]}$. Ceci n'est vrai que si $X(t)$ est une constante, pas une variable aléatoire.
+
+\begin{remarquebox}[Outil : Espérance d'une variable Log-Normale]
+Si $Y$ est une variable aléatoire qui suit une loi normale, $Y \sim N(m, v)$ (où $m$ est la moyenne et $v$ est la variance), alors l'espérance de son exponentielle est donnée par la formule :
+$$ E[e^Y] = e^{m + v/2} $$
+\end{remarquebox}
+
+Armés de cet outil, nous pouvons dériver l'espérance de $S(t)$.
+
+\begin{examplebox}[Dérivation Détaillée de l'espérance]
+\textbf{1. Objectif :} Calculer $E[S(t)]$.
+
+\textbf{2. Point de départ :} $S(t) = S(0) e^{X(t)}$. (Posons $s = S(0)$).
+$$ E[S(t)] = E[s \cdot e^{X(t)}] $$
+Puisque $s$ est une constante, elle sort de l'espérance :
+$$ E[S(t)] = s \cdot E[e^{X(t)}] $$
+
+\textbf{3. Identifier la variable aléatoire :} La variable aléatoire est $Y = X(t)$.
+
+\textbf{4. Trouver la distribution de cette variable :} Par définition du MB $X(t)$, nous savons que pour un temps $t$ fixé :
+$$ X(t) \sim N(\mu t, \sigma^2 t) $$
+
+\textbf{5. Identifier les paramètres de la loi normale :}
+\begin{itemize}
+    \item La moyenne de $X(t)$ est $m = \mu t$
+    \item La variance de $X(t)$ est $v = \sigma^2 t$
+\end{itemize}
+
+\textbf{6. Appliquer l'outil (la formule $E[e^Y] = e^{m + v/2}$) :}
+$$ E[e^{X(t)}] = e^{\left( m \right) + \left( v \right)/2} $$
+$$ E[e^{X(t)}] = e^{\left( \mu t \right) + \left( \sigma^2 t \right)/2} $$
+
+\textbf{7. Finaliser le calcul :}
+$$ E[S(t)] = s \cdot E[e^{X(t)}] = s \cdot e^{\mu t + \sigma^2 t / 2} $$
+En factorisant le $t$ dans l'exposant :
+$$ E[S(t)] = s \cdot e^{(\mu + \sigma^2/2)t} $$
+\end{examplebox}
+
+\begin{intuitionbox}[Le "Boost" de la Volatilité sur la Moyenne]
+Nous venons de trouver que le taux de croissance du prix \textit{moyen} (l'espérance) n'est pas $\mu$, mais $\alpha = \mu + \sigma^2/2$.
+
+$$ E[S(t)] = S(0) \cdot e^{(\mu + \sigma^2/2)t} $$
+
+Pourquoi ce terme $\sigma^2/2$ supplémentaire ?
+\begin{itemize}
+    \item $\mu$ est le taux de croissance du \textit{logarithme} du prix. C'est aussi le taux de croissance de la \textbf{médiane} (la trajectoire "du milieu").
+    \item $\alpha = \mu + \sigma^2/2$ est le taux de croissance de la \textbf{moyenne} (l'espérance).
+\end{itemize}
+La fonction $f(x) = e^x$ est \textbf{convexe}. 
+Cela signifie qu'une augmentation de $x$ a plus d'impact sur $e^x$ qu'une diminution de $x$ n'en a.
+
+Quand $\sigma > 0$, le processus $X(t)$ fluctue.
+\begin{itemize}
+    \item Les baisses de $X(t)$ font baisser $S(t)$, mais les pertes sont "capées" à 0.
+    \item Les hausses de $X(t)$ font monter $S(t)$, et les gains sont \textit{illimités} et amplifiés par l'exponentielle.
+\end{itemize}
+La volatilité ($\sigma^2$) crée une asymétrie : elle génère quelques scénarios de gains extrêmes qui sont si grands qu'ils tirent la \textit{moyenne} de tous les scénarios vers le haut.
+
+C'est pourquoi $\text{Moyenne} > \text{Médiane}$ et le taux de croissance de la moyenne ($\mu + \sigma^2/2$) est supérieur au taux de croissance de la médiane ($\mu$).
+\end{intuitionbox}
+
+\subsubsection{Exemples Calculatoires Détaillés}
+
+Appliquons ces concepts.
+
+\begin{intuitionbox}[Paramètres de l'exemple]
+Supposons qu'une action ait un prix initial $\textbf{S(0) = s = 100 €}$.
+Elle suit un MBG défini par les paramètres de son processus $X(t)$ (log-rendement) :
+\begin{itemize}
+    \item Dérive du log (drift) : $\mu = 0.08$ (soit 8\% par an)
+    \item Volatilité (écart-type du log) : $\sigma = 0.20$ (soit 20\% par an)
+\end{itemize}
+Nous avons donc $\text{Var}(X(t)) = \sigma^2 t = (0.20)^2 t = 0.04 t$.
+\end{intuitionbox}
+
+\begin{examplebox}[Problème 1 : Prix Espéré et Médian à 1 an]
+\textbf{Question :} Quelle est la valeur \textit{espérée} (moyenne) et la valeur \textit{médiane} du prix de l'action dans un an ($t=1$) ?
+
+\textbf{Solution (Espérance) :}
+Nous utilisons la formule $E[S(t)] = s \cdot e^{(\mu + \sigma^2 / 2)t}$.
+1.  Calculer le taux de croissance espéré :
+    $$\alpha = \mu + \frac{\sigma^2}{2} = 0.08 + \frac{(0.20)^2}{2} = 0.08 + \frac{0.04}{2}$$
+    $$\alpha = 0.08 + 0.02 = 0.10 \text{ (soit 10\% par an)}$$
+2.  Appliquer ce taux pour $t=1$ :
+    $$E[S(1)] = 100 \cdot e^{(0.10) \times 1} = 100 \cdot e^{0.1} \approx 100 \times 1.10517 = 110.52 \text{ €}$$
+    
+\textbf{Solution (Médiane) :}
+La médiane d'une loi log-normale $e^Y$ est $e^{E[Y]}$.
+$$\text{Médiane}[S(t)] = s \cdot e^{E[X(t)]} = s \cdot e^{\mu t}$$
+1.  Utiliser le taux de croissance de la médiane, $\mu = 0.08$.
+2.  Appliquer ce taux pour $t=1$ :
+    $$\text{Médiane}[S(1)] = 100 \cdot e^{0.08 \times 1} = 100 \cdot e^{0.08} \approx 100 \times 1.08329 = 108.33 \text{ €}$$
+
+\textbf{Conclusion :} Le prix \textit{moyen} attendu (110.52 €) est supérieur au prix \textit{médian} (108.33 €). 50\% des scénarios seront en dessous de 108.33 €, mais les 50\% au-dessus ont des gains tellement élevés qu'ils tirent la moyenne à 110.52 €.
+\end{examplebox}
+
+\begin{examplebox}[Problème 2 : Probabilité d'une Baisse]
+\textbf{Question :} Quelle est la probabilité que l'action termine l'année ($t=1$) avec un prix \textit{inférieur} à son prix de départ de 100 € ?
+
+\textbf{Solution :}
+1.  Poser le problème : Nous cherchons $P(S(1) < 100)$.
+2.  Traduire en "log-espace" (avec $X(t)$) :
+    $$P(100 \cdot e^{X(1)} < 100) \implies P(e^{X(1)} < 1) \implies P(X(1) < \ln(1))$$
+    $$P(X(1) < 0)$$
+3.  Trouver la distribution de $X(1)$ :
+    Nous savons que $X(1) \sim N(\mu t, \sigma^2 t)$ avec $t=1$.
+    $$X(1) \sim N(0.08 \times 1, \ 0.20^2 \times 1) \implies X(1) \sim N(0.08, 0.04)$$
+4.  Standardiser (Calculer le Z-score) :
+    Nous cherchons $P(X(1) < 0)$ pour une loi normale de moyenne $m=0.08$ et d'écart-type $\sigma_{std}=\sqrt{0.04}=0.20$.
+    $$Z = \frac{\text{Valeur} - \text{Moyenne}}{\text{Écart-type}} = \frac{0 - 0.08}{0.20} = -0.40$$
+5.  Trouver la probabilité :
+    $$P(Z < -0.40) \approx 0.3446 \text{ (en utilisant une table N(0,1))}$$
+
+\textbf{Conclusion :} Il y a environ 34.5\% de chances que l'action soit en baisse à la fin de l'année, même si sa dérive $\mu$ est positive.
+\end{examplebox}
+
+\begin{examplebox}[Problème 3 : Intervalle de Confiance à 95\%]
+\textbf{Question :} Trouver l'intervalle de confiance à 95\% pour le prix de l'action dans un an ($t=1$).
+
+\textbf{Solution :}
+Nous ne pouvons pas calculer l'intervalle directement sur $S(1)$ (car il n'est pas symétrique). Nous devons le calculer sur $\ln(S(1))$ (ou $X(1)$) puis convertir les bornes.
+
+1.  Intervalle de confiance à 95\% pour $X(1)$ :
+    Nous savons que $X(1) \sim N(0.08, 0.04)$. L'écart-type est $0.20$.
+    Un IC à 95\% pour une loi normale est $\left[ m - 1.96 \cdot \sigma_{std}, m + 1.96 \cdot \sigma_{std} \right]$.
+    \begin{itemize}
+        \item Borne inf. $X_1$ : $0.08 - 1.96 \times 0.20 = 0.08 - 0.392 = -0.312$
+        \item Borne sup. $X_1$ : $0.08 + 1.96 \times 0.20 = 0.08 + 0.392 = +0.472$
+    \end{itemize}
+    L'intervalle pour $X(1)$ est $[-0.312, 0.472]$.
+
+2.  Convertir l'intervalle pour $S(1) = 100 \cdot e^{X(1)}$ :
+    \begin{itemize}
+        \item Borne inf. $S_1$ : $100 \cdot e^{-0.312} \approx 100 \times 0.7320 = 73.20 \text{ €}$
+        \item Borne sup. $S_1$ : $100 \cdot e^{+0.472} \approx 100 \times 1.6032 = 160.32 \text{ €}$
+    \end{itemize}
+
+\textbf{Conclusion :} Nous sommes confiants à 95\% que le prix de l'action dans un an se situera entre 73.20 € et 160.32 €. Notez que cet intervalle n'est pas symétrique autour de la médiane (108.33 €) ou de la moyenne (110.52 €).
+\end{examplebox}

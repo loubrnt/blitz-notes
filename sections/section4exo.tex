@@ -1,0 +1,419 @@
+\subsection{Exercices}
+
+% --- Section 1 : PDF & CDF (Calculs Intégraux de Base) ---
+
+\begin{exercicebox}[Exercice 1 : Validation d'une PDF]
+Soit la fonction $f(x) = cx^2$ pour $x \in [0, 1]$, et $f(x)=0$ sinon.
+Calculez la valeur de la constante $c$ pour que $f(x)$ soit une fonction de densité de probabilité (PDF) valide.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Calcul de Probabilité (PDF)]
+En utilisant la PDF $f(x) = 3x^2$ pour $x \in [0, 1]$ (de l'exercice 1), calculez $P(X > 1/2)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Calcul de la CDF]
+Pour la PDF $f(x) = 3x^2$ sur $[0, 1]$, déterminez l'expression de la fonction de répartition (CDF) $F(x)$ pour $x \in [0, 1]$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Calcul de la PDF à partir de la CDF]
+La CDF d'une variable aléatoire $X$ est donnée par :
+$$F(x) = \begin{cases} 0 & \text{si } x < 0 \\ x^4 & \text{si } 0 \le x \le 1 \\ 1 & \text{si } x > 1 \end{cases}$$
+Calculez la PDF $f(x)$ de $X$ pour $x \in [0, 1]$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Calcul de Probabilité (CDF)]
+En utilisant la CDF $F(x) = x^4$ pour $x \in [0, 1]$ (de l'exercice 4), calculez $P(0.5 \le X \le 1)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 6 : PDF (Trouver la constante)]
+Soit la fonction $f(x) = c/x^3$ pour $x \in [1, 2]$, et $f(x)=0$ sinon.
+Calculez la valeur de la constante $c$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 7 : Calcul de Probabilité (PDF non-polynomiale)]
+En utilisant la PDF $f(x) = (8/3) \cdot (1/x^3)$ sur $[1, 2]$ (de l'exercice 6), calculez $P(X \le 1.5)$.
+\end{exercicebox}
+
+% --- Section 2 : Espérance, Variance, LOTUS (Calculs Intégraux) ---
+
+\begin{exercicebox}[Exercice 8 : Calcul d'Espérance]
+Soit $X$ une v.a. de PDF $f(x) = 3x^2$ sur $[0, 1]$. Calculez $E[X]$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 9 : Calcul de Moment (LOTUS)]
+Pour la même PDF $f(x) = 3x^2$ sur $[0, 1]$, calculez $E[X^2]$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : Calcul de Variance]
+En utilisant les résultats des exercices 8 et 9, calculez $\text{Var}(X)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 11 : Application de LOTUS]
+Soit $X$ une v.a. de PDF $f(x) = 2x$ sur $[0, 1]$. Calculez $E[\sqrt{X}]$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 12 : Calcul d'Espérance]
+En utilisant la PDF $f(x) = 2/x^3$ sur $[1, \infty)$, calculez $E[X]$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 13 : Calcul avec LOTUS]
+En utilisant la PDF $f(x) = 2/x^3$ sur $[1, \infty)$, calculez $E[1/X]$.
+\end{exercicebox}
+
+% --- Section 3 : Loi Uniforme (Applications) ---
+
+\begin{exercicebox}[Exercice 14 : Scénario (Loi Uniforme - Bus)]
+Un bus arrive à un arrêt toutes les 15 minutes exactement. Vous arrivez à l'arrêt à un moment aléatoire. Votre temps d'attente $T$ suit une loi $T \sim \text{Unif}(0, 15)$. Calculez la probabilité que vous attendiez 3 minutes ou moins.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 15 : Probabilité (Loi Uniforme - Bus)]
+En utilisant le scénario de l'exercice 14 ($T \sim \text{Unif}(0, 15)$), calculez la probabilité que vous attendiez entre 5 et 10 minutes.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 16 : Espérance et Variance (Loi Uniforme - Bus)]
+Pour le temps d'attente $T \sim \text{Unif}(0, 15)$, calculez le temps d'attente moyen $E[T]$ et la variance $\text{Var}(T)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 17 : Problème Inverse (Loi Uniforme)]
+Un générateur de nombres aléatoires produit un nombre $X$ suivant $\text{Unif}(a, b)$. On sait que $E[X] = 5$ et $\text{Var}(X) = 3$.
+En utilisant les formules $E[X] = (a+b)/2$ et $\text{Var}(X) = (b-a)^2/12$, trouvez $a$ et $b$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 18 : LOTUS (Loi Uniforme)]
+Soit $X \sim \text{Unif}(0, 2)$. La PDF est $f(x)=1/2$ sur $[0, 2]$.
+Calculez $E[X^3]$.
+\end{exercicebox}
+
+% --- Section 4 : Loi Exponentielle (Applications) ---
+
+\begin{exercicebox}[Exercice 19 : Scénario (Loi Exponentielle - Appels)]
+Les appels à un service client arrivent selon un processus de Poisson. Le temps $T$ (en minutes) entre deux appels suit une loi exponentielle avec $\lambda = 0.1$ appels/minute.
+Calculez le temps moyen $E[T]$ entre les appels.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 20 : Probabilité (Loi Exponentielle - Appels)]
+En utilisant $T \sim \text{Exp}(0.1)$ de l'exercice 19, calculez la probabilité qu'il n'y ait pas d'appel pendant au moins 5 minutes, $P(T > 5)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 21 : Probabilité (Loi Exponentielle - Appels)]
+En utilisant $T \sim \text{Exp}(0.1)$, calculez la probabilité que le prochain appel arrive entre la 2ème et la 3ème minute, $P(2 \le T \le 3)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 22 : Scénario (Loi Exponentielle - Durée de vie)]
+La durée de vie (en années) d'un composant suit $T \sim \text{Exp}(\lambda)$. On sait que sa durée de vie moyenne $E[T]$ est de 8 ans.
+Calculez la probabilité que le composant tombe en panne avant 2 ans, $P(T \le 2)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 23 : Non-Mémoire (Loi Exponentielle)]
+En utilisant le scénario de l'exercice 22 ($T \sim \text{Exp}(1/8)$), calculez la probabilité que le composant dure 10 ans de plus, sachant qu'il a déjà duré 5 ans : $P(T > 15 \mid T > 5)$.
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 24 : Problème Inverse (Loi Exponentielle)]
+Soit $X \sim \text{Exp}(\lambda)$.
+Trouvez $\lambda$ tel que $P(X \le 100) = 0.9$. (C'est-à-dire que 90% des observations sont inférieures à 100).
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 25 : Preuve de l'Espérance (Exponentielle)]
+Soit $X \sim \text{Exp}(\lambda)$. Sa PDF est $f(x) = \lambda e^{-\lambda x}$ pour $x \ge 0$.
+En utilisant l'intégration par parties sur $E[X] = \int_0^\infty x \lambda e^{-\lambda x} \, dx$, prouvez que $E[X] = 1/\lambda$.
+\end{exercicebox}
+
+
+\subsection{Corrections des Exercices}
+
+\begin{correctionbox}[Correction Exercice 1 : Validation d'une PDF]
+$$\int_0^1 cx^2 \, \mathrm{d}x = c \left[ \frac{x^3}{3} \right]_0^1 = c \left( \frac{1^3}{3} - 0 \right) = \frac{c}{3}$$
+$$\frac{c}{3} = 1 \implies c = 3$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 2 : Calcul de Probabilité (PDF)]
+$f(x) = 3x^2$ sur $[0, 1]$.
+$$P(X > 1/2) = \int_{1/2}^1 3x^2 \, \mathrm{d}x = \left[ x^3 \right]_{1/2}^1$$
+$$= (1)^3 - (1/2)^3 = 1 - 1/8 = 7/8 \text{ (ou } 0.875 \text{)}$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 3 : Calcul de la CDF]
+Pour $x \in [0, 1]$ :
+$$F(x) = \int_0^x f(t) \, \mathrm{d}t = \int_0^x 3t^2 \, \mathrm{d}t = \left[ t^3 \right]_0^x = x^3$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 4 : Calcul de la PDF à partir de la CDF]
+$f(x) = F'(x) = \frac{d}{dx} (x^4) = 4x^3$.
+Donc, $f(x) = 4x^3$ pour $x \in [0, 1]$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 5 : Calcul de Probabilité (CDF)]
+$P(0.5 \le X \le 1) = F(1) - F(0.5) = (1)^4 - (0.5)^4 = 1 - 0.0625 = 0.9375$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 6 : PDF (Trouver la constante)]
+$$\int_1^2 \frac{c}{x^3} \, \mathrm{d}x = c \int_1^2 x^{-3} \, \mathrm{d}x = c \left[ \frac{x^{-2}}{-2} \right]_1^2 = c \left[ -\frac{1}{2x^2} \right]_1^2$$
+$$= c \left( (-\frac{1}{2 \cdot 2^2}) - (-\frac{1}{2 \cdot 1^2}) \right) = c \left( -\frac{1}{8} + \frac{1}{2} \right) = c \left( \frac{3}{8} \right)$$
+$$c(3/8) = 1 \implies c = 8/3$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 7 : Calcul de Probabilité (PDF non-polynomiale)]
+$f(x) = (8/3)x^{-3}$ sur $[1, 2]$.
+$$P(X \le 1.5) = \int_1^{1.5} \frac{8}{3}x^{-3} \, \mathrm{d}x = \frac{8}{3} \left[ \frac{x^{-2}}{-2} \right]_1^{1.5} = \frac{8}{3} \left[ -\frac{1}{2x^2} \right]_1^{1.5}$$
+$$= \frac{8}{3} \left( (-\frac{1}{2 \cdot (1.5)^2}) - (-\frac{1}{2 \cdot 1^2}) \right) = \frac{8}{3} \left( -\frac{1}{4.5} + \frac{1}{2} \right)$$
+$$= \frac{8}{3} \left( -\frac{2}{9} + \frac{1}{2} \right) = \frac{8}{3} \left( \frac{-4+9}{18} \right) = \frac{8}{3} \left( \frac{5}{18} \right) = \frac{40}{54} = \frac{20}{27}$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 8 : Calcul d'Espérance]
+$f(x) = 3x^2$ sur $[0, 1]$.
+$$E[X] = \int_0^1 x \cdot (3x^2) \, \mathrm{d}x = \int_0^1 3x^3 \, \mathrm{d}x = \left[ \frac{3x^4}{4} \right]_0^1 = 3/4$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 9 : Calcul de Moment (LOTUS)]
+$f(x) = 3x^2$ sur $[0, 1]$.
+$$E[X^2] = \int_0^1 x^2 \cdot (3x^2) \, \mathrm{d}x = \int_0^1 3x^4 \, \mathrm{d}x = \left[ \frac{3x^5}{5} \right]_0^1 = 3/5$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 10 : Calcul de Variance]
+$\text{Var}(X) = E[X^2] - (E[X])^2 = (3/5) - (3/4)^2$
+$$= \frac{3}{5} - \frac{9}{16} = \frac{48 - 45}{80} = \frac{3}{80}$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 11 : Application de LOTUS]
+$f(x) = 2x$ sur $[0, 1]$. $g(x) = \sqrt{X} = x^{1/2}$.
+$$E[\sqrt{X}] = \int_0^1 x^{1/2} \cdot (2x) \, \mathrm{d}x = \int_0^1 2x^{3/2} \, \mathrm{d}x$$
+$$= \left[ 2 \frac{x^{5/2}}{5/2} \right]_0^1 = \left[ \frac{4}{5} x^{5/2} \right]_0^1 = 4/5$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 12 : Calcul d'Espérance]
+$f(x) = 2/x^3$ sur $[1, \infty)$.
+$$E[X] = \int_1^\infty x \cdot \frac{2}{x^3} \, \mathrm{d}x = \int_1^\infty \frac{2}{x^2} \, \mathrm{d}x = \left[ -\frac{2}{x} \right]_1^\infty$$
+$$= \left( \lim_{b \to \infty} -\frac{2}{b} \right) - \left( -\frac{2}{1} \right) = 0 - (-2) = 2$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 13 : Calcul avec LOTUS]
+$f(x) = 2/x^3$ sur $[1, \infty)$. $g(x) = 1/x$.
+$$E[1/X] = \int_1^\infty (1/x) \cdot \frac{2}{x^3} \, \mathrm{d}x = \int_1^\infty \frac{2}{x^4} \, \mathrm{d}x = \left[ \frac{2x^{-3}}{-3} \right]_1^\infty$$
+$$= \left[ -\frac{2}{3x^3} \right]_1^\infty = (0) - (-\frac{2}{3}) = 2/3$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 14 : Scénario (Loi Uniforme - Bus)]
+$T \sim \text{Unif}(0, 15)$. $f(t) = 1/15$ sur $[0, 15]$.
+$$P(T \le 3) = \int_0^3 \frac{1}{15} \, \mathrm{d}t = \frac{1}{15} [t]_0^3 = \frac{3}{15} = 0.2$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 15 : Probabilité (Loi Uniforme - Bus)]
+$T \sim \text{Unif}(0, 15)$.
+$$P(5 \le T \le 10) = \int_5^{10} \frac{1}{15} \, \mathrm{d}t = \frac{1}{15} [t]_5^{10} = \frac{10-5}{15} = \frac{5}{15} = 1/3$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 16 : Espérance et Variance (Loi Uniforme - Bus)]
+$T \sim \text{Unif}(a=0, b=15)$.
+$E[T] = \frac{a+b}{2} = \frac{0+15}{2} = 7.5$ minutes.
+$\text{Var}(T) = \frac{(b-a)^2}{12} = \frac{(15-0)^2}{12} = \frac{225}{12} = \frac{75}{4} = 18.75 \text{ min}^2$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 17 : Problème Inverse (Loi Uniforme)]
+$E[X] = \frac{a+b}{2} = 5 \implies a+b = 10$.
+$\text{Var}(X) = \frac{(b-a)^2}{12} = 3 \implies (b-a)^2 = 36 \implies b-a = 6$.
+Système : (1) $b+a=10$, (2) $b-a=6$.
+(1)+(2) : $2b = 16 \implies b = 8$.
+(1) : $a = 10 - b = 10 - 8 = 2$.
+$X \sim \text{Unif}(2, 8)$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 18 : LOTUS (Loi Uniforme)]
+$f(x) = 1/2$ sur $[0, 2]$. $g(x) = x^3$.
+$$E[X^3] = \int_0^2 x^3 \cdot \frac{1}{2} \, \mathrm{d}x = \frac{1}{2} \left[ \frac{x^4}{4} \right]_0^2$$
+$$= \frac{1}{2} \left( \frac{2^4}{4} - 0 \right) = \frac{1}{2} \left( \frac{16}{4} \right) = 2$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 19 : Scénario (Loi Exponentielle - Appels)]
+$T \sim \text{Exp}(0.1)$.
+$E[T] = 1/\lambda = 1/0.1 = 10$ minutes.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 20 : Probabilité (Loi Exponentielle - Appels)]
+$\lambda = 0.1$. On cherche $P(T > 5)$.
+$$P(T > 5) = e^{-\lambda t} = e^{-0.1 \times 5} = e^{-0.5} \approx 0.6065$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 21 : Probabilité (Loi Exponentielle - Appels)]
+$\lambda = 0.1$. $P(2 \le T \le 3) = F(3) - F(2)$.
+$F(t) = 1 - e^{-\lambda t}$.
+$P = (1 - e^{-0.1 \times 3}) - (1 - e^{-0.1 \times 2}) = (1 - e^{-0.3}) - (1 - e^{-0.2})$
+$$= e^{-0.2} - e^{-0.3} \approx 0.8187 - 0.7408 = 0.0779$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 22 : Scénario (Loi Exponentielle - Durée de vie)]
+$E[T] = 8 \implies \lambda = 1/8 = 0.125$.
+On cherche $P(T \le 2)$.
+$$P(T \le 2) = F(2) = 1 - e^{-\lambda t} = 1 - e^{-0.125 \times 2} = 1 - e^{-0.25}$$
+$$\approx 1 - 0.7788 = 0.2212$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 23 : Non-Mémoire (Loi Exponentielle)]
+$\lambda = 1/8$. $P(T > 15 \mid T > 5) = P(T > 10+5 \mid T > 5)$.
+Par non-mémoire, c'est $P(T > 10)$.
+$$P(T > 10) = e^{-\lambda t} = e^{-(1/8) \times 10} = e^{-10/8} = e^{-1.25} \approx 0.2865$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 24 : Problème Inverse (Loi Exponentielle)]
+On cherche $\lambda$ tel que $F(100) = 0.9$.
+$$F(100) = 1 - e^{-\lambda \times 100} = 0.9$$
+$$0.1 = e^{-100\lambda}$$
+$$\ln(0.1) = -100\lambda$$
+$$-\ln(10) = -100\lambda$$
+$$\lambda = \frac{\ln(10)}{100} \approx \frac{2.3026}{100} \approx 0.023$$
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 25 : Preuve de l'Espérance (Exponentielle)]
+$E[X] = \int_0^\infty x \lambda e^{-\lambda x} \, dx$.
+IPP : $u=x \implies du=dx$ ; $dv=\lambda e^{-\lambda x}dx \implies v=-e^{-\lambda x}$.
+$$E[X] = [u v]_0^\infty - \int_0^\infty v \, du = \left[ -x e^{-\lambda x} \right]_0^\infty - \int_0^\infty (-e^{-\lambda x}) \, dx$$
+Le premier terme est $(0 - 0)$ (par croissance comparée).
+$$E[X] = \int_0^\infty e^{-\lambda x} \, dx = \left[ -\frac{1}{\lambda} e^{-\lambda x} \right]_0^\infty$$
+$$= \left( \lim_{b \to \infty} -\frac{1}{\lambda} e^{-\lambda b} \right) - \left( -\frac{1}{\lambda} e^0 \right) = 0 - (-1/\lambda) = 1/\lambda$$
+\end{correctionbox}
+
+\subsection{Exercices Python}
+
+Les exercices suivants appliquent les concepts de variables aléatoires continues (PDF, CDF, espérance, variance) en utilisant la bibliothèque \texttt{NumPy} pour la simulation numérique afin de vérifier les résultats théoriques.
+
+\begin{codecell}
+import numpy as np
+import math
+\end{codecell}
+
+\begin{exercicebox}[Exercice 1 : PDF CDF et Espérance (Simulation)]
+Soit $X$ une v.a. continue avec la PDF $f(x) = 2x$ pour $x \in [0, 1]$, et $f(x)=0$ sinon.
+Par calcul (que vous pouvez faire à la main), on trouve :
+\begin{itemize}
+    \item CDF : $F(x) = x^2$ (pour $x \in [0, 1]$)
+    \item Espérance : $E[X] = 2/3$
+\end{itemize}
+Nous pouvons simuler cette variable en utilisant la méthode de la transformée inverse : si $U \sim \text{Unif}(0, 1)$, alors $X = F^{-1}(U) = \sqrt{U}$ suit la loi de $X$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Générer $N=100000$ échantillons $U$ d'une loi Uniforme(0, 1) avec \texttt{np.random.rand}.
+    \item Transformer ces échantillons pour obtenir $N$ échantillons de $X$ (en prenant la racine carrée).
+    \item Calculer l'espérance empirique $E[X]$ (la moyenne de vos échantillons $X$) et la comparer à la valeur théorique $2/3$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 2 : Variance (Simulation)]
+En utilisant les échantillons $X$ de l'exercice 1.
+La valeur théorique (calculée à la main) de la variance est $\text{Var}(X) = 1/18$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Calculer la variance empirique $\text{Var}(X)$ de vos échantillons $X$ avec \texttt{np.var}.
+    \item Comparer le résultat empirique à la valeur théorique $1/18$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 3 : Loi Uniforme (Simulation vs Théorie)]
+Soit $X \sim \text{Unif}(a=5, b=15)$. Les valeurs théoriques sont $E[X] = \frac{a+b}{2}$ et $\text{Var}(X) = \frac{(b-a)^2}{12}$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Calculer l'espérance et la variance théoriques.
+    \item Générer $N=100000$ échantillons aléatoires de $X$ avec \texttt{np.random.uniform}.
+    \item Calculer l'espérance empirique (\texttt{np.mean}) et la variance empirique (\texttt{np.var}) des échantillons.
+    \item Comparer les résultats empiriques aux résultats théoriques.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 4 : Loi Uniforme (Vérification de la PDF)]
+Pour $X \sim \text{Unif}(5, 15)$, la PDF est $f(x) = \frac{1}{10}$ sur $[5, 15]$.
+La probabilité $P(7 \le X \le 10)$ est $\int_7^{10} \frac{1}{10} dx = \frac{10-7}{10} = 0.3$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Utiliser les échantillons de $X$ de l'exercice 3.
+    \item Calculer la probabilité empirique $P(7 \le X \le 10)$ en comptant la proportion d'échantillons qui tombent dans cet intervalle.
+    \item Comparer le résultat empirique à la valeur théorique $0.3$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 5 : Loi Exponentielle (Simulation vs Théorie)]
+Soit $X \sim \text{Exp}(\lambda=0.5)$. Les valeurs théoriques sont $E[X] = \frac{1}{\lambda}$ et $\text{Var}(X) = \frac{1}{\lambda^2}$.
+
+Note : \texttt{np.random.exponential} prend un paramètre "scale" $\beta = 1/\lambda$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Définir $\lambda$ et calculer $E[X]$ et $\text{Var}(X)$ théoriques.
+    \item Calculer le paramètre $\beta$ (scale) pour NumPy.
+    \item Générer $N=100000$ échantillons aléatoires de $X$.
+    \item Calculer et comparer les espérances et variances empiriques et théoriques.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 6 : Loi Exponentielle (Vérification de la CDF)]
+Pour $X \sim \text{Exp}(\lambda=0.5)$, la CDF est $F(x) = 1 - e^{-\lambda x}$.
+Calculons $P(X \le 3) = F(3) = 1 - e^{-0.5 \times 3}$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Calculer la valeur théorique $F(3)$.
+    \item Utiliser les échantillons de $X$ de l'exercice 5.
+    \item Calculer la probabilité empirique $P(X \le 3)$ en comptant la proportion d'échantillons $\le 3$.
+    \item Comparer les deux valeurs.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 7 : Propriété de Non-Mémoire (Exponentielle)]
+Nous allons vérifier numériquement la propriété de non-mémoire $P(X > s+t \mid X > s) = P(X > t)$ en utilisant les échantillons de $X$ de l'exercice 5 ($\lambda=0.5$).
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Choisir $s=1$ et $t=2$.
+    \item Calculer $P(X > t)$ (théoriquement $e^{-\lambda t}$). Calculer la probabilité empirique (proportion d'échantillons $> t$).
+    \item Calculer $P(X > s+t \mid X > s)$ empiriquement :
+        \begin{itemize}
+            \item Filtrer les échantillons pour ne garder que ceux où $X > s$.
+            \item Parmi ce sous-ensemble, calculer la proportion de ceux où $X > s+t$.
+        \end{itemize}
+    \item Comparer les deux probabilités empiriques.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 8 : Théorème de Transfert (LOTUS)]
+Soit $X \sim \text{Unif}(0, 2)$. La PDF est $f(x)=1/2$.
+Soit $g(X) = X^2$. Nous voulons $E[g(X)] = E[X^2]$.
+Théoriquement : $E[X^2] = \int_0^2 x^2 f(x) \, dx = \int_0^2 x^2 (1/2) \, dx = \frac{1}{2} [\frac{x^3}{3}]_0^2 = \frac{1}{2} (\frac{8}{3}) = 4/3$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Générer $N=100000$ échantillons $X \sim \text{Unif}(0, 2)$.
+    \item Créer les échantillons $Y = g(X) = X^2$.
+    \item Calculer l'espérance empirique $E[Y]$ (la moyenne de $Y$).
+    \item Comparer le résultat empirique à la valeur théorique $4/3$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 9 : Linéarité de l'Espérance (E[aX+b])]
+Soit $X \sim \text{Unif}(5, 15)$ (de l'exercice 3). Nous savons que $E[X] = 10$.
+Soit $Y = 5X - 3$.
+Par linéarité, l'espérance théorique est $E[Y] = E[5X - 3] = 5E[X] - 3$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Calculer $E[Y]$ théoriquement en utilisant $E[X] = 10$.
+    \item Utiliser les échantillons $X$ de l'exercice 3.
+    \item Créer les échantillons $Y = 5 \times X - 3$.
+    \item Calculer l'espérance empirique $E[Y]$ (la moyenne de $Y$).
+    \item Comparer les deux résultats.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : Propriétés de la Variance (Var(aX+b))]
+Soit $X \sim \text{Unif}(5, 15)$ (de l'exercice 3). $\text{Var}(X) = \frac{(15-5)^2}{12} = 100/12 \approx 8.333$.
+Soit $Y = 5X - 3$.
+Théoriquement : $\text{Var}(Y) = \text{Var}(5X - 3) = \text{Var}(5X) = 5^2 \text{Var}(X) = 25 \times \text{Var}(X)$.
+
+\textbf{Votre tâche (avec NumPy) :}
+\begin{enumerate}
+    \item Calculer $\text{Var}(Y)$ théoriquement en utilisant $\text{Var}(X) = 100/12$.
+    \item Utiliser les échantillons $Y$ de l'exercice 9.
+    \item Calculer la variance empirique $\text{Var}(Y)$ (avec \texttt{np.var}).
+    \item Comparer les deux résultats.
+\end{enumerate}
+\end{exercicebox}
