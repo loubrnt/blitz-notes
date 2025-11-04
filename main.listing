@@ -1,9 +1,28 @@
+!pip install yfinance
+import yfinance as yf
 import pandas as pd
-import seaborn as sns
-import math
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
 
-# Charger le dataset Taxis
-df = sns.load_dataset("taxis")
+# Definir le ticker et une longue periode pour notre "population"
+ticker = "GOOG"
+start_date = "2010-01-01"
+end_date = "2024-12-31"
 
-# 'df' est maintenant notre Univers S.
-# S_total = len(df)
+# Telecharger les prix de cloture ajustes
+data = yf.download(ticker, start=start_date, end=end_date)["Adj Close"]
+
+# Calculer les rendements journaliers (notre population X)
+returns = data.pct_change().dropna()
+
+# Calculer les "vrais" parametres de la population
+population_mean = returns.mean()
+population_var = returns.var()
+population_std = returns.std()
+
+print(f"--- Parametres de la Population (GOOG 2010-2024) ---")
+print(f"Mu (moyenne) = {population_mean:.6f}")
+print(f"Sigma^2 (variance) = {population_var:.6f}")
+print(f"Sigma (ecart-type) = {population_std:.6f}")
+print(f"N total (population) = {len(returns)}")
