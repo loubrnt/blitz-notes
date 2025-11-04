@@ -551,4 +551,115 @@ On utilise maintenant la formule de calcul $\text{Var}(X) = E(X^2) - [E(X)]^2$ :
 &= \frac{4a^2+4ab+4b^2 - 3a^2-6ab-3b^2}{12} \\
 &= \frac{a^2-2ab+b^2}{12} = \frac{(b-a)^2}{12}
 \end{align*}
+
+
+\end{examplebox}
+
+\subsection{Changement de Variable pour les Variables Aléatoires Continues}
+
+Un problème courant en probabilité est de déterminer la densité d'une variable aléatoire $Y = g(X)$, où $X$ est une variable aléatoire continue de densité connue $f_X(x)$ et $g$ est une fonction. Cette technique est fondamentale pour transformer des distributions.
+
+\begin{theorembox}[Changement de Variable - Cas Monotone]
+Soit $X$ une variable aléatoire continue de densité $f_X(x)$ supportée sur un intervalle $I$. Soit $g : I \to J$ une fonction strictement monotone (croissante ou décroissante) et dérivable, avec $g'(x) \ne 0$ sur $I$. Alors $Y = g(X)$ est une variable aléatoire continue de densité :
+$$ f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right| $$
+pour $y \in J$, et $f_Y(y) = 0$ ailleurs.
+\end{theorembox}
+
+\begin{proofbox}[Preuve du Théorème]
+La preuve repose sur la relation entre la CDF de $Y$ et celle de $X$.
+
+\textbf{Cas 1 : $g$ strictement croissante.}
+$$ F_Y(y) = P(Y \le y) = P(g(X) \le y) = P(X \le g^{-1}(y)) = F_X(g^{-1}(y)) $$
+En dérivant par rapport à $y$ :
+$$ f_Y(y) = \frac{d}{dy} F_X(g^{-1}(y)) = f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y) $$
+Comme $g$ est croissante, $g^{-1}$ est croissante, donc $\frac{d}{dy} g^{-1}(y) > 0$. On a donc :
+$$ f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right| $$
+
+\textbf{Cas 2 : $g$ strictement décroissante.}
+$$ F_Y(y) = P(Y \le y) = P(g(X) \le y) = P(X \ge g^{-1}(y)) = 1 - F_X(g^{-1}(y)) $$
+En dérivant par rapport à $y$ :
+$$ f_Y(y) = -f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y) $$
+Comme $g$ est décroissante, $g^{-1}$ est décroissante, donc $\frac{d}{dy} g^{-1}(y) < 0$. On a donc :
+$$ f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right| $$
+\end{proofbox}
+
+
+
+
+\begin{examplebox}[Changement d'unité : distance entre véhicules sur une autoroute]
+\textbf{Contexte:} Supposons que l’on modélise le trafic sur une portion isolée d’autoroute en zone rurale. Les véhicules passent rarement, de manière indépendante les uns des autres, à des instants aléatoires. Dans ce cadre, le nombre de voitures observées sur un intervalle de temps fixé suit une \textbf{loi de Poisson}, ce qui implique naturellement que le \textbf{temps entre deux passages successifs} suit une loi exponentielle. Par extension, si l’on suppose une vitesse constante moyenne, alors la \textbf{distance entre deux véhicules consécutifs} peut également être modélisée par une loi exponentielle.
+
+On s’intéresse précisément à cette distance \( X \), exprimée en \textbf{mètres}. On suppose qu’elle suit une loi exponentielle de paramètre \( \lambda = 0.001 \), ce qui correspond à une distance moyenne de \( 1/\lambda = 1000 \) mètres entre deux voitures — une situation réaliste pour une très faible densité de circulation.
+
+Ainsi, la densité de \( X \) est :
+\[
+f_X(x) = 
+\begin{cases}
+0.001 \, e^{-0.001x} & x \geq 0 \\
+0 & x < 0
+\end{cases}
+\]
+
+Un ingénieur souhaite maintenant exprimer cette distance en \textbf{kilomètres} pour des raisons pratiques (rapports, comparaison avec d'autres données). On définit donc :
+\[
+Y = \frac{X}{1000}
+\]
+Notre objectif est de déterminer la densité \( f_Y(y) \) de \( Y \) en suivant rigoureusement la méthode de changement de variable présentée dans le théorème précédent.
+
+\textbf{Étape 1 : Identifier la transformation}  
+La fonction \( g \) est définie par :
+\[
+g(x) = \frac{x}{1000}
+\]
+C’est une fonction \textbf{strictement croissante} et dérivable sur \( [0, \infty[ \), donc le théorème s’applique.
+
+\textbf{Étape 2 : Calculer la réciproque}  
+\[
+y = \frac{x}{1000} \quad \Rightarrow \quad x = 1000y \quad \Rightarrow \quad g^{-1}(y) = 1000y
+\]
+
+\textbf{Étape 3 : Calculer la dérivée de la réciproque}  
+\[
+\frac{d}{dy} g^{-1}(y) = \frac{d}{dy}(1000y) = 1000
+\]
+Donc :
+\[
+\left| \frac{d}{dy} g^{-1}(y) \right| = 1000
+\]
+
+\textbf{Étape 4 : Appliquer la formule du changement de variable}  
+D’après le théorème :
+\[
+f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right| = f_X(1000y) \cdot 1000
+\]
+
+Substituons \( f_X(1000y) \) :
+\[
+f_X(1000y) = 0.001 \, e^{-0.001 \cdot (1000y)} = 0.001 \, e^{-y}
+\]
+Donc :
+\[
+f_Y(y) = 0.001 \, e^{-y} \cdot 1000 = e^{-y}, \quad y \geq 0
+\]
+
+\textbf{Résultat final :}
+\[
+f_Y(y) = 
+\begin{cases}
+e^{-y} & y \geq 0 \\
+0 & y < 0
+\end{cases}
+\]
+Ce qui signifie que \( Y \sim \mathcal{E}(1) \), une loi exponentielle de paramètre \( 1 \), dont l’espérance est \( \mathbb{E}[Y] = 1 \) kilomètre.
+
+\textbf{Vérification probabiliste :}  
+Calculons la probabilité que la distance entre deux véhicules soit inférieure à 500 mètres.
+
+- En mètres : \( P(X < 500) = 1 - e^{-0.001 \times 500} = 1 - e^{-0.5} \approx 0.3935 \)
+- En kilomètres : \( 500 \, \text{m} = 0.5 \, \text{km} \), donc \( P(Y < 0.5) = 1 - e^{-1 \times 0.5} = 1 - e^{-0.5} \approx 0.3935 \)
+
+Les probabilités sont identiques, confirmant la validité du changement de variable.
+
+\textbf{Conclusion :}  
+Le passage d’une unité à une autre (ici, mètres → kilomètres) modifie la forme apparente de la densité, mais respecte la structure probabiliste sous-jacente. Le facteur jacobien \( \left| \frac{d}{dy} g^{-1}(y) \right| = 1000 \) compense exactement la compression de l’échelle, garantissant que la nouvelle densité intègre bien à 1 et que toutes les probabilités restent cohérentes avec la réalité physique du phénomène modélisé.
 \end{examplebox}

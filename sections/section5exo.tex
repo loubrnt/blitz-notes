@@ -1,335 +1,330 @@
 \subsection{Exercices}
 
-% --- Lois Jointes et Marginales (Discret) ---
+\textit{Pour tous les exercices de calcul, vous pouvez utiliser les valeurs suivantes pour la fonction de répartition de la loi normale standard $\Phi(z) = P(Z \le z)$ :}
+\begin{itemize}
+    \item $\Phi(0) = 0.5$
+    \item $\Phi(0.675) \approx 0.75$
+    \item $\Phi(1) \approx 0.8413$
+    \item $\Phi(1.28) \approx 0.90$
+    \item $\Phi(1.5) \approx 0.9332$
+    \item $\Phi(1.96) \approx 0.975$
+    \item $\Phi(2) \approx 0.9772$
+    \item $\Phi(2.5) \approx 0.9938$
+    \item $\Phi(3) \approx 0.9987$
+\end{itemize}
+\textit{Et rappelez-vous la propriété de symétrie : $\Phi(-z) = 1 - \Phi(z)$.}
 
-\begin{exercicebox}[Exercice 1 : Loi Jointe et Marginales]
-Soit le tableau suivant représentant la loi de probabilité jointe $P(X=x, Y=y)$ d'un couple de variables aléatoires $(X, Y)$.
+% --- Section 1 : Concepts, Z-Scores & Règle Empirique ---
 
-\begin{center}
-\begin{tabular}{|c|ccc|}
-\hline
-\diagbox{$X$}{$Y$} & 0 & 1 & 2 \\ \hline
-0 & 0.1 & 0.2 & 0.1 \\
-1 & 0.3 & 0.1 & 0.2 \\ \hline
-\end{tabular}
-\end{center}
-
+\begin{exercicebox}[Exercice 1 : Concepts (PDF)]
+Soit deux lois normales $A \sim \mathcal{N}(10, 4)$ et $B \sim \mathcal{N}(10, 9)$.
 \begin{enumerate}
-    \item Vérifiez qu'il s'agit bien d'une loi de probabilité.
-    \item Calculez la loi marginale de $X$, $P(X=x)$.
-    \item Calculez la loi marginale de $Y$, $P(Y=y)$.
+    \item Laquelle des deux distributions a le pic le plus élevé ?
+    \item Laquelle des deux distributions est la plus "aplatie" ?
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 2 : Calcul de Probabilité Jointe]
-En utilisant la loi jointe de l'exercice 1 :
-\begin{enumerate}
-    \item Calculez $P(X=0, Y \le 1)$.
-    \item Calculez $P(X=Y)$.
-    \item Calculez $P(X > Y)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 2 : Z-Score (Calcul)]
+La taille des étudiants suit $X \sim \mathcal{N}(175, 6^2)$, où les unités sont en cm. Un étudiant mesure 184 cm. Calculez son Z-score.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 3 : Indépendance (Loi Jointe)]
-En utilisant la loi jointe de l'exercice 1 :
-\begin{enumerate}
-    \item Calculez $P(X=0) \times P(Y=0)$.
-    \item Comparez ce résultat à $P(X=0, Y=0)$.
-    \item Les variables $X$ et $Y$ sont-elles indépendantes ? Justifiez.
-\end{enumerate}
+\begin{exercicebox}[Exercice 3 : Z-Score (Interprétation)]
+Un score de $Z = -2.5$ est obtenu pour une variable $X$. Qu'est-ce que cela signifie en termes de moyenne ($\mu$) et d'écart-type ($\sigma$) ?
 \end{exercicebox}
 
-% --- Espérance, Covariance et Corrélation ---
-
-\begin{exercicebox}[Exercice 4 : Espérances Marginales]
-En utilisant les lois marginales calculées à l'exercice 1 :
-\begin{enumerate}
-    \item Calculez l'espérance $E[X]$.
-    \item Calculez l'espérance $E[Y]$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 4 : Z-Score (Calcul Inverse)]
+Pour une distribution $\mathcal{N}(50, 100)$, quelle valeur $x$ correspond à un Z-score de $z = 1.5$ ?
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 5 : Espérance d'une Fonction (LOTUS)]
-En utilisant la loi jointe de l'exercice 1, calculez $E[XY]$.
-(Indice : $E[XY] = \sum_x \sum_y (xy) P(X=x, Y=y)$).
+\begin{exercicebox}[Exercice 5 : Z-Score (Comparaison)]
+Alice obtient 115 à un test de QI $\mathcal{N}(100, 15^2)$. Bob obtient 24 à un test d'aptitude $\mathcal{N}(20, 2^2)$. Qui a le mieux réussi par rapport à son groupe ?
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 6 : Covariance (Calcul)]
-En utilisant les résultats des exercices 4 et 5, calculez la covariance $\text{Cov}(X,Y)$.
+\begin{exercicebox}[Exercice 6 : Règle Empirique (68-95-99.7)]
+Le poids de paquets de café suit $\mathcal{N}(500g, 10^2)$.
+En utilisant la règle empirique, quel pourcentage approximatif de paquets pèse entre 490g et 510g ?
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 7 : Variances Marginales]
-En utilisant les lois marginales de l'exercice 1 et les espérances de l'exercice 4 :
-\begin{enumerate}
-    \item Calculez $E[X^2]$ et $\text{Var}(X)$.
-    \item Calculez $E[Y^2]$ et $\text{Var}(Y)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 7 : Règle Empirique (Queue)]
+En utilisant la règle empirique pour $\mathcal{N}(\mu, \sigma^2)$, quelle est la probabilité approximative $P(X > \mu + 2\sigma)$ ?
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 8 : Corrélation (Calcul)]
-En utilisant les résultats des exercices 6 et 7, calculez le coefficient de corrélation $\text{Corr}(X,Y)$.
+% --- Section 2 : Calculs de Probabilités (Standardisation) ---
+
+\begin{exercicebox}[Exercice 8 : Loi Standard (Lecture Directe)]
+Soit $Z \sim \mathcal{N}(0, 1)$. Calculez $P(Z \le 1.5)$.
 \end{exercicebox}
 
-% --- Propriétés de la Variance et de la Covariance ---
-
-\begin{exercicebox}[Exercice 9 : Variance d'une Somme (Non Indépendant)]
-Soient $X$ et $Y$ deux variables aléatoires telles que $\text{Var}(X) = 10$, $\text{Var}(Y) = 5$ et $\text{Cov}(X,Y) = 2$.
-Calculez $\text{Var}(X+Y)$.
+\begin{exercicebox}[Exercice 9 : Loi Standard (Queue Droite)]
+Soit $Z \sim \mathcal{N}(0, 1)$. Calculez $P(Z > 1)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 10 : Variance d'une Différence (Indépendant)]
-Soient $X$ et $Y$ deux variables aléatoires \textbf{indépendantes} telles que $\text{Var}(X) = 16$ et $\text{Var}(Y) = 9$.
-\begin{enumerate}
-    \item Que vaut $\text{Cov}(X,Y)$ ?
-    \item Calculez $\text{Var}(X-Y)$. (Rappel : $\text{Var}(X-Y) = \text{Var}(X) + \text{Var}(Y) - 2\text{Cov}(X,Y)$).
-\end{enumerate}
+\begin{exercicebox}[Exercice 10 : Loi Standard (Queue Gauche)]
+Soit $Z \sim \mathcal{N}(0, 1)$. Calculez $P(Z \le -2)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 11 : Bilinéarité de la Covariance]
-Soient $X, Y, Z$ trois variables aléatoires. Exprimez $\text{Cov}(X+Y, Z)$ en fonction des covariances des variables individuelles.
+\begin{exercicebox}[Exercice 11 : Loi Standard (Intervalle)]
+Soit $Z \sim \mathcal{N}(0, 1)$. Calculez $P(-1 \le Z \le 2)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 12 : Variance d'une Combinaison Linéaire]
-Soient $X$ et $Y$ deux variables aléatoires indépendantes avec $\text{Var}(X) = 4$ et $\text{Var}(Y) = 2$.
-Calculez $\text{Var}(3X - 5Y + 1)$.
+\begin{exercicebox}[Exercice 12 : Calcul (Standardisation)]
+Soit $X \sim \mathcal{N}(50, 25)$. (Attention : $\sigma^2=25$).
+Calculez $P(X \le 60)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 13 : Variance d'une Somme (Dés)]
-On lance deux dés équilibrés $D_1$ et $D_2$. Soit $S = D_1 + D_2$.
-On rappelle que pour un dé, $\text{Var}(D_i) = 35/12$.
-\begin{enumerate}
-    \item Les variables $D_1$ et $D_2$ sont-elles indépendantes ?
-    \item Calculez $\text{Var}(S)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 13 : Calcul (Standardisation)]
+Soit $X \sim \mathcal{N}(100, 225)$. (Attention : $\sigma^2=225$).
+Calculez $P(X > 77.5)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 14 : Covariance et Variance]
-Soit $X$ une variable aléatoire. En utilisant la bilinéarité de la covariance, montrez que $\text{Cov}(X, X) = \text{Var}(X)$.
+\begin{exercicebox}[Exercice 14 : Calcul (Intervalle)]
+La durée de vie d'une batterie suit $X \sim \mathcal{N}(40 \text{ heures}, 16)$.
+Calculez $P(38 \le X \le 42)$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 15 : Covariance avec une Constante]
-Soit $X$ une variable aléatoire et $c$ une constante.
-Montrez que $\text{Cov}(X, c) = 0$. (Indice : $E[c]=c$ et $E[Xc] = cE[X]$).
+\begin{exercicebox}[Exercice 15 : Propriété de la CDF]
+En utilisant les définitions, montrez que $P(Z > z) = P(Z \le -z)$.
 \end{exercicebox}
 
-% --- Standardisation et Somme de Poissons ---
+% --- Section 3 : Problèmes Inverses ---
 
-\begin{exercicebox}[Exercice 16 : Standardisation (Centrer-Réduire)]
-Soit $X$ une variable aléatoire avec $E[X] = 10$ et $\text{Var}(X) = 4$.
-Soit $Z = \frac{X - E[X]}{\sqrt{\text{Var}(X)}} = \frac{X - 10}{2}$ la variable standardisée.
-\begin{enumerate}
-    \item Calculez $E[Z]$.
-    \item Calculez $\text{Var}(Z)$.
-\end{enumerate}
+\begin{exercicebox}[Exercice 16 : Inverse (Z-Score)]
+Soit $Z \sim \mathcal{N}(0, 1)$. Trouvez la valeur $z$ telle que $P(Z \le z) = 0.975$.
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 17 : Corrélation et Standardisation]
-Soit $\text{Corr}(X,Y) = 0.5$. Soient $Z_X$ et $Z_Y$ les versions standardisées de $X$ et $Y$.
-Que vaut $\text{Cov}(Z_X, Z_Y)$ ? (Indice : regardez l'intuition de la corrélation).
+\begin{exercicebox}[Exercice 17 : Inverse (Z-Score Queue Droite)]
+Soit $Z \sim \mathcal{N}(0, 1)$. Trouvez la valeur $z$ telle que $P(Z > z) = 0.1587$.
+(Indice : $1 - 0.1587 = 0.8413$).
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 18 : Somme de Lois de Poisson]
-Un magasin reçoit des clients au comptoir A selon $X \sim \text{Poisson}(\lambda_1=5 \text{ clients/heure})$ et au comptoir B selon $Y \sim \text{Poisson}(\lambda_2=3 \text{ clients/heure})$. On suppose que $X$ et $Y$ sont indépendantes.
-Soit $S = X+Y$ le nombre total de clients arrivant au magasin en une heure.
-\begin{enumerate}
-    \item Quelle est la loi de $S$ ? Donnez son nom et son paramètre.
-    \item Quelle est la probabilité qu'exactement 6 clients au total arrivent en une heure, $P(S=6)$ ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 18 : Inverse (Z-Score Intervalle Central)]
+Soit $Z \sim \mathcal{N}(0, 1)$. Trouvez la valeur $z$ (positive) telle que $P(-z \le Z \le z) = 0.95$.
+(Indice : si l'aire centrale est 0.95, combien vaut l'aire à gauche de $z$ ?)
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 19 : Corrélation Nulle mais Dépendance]
-Soit $X$ une variable aléatoire $X \in \{-1, 0, 1\}$, avec $P(X=-1)=1/3$, $P(X=0)=1/3$, $P(X=1)=1/3$.
-Soit $Y = X^2$.
-\begin{enumerate}
-    \item Calculez $E[X]$.
-    \item Calculez $E[XY]$. (Indice : $E[XY] = E[X^3]$).
-    \item Calculez $\text{Cov}(X,Y)$.
-    \item Les variables $X$ et $Y$ sont-elles indépendantes ?
-\end{enumerate}
+\begin{exercicebox}[Exercice 19 : Problème Inverse (Application)]
+Le score à un examen suit $\mathcal{N}(100, 15^2)$. Pour obtenir la note "A", un étudiant doit être dans le top 2.5\% (c'est-à-dire $P(X > x) = 0.025$).
+Quel score $x$ minimum faut-il obtenir ?
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 20 : Bornes de la Corrélation]
-Soit $X$ une variable aléatoire et $Y = -3X + 5$.
-Sans faire de calcul, que vaut $\text{Corr}(X,Y)$ ? Justifiez.
+\begin{exercicebox}[Exercice 20 : Problème Inverse (Application)]
+Une machine remplit des sacs de farine $\mathcal{N}(1000g, 20^2)$. On veut garantir que 99.87\% des sacs pèsent *plus* qu'un certain poids $x$.
+Quelle est la valeur de $x$ ?
+\end{exercicebox}
+
+% --- Section 4 : Propriétés (Stabilité, Sommes) ---
+
+\begin{exercicebox}[Exercice 21 : Stabilité par Transformation Linéaire]
+Si $X \sim \mathcal{N}(10, 4)$ (donc $\sigma=2$), quelle est la loi de la variable $Y = 3X + 5$ ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 22 : Stabilité (Changement d'Unités)]
+La taille $T_{cm}$ d'une population suit $\mathcal{N}(170, 100)$. Quelle est la loi de la taille $T_{m}$ en mètres ? (Rappel : $T_{m} = T_{cm} / 100$).
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 23 : Stabilité par Addition (Indépendante)]
+Soit $X \sim \mathcal{N}(50, 10)$ et $Y \sim \mathcal{N}(30, 6)$ deux variables indépendantes.
+Quelle est la loi de la somme $S = X + Y$ ?
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 24 : Stabilité par Différence (Indépendante)]
+En utilisant les variables $X$ et $Y$ de l'exercice 23, quelle est la loi de la différence $D = X - Y$ ?
+(Indice : $D = X + (-1)Y$).
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 25 : Somme de $n$ variables i.i.d.]
+On prélève 10 pommes d'un lot où le poids d'une pomme suit $\mathcal{N}(150g, 10^2)$. Soit $P_{total}$ le poids total des 10 pommes (supposées indépendantes).
+Quelle est la loi de $P_{total}$ ?
 \end{exercicebox}
 
 \subsection{Corrections des Exercices}
 
-% --- Corrections : Lois Jointes et Marginales (Discret) ---
-
-\begin{correctionbox}[Correction Exercice 1 : Loi Jointe et Marginales]
-1.  On somme toutes les probabilités du tableau :
-    $0.1 + 0.2 + 0.1 + 0.3 + 0.1 + 0.2 = 1.0$.
-    Puisque la somme est 1 et toutes les probabilités sont non négatives, c'est une loi valide.
-
-2.  Loi marginale de $X$ (somme des lignes) :
-    $P(X=0) = P(X=0, Y=0) + P(X=0, Y=1) + P(X=0, Y=2) = 0.1 + 0.2 + 0.1 = 0.4$.
-    $P(X=1) = P(X=1, Y=0) + P(X=1, Y=1) + P(X=1, Y=2) = 0.3 + 0.1 + 0.2 = 0.6$.
-
-3.  Loi marginale de $Y$ (somme des colonnes) :
-    $P(Y=0) = P(X=0, Y=0) + P(X=1, Y=0) = 0.1 + 0.3 = 0.4$.
-    $P(Y=1) = P(X=0, Y=1) + P(X=1, Y=1) = 0.2 + 0.1 = 0.3$.
-    $P(Y=2) = P(X=0, Y=2) + P(X=1, Y=2) = 0.1 + 0.2 = 0.3$.
+\begin{correctionbox}[Correction Exercice 1 : Concepts (PDF)]
+1.  La variance de A ($\sigma_A^2=4$) est plus petite que celle de B ($\sigma_B^2=9$). Une variance plus petite signifie une distribution plus concentrée, donc un pic plus élevé (l'aire totale devant rester 1). C'est la distribution A.
+2.  La distribution B ($\sigma_B=3$) a un écart-type plus grand que A ($\sigma_A=2$), elle est donc plus dispersée, c'est-à-dire plus "large et aplatie".
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 2 : Calcul de Probabilité Jointe]
-1.  $P(X=0, Y \le 1) = P(X=0, Y=0) + P(X=0, Y=1) = 0.1 + 0.2 = 0.3$.
-2.  $P(X=Y) = P(X=0, Y=0) + P(X=1, Y=1) = 0.1 + 0.1 = 0.2$.
-3.  $P(X > Y) = P(X=1, Y=0) = 0.3$. (C'est la seule case où $x > y$).
+\begin{correctionbox}[Correction Exercice 2 : Z-Score (Calcul)]
+On a $x=184$, $\mu=175$, $\sigma=6$.
+$$Z = \frac{x - \mu}{\sigma} = \frac{184 - 175}{6} = \frac{9}{6} = 1.5$$
+L'étudiant se situe à 1.5 écarts-types au-dessus de la moyenne.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 3 : Indépendance (Loi Jointe)]
-On utilise les lois marginales de l'exercice 1 : $P(X=0)=0.4$ et $P(Y=0)=0.4$.
-1.  $P(X=0) \times P(Y=0) = 0.4 \times 0.4 = 0.16$.
-2.  Dans le tableau joint, $P(X=0, Y=0) = 0.1$.
-3.  Puisque $P(X=0, Y=0) \neq P(X=0) \times P(Y=0)$ (car $0.1 \neq 0.16$), les variables $X$ et $Y$ \textbf{ne sont pas indépendantes}. (Un seul contre-exemple suffit).
+\begin{correctionbox}[Correction Exercice 3 : Z-Score (Interprétation)]
+Cela signifie que la valeur $X$ observée est $2.5$ écarts-types \textbf{en dessous} de la moyenne $\mu$. (c-à-d, $x = \mu - 2.5\sigma$).
 \end{correctionbox}
 
-% --- Corrections : Espérance, Covariance et Corrélation ---
-
-\begin{correctionbox}[Correction Exercice 4 : Espérances Marginales]
-1.  $E[X] = \sum_x x P(X=x) = (0)(P(X=0)) + (1)(P(X=1))$
-    $E[X] = (0)(0.4) + (1)(0.6) = 0.6$.
-2.  $E[Y] = \sum_y y P(Y=y) = (0)(P(Y=0)) + (1)(P(Y=1)) + (2)(P(Y=2))$
-    $E[Y] = (0)(0.4) + (1)(0.3) + (2)(0.3) = 0 + 0.3 + 0.6 = 0.9$.
+\begin{correctionbox}[Correction Exercice 4 : Z-Score (Calcul Inverse)]
+On a $\mu=50$ et $\sigma^2=100 \implies \sigma=10$. On cherche $x$.
+$z = \frac{x - \mu}{\sigma} \implies x = \mu + z\sigma$
+$x = 50 + (1.5)(10) = 50 + 15 = 65$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 5 : Espérance d'une Fonction (LOTUS)]
-On somme $(xy)P(X=x, Y=y)$ sur les 6 cases. Les termes où $x=0$ ou $y=0$ sont nuls.
-$E[XY] = (0 \cdot 0)(0.1) + (0 \cdot 1)(0.2) + (0 \cdot 2)(0.1) + (1 \cdot 0)(0.3) + (1 \cdot 1)(0.1) + (1 \cdot 2)(0.2)$
-$E[XY] = 0 + 0 + 0 + 0 + (1)(0.1) + (2)(0.2) = 0.1 + 0.4 = 0.5$.
+\begin{correctionbox}[Correction Exercice 5 : Z-Score (Comparaison)]
+On compare les Z-scores :
+$Z_{Alice} = \frac{115 - 100}{15} = \frac{15}{15} = 1.0$.
+$Z_{Bob} = \frac{24 - 20}{2} = \frac{4}{2} = 2.0$.
+Bob a un Z-score plus élevé (2.0 contre 1.0), il a donc mieux réussi par rapport à son groupe.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 6 : Covariance (Calcul)]
-On utilise la formule $\text{Cov}(X,Y) = E[XY] - E[X]E[Y]$.
-$$ \text{Cov}(X,Y) = 0.5 - (0.6)(0.9) = 0.5 - 0.54 = -0.04 $$
+\begin{correctionbox}[Correction Exercice 6 : Règle Empirique (68-95-99.7)]
+On a $\mu=500$ et $\sigma=10$. L'intervalle [490, 510] correspond à $[\mu - 1\sigma, \mu + 1\sigma]$.
+Selon la règle empirique, environ \textbf{68\%} des paquets se trouvent dans cet intervalle.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 7 : Variances Marginales]
-1.  Pour $X$:
-    $E[X^2] = (0^2)(0.4) + (1^2)(0.6) = 0.6$.
-    $\text{Var}(X) = E[X^2] - (E[X])^2 = 0.6 - (0.6)^2 = 0.6 - 0.36 = 0.24$.
-2.  Pour $Y$:
-    $E[Y^2] = (0^2)(0.4) + (1^2)(0.3) + (2^2)(0.3) = 0 + 0.3 + (4)(0.3) = 0.3 + 1.2 = 1.5$.
-    $\text{Var}(Y) = E[Y^2] - (E[Y])^2 = 1.5 - (0.9)^2 = 1.5 - 0.81 = 0.69$.
+\begin{correctionbox}[Correction Exercice 7 : Règle Empirique (Queue)]
+La règle dit que $P(\mu - 2\sigma \le X \le \mu + 2\sigma) \approx 0.95$.
+L'aire totale est 1. L'aire en dehors de cet intervalle est $1 - 0.95 = 0.05$.
+En raison de la symétrie, cette aire de 0.05 est répartie également entre les deux queues (gauche et droite).
+L'aire de la queue droite $P(X > \mu + 2\sigma)$ est donc $0.05 / 2 = 0.025$ (soit 2.5\%).
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 8 : Corrélation (Calcul)]
-On utilise la formule $\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}$.
-$$ \text{Corr}(X,Y) = \frac{-0.04}{\sqrt{0.24 \times 0.69}} = \frac{-0.04}{\sqrt{0.1656}} \approx \frac{-0.04}{0.4069} \approx -0.098 $$
-La corrélation est très faible et négative.
+\begin{correctionbox}[Correction Exercice 8 : Loi Standard (Lecture Directe)]
+$P(Z \le 1.5) = \Phi(1.5)$. En utilisant la table fournie, $P(Z \le 1.5) \approx 0.9332$.
 \end{correctionbox}
 
-% --- Corrections : Propriétés de la Variance et de la Covariance ---
-
-\begin{correctionbox}[Correction Exercice 9 : Variance d'une Somme (Non Indépendant)]
-On utilise la formule générale :
-$$ \text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y) $$
-$$ \text{Var}(X+Y) = 10 + 5 + 2(2) = 15 + 4 = 19 $$
+\begin{correctionbox}[Correction Exercice 9 : Loi Standard (Queue Droite)]
+$P(Z > 1) = 1 - P(Z \le 1) = 1 - \Phi(1)$.
+$P(Z > 1) \approx 1 - 0.8413 = 0.1587$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 10 : Variance d'une Différence (Indépendant)]
-1.  Puisque $X$ et $Y$ sont indépendantes, leur covariance est nulle : $\text{Cov}(X,Y) = 0$.
-2.  On utilise la formule générale :
-    $$ \text{Var}(X-Y) = \text{Var}(X + (-1)Y) = \text{Var}(X) + \text{Var}(-1 \cdot Y) + 2\text{Cov}(X, -Y) $$
-    $$ = \text{Var}(X) + (-1)^2 \text{Var}(Y) - 2\text{Cov}(X, Y) $$
-    $$ \text{Var}(X-Y) = \text{Var}(X) + \text{Var}(Y) - 2(0) $$
-    $$ \text{Var}(X-Y) = 16 + 9 = 25 $$
+\begin{correctionbox}[Correction Exercice 10 : Loi Standard (Queue Gauche)]
+$P(Z \le -2) = \Phi(-2)$. Par symétrie, $\Phi(-2) = 1 - \Phi(2)$.
+$P(Z \le -2) \approx 1 - 0.9772 = 0.0228$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 11 : Bilinéarité de la Covariance]
-La covariance est linéaire sur son premier argument :
-$$ \text{Cov}(X+Y, Z) = \text{Cov}(X, Z) + \text{Cov}(Y, Z) $$
+\begin{correctionbox}[Correction Exercice 11 : Loi Standard (Intervalle)]
+$P(-1 \le Z \le 2) = P(Z \le 2) - P(Z \le -1) = \Phi(2) - \Phi(-1)$.
+$\Phi(-1) = 1 - \Phi(1) \approx 1 - 0.8413 = 0.1587$.
+$P(-1 \le Z \le 2) \approx 0.9772 - 0.1587 = 0.8185$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 12 : Variance d'une Combinaison Linéaire]
-On utilise $\text{Var}(aX + bY + c) = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab\text{Cov}(X,Y)$.
-Ici $a=3$, $b=-5$, $c=1$. $X$ et $Y$ sont indépendantes, donc $\text{Cov}(X,Y)=0$.
-$$ \text{Var}(3X - 5Y + 1) = (3)^2 \text{Var}(X) + (-5)^2 \text{Var}(Y) + 0 $$
-$$ = 9 \times (4) + 25 \times (2) = 36 + 50 = 86 $$
-(Note : la constante additive $c=1$ ne change pas la variance).
+\begin{correctionbox}[Correction Exercice 12 : Calcul (Standardisation)]
+$X \sim \mathcal{N}(50, 25) \implies \mu=50, \sigma=5$.
+On cherche $P(X \le 60)$.
+$Z = \frac{60 - 50}{5} = \frac{10}{5} = 2$.
+$P(X \le 60) = P(Z \le 2) = \Phi(2) \approx 0.9772$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 13 : Variance d'une Somme (Dés)]
-1.  Oui, les lancers de deux dés standards sont des événements physiquement indépendants.
-2.  Puisqu'ils sont indépendants, $\text{Cov}(D_1, D_2) = 0$.
-    $$ \text{Var}(S) = \text{Var}(D_1 + D_2) = \text{Var}(D_1) + \text{Var}(D_2) $$
-    $$ \text{Var}(S) = \frac{35}{12} + \frac{35}{12} = \frac{70}{12} = \frac{35}{6} $$
+\begin{correctionbox}[Correction Exercice 13 : Calcul (Standardisation)]
+$X \sim \mathcal{N}(100, 225) \implies \mu=100, \sigma=15$.
+On cherche $P(X > 77.5)$.
+$Z = \frac{77.5 - 100}{15} = \frac{-22.5}{15} = -1.5$.
+$P(X > 77.5) = P(Z > -1.5) = 1 - P(Z \le -1.5) = 1 - \Phi(-1.5)$.
+$\Phi(-1.5) = 1 - \Phi(1.5) \approx 1 - 0.9332 = 0.0668$.
+$P(Z > -1.5) = 1 - 0.0668 = 0.9332$. (Logique : $P(Z > -1.5) = P(Z \le 1.5)$ par symétrie).
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 14 : Covariance et Variance]
-Par définition, $\text{Cov}(A, B) = E[(A-\mu_A)(B-\mu_B)]$.
-Posons $A=X$ et $B=X$. Alors $\mu_A = \mu_X$ et $\mu_B = \mu_X$.
-$$ \text{Cov}(X, X) = E[(X-\mu_X)(X-\mu_X)] = E[(X-\mu_X)^2] $$
-C'est la définition de $\text{Var}(X)$.
+\begin{correctionbox}[Correction Exercice 14 : Calcul (Intervalle)]
+$X \sim \mathcal{N}(40, 16) \implies \mu=40, \sigma=4$.
+On cherche $P(38 \le X \le 42)$.
+$z_1 = \frac{38 - 40}{4} = -0.5$. $z_2 = \frac{42 - 40}{4} = 0.5$.
+$P(38 \le X \le 42) = P(-0.5 \le Z \le 0.5) = \Phi(0.5) - \Phi(-0.5)$.
+$\Phi(-0.5) = 1 - \Phi(0.5)$.
+$P = \Phi(0.5) - (1 - \Phi(0.5)) = 2\Phi(0.5) - 1$.
+(La valeur $\Phi(0.5) \approx 0.6915$ n'est pas fournie, mais $P(-1 \le Z \le 1) \approx 0.68$, donc on s'attend à une valeur plus petite).
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 15 : Covariance avec une Constante]
-On utilise la formule de calcul $\text{Cov}(X,c) = E[Xc] - E[X]E[c]$.
-Par linéarité, $E[Xc] = cE[X]$.
-L'espérance d'une constante est la constante elle-même : $E[c] = c$.
-$$ \text{Cov}(X, c) = cE[X] - E[X]c = 0 $$
+\begin{correctionbox}[Correction Exercice 15 : Propriété de la CDF]
+$P(Z > z) = 1 - P(Z \le z) = 1 - \Phi(z)$.
+$P(Z \le -z) = \Phi(-z)$.
+Par symétrie de la PDF $\phi(z) = \phi(-z)$, l'aire à droite de $z$ est égale à l'aire à gauche de $-z$.
+Donc $P(Z > z) = P(Z \le -z)$, ce qui implique $1 - \Phi(z) = \Phi(-z)$.
 \end{correctionbox}
 
-% --- Corrections : Standardisation et Somme de Poissons ---
-
-\begin{correctionbox}[Correction Exercice 16 : Standardisation (Centrer-Réduire)]
-$Z = \frac{X - 10}{2} = \frac{1}{2}X - 5$.
-1.  Calcul de $E[Z]$ par linéarité :
-    $$ E[Z] = E\left[ \frac{1}{2}X - 5 \right] = \frac{1}{2}E[X] - 5 = \frac{1}{2}(10) - 5 = 5 - 5 = 0 $$
-2.  Calcul de $\text{Var}(Z)$ par les propriétés de la variance :
-    $$ \text{Var}(Z) = \text{Var}\left( \frac{1}{2}X - 5 \right) = \left(\frac{1}{2}\right)^2 \text{Var}(X) = \frac{1}{4} \text{Var}(X) $$
-    $$ \text{Var}(Z) = \frac{1}{4}(4) = 1 $$
-    Par définition, une variable standardisée a une moyenne de 0 et une variance de 1.
+\begin{correctionbox}[Correction Exercice 16 : Inverse (Z-Score)]
+On cherche $z$ tel que $P(Z \le z) = 0.975$.
+C'est $\Phi(z) = 0.975$. D'après la table, $z = 1.96$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 17 : Corrélation et Standardisation]
-La corrélation $\text{Corr}(X,Y)$ EST, par définition, la covariance des versions standardisées $Z_X$ et $Z_Y$.
-$$ \text{Cov}(Z_X, Z_Y) = \text{Corr}(X,Y) = 0.5 $$
+\begin{correctionbox}[Correction Exercice 17 : Inverse (Z-Score Queue Droite)]
+On cherche $z$ tel que $P(Z > z) = 0.1587$.
+Cela signifie $P(Z \le z) = 1 - 0.1587 = 0.8413$.
+$\Phi(z) = 0.8413$. D'après la table, $z = 1$.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 18 : Somme de Lois de Poisson]
-1.  Puisque $X$ et $Y$ sont des v.a. de Poisson \textbf{indépendantes}, leur somme $S=X+Y$ suit aussi une \textbf{loi de Poisson}.
-    Le nouveau paramètre est la somme des paramètres : $\lambda_S = \lambda_1 + \lambda_2 = 5 + 3 = 8$.
-    Donc, $S \sim \text{Poisson}(\lambda=8)$.
-2.  On cherche $P(S=6)$ pour $S \sim \text{Poisson}(8)$.
-    $$ P(S=6) = \frac{e^{-8} 8^6}{6!} = \frac{e^{-8} \times 262144}{720} = 364.08 \times e^{-8} \approx 0.122 $$
+\begin{correctionbox}[Correction Exercice 18 : Inverse (Z-Score Intervalle Central)]
+Si $P(-z \le Z \le z) = 0.95$, l'aire restante dans les deux queues est $1 - 0.95 = 0.05$.
+Par symétrie, l'aire dans la queue gauche $P(Z < -z)$ est $0.05 / 2 = 0.025$.
+L'aire totale à gauche de $z$ est $P(Z \le z) = 0.95 + 0.025 = 0.975$.
+On cherche $z$ tel que $\Phi(z) = 0.975$.
+D'après la table, $z = 1.96$. (On retrouve $\mu \pm 1.96\sigma$ comme l'intervalle à 95\% exact).
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 19 : Corrélation Nulle mais Dépendance]
-1.  $E[X] = (-1)(1/3) + (0)(1/3) + (1)(1/3) = -1/3 + 0 + 1/3 = 0$.
-2.  $E[XY] = E[X(X^2)] = E[X^3]$.
-    $E[X^3] = (-1)^3(1/3) + (0)^3(1/3) + (1)^3(1/3) = (-1)(1/3) + 0 + (1)(1/3) = 0$.
-3.  $\text{Cov}(X,Y) = E[XY] - E[X]E[Y] = 0 - (0)E[Y] = 0$.
-    Les variables sont \textbf{non corrélées}.
-4.  Les variables $X$ et $Y$ sont-elles indépendantes ? Non.
-    Test : $P(X=1, Y=0) \stackrel{?}{=} P(X=1)P(Y=0)$.
-    - $P(X=1, Y=0) = P(X=1, X^2=0) = 0$.
-    - $P(X=1) = 1/3$.
-    - $P(Y=0) = P(X^2=0) = P(X=0) = 1/3$.
-    - $P(X=1)P(Y=0) = (1/3)(1/3) = 1/9$.
-    Puisque $0 \neq 1/9$, elles \textbf{ne sont pas indépendantes}.
-    C'est un exemple classique de dépendance non linéaire avec covariance nulle.
+\begin{correctionbox}[Correction Exercice 19 : Problème Inverse (Application)]
+$X \sim \mathcal{N}(100, 15^2)$. On cherche $x$ tel que $P(X > x) = 0.025$.
+Standardisation : $P(Z > z) = 0.025$, où $z = (x-100)/15$.
+$P(Z \le z) = 1 - 0.025 = 0.975$.
+D'après la table, $z$ tel que $\Phi(z)=0.975$ est $z=1.96$.
+On résout : $1.96 = \frac{x - 100}{15} \implies x = 100 + 1.96(15) = 100 + 29.4 = 129.4$.
+Il faut un score minimum de 129.4.
 \end{correctionbox}
 
-\begin{correctionbox}[Correction Exercice 20 : Bornes de la Corrélation]
-$Y$ est une fonction linéaire parfaite de $X$ : $Y = aX + b$ avec $a=-3$ et $b=5$.
-La corrélation $\text{Corr}(X,Y)$ mesure la force de la relation \textit{linéaire}. Puisqu'elle est parfaite, la corrélation doit être $\pm 1$.
-Le coefficient $a = -3$ est négatif, donc la relation est décroissante.
-Par conséquent, $\text{Corr}(X,Y) = -1$.
+\begin{correctionbox}[Correction Exercice 20 : Problème Inverse (Application)]
+$X \sim \mathcal{N}(1000, 20^2)$. On cherche $x$ tel que $P(X > x) = 0.9987$.
+Standardisation : $P(Z > z) = 0.9987$, où $z = (x-1000)/20$.
+$P(Z \le z) = 1 - 0.9987 = 0.0013$.
+C'est une valeur très faible. Utilisons la symétrie : $\Phi(-z) = 1 - \Phi(z)$.
+$\Phi(z) = 0.0013$. On cherche $z$ dans la table.
+On voit que $\Phi(3) = 0.9987$, donc $\Phi(-3) = 1 - 0.9987 = 0.0013$.
+Le Z-score est $z = -3$.
+On résout : $-3 = \frac{x - 1000}{20} \implies x = 1000 - 3(20) = 1000 - 60 = 940$.
+Le poids garanti est 940g.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 21 : Stabilité par Transformation Linéaire]
+$X \sim \mathcal{N}(10, 4) \implies \mu_X=10, \sigma_X^2=4$. $Y = aX + b$ avec $a=3, b=5$.
+$Y$ suit une loi normale.
+$E[Y] = a\mu_X + b = 3(10) + 5 = 35$.
+$\text{Var}(Y) = a^2 \text{Var}(X) = 3^2 \times 4 = 9 \times 4 = 36$.
+Donc, $Y \sim \mathcal{N}(35, 36)$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 22 : Stabilité (Changement d'Unités)]
+$T_{cm} \sim \mathcal{N}(170, 100) \implies \mu=170, \sigma^2=100$.
+$T_m = a T_{cm} + b$ avec $a=1/100 = 0.01$ et $b=0$.
+$E[T_m] = a\mu + b = 0.01(170) + 0 = 1.7$.
+$\text{Var}(T_m) = a^2 \text{Var}(T_{cm}) = (0.01)^2 \times 100 = 0.0001 \times 100 = 0.01$.
+Donc, $T_m \sim \mathcal{N}(1.7, 0.01)$. (L'écart-type est $\sigma_m = \sqrt{0.01} = 0.1$ m, ce qui est logique : 10cm = 0.1m).
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 23 : Stabilité par Addition (Indépendante)]
+$X \sim \mathcal{N}(50, 10)$, $Y \sim \mathcal{N}(30, 6)$. $X, Y$ indépendantes.
+$S = X + Y$ suit une loi normale.
+$E[S] = E[X] + E[Y] = 50 + 30 = 80$.
+$\text{Var}(S) = \text{Var}(X) + \text{Var}(Y) = 10 + 6 = 16$.
+Donc, $S \sim \mathcal{N}(80, 16)$.
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 24 : Stabilité par Différence (Indépendante)]
+$D = X - Y = X + (-1)Y$. C'est une somme de variables normales indépendantes (si $X, Y$ le sont, $X, -Y$ le sont aussi). $D$ suit une loi normale.
+$E[D] = E[X] + E[-Y] = E[X] - E[Y] = 50 - 30 = 20$.
+$\text{Var}(D) = \text{Var}(X) + \text{Var}(-1 \cdot Y) = \text{Var}(X) + (-1)^2 \text{Var}(Y)$
+$\text{Var}(D) = \text{Var}(X) + \text{Var}(Y) = 10 + 6 = 16$.
+Donc, $D \sim \mathcal{N}(20, 16)$. (Note : les variances s'ajoutent toujours !)
+\end{correctionbox}
+
+\begin{correctionbox}[Correction Exercice 25 : Somme de $n$ variables i.i.d.]
+Soit $P_i \sim \mathcal{N}(150, 100)$ le poids de la $i$-ème pomme.
+$P_{total} = P_1 + \dots + P_{10}$. C'est une somme de 10 v.a. normales indépendantes.
+$P_{total}$ suit une loi normale.
+$E[P_{total}] = E[P_1] + \dots + E[P_{10}] = 10 \times E[P_1] = 10 \times 150 = 1500g$.
+$\text{Var}(P_{total}) = \text{Var}(P_1) + \dots + \text{Var}(P_{10}) = 10 \times \text{Var}(P_1) = 10 \times 100 = 1000$.
+Donc, $P_{total} \sim \mathcal{N}(1500, 1000)$.
 \end{correctionbox}
 
 \subsection{Exercices Python}
 
-Ces exercices appliquent les concepts de distributions multivariées (covariance, corrélation, variance d'une somme) à des données financières réelles. Nous allons analyser la relation entre les rendements boursiers de deux entreprises technologiques : Google (GOOG) et Microsoft (MSFT).
+Ces exercices appliquent les concepts de la loi normale au jeu de données "Yahoo Finance". Nous allons modéliser les \textbf{rendements journaliers} (variation en pourcentage) des actions, qui sont souvent (par approximation) considérés comme suivant une loi normale.
 
-Nous travaillerons avec les \textbf{rendements journaliers} (variation en pourcentage), qui sont des variables aléatoires continues. L'espérance $E[X]$ sera estimée par la moyenne empirique (\texttt{.mean()}) et la variance $\text{Var}(X)$ par la variance empirique (\texttt{.var()}).
+Nous allons travailler avec les rendements de Google ($X$) et de Microsoft ($Y$).
 
 \begin{codecell}
 !pip install yfinance
 import yfinance as yf
 import pandas as pd
 import numpy as np
+from scipy.stats import norm # Moteur pour les calculs de CDF/PDF
 
 # Definir les tickers et la periode
 tickers = ["GOOG", "MSFT"]
@@ -345,138 +340,159 @@ returns = data.pct_change().dropna()
 # Renommer les colonnes pour plus de clarte
 returns.columns = ["GOOG_Return", "MSFT_Return"]
 
-# "returns" est notre DataFrame principal.
+# 'returns' est notre DataFrame principal.
 # X = returns["GOOG_Return"]
 # Y = returns["MSFT_Return"]
 \end{codecell}
 
-\begin{exercicebox}[Exercice 1 : Espérances et Variances Marginales]
+\begin{exercicebox}[Exercice 1 : Estimation des Paramètres $\mu$ et $\sigma^2$]
 Soit $X$ la v.a. "Rendement journalier de GOOG" et $Y$ la v.a. "Rendement journalier de MSFT".
+Nous supposons $X \sim \mathcal{N}(\mu_X, \sigma_X^2)$ et $Y \sim \mathcal{N}(\mu_Y, \sigma_Y^2)$.
 
 \textbf{Votre tâche :}
 \begin{enumerate}
-    \item Calculer l'espérance empirique $E[X]$ et $E[Y]$. (Que remarquez-vous sur leur ordre de grandeur ?)
-    \item Calculer la variance empirique $\text{Var}(X)$ et $\text{Var}(Y)$.
-    \item Calculer l'écart-type empirique $\sigma_X$ et $\sigma_Y$. Laquelle des deux actions est la plus "volatile" ?
+    \item Estimer $\mu_X$ et $\mu_Y$ (les espérances) en calculant la moyenne empirique (\texttt{.mean()}) des deux séries.
+    \item Estimer $\sigma_X^2$ et $\sigma_Y^2$ (les variances) en calculant la variance empirique (\texttt{.var()}).
+    \item Estimer $\sigma_X$ et $\sigma_Y$ (les écarts-types) en prenant la racine carrée des variances (ou \texttt{.std()}).
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 2 : Standardisation (Centrer-Réduire)]
-Le concept de variable centrée réduite $Z = \frac{X - \mu_X}{\sigma_X}$ est très utilisé en finance (par ex: "Z-score").
+\begin{exercicebox}[Exercice 2 : Standardisation (Score Z)]
+Le Z-score nous dit à combien d'écarts-types une observation se situe de la moyenne.
 
 \textbf{Votre tâche :}
 \begin{enumerate}
-    \item Récupérer $E[X]$ (la moyenne) et $\sigma_X$ (l'écart-type) des rendements de GOOG de l'exercice 1.
-    \item Prendre le \textbf{dernier} rendement journalier de GOOG dans le jeu de données.
-    \item Calculer le "Z-score" de ce dernier rendement.
-    \item Interpréter ce score (par ex: "Le dernier jour, GOOG a performé à X écarts-types de sa moyenne...").
+    \item Utiliser les $\mu_X$ et $\sigma_X$ (pour GOOG) estimés à l'exercice 1.
+    \item Trouver le rendement du dernier jour disponible dans vos données pour GOOG.
+    \item Calculer le Z-score de ce rendement : $Z = (x - \mu_X) / \sigma_X$.
+    \item Interpréter ce score (ex: "Le rendement de ce jour était à [Z] écarts-types de la moyenne...").
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 3 : Covariance (Calcul via LOTUS)]
-Calculez la covariance entre les rendements de GOOG ($X$) et de MSFT ($Y$) en utilisant la formule $\text{Cov}(X,Y) = E[XY] - E[X]E[Y]$.
+\begin{exercicebox}[Exercice 3 : Calcul de Probabilité (Utilisation de $\Phi$)]
+En utilisant les paramètres $\mu_X$ et $\sigma_X$ pour GOOG (Ex 1) et en supposant la distribution normale :
 
 \textbf{Votre tâche :}
 \begin{enumerate}
-    \item Récupérer $E[X]$ et $E[Y]$ de l'exercice 1.
-    \item Calculer $E[XY]$ en utilisant le "Théorème de Transfert" (LOTUS) sur les données empiriques (Indice : calculez la moyenne de la série $X \times Y$).
-    \item Appliquer la formule pour trouver $\text{Cov}(X,Y)$.
-    \item Le signe est-il positif ou négatif ? Qu'est-ce que cela implique intuitivement ?
+    \item Calculer la probabilité qu'un jour donné, le rendement de GOOG soit "calme", c'est-à-dire $P(-0.01 \le X \le 0.01)$.
+    \item (Indice : Standardisez $a=-0.01$ et $b=0.01$ en $z_a, z_b$, puis calculez $\Phi(z_b) - \Phi(z_a)$. Vous aurez besoin de \texttt{scipy.stats.norm.cdf()}).
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 4 : Corrélation (Calcul)]
-La covariance de l'exercice 3 dépend des unités (rendement au carré). Nous allons la normaliser pour obtenir la corrélation $r \in [-1, 1]$.
+\begin{exercicebox}[Exercice 4 : Problème Inverse (Value at Risk)]
+Le "Value at Risk" (VaR) est une valeur $x$ telle qu'il y a une probabilité $p$ de perdre plus que $x$.
 
 \textbf{Votre tâche :}
 \begin{enumerate}
-    \item Récupérer $\text{Cov}(X,Y)$ (Exercice 3) et $\sigma_X, \sigma_Y$ (Exercice 1).
-    \item Appliquer la formule : $\text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}$.
-    \item Interpréter ce coefficient. La relation linéaire entre GOOG et MSFT est-elle forte ou faible ?
+    \item Toujours avec les paramètres de GOOG, trouvez la valeur $x$ (le rendement) qui correspond au "top 5\%" des pires jours.
+    \item Autrement dit, trouvez $x$ tel que $P(X \le x) = 0.05$.
+    \item (Indice : Trouvez le Z-score $z$ tel que $\Phi(z) = 0.05$ (vous aurez besoin de \texttt{scipy.stats.norm.ppf()}), puis "dé-standardisez" : $x = \mu_X + z \sigma_X$).
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 5 : Linéarité de l'Espérance (Portefeuille)]
-Soit un portefeuille $P$ composé à 60\% de GOOG ($X$) et 40\% de MSFT ($Y$).
-Le rendement du portefeuille est $P = 0.6X + 0.4Y$.
-La théorie dit : $E[P] = E[0.6X + 0.4Y] = 0.6E[X] + 0.4E[Y]$.
+\begin{exercicebox}[Exercice 5 : PDF (Calcul de la Densité)]
+La PDF $f(x)$ n'est pas une probabilité, mais une "densité". La valeur $f(\mu)$ est le point le plus haut de la cloche.
 
 \textbf{Votre tâche :}
 \begin{enumerate}
-    \item En utilisant $E[X]$ et $E[Y]$ de l'exercice 1, calculer l'espérance \textbf{théorique} $E[P]$.
-    \item \textbf{Vérification empirique} : 
+    \item Utiliser les $\mu_X$ et $\sigma_X$ de GOOG (Ex 1).
+    \item Calculer la valeur de la densité de probabilité au point $x=\mu_X$ (le pic de la cloche).
+    \item Calculer la valeur de la densité au point $x=0.0$.
+    \item (Indice : Vous aurez besoin de \texttt{scipy.stats.norm.pdf(x, loc=mu, scale=sigma)}).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 6 : Vérification de la Règle Empirique (68-95-99.7)]
+La théorie dit que $\approx 68\%$ des données devraient être dans $\mu \pm \sigma$. Nous allons vérifier si les rendements boursiers respectent cette règle.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Utiliser les $\mu_X$ et $\sigma_X$ de GOOG (Ex 1).
+    \item Calculer la proportion \textbf{réelle} des rendements qui tombent dans l'intervalle $[\mu_X - \sigma_X, \mu_X + \sigma_X]$.
+    \item (Bonus) Faire de même pour $[\mu_X - 2\sigma_X, \mu_X + 2\sigma_X]$ (théorie: 95\%).
+    \item (Conclusion) Les rendements de GOOG semblent-ils suivre parfaitement la règle ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 7 : Calcul des Quartiles]
+L'écart interquartile (IQR) est une autre mesure de dispersion, $IQR = Q_3 - Q_1$.
+$Q_1$ est la valeur $x$ telle que $P(X \le x) = 0.25$.
+$Q_3$ est la valeur $x$ telle que $P(X \le x) = 0.75$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item En utilisant le modèle normal pour GOOG ($\mu_X, \sigma_X$), trouver les Z-scores $z_1$ et $z_3$ pour $p=0.25$ et $p=0.75$ (\texttt{norm.ppf}).
+    \item "Dé-standardiser" ces Z-scores pour trouver $Q_1$ et $Q_3$.
+    \item Calculer l'IQR \textbf{théorique} ($Q_3 - Q_1$).
+    \item Comparer cet IQR théorique à l'IQR \textbf{empirique} de la série $X$ (Indice : \texttt{X.quantile(0.75) - X.quantile(0.25)}).
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 8 : Stabilité par Transformation Linéaire (Y=aX+b)]
+Soit un produit financier (ETF) qui amplifie par 2 les mouvements de GOOG, $Y = 2X$.
+La théorie prédit $E[Y] = 2E[X]$ et $\text{Var}(Y) = 2^2 \text{Var}(X) = 4\text{Var}(X)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer $E[Y]$ et $\text{Var}(Y)$ \textbf{théoriquement} en utilisant $E[X]$ et $\text{Var}(X)$ de l'Ex 1.
+    \item \textbf{Vérification empirique} :
         \begin{itemize}
-            \item Créer la série de données $P_{series} = 0.6 \times X + 0.4 \times Y$.
-            \item Calculer l'espérance empirique de $P_{series}$ (\texttt{.mean()}).
+            \item Créer la série de données $Y_{series} = 2 \times X$.
+            \item Calculer la moyenne (\texttt{.mean()}) et la variance (\texttt{.var()}) de $Y_{series}$.
         \end{itemize}
-    \item Comparer votre résultat théorique (1) et empirique (2).
+    \item Comparer les résultats théoriques et empiriques.
 \end{enumerate}
 \end{exercicebox}
 
-\begin{exercicebox}[Exercice 6 : Variance d'un Portefeuille (Variance d'une Somme)]
-Continuons avec le portefeuille $P = 0.6X + 0.4Y$.
-La variance \textbf{théorique} est : $\text{Var}(P) = a^2\text{Var}(X) + b^2\text{Var}(Y) + 2ab\text{Cov}(X,Y)$.
+\begin{exercicebox}[Exercice 9 : Stabilité par Addition (Portefeuille S=X+Y)]
+Théorie : $E[X+Y] = E[X] + E[Y]$ et $\text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)$.
+*Note : $X$ et $Y$ (GOOG, MSFT) ne sont PAS indépendantes.*
 
 \textbf{Votre tâche :}
 \begin{enumerate}
-    \item En utilisant $\text{Var}(X)$, $\text{Var}(Y)$ (Ex 1) et $\text{Cov}(X,Y)$ (Ex 3), calculer $\text{Var}(P)$ en appliquant la formule ci-dessus.
-    \item \textbf{Vérification empirique} : 
+    \item Créer la série $S = X + Y$.
+    \item Calculer $E[S]$ (la moyenne de $S$).
+    \item Vérifier que $E[S] = E[X] + E[Y]$ (en utilisant les valeurs de l'Ex 1).
+    \item Calculer $\text{Var}(S)$ (la variance de $S$).
+    \item Est-ce que $\text{Var}(S) = \text{Var}(X) + \text{Var}(Y)$ ? Pourquoi y a-t-il une différence ?
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 10 : Covariance et Variance du Portefeuille (Corrigé)]
+Reprenons l'exercice 9. La différence est due à la covariance.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer $\text{Cov}(X,Y)$ (vous pouvez utiliser \texttt{returns.cov()}).
+    \item Calculer la variance \textbf{théorique} de $S = X+Y$ avec la formule complète : $\text{Var}(S_{theo}) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)$.
+    \item Comparer $\text{Var}(S_{theo})$ à la variance empirique $\text{Var}(S)$ calculée à l'exercice 9.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 11 : Distribution d'un Portefeuille Pondéré]
+Un portefeuille $P$ est composé de 60\% de GOOG ($X$) et 40\% de MSFT ($Y$). Donc $P = 0.6X + 0.4Y$.
+Si $X$ et $Y$ sont (conjointement) normales, $P$ est aussi normale.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer l'espérance $E[P]$ (en utilisant la linéarité : $0.6E[X] + 0.4E[Y]$).
+    \item Calculer la variance $\text{Var}(P)$ (en utilisant la formule complète : $\text{Var}(0.6X + 0.4Y) = 0.6^2\text{Var}(X) + 0.4^2\text{Var}(Y) + 2(0.6)(0.4)\text{Cov}(X,Y)$).
+    \item Énoncer la loi de probabilité approximative du portefeuille : $P \sim \mathcal{N}(\mu_P, \sigma_P^2)$.
+\end{enumerate}
+\end{exercicebox}
+
+\begin{exercicebox}[Exercice 12 : Distribution de la Différence (Pairs Trading)]
+Un "spread" $D$ est la différence de rendement $D = X - Y$.
+Théorie : $E[D] = E[X] - E[Y]$ et $\text{Var}(D) = \text{Var}(X) + \text{Var}(Y) - 2\text{Cov}(X,Y)$.
+
+\textbf{Votre tâche :}
+\begin{enumerate}
+    \item Calculer $E[D]$ et $\text{Var}(D)$ \textbf{théoriquement} en utilisant les valeurs des exercices précédents.
+    \item \textbf{Vérification empirique} :
         \begin{itemize}
-            \item Utiliser la série $P_{series}$ de l'exercice 5.
-            \item Calculer la variance empirique de $P_{series}$ (\texttt{.var()}).
+            \item Créer la série de données $D_{series} = X - Y$.
+            \item Calculer la moyenne (\texttt{.mean()}) et la variance (\texttt{.var()}) de $D_{series}$.
         \end{itemize}
-    \item Comparer votre résultat théorique (1) et empirique (2).
-\end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 7 : Le Bénéfice de la Diversification]
-La diversification (le fait que $\text{Corr}(X,Y) \ne 1$) réduit le risque. Nous allons le prouver.
-Le risque (l'écart-type) d'un portefeuille \textit{n'est pas} la moyenne pondérée des risques.
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Calculer le risque du portefeuille $\sigma_P$ (l'écart-type) en prenant la racine carrée de $\text{Var}(P)$ (calculée à l'exercice 6).
-    \item Calculer la "moyenne pondérée des risques" : $\sigma_{moy} = 0.6 \sigma_X + 0.4 \sigma_Y$ (en utilisant $\sigma_X, \sigma_Y$ de l'Ex 1).
-    \item Comparer $\sigma_P$ et $\sigma_{moy}$. Lequel est le plus petit ?
-    \item (Conclusion) Pourquoi $\sigma_P < \sigma_{moy}$ ? (Indice : $\text{Corr}(X,Y)$).
-\end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 8 : Vérification des Bornes de Corrélation]
-Le théorème stipule que si $Y = aX + b$, alors $\text{Corr}(X,Y) = \pm 1$. Vérifions cela.
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Soit $X$ la série des rendements de GOOG.
-    \item Créer une nouvelle variable $Z = -3X + 0.005$ (une relation linéaire négative parfaite).
-    \item Calculer la corrélation empirique entre $X$ et $Z$. (Vous pouvez utiliser \texttt{X.corr(Z)}).
-    \item Le résultat est-il conforme au théorème ?
-\end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 9 : Loi Jointe (Discrétisation)]
-Transformons nos variables continues $X$ et $Y$ en variables de Bernoulli discrètes.
-Soit $X_{bern} = 1$ si le rendement de GOOG est positif ($> 0$), et $0$ sinon.
-Soit $Y_{bern} = 1$ si le rendement de MSFT est positif ($> 0$), et $0$ sinon.
-Nous voulons trouver la PMF jointe $P(X_{bern}=x, Y_{bern}=y)$.
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Créer les deux séries discrètes $X_{bern}$ et $Y_{bern}$.
-    \item Utiliser \texttt{pandas.crosstab} pour créer un tableau de contingence (les effectifs).
-    \item Normaliser ce tableau par l'effectif total pour obtenir la \textbf{loi jointe} (PMF jointe).
-    \item Quelle est la probabilité que les deux actions aient un rendement positif le même jour, $P(X_{bern}=1, Y_{bern}=1)$ ?
-\end{enumerate}
-\end{exercicebox}
-
-\begin{exercicebox}[Exercice 10 : Lois Marginales et Indépendance (Discret)]
-En utilisant la loi jointe $P(X_{bern}, Y_{bern})$ de l'exercice 9.
-
-\textbf{Votre tâche :}
-\begin{enumerate}
-    \item Calculer la loi marginale $P(X_{bern}=x)$ (somme des lignes).
-    \item Calculer la loi marginale $P(Y_{bern}=y)$ (somme des colonnes).
-    \item Les variables $X_{bern}$ et $Y_{bern}$ sont-elles indépendantes ? 
-    \item Justifiez en comparant $P(X_{bern}=1, Y_{bern}=1)$ au produit $P(X_{bern}=1) \times P(Y_{bern}=1)$.
+    \item Comparer les résultats théoriques et empiriques.
 \end{enumerate}
 \end{exercicebox}

@@ -5,24 +5,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 
-# Definir le ticker et une longue periode pour notre "population"
-ticker = "GOOG"
+# Definir les tickers et la periode
+tickers = ["GOOG"]
 start_date = "2010-01-01"
 end_date = "2024-12-31"
 
 # Telecharger les prix de cloture ajustes
-data = yf.download(ticker, start=start_date, end=end_date)["Adj Close"]
+data = yf.download(tickers, start=start_date, end=end_date)["Adj Close"]
 
-# Calculer les rendements journaliers (notre population X)
+# Calculer les rendements journaliers en pourcentage
 returns = data.pct_change().dropna()
 
-# Calculer les "vrais" parametres de la population
+# 'returns' est notre DataFrame principal.
+# Considerons cette grande serie de donnees comme notre "Population"
+# pour les besoins de ces exercices.
 population_mean = returns.mean()
 population_var = returns.var()
 population_std = returns.std()
 
-print(f"--- Parametres de la Population (GOOG 2010-2024) ---")
-print(f"Mu (moyenne) = {population_mean:.6f}")
-print(f"Sigma^2 (variance) = {population_var:.6f}")
-print(f"Sigma (ecart-type) = {population_std:.6f}")
-print(f"N total (population) = {len(returns)}")
+print(f"--- Population (GOOG 2010-2024) ---")
+print(f"Vraie Moyenne (mu) = {population_mean:.6f}")
+print(f"Vraie Variance (sigma^2) = {population_var:.6f}")
