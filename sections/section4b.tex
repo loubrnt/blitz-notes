@@ -1,0 +1,151 @@
+\newpage
+\section{La Loi Gamma}
+
+\subsection{Petite promenade avant le grand plongeon}
+
+Avant que les équations n’apparaissent, laissez-nous quelques instants de flânerie.  
+Imaginez-vous debout (ou assis(e), selon l’humeur) à un arrêt de bus dont l’horaire est… on va dire « créativement imprévisible ». Les véhicules arrivent sans régularité apparente, mais avec une propriété étonnante : peu importe le temps déjà écoulé depuis le dernier bus, la probabilité qu’un nouveau bus arrive dans la minute qui suit reste la même. Cette absence de mémoire est la signature d’une loi exponentielle.
+
+Maintenant, si vous décidez de ne \textbf{pas} prendre le premier bus qui se présente, ni le deuxième, mais d’attendre patiemment d’en voir \textbf{n} passer avant de lever le pouce, vous venez de créer — sans vous en douter — une variable aléatoire \textbf{Gamma}. Le temps total que vous passerez sur le trottoir est la \textbf{some} de \textbf{n} durées exponentielles indépendantes. Et cette somme a une forme, une densité, des moments… bref, une personnalité propre : la \textbf{loi Gamma}.
+
+\subsection{Intuition « assis(e) à l’arrêt de bus »}
+
+\begin{intuitionbox}[Pourquoi la somme ?]
+\begin{itemize}
+  \item Chaque bus arrive \emph{sans horaire fixe} ; l’écart entre deux bus est modelé par une loi exponentielle $\mathcal{E}(\lambda)$.
+  \item Tu \textbf{ne bouges pas} : tu démarres ton chronomètre quand le premier bus arrive et tu l’arrêtes quand le \emph{n-ième} bus passe.
+  \item Le temps total que tu vas passer assis(e) est donc
+        \[ Y = X_1 + X_2 + \dots + X_n \]
+        où les $X_i$ sont les durées \emph{entre} bus, indépendantes et de même paramètre $\lambda$.
+\end{itemize}
+\smallskip
+\underline{Point-clé} : une exponentielle modélise \emph{un} temps d’attente ; une Gamma modélise la \emph{some} de plusieurs de ces temps.
+\end{intuitionbox}
+
+\subsection{La loi Gamma en deux lignes}
+
+\begin{definitionbox}[Loi Gamma]
+Une variable aléatoire $Y$ suit une loi Gamma de paramètres de forme $k > 0$ et de taux $\lambda > 0$, notée
+\[ Y \sim \text{Gamma}(k, \lambda), \]
+si sa densité est
+\[ f_Y(y) = \frac{\lambda^k y^{k-1} e^{-\lambda y}}{\Gamma(k)}, \qquad y > 0. \]
+Pour $k$ entier on a $\Gamma(k) = (k-1)!$ ; c’est le cas qui nous intéresse ici ($k = n$).
+\end{definitionbox}
+
+\subsection{Preuve par récurrence « bus après bus »}
+
+Commençons par observer les premiers cas concrets avant d'établir le passage général de $n$ à $n+1$.
+
+\begin{proofbox}[Étape 0 – $n = 1$ (un seul bus)]
+Tu \textbf{vois le premier bus}.  
+Le \textbf{temps d’attente} est :
+\[
+X_1 \sim \text{Exp}(\lambda)
+\]
+Sa \textbf{densité} est :
+\[
+f_1(y) = \lambda e^{-\lambda y}
+\]
+\textbf{Remarque} : c’est \textbf{déjà} une \textbf{Gamma$(1, \lambda)$}.
+\end{proofbox}
+
+\begin{proofbox}[Étape 1 – $n = 2$ (deux bus)]
+Tu \textbf{ne pars toujours pas}.  
+Tu \textbf{attends le deuxième bus}.
+
+Le \textbf{temps entre le 1er et le 2e} est :
+\[
+X_2 \sim \text{Exp}(\lambda), \quad \text{indépendant de } X_1
+\]
+Tu veux la \textbf{densité} de :
+\[
+Y_2 = X_1 + X_2
+\]
+
+\subsection*{On \textbf{convoit} les deux densités :}
+\[
+f_2(y) = \int_0^y f_{X_1}(x) f_{X_2}(y - x) \, dx
+= \int_0^y \lambda e^{-\lambda x} \cdot \lambda e^{-\lambda (y - x)} \, dx
+\]
+
+\[
+= \lambda^2 e^{-\lambda y} \int_0^y dx
+= \lambda^2 y e^{-\lambda y}
+\]
+\textbf{C'est exactement} la densité d’une \textbf{Gamma$(2, \lambda)$}.
+\end{proofbox}
+
+\begin{proofbox}[Étape 2 – $n = 3$ (trois bus)]
+Tu \textbf{attends encore}.  
+Le \textbf{temps entre le 2e et le 3e} est :
+\[
+X_3 \sim \text{Exp}(\lambda), \quad \text{indépendant}
+\]
+Tu veux la \textbf{densité} de :
+\[
+Y_3 = Y_2 + X_3
+\]
+
+\subsection*{On \textbf{convoit} encore :}
+\[
+f_3(y) = \int_0^y f_{Y_2}(x) f_{X_3}(y - x) \, dx
+= \int_0^y \lambda^2 x e^{-\lambda x} \cdot \lambda e^{-\lambda (y - x)} \, dx
+\]
+
+\[
+= \lambda^3 e^{-\lambda y} \int_0^y x \, dx
+= \lambda^3 e^{-\lambda y} \cdot \frac{y^2}{2}
+= \frac{\lambda^3 y^2 e^{-\lambda y}}{2!}
+\]
+\textbf{C'est exactement} la densité d’une \textbf{Gamma$(3, \lambda)$}.
+\end{proofbox}
+
+\begin{proofbox}[Étape 3 – Tu vois la forme qui sort]
+À \textbf{chaque fois} que tu \textbf{ajoutes un bus}, tu \textbf{convois} avec une \textbf{exponentielle}, et tu \textbf{fais apparaître} :
+\begin{itemize}
+  \item \textbf{$y^{n-1}$} au numérateur
+  \item \textbf{$(n-1)!$} au dénominateur
+  \item \textbf{$\lambda^n e^{-\lambda y}$} devant
+\end{itemize}
+\end{proofbox}
+
+\begin{proofbox}[Étape 4 – Généralisation $n \to n+1$]
+\subsection*{Supposons que :}
+\[
+f_n(y) = \frac{\lambda^n y^{n-1} e^{-\lambda y}}{(n-1)!}
+\]
+\subsection*{Alors :}
+\[
+f_{n+1}(y) = \int_0^y f_n(x) f_{X_{n+1}}(y - x) \, dx
+= \int_0^y \frac{\lambda^n x^{n-1} e^{-\lambda x}}{(n-1)!} \cdot \lambda e^{-\lambda (y - x)} \, dx
+\]
+
+\[
+= \frac{\lambda^{n+1} e^{-\lambda y}}{(n-1)!} \int_0^y x^{n-1} \, dx
+= \frac{\lambda^{n+1} e^{-\lambda y}}{(n-1)!} \cdot \frac{y^n}{n}
+= \frac{\lambda^{n+1} y^n e^{-\lambda y}}{n!}
+\]
+\textbf{C'est exactement} la densité d’une \textbf{Gamma$(n+1, \lambda)$}.
+
+\smallskip
+\emph{Conséquence} : par récurrence, $X_1+\dots+X_n \sim \text{Gamma}(n, \lambda)$ pour tout $n\geq 1$.
+\end{proofbox}
+
+\subsection{Règles mnémotechniques}
+
+\begin{remarquebox}[Formules « directes » pour $n$ entier]
+Si $Y \sim \text{Gamma}(n, \lambda)$ avec $n$ entier :
+\begin{itemize}
+  \item Espérance : $\mathbb{E}[Y] = \dfrac{n}{\lambda}$ \quad (somme de $n$ moyennes $1/\lambda$)
+  \item Variance : $\text{Var}(Y) = \dfrac{n}{\lambda^2}$ \quad (somme de $n$ variances $1/\lambda^2$)
+\end{itemize}
+\underline{Rappel visuel} : « $n$ bus = $n$ fois l'espérance d'un seul trajet ».
+\end{remarquebox}
+
+\subsection{Lien avec le processus de Poisson (facultatif mais éclairant)}
+
+\begin{intuitionbox}[Du bus au comptage]
+Les instants d'arrivée des bus forment un \emph{processus de Poisson} d'intensité $\lambda$.  
+La variable $Y$ ci-dessus n'est autre que la date du $n$-ième événement ;  
+sa densité Gamma traduit le fait qu'"attendre $n$ événements" prend \emph{en moyenne} $n/\lambda$ unités de temps, avec une dispersion croissante avec $n$.
+\end{intuitionbox}

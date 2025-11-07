@@ -1,0 +1,135 @@
+
+\newpage
+
+\section{Transformations de Variable}
+
+Un problème fondamental en théorie des probabilités est de déterminer la distribution d'une variable aléatoire transformée \( Y = g(X) \), lorsque \( X \) est une variable continue de densité connue \( f_X(x) \). Cette section présente les méthodes pour obtenir la densité de \( Y \), selon que la fonction \( g \) est monotone ou non.
+
+\subsection{Cas où \( g \) est strictement monotone}
+
+Lorsque \( g \) est strictement monotone (croissante ou décroissante) et dérivable sur le support de \( X \), on peut appliquer une formule directe basée sur la réciproque de \( g \).
+
+\begin{theorembox}[Changement de Variable - Cas Monotone]
+Soit \( X \) une variable aléatoire continue de densité \( f_X(x) \), supportée sur un intervalle \( I \). Soit \( g : I \to J \) une fonction strictement monotone et dérivable, avec \( g'(x) \ne 0 \) sur \( I \). Alors \( Y = g(X) \) est une variable aléatoire continue de densité :
+$$ f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right| $$
+pour \( y \in J \), et \( f_Y(y) = 0 \) ailleurs.
+\end{theorembox}
+
+\begin{proofbox}[Preuve du Théorème]
+On distingue deux cas selon la monotonie de \( g \).
+
+\textbf{Cas 1 : \( g \) strictement croissante.}
+$$ F_Y(y) = P(Y \le y) = P(g(X) \le y) = P(X \le g^{-1}(y)) = F_X(g^{-1}(y)) $$
+En dérivant par rapport à \( y \) :
+$$ f_Y(y) = \frac{d}{dy} F_X(g^{-1}(y)) = f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y) $$
+Comme \( \frac{d}{dy} g^{-1}(y) > 0 \), on a :
+$$ f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right| $$
+
+\textbf{Cas 2 : \( g \) strictement décroissante.}
+$$ F_Y(y) = P(Y \le y) = P(g(X) \le y) = P(X \ge g^{-1}(y)) = 1 - F_X(g^{-1}(y)) $$
+Dérivons :
+$$ f_Y(y) = -f_X(g^{-1}(y)) \cdot \frac{d}{dy} g^{-1}(y) $$
+Puisque \( \frac{d}{dy} g^{-1}(y) < 0 \), la valeur absolue donne :
+$$ f_Y(y) = f_X(g^{-1}(y)) \cdot \left| \frac{d}{dy} g^{-1}(y) \right| $$
+\end{proofbox}
+
+\begin{examplebox}[Changement d'unité : distance entre véhicules]
+Soit \( X \sim \text{Exp}(0.001) \), exprimée en mètres. On pose \( Y = X / 1000 \), en kilomètres. Alors :
+- \( g(x) = x/1000 \), strictement croissante.
+- \( g^{-1}(y) = 1000y \)
+- \( \left| \frac{d}{dy} g^{-1}(y) \right| = 1000 \)
+
+Ainsi :
+\[
+f_Y(y) = f_X(1000y) \cdot 1000 = (0.001 e^{-0.001 \cdot 1000y}) \cdot 1000 = e^{-y}, \quad y \geq 0
+\]
+Donc \( Y \sim \text{Exp}(1) \).
+\end{examplebox}
+
+\subsection{Cas où \( g \) n'est pas monotone}
+
+Lorsque \( g \) n’est pas monotone, l’inverse global \( g^{-1} \) n’existe pas. On doit alors partitionner le support de \( X \) en sous-intervalles sur lesquels \( g \) est monotone, puis sommer les contributions de chaque branche.
+
+\begin{theorembox}[Changement de Variable - Cas Général]
+Soit \( X \) de densité \( f_X(x) \), et \( Y = g(X) \). Supposons que \( g \) soit différentiable et que l'on puisse diviser le support de \( X \) en \( n \) intervalles disjoints \( I_1, \dots, I_n \), sur chacun desquels \( g \) est strictement monotone. Soit \( x_k = h_k(y) \) la réciproque de \( g \) sur \( I_k \). Alors :
+$$ f_Y(y) = \sum_{k=1}^n f_X(h_k(y)) \cdot \left| \frac{d}{dy} h_k(y) \right| $$
+pour tout \( y \) tel que \( g(x) = y \) admette des solutions dans ces intervalles.
+\end{theorembox}
+
+\begin{examplebox}[Transformation non monotone : $ Y = \sqrt{|X|} $]
+
+\textbf{Énoncé.} Soit $ X \sim \mathcal{N}(0, 1) $, de densité :
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}, \quad x \in \mathbb{R}.
+\]
+On considère $ Y = \sqrt{|X|} $. Déterminons la densité de $ Y $.
+
+\textbf{Analyse de la transformation.}
+
+\textit{Support de $ Y $ :} Puisque $ |X| \geq 0 $, on a $ Y = \sqrt{|X|} \geq 0 $. Le support de $ Y $ est donc $ [0, \infty) $.
+
+\textit{Non-monotonie :} La fonction $ g(x) = \sqrt{|x|} $ n'est pas monotone sur $ \mathbb{R} $. Pour une valeur donnée $ y > 0 $, l'équation $ y = \sqrt{|x|} $ admet \textbf{deux solutions} :
+\begin{itemize}
+  \item $ x_1 = y^2 $ (quand $ X > 0 $),
+  \item $ x_2 = -y^2 $ (quand $ X < 0 $).
+\end{itemize}
+Cette transformation est dite \textbf{deux-pour-un} : deux valeurs distinctes de $ X $ produisent la même valeur de $ Y $.
+
+\textbf{Application de la formule générale.}
+
+On partitionne le support de $ X $ en deux intervalles sur lesquels $ g $ est monotone :
+\begin{itemize}
+  \item $ A_1 = (0, \infty) $ : sur cet intervalle, $ g(x) = \sqrt{x} $ est strictement croissante,
+  \item $ A_2 = (-\infty, 0) $ : sur cet intervalle, $ g(x) = \sqrt{-x} $ est strictement décroissante.
+\end{itemize}
+
+Pour $ y > 0 $, on applique la formule :
+\[
+f_Y(y) = \sum_{k=1}^{2} f_X(x_k) \left| \frac{dx_k}{dy} \right|,
+\]
+où $ x_1 = y^2 $ et $ x_2 = -y^2 $ sont les inverses sur chaque branche.
+
+\textit{Calcul des dérivées :}
+\begin{itemize}
+  \item $ \frac{dx_1}{dy} = \frac{d}{dy}(y^2) = 2y $, donc $ \left| \frac{dx_1}{dy} \right| = 2y $ (car $ y > 0 $),
+  \item $ \frac{dx_2}{dy} = \frac{d}{dy}(-y^2) = -2y $, donc $ \left| \frac{dx_2}{dy} \right| = 2y $.
+\end{itemize}
+
+\textit{Évaluation de $ f_X $ :}
+\begin{itemize}
+  \item $ f_X(y^2) = \frac{1}{\sqrt{2\pi}} e^{-\frac{(y^2)^2}{2}} = \frac{1}{\sqrt{2\pi}} e^{-\frac{y^4}{2}} $,
+  \item $ f_X(-y^2) = \frac{1}{\sqrt{2\pi}} e^{-\frac{(-y^2)^2}{2}} = \frac{1}{\sqrt{2\pi}} e^{-\frac{y^4}{2}} $.
+\end{itemize}
+Les deux termes sont identiques par symétrie de la loi normale.
+
+\textit{Densité de $ Y $ :}
+\[
+f_Y(y) = f_X(y^2) \cdot 2y + f_X(-y^2) \cdot 2y = 2 \cdot \frac{1}{\sqrt{2\pi}} e^{-\frac{y^4}{2}} \cdot 2y = \frac{4y}{\sqrt{2\pi}} e^{-\frac{y^4}{2}}, \quad y > 0.
+\]
+
+\textbf{Justification de l'addition des contributions.}
+
+Considérons un petit intervalle $ [y, y + dy] $. La probabilité que $ Y $ tombe dans cet intervalle provient de deux événements disjoints :
+\begin{itemize}
+  \item $ X $ proche de $ y^2 $ (branche positive),
+  \item $ X $ proche de $ -y^2 $ (branche négative).
+\end{itemize}
+On a donc :
+\[
+P(Y \in [y, y + dy]) = P(X \in [y^2, (y + dy)^2]) + P(X \in [-(y + dy)^2, -y^2]).
+\]
+En utilisant les densités :
+\[
+f_Y(y) \, dy \approx f_X(y^2) \, dx_1 + f_X(-y^2) \, dx_2,
+\]
+où $ dx_1 $ et $ dx_2 $ sont les longueurs des intervalles correspondants dans l'espace de $ X $. Cela conduit à sommer les contributions.
+
+\textbf{Conclusion.}
+
+La densité de $ Y = \sqrt{|X|} $ est :
+\[
+f_Y(y) = \frac{4y}{\sqrt{2\pi}} e^{-\frac{y^4}{2}}, \quad y > 0.
+\]
+Elle résulte de la somme de deux contributions égales, reflétant la symétrie de $ X $ autour de zéro.
+
+\end{examplebox}

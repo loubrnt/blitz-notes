@@ -122,3 +122,53 @@ L'intégrale $\int e^{y^2} \, dy$ n'a pas de forme close élémentaire ! Cet ord
 \textbf{Leçon :} Toujours examiner la fonction et le domaine avant de choisir l'ordre d'intégration.
 
 \end{intuitionbox}
+
+\subsection{Changement de l'ordre d'intégration : Exemple simple}
+
+\begin{examplebox}[Exemple concret : Triangle]
+Calculons l'intégrale : $$\int_0^1 \int_0^x y \, dy \, dx$$
+
+\textbf{Région d'intégration initiale :}
+\begin{itemize}
+    \item $x$ varie de 0 à 1
+    \item Pour chaque $x$ fixé, $y$ varie de 0 à $x$
+\end{itemize}
+
+C'est un \textbf{triangle} : $D = \{(x,y) : 0 \le x \le 1 \text{ et } 0 \le y \le x\}$
+
+\tcblower
+
+\textbf{Méthode 1 : Ordre initial (on intègre d'abord en $y$)}
+
+\begin{align*}
+\int_0^1 \left(\int_0^x y \, dy\right) dx &= \int_0^1 \left[\frac{y^2}{2}\right]_0^x dx \\
+&= \int_0^1 \frac{x^2}{2} \, dx \\
+&= \left[\frac{x^3}{6}\right]_0^1 \\
+&= \frac{1}{6}
+\end{align*}
+
+\tcblower
+
+\textbf{Méthode 2 : Changement de l'ordre (on intègre d'abord en $x$)}
+
+\textit{L'astuce :} Redécrire la même région en fixant $y$ d'abord !
+
+Dans le triangle, si je fixe $y$ :
+\begin{itemize}
+    \item $y$ varie de 0 à 1 (minimum et maximum de $y$ dans le triangle)
+    \item Pour chaque $y$ fixé, $x$ varie de $y$ à 1 (car $x \ge y$ dans notre région)
+\end{itemize}
+
+\textbf{Nouvelles bornes :}
+$$ \int_0^1 \int_y^1 y \, dx \, dy $$
+
+\textbf{Calcul :}
+\begin{align*}
+\int_0^1 \left(\int_y^1 y \, dx\right) dy &= \int_0^1 y[x]_y^1 \, dy \\
+&= \int_0^1 y(1-y) \, dy \\
+&= \int_0^1 (y - y^2) \, dy \\
+&= \left[\frac{y^2}{2} - \frac{y^3}{3}\right]_0^1 \\
+&= \frac{1}{2} - \frac{1}{3} \\
+&= \frac{1}{6} \quad \checkmark
+\end{align*}
+\end{examplebox}
